@@ -54,16 +54,21 @@ export const Conference: UseCase = {
       requestedCredentials: [
         {
           id: uuid(),
-          name: 'Animo ID Card',
+          name: 'BC ID Card',
           icon: `/public/businesswoman/icon-businesswoman.svg`,
-          properties: ['Name', 'Nationality'],
+          properties: ['name', 'emailAddress', 'iss_dateint', 'program'],
         },
       ],
       issueCredentials: [
         {
           id: uuid(),
-          name: 'Conference Pass',
-          properties: [{ name: 'Name' }, { name: 'Nationality' }],
+          name: 'BC Pilot',
+          attributes: [
+            { name: 'name', value: 'Jan van Dalen' },
+            { name: 'emailAddress', value: 'test@mail.com' },
+            { name: 'iss_dateint', value: "2025" },
+            { name: 'program', value: "LSBC" }
+          ],
           icon: `${URL}/icon-conference-pass.svg`,
         },
       ],

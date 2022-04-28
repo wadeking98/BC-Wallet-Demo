@@ -57,25 +57,20 @@ export const Sport: UseCase = {
       requestedCredentials: [
         {
           id: uuid(),
-          name: 'Animo ID Card',
+          name: 'BC ID Card',
           icon: '/public/student/icon-student.svg',
-          properties: ['Name', 'Date of birth'],
-        },
-        {
-          id: uuid(),
-          name: 'University Card',
-          icon: '/public/student/useCases/school/icon-university-card.png',
-          properties: ['Valid until'],
-        },
+          properties: ['name', 'emailAddress', 'iss_dateint', 'program'],
+        }
       ],
       issueCredentials: [
         {
           id: uuid(),
-          name: 'Gym Membership',
+          name: 'BC Pilot',
           attributes: [
-            { name: 'Name', value: 'Jan van Dalen' },
-            { name: 'Date of birth', value: '19990101' },
-            { name: 'Valid until', value: nextYear.toString() },
+            { name: 'name', value: 'Jan van Dalen' },
+            { name: 'emailAddress', value: 'test@mail.com' },
+            { name: 'iss_dateint', value: "2025" },
+            { name: 'program', value: "LSBC" }
           ],
           icon: `${URL}/icon-membership.png`,
         },

@@ -53,26 +53,20 @@ export const AirTravel: UseCase = {
       requestedCredentials: [
         {
           id: uuid(),
-          name: 'Animo ID Card',
+          name: 'BC ID Card',
           icon: `/public/businesswoman/icon-businesswoman.svg`,
-          properties: ['Name', 'Date of birth', 'Nationality'],
-        },
-        {
-          id: uuid(),
-          name: 'Credit card',
-          icon: `/public/businesswoman/icon-creditcard.png`,
-          properties: ['Security code', 'Card number', 'Valid until'],
-        },
+          properties: ['name', 'emailAddress', 'iss_dateint', 'program'],
+        }
       ],
       issueCredentials: [
         {
           id: uuid(),
-          name: 'Airplane Ticket',
+          name: 'BC Pilot',
           attributes: [
-            { name: 'Airline', value: 'Sunrise Airways' },
-            { name: 'Class', value: 'Business' },
-            { name: 'Seat', value: '13A' },
-            { name: 'Passenger', value: 'Joyce Brown' },
+            { name: 'name', value: 'Jan van Dalen' },
+            { name: 'emailAddress', value: 'test@mail.com' },
+            { name: 'iss_dateint', value: "2025" },
+            { name: 'program', value: "LSBC" }
           ],
           icon: `${URL}/icon-ticket.png`,
         },
