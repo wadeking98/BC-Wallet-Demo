@@ -53,21 +53,21 @@ export const School: UseCase = {
       requestedCredentials: [
         {
           id: uuid(),
-          name: 'Animo ID Card',
+          name: 'BC ID Card',
           icon: '/public/student/icon-student.svg',
-          properties: ['Name', 'Date of birth'],
+          properties: ['name', 'emailAddress', 'iss_dateint', 'program'],
         },
       ],
       issueCredentials: [
         {
           id: uuid(),
-          name: 'University Card',
+          name: 'BC Pilot',
           properties: [{ name: 'Name' }, { name: 'Date of birth' }],
           attributes: [
-            { name: 'University', value: 'University of Law' },
-            { name: 'Faculty', value: 'Law' },
-            { name: 'StudentID', value: '121098' },
-            { name: 'Valid until', value: '20230831' },
+            { name: 'name', value: 'Jan van Dalen' },
+            { name: 'emailAddress', value: 'test@mail.com' },
+            { name: 'iss_dateint', value: "2025" },
+            { name: 'program', value: "LSBC" }
           ],
           icon: `${URL}/icon-university-card.png`,
         },
