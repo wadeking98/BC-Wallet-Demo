@@ -41,114 +41,115 @@ export class CredDefService {
 
   private async init() {
     const cd1 = await this.createCredentialDefinition({
-      schemaId: 'q7ATwTYbQDgiigVijUAej:2:Animo ID:1.1',
+      schemaId: '9wVuYYDEDtpZ6CYMqSiWop:2:unverified_person:0.1.0',
       supportRevocation: false,
-      tag: 'Animo ID Card',
+      tag: 'BC ID Card',
     })
     // "attributes": [
     //   "Name", "Street", "City", "Date of birth", "Nationality"
     // ]
 
-    const cd2 = await this.createCredentialDefinition({
-      schemaId: 'q7ATwTYbQDgiigVijUAej:2:Credit card:1.0.0',
-      supportRevocation: false,
-      tag: 'Credit card',
-    })
+    // const cd2 = await this.createCredentialDefinition({
+    //   schemaId: 'q7ATwTYbQDgiigVijUAej:2:Credit card:1.0.0',
+    //   supportRevocation: false,
+    //   tag: 'Credit card',
+    // })
     //"attrNames": [
     //   "Security code", "Card number", "Issuer", "Holder", "Valid until"
     // ],
 
-    const cd3 = await this.createCredentialDefinition({
-      schemaId: 'q7ATwTYbQDgiigVijUAej:2:Airplane Ticket:1.0',
-      supportRevocation: false,
-      tag: 'Airplane Ticket',
-    })
+    // const cd3 = await this.createCredentialDefinition({
+    //   schemaId: 'q7ATwTYbQDgiigVijUAej:2:Airplane Ticket:1.0',
+    //   supportRevocation: false,
+    //   tag: 'Airplane Ticket',
+    // })
     // "attrNames": [
     //   "Airline", "Class", "Seat", "Passenger"
     // ],
 
-    const cd4 = await this.createCredentialDefinition({
-      schemaId: 'q7ATwTYbQDgiigVijUAej:2:Conference Pass:1.0.0',
-      supportRevocation: false,
-      tag: 'Conference Pass',
-    })
+    // const cd4 = await this.createCredentialDefinition({
+    //   schemaId: 'q7ATwTYbQDgiigVijUAej:2:Conference Pass:1.0.0',
+    //   supportRevocation: false,
+    //   tag: 'Conference Pass',
+    // })
     // "attrNames": [
     //   "Name", "Nationality"
     // ],
 
-    const cd5 = await this.createCredentialDefinition({
-      schemaId: 'q7ATwTYbQDgiigVijUAej:2:Hotel Keycard:1.0.0',
-      supportRevocation: false,
-      tag: 'Hotel Keycard',
-    })
+    // const cd5 = await this.createCredentialDefinition({
+    //   schemaId: 'q7ATwTYbQDgiigVijUAej:2:Hotel Keycard:1.0.0',
+    //   supportRevocation: false,
+    //   tag: 'Hotel Keycard',
+    // })
     // "attrNames": [
     //   "name", "room"
     // ],
 
-    const cd6 = await this.createCredentialDefinition({
-      schemaId: 'q7ATwTYbQDgiigVijUAej:2:University Card:1.0.2',
-      supportRevocation: false,
-      tag: 'University Card',
-    })
+    // const cd6 = await this.createCredentialDefinition({
+    //   schemaId: 'q7ATwTYbQDgiigVijUAej:2:University Card:1.0.2',
+    //   supportRevocation: false,
+    //   tag: 'University Card',
+    // })
     // "attrNames": [
     //   "Date of birth", "StudentID", "Valid until", "University", "Faculty", "Name"
     // ],
 
-    const cd7 = await this.createCredentialDefinition({
-      schemaId: "q7ATwTYbQDgiigVijUAej:2:Master's Degree:1.0.0",
-      supportRevocation: false,
-      tag: `Master's Degree`,
-    })
+    // const cd7 = await this.createCredentialDefinition({
+    //   schemaId: "q7ATwTYbQDgiigVijUAej:2:Master's Degree:1.0.0",
+    //   supportRevocation: false,
+    //   tag: `Master's Degree`,
+    // })
     // "attrNames": [
     //   "Graduate", "Date", "Field", "Institute"
     // ],
 
-    const cd8 = await this.createCredentialDefinition({
-      schemaId: 'q7ATwTYbQDgiigVijUAej:2:Proof of Employment:1.0.0',
-      supportRevocation: false,
-      tag: `Proof of Employment`,
-    })
+    // const cd8 = await this.createCredentialDefinition({
+    //   schemaId: 'q7ATwTYbQDgiigVijUAej:2:Proof of Employment:1.0.0',
+    //   supportRevocation: false,
+    //   tag: `Proof of Employment`,
+    // })
     // "attrNames": [
     //   "Date", "Organization", "Title", "Name"
     // ]
 
-    const cd9 = await this.createCredentialDefinition({
-      schemaId: 'q7ATwTYbQDgiigVijUAej:2:Rent Agreement:1.0.1',
-      supportRevocation: false,
-      tag: `Rent Agreement`,
-    })
+    // const cd9 = await this.createCredentialDefinition({
+    //   schemaId: 'q7ATwTYbQDgiigVijUAej:2:Rent Agreement:1.0.1',
+    //   supportRevocation: false,
+    //   tag: `Rent Agreement`,
+    // })
     // "attributes": [
     //   "Landlord", "Name", "Rent", "Start date", "End date"
     // ]
 
-    const cd10 = await this.createCredentialDefinition({
-      schemaId: 'q7ATwTYbQDgiigVijUAej:2:Laptop Invoice:1.0.1',
-      supportRevocation: false,
-      tag: `Laptop Invoice`,
-    })
+    // const cd10 = await this.createCredentialDefinition({
+    //   schemaId: 'q7ATwTYbQDgiigVijUAej:2:Laptop Invoice:1.0.1',
+    //   supportRevocation: false,
+    //   tag: `Laptop Invoice`,
+    // })
     // "attrNames": [
     //  "Street", "Store", "Name", "City", "Product", "Price", "Date"
     // ]
 
-    const cd11 = await this.createCredentialDefinition({
-      schemaId: 'q7ATwTYbQDgiigVijUAej:2:Crypto Wallet:1.0.2',
-      supportRevocation: false,
-      tag: `Crypto Wallet`,
-    })
+    // const cd11 = await this.createCredentialDefinition({
+    //   schemaId: 'q7ATwTYbQDgiigVijUAej:2:Crypto Wallet:1.0.2',
+    //   supportRevocation: false,
+    //   tag: `Crypto Wallet`,
+    // })
     // "attrNames": [
     //  "Address", "Balance"
     // ]
 
-    const cd12 = await this.createCredentialDefinition({
-      schemaId: 'q7ATwTYbQDgiigVijUAej:2:Gym Membership:1.0',
-      supportRevocation: false,
-      tag: `Gym Membership`,
-    })
+    // const cd12 = await this.createCredentialDefinition({
+    //   schemaId: 'q7ATwTYbQDgiigVijUAej:2:Gym Membership:1.0',
+    //   supportRevocation: false,
+    //   tag: `Gym Membership`,
+    // })
     // "attrNames": [
     //  "Name", "Valid until", "Date of birth"
     // ],
 
-    this.credentialDefinitions = [cd1, cd2, cd3, cd4, cd5, cd6, cd7, cd8, cd9, cd10, cd11, cd12]
+    // this.credentialDefinitions = [cd1, cd2, cd3, cd4, cd5, cd6, cd7, cd8, cd9, cd10, cd11, cd12]
+    this.credentialDefinitions = [cd1]
   }
 
   private async createCredentialDefinition(credentialDefinitionRequest: {
