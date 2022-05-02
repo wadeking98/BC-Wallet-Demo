@@ -54,9 +54,9 @@ export const Conference: UseCase = {
       requestedCredentials: [
         {
           id: uuid(),
-          name: 'BC ID Card',
+          name: 'Student ID Card',
           icon: `/public/businesswoman/icon-businesswoman.svg`,
-          properties: ['name', 'emailAddress', 'iss_dateint', 'program'],
+          properties: ['student_first_name', 'student_last_name', 'expiry_date'],
         },
       ],
       issueCredentials: [
@@ -109,7 +109,7 @@ export const Conference: UseCase = {
           type: StepType.CREDENTIAL,
           title: 'Accept your conference pass',
           description: `Open your wallet, and accept your new conference pass. You can use it to prove that you have access.`,
-          useProof: true,
+          //useProof: true,
         },
       ],
     },
@@ -128,9 +128,9 @@ export const Conference: UseCase = {
       requestedCredentials: [
         {
           id: uuid(),
-          name: 'Conference Pass',
+          name: 'BC Pilot',
           icon: `${URL}/icon-conference-pass.svg`,
-          properties: ['Name'],
+          properties: ['name'],
         },
       ],
       steps: [

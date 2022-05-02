@@ -41,9 +41,9 @@ export class CredDefService {
 
   private async init() {
     const cd1 = await this.createCredentialDefinition({
-      schemaId: 'GW9GbSntDFutu2qQra2DXd:2:BC VC Pilot Certificate:1.0.1',
+      schemaId: 'Trx3R1frdEzbn34Sp1jyX:2:student_id:1.0',
       supportRevocation: false,
-      tag: 'BC ID Card',
+      tag: 'Student ID Card',
     })
     // "attributes": [
     //   "Name", "Street", "City", "Date of birth", "Nationality"

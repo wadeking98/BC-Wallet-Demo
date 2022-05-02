@@ -12,13 +12,12 @@ export const Millennial: Character = {
   starterCredentials: [
     {
       id: uuid(),
-      name: 'BC ID Card',
+      name: 'Student ID Card',
       icon: '/public/millennial/icon-millennial.svg',
       attributes: [
-        { name: 'name', value: 'Jan van Dalen' },
-        { name: 'emailAddress', value: 'test@mail.com' },
-        { name: 'iss_dateint', value: "2025" },
-        { name: 'program', value: "LSBC" }
+        { name: 'student_first_name', value: 'Jan' },
+        { name: 'student_last_name', value: 'Test' },
+        { name: 'expiry_date', value: "05-05-2025" }
       ],
     },
   ],

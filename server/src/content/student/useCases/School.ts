@@ -53,16 +53,15 @@ export const School: UseCase = {
       requestedCredentials: [
         {
           id: uuid(),
-          name: 'BC ID Card',
+          name: 'Student ID Card',
           icon: '/public/student/icon-student.svg',
-          properties: ['name', 'emailAddress', 'iss_dateint', 'program'],
-        },
+          properties: ['student_first_name', 'student_last_name', 'expiry_date'],
+        }
       ],
       issueCredentials: [
         {
           id: uuid(),
           name: 'BC Pilot',
-          properties: [{ name: 'Name' }, { name: 'Date of birth' }],
           attributes: [
             { name: 'name', value: 'Jan van Dalen' },
             { name: 'emailAddress', value: 'test@mail.com' },
@@ -126,7 +125,7 @@ export const School: UseCase = {
             name: 'Student pass',
             comment: 'Here is your student pass.',
           },
-          useProof: true,
+          //useProof: true,
         },
         {
           id: uuid(),
