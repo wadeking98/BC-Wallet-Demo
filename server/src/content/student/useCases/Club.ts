@@ -57,9 +57,9 @@ export const Club: UseCase = {
       requestedCredentials: [
         {
           id: uuid(),
-          name: 'BC ID Card',
+          name: 'Student ID Card',
           icon: '/public/student/icon-student.svg',
-          predicates: { name: 'iss_dateint', value: ageDate, type: '<=' },
+          predicates: { name: 'expiry_date', value: ageDate, type: '<=' },
         },
       ],
       steps: [

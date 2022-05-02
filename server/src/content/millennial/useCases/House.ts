@@ -58,9 +58,9 @@ export const House: UseCase = {
       requestedCredentials: [
         {
           id: uuid(),
-          name: 'BC ID Card',
+          name: 'Student ID Card',
           icon: '/public/millennial/icon-millennial.svg',
-          properties: ['name', 'emailAddress', 'iss_dateint', 'program'],
+          properties: ['student_first_name', 'student_last_name', 'expiry_date'],
         }
       ],
       issueCredentials: [
