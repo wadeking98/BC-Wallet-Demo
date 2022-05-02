@@ -149,7 +149,7 @@ export class CredDefService {
     // ],
 
     // this.credentialDefinitions = [cd1, cd2, cd3, cd4, cd5, cd6, cd7, cd8, cd9, cd10, cd11, cd12]
-    this.credentialDefinitions = [cd1]
+    this.credentialDefinitions = [cd1, cd2]
   }
 
   private async createCredentialDefinition(credentialDefinitionRequest: {
