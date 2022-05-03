@@ -12,14 +12,12 @@ export const Student: Character = {
   starterCredentials: [
     {
       id: uuid(),
-      name: 'Animo ID Card',
+      name: 'Student ID Card',
       icon: '/public/student/icon-student.svg',
       attributes: [
-        { name: 'Name', value: 'Jan van Dalen' },
-        { name: 'Date of birth', value: '19990101' },
-        { name: 'Street', value: 'Ambachtstraat 61' },
-        { name: 'City', value: 'Utrecht' },
-        { name: 'Nationality', value: 'The Netherlands' },
+        { name: 'student_first_name', value: 'Jan' },
+        { name: 'student_last_name', value: 'Test' },
+        { name: 'expiry_date', value: "05-05-2025" }
       ],
     },
   ],

@@ -58,27 +58,20 @@ export const House: UseCase = {
       requestedCredentials: [
         {
           id: uuid(),
-          name: 'Animo ID Card',
+          name: 'Student ID Card',
           icon: '/public/millennial/icon-millennial.svg',
-          properties: ['Name', 'Date of birth', 'Nationality'],
-        },
-        {
-          id: uuid(),
-          name: 'Proof of Employment',
-          icon: '/public/millennial/useCases/job/job-icon-proof-of-employment.png',
-          properties: ['Date'],
-        },
+          properties: ['student_first_name', 'student_last_name', 'expiry_date'],
+        }
       ],
       issueCredentials: [
         {
           id: uuid(),
-          name: 'Rent Agreement',
+          name: 'BC Pilot',
           attributes: [
-            { name: 'Tenant', value: 'Noah Müller' },
-            { name: 'Landlord', value: 'Mary' },
-            { name: 'Rent', value: '$1000' },
-            { name: 'Start date', value: today.toString() },
-            { name: 'End date', value: nextYear.toString() },
+            { name: 'name', value: 'Jan van Dalen' },
+            { name: 'emailAddress', value: 'test@mail.com' },
+            { name: 'iss_dateint', value: "2025" },
+            { name: 'program', value: "LSBC" }
           ],
           icon: '/public/millennial/useCases/house/house-icon-rent.png',
         },
