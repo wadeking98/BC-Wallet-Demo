@@ -4,14 +4,14 @@ import { v4 as uuid } from 'uuid'
 
 import { StepType } from '../../types'
 
-const URL = '/public/student/useCases/school'
+const URL = '/public/student/useCases/store'
 
-export const School: UseCase = {
-  slug: 'school',
+export const OnlineStore: UseCase = {
+  slug: 'store',
   card: {
-    title: 'Enroll into law school',
+    title: '',
     image: `${URL}/card-school.svg`,
-    description: `Let's enroll into university and get our student pass using the power of verifiable credentials.`,
+    description: `Get a student discount in and online store`,
   },
 
   stepper: [
@@ -76,8 +76,8 @@ export const School: UseCase = {
           id: uuid(),
           type: StepType.START,
           image: `${URL}/card-school.svg`,
-          title: 'Enroll into law school.',
-          description: `You are ready to kickstart your career in Law and found a great university not far from your hometown. The university supports the use of verifiable credentials, so enrolling should be easy. Let's try it!`,
+          title: 'Getting a student discount',
+          description: `Alice (that's you in this demo!) can get a student discount on her online purchase.\n\nIn this example, you will just tell CoolClothes.co you're a student`,
         },
         {
           id: uuid(),
