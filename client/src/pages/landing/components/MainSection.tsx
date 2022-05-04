@@ -23,18 +23,12 @@ export const MainSection: React.FC = () => {
     <motion.div className="flex-1 dark:text-white text-left text-4xl font-semibold my-8 leading-snug ">
       <h1>
         <div className="overflow-hidden py-1">
-          <motion.p variants={landingTitle}>Decentralized </motion.p>
-          <motion.p variants={landingTitle}>identity is changing </motion.p>
-        </div>
-        <div className="overflow-hidden py-1">
-          <motion.span variants={fade} className="text-6xl text-animo-coral dark:text-animo-blue filter drop-shadow">
-            the future.
-          </motion.span>
+          <motion.p variants={landingTitle}>BC Wallet Showcase</motion.p>
         </div>
       </h1>
       <div className="overflow-hidden">
         <motion.h2 variants={fade} className="text-lg font-normal mt-6 dark:text-animo-lightgrey text-animo-darkgrey">
-          Experience a world where self-sovereign identity is the standard.
+          Explore how you can use BC Wallet to prove things about yourself, in a way that's safe and secure.
         </motion.h2>
       </div>
       <div className="flex flex-col justify-center text-base sxl:text-lg font-normal mt-6 m-auto">
@@ -64,13 +58,7 @@ export const MainSection: React.FC = () => {
     <motion.div className="flex-1 text-left text-animo-black dark:text-animo-white font-semibold text-4xl lg:text-5xl xl:text-6xl m-auto">
       <h1>
         <div className="overflow-hidden py-1 leading-tight">
-          <motion.p variants={landingTitle}>Decentralized</motion.p>
-        </div>
-        <div className="overflow-hidden py-1 leading-tight">
-          <motion.p variants={landingTitle}>identity is changing </motion.p>
-          <motion.span variants={fade} className="text-animo-coral dark:text-animo-blue filter drop-shadow">
-            the future.
-          </motion.span>
+          <motion.p variants={landingTitle}>BC Wallet Showcase</motion.p>
         </div>
       </h1>
       <div className="overflow-hidden">
@@ -78,7 +66,7 @@ export const MainSection: React.FC = () => {
           variants={fadeDelay}
           className="text-base lg:text-lg font-normal mt-6 dark:text-animo-lightgrey text-animo-darkgrey"
         >
-          Experience a world where self-sovereign identity is the standard.
+          Explore how you can use BC Wallet to prove things about yourself, in a way that's safe and secure.
         </motion.h2>
       </div>
       <div className="flex flex-row justify-start text-base sxl:text-lg  font-normal mt-6">
@@ -88,10 +76,10 @@ export const MainSection: React.FC = () => {
           className="bg-animo-black dark:bg-animo-white text-animo-white dark:text-animo-black py-3 px-5 rounded-lg font-semibold shadow-sm dark:shadow-none select-none "
           onClick={handleStart}
         >
-          Try demo &nbsp;
+          Get started &nbsp;
           <FiArrowRight className="inline h-6 pb-1" />
         </motion.button>
-        <a href="https://animo.id" target="_blank">
+        <a href="#" target="_blank">
           <motion.button
             variants={fadeDelay}
             whileHover={buttonHover}

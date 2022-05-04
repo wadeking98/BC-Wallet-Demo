@@ -9,10 +9,7 @@ export const Footer: React.FC = () => {
 
   return (
     <div className="flex dark:text-white justify-center content-center select-none my-8 pb-4 sm:my-4">
-      <p className="self-center mr-2 text-sm">POWERED BY</p>
-      <a href="https://animo.id" target="_blank">
-        <img className="m-2 h-3" src={darkMode ? animoDark : animoLight} alt="animo-credentials-home" />
-      </a>
+      <p className="self-center mr-2 text-sm">Copyright &#169; 2022 Government of British Columbia</p>
     </div>
   )
 }

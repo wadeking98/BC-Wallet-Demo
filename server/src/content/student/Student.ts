@@ -5,10 +5,10 @@ import { v4 as uuid } from 'uuid'
 export const Student: Character = {
   id: '1',
   image: '/public/student/student.svg',
-  name: 'Jan',
+  name: 'Alice',
   type: 'Student',
   backstory:
-    'Jan is feeling great! He just got into law school and is ready to experience everything that student life has to offer. Help him navigate the experience!',
+    'Meet Alice. (That\'s you in this demo!)\n\nAlice is a student at BestBC College.\n\nTo help make student life easier, BestBc College is going to offer Alice a DIgital Student Card to put in her BC Wallet',
   starterCredentials: [
     {
       id: uuid(),

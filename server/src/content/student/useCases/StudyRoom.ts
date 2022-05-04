@@ -4,18 +4,18 @@ import { v4 as uuid } from 'uuid'
 
 import { StepType } from '../../types'
 
-const URL = '/public/student/useCases/sport'
+const URL = '/public/student/useCases/study'
 
 const date = new Date()
 date.setFullYear(date.getFullYear() + 1)
 const nextYear = Number(date.toISOString().replace('-', '').split('T')[0].replace('-', ''))
 
-export const Sport: UseCase = {
-  slug: 'sport',
+export const StudyRoom: UseCase = {
+  slug: 'study',
   card: {
-    title: 'Get your free gym membership',
+    title: 'Book a study room',
     image: `${URL}/card-sport.svg`,
-    description: `Students can apply for a free gym membership. Let's use our credentials to get in shape!`,
+    description: ``,
   },
 
   stepper: [
