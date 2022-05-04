@@ -12,27 +12,13 @@ export const BusinessWoman: Character = {
   starterCredentials: [
     {
       id: uuid(),
-      name: 'Animo ID Card',
+      name: 'Student ID Card',
       icon: '/public/businesswoman/icon-businesswoman.svg',
       attributes: [
-        { name: 'Name', value: 'Joyce Brown' },
-        { name: 'Date of birth', value: '19910104' },
-        { name: 'Street', value: 'Main Road 207' },
-        { name: 'City', value: 'New York' },
-        { name: 'Nationality', value: 'United States of America' },
+        { name: 'student_first_name', value: 'Jan' },
+        { name: 'student_last_name', value: 'Test' },
+        { name: 'expiry_date', value: "05-05-2025" }
       ],
-    },
-    {
-      id: uuid(),
-      name: 'Credit card',
-      icon: '/public/businesswoman/icon-creditcard.png',
-      attributes: [
-        { name: 'Issuer', value: 'qBank New York' },
-        { name: 'Holder', value: 'Joyce Brown' },
-        { name: 'Card number', value: '4537-6696-0666-0146' },
-        { name: 'Security code', value: '063' },
-        { name: 'Valid until', value: '20250315' },
-      ],
-    },
+    }
   ],
 }

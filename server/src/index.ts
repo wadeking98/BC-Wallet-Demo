@@ -18,7 +18,7 @@ import { Container } from 'typedi'
 import { CredDefService } from './controllers/CredDefService'
 import { TestLogger } from './logger'
 import { AgentCleanup } from './utils/AgentCleanup'
-import { BCOVRIN_TEST_GENESIS } from './utils/utils'
+import { CANDY_DEV } from './utils/utils'
 
 const logger = new TestLogger(process.env.NODE_ENV ? LogLevel.error : LogLevel.debug)
 
@@ -42,8 +42,8 @@ const run = async () => {
     },
     indyLedgers: [
       {
-        id: 'BCOVRIN_TEST_GENESIS',
-        genesisTransactions: BCOVRIN_TEST_GENESIS,
+        id:'CandyDev',
+        genesisTransactions: CANDY_DEV,
         isProduction: false,
       },
     ],
