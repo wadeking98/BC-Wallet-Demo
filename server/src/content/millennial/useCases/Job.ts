@@ -56,26 +56,20 @@ export const Job: UseCase = {
       requestedCredentials: [
         {
           id: uuid(),
-          name: 'Animo ID Card',
+          name: 'Student ID Card',
           icon: '/public/millennial/icon-millennial.svg',
-          properties: ['Name', 'Date of birth'],
-        },
-        {
-          id: uuid(),
-          name: `Master's Degree`,
-          icon: '/public/millennial/icon-degree.svg',
-          properties: ['Institute', 'Field'],
-        },
+          properties: ['student_first_name', 'student_last_name', 'expiry_date'],
+        }
       ],
       issueCredentials: [
         {
           id: uuid(),
-          name: 'Proof of Employment',
+          name: 'BC Pilot',
           attributes: [
-            { name: 'Name', value: 'Noah Müller' },
-            { name: 'Organization', value: 'eCorp' },
-            { name: 'Date', value: today.toString() },
-            { name: 'Title', value: 'Developer' },
+            { name: 'name', value: 'Jan van Dalen' },
+            { name: 'emailAddress', value: 'test@mail.com' },
+            { name: 'iss_dateint', value: "2025" },
+            { name: 'program', value: "LSBC" }
           ],
           icon: `${URL}/job-icon-proof-of-employment.png`,
         },

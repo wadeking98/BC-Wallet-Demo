@@ -55,29 +55,20 @@ export const Laptop: UseCase = {
       requestedCredentials: [
         {
           id: uuid(),
-          name: 'Animo ID Card',
+          name: 'Student ID Card',
           icon: '/public/millennial/icon-millennial.svg',
-          properties: ['Name', 'Street', 'City'],
-        },
-        {
-          id: uuid(),
-          name: 'Crypto Wallet',
-          icon: '/public/millennial/icon-crypto-wallet.png',
-          properties: ['Address'],
-        },
+          properties: ['student_first_name', 'student_last_name', 'expiry_date'],
+        }
       ],
       issueCredentials: [
         {
           id: uuid(),
-          name: 'Laptop Invoice',
+          name: 'BC Pilot',
           attributes: [
-            { name: 'Name', value: 'Noah Müller' },
-            { name: 'Street', value: 'Dorfstrasse 23' },
-            { name: 'City', value: 'Zürich' },
-            { name: 'Store', value: 'Pear Store' },
-            { name: 'Product', value: 'PearBook Pro' },
-            { name: 'Price', value: '$1000' },
-            { name: 'Date', value: today.toString() },
+            { name: 'name', value: 'Jan van Dalen' },
+            { name: 'emailAddress', value: 'test@mail.com' },
+            { name: 'iss_dateint', value: "2025" },
+            { name: 'program', value: "LSBC" }
           ],
           icon: `${URL}/laptop-invoice.png`,
         },
