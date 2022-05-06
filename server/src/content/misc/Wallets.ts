@@ -10,5 +10,5 @@ export const Wallets: Wallet[] = [
     url: '/#',
     apple: '/#',
     android: '/#',
-  }
+  },
 ]

@@ -28,28 +28,16 @@ export const SetupCompleted: React.FC<Props> = ({ content, characterName }) => {
         </div>
         <div className="pt-4 flex-1 mb-6">
           <div className="dark:text-white">
-            <p>
-              Your (Pretend) student card is in your BC Wallet!
-            </p>
+            <p>Your (Pretend) student card is in your BC Wallet!</p>
             <ul>
-              <li>
-                You control when you use the student card.
-              </li>
-              <li>
-                You can share part of the student card's information, or even just that you're a student.
-              </li>
-              <li>
-                No one else is told when you use it.
-              </li>
-              <li>
-                The information from your student card is always shared securely.
-              </li>
+              <li>You control when you use the student card.</li>
+              <li>You can share part of the student card's information, or even just that you're a student.</li>
+              <li>No one else is told when you use it.</li>
+              <li>The information from your student card is always shared securely.</li>
               <li>Anyone who receives the information can trust it's legitimate</li>
             </ul>
             <p>We're done with this step. Next, we'll explore ways you can use your student card</p>
           </div>
-
-
         </div>
       </div>
     </motion.div>
