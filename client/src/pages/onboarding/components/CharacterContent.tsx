@@ -27,10 +27,6 @@ export const CharacterContent: React.FC<Props> = ({ character }) => {
               <p>{character.type}</p>
             </div>
             <img className="h-72" src={prependApiUrl(character.image)} />
-            <div className="px-4 sxl:px-8 dark:text-white">
-              <p className="text-lg font-medium">{character.name}</p>
-              <p className="text-grey text-sm lg:text-base ">{character.backstory}</p>
-            </div>
           </motion.div>
         </AnimatePresence>
       ) : (
