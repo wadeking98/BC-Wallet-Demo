@@ -31,7 +31,7 @@ Welcome to the repository of Animo's Self-Sovereign identity demo. This interact
 - [Yarn](https://classic.yarnpkg.com/en/docs/install)
 - [Git](https://git-scm.com/downloads) - You probably already have this
 
-### 🖥  Client
+### 🖥 Client
 
 Copy the `.env.example` file to a `.env` file and set the environment variables.
 
@@ -45,7 +45,6 @@ cp .env.example .env
 | `REACT_APP_HOST_BACKEND`        | Used in the frontend application to connect with the backend. Should be `http://localhost:5000` for development.      |
 | `REACT_APP_INSIGHTS_PROJECT_ID` | Used in the frontend application for analytics using https://getinsights.io. Should not be set for local development. |
 
-
 ### 🎛️ Server
 
 Copy the `.env.example` file to a `.env` file and set the environment variables.
@@ -55,11 +54,11 @@ cd server
 cp .env.example .env
 ```
 
-| Variable                        | Description                                                                                                           |
-| ------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
-| `AGENT_PUBLIC_DID_SEED`         | Used in the backend application for the agent. Should be set to your agent's public DID in development/production.    |
-| `AGENT_ENDPOINT`                | Used in the backend application for the agent. Should be set to your agent's endpoint in development/production.      |
-| `AGENT_WALLET_KEY`              | Used in the backend application for the agent. Should be set to your agent's wallet key in development/production.      |
+| Variable                | Description                                                                                                        |
+| ----------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| `AGENT_PUBLIC_DID_SEED` | Used in the backend application for the agent. Should be set to your agent's public DID in development/production. |
+| `AGENT_ENDPOINT`        | Used in the backend application for the agent. Should be set to your agent's endpoint in development/production.   |
+| `AGENT_WALLET_KEY`      | Used in the backend application for the agent. Should be set to your agent's wallet key in development/production. |
 
 ### Node version
 
@@ -81,8 +80,8 @@ yarn dev
 
 ### Tests
 
-The demo has [Cypress](https://www.cypress.io/) integration tests. To run the tests, make sure you have both the client and the server running locally. You can start the tests with `yarn test`. This will open up cypress in chrome from where you can run the tests. 
-
+The demo has [Cypress](https://www.cypress.io/) integration tests. To run the tests, make sure you have both the client and the server running locally. You can start the tests with `yarn test`. This will open up cypress in chrome from where you can run the tests.
 
 ## How To Contribute
+
 You're welcome to contribute to this demo. Please make sure to open an issue first!

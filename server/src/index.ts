@@ -42,7 +42,7 @@ const run = async () => {
     },
     indyLedgers: [
       {
-        id:'CandyDev',
+        id: 'CandyDev',
         genesisTransactions: CANDY_DEV,
         isProduction: false,
       },

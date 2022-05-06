@@ -66,8 +66,8 @@ export const Conference: UseCase = {
           attributes: [
             { name: 'name', value: 'Jan van Dalen' },
             { name: 'emailAddress', value: 'test@mail.com' },
-            { name: 'iss_dateint', value: "2025" },
-            { name: 'program', value: "LSBC" }
+            { name: 'iss_dateint', value: '2025' },
+            { name: 'program', value: 'LSBC' },
           ],
           icon: `${URL}/icon-conference-pass.svg`,
         },
