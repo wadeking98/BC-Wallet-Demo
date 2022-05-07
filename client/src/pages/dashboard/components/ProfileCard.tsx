@@ -19,7 +19,7 @@ export const ProfileCard: React.FC<Props> = ({ currentCharacter }) => {
 
   const MODAL_TITLE = 'This will reset your dashboard.'
   const MODAL_DESCRIPTION = `Your current credentials will become invalid. Please make sure you've completed all the use cases
-  before you switch to another character.`
+  before you do this.`
 
   const reset = () => {
     dispatch({ type: 'demo/RESET' })
