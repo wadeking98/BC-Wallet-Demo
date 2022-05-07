@@ -39,8 +39,7 @@ export const ProfileCard: React.FC<Props> = ({ currentCharacter }) => {
           alt={currentCharacter.name}
         />
 
-        <h1 className="font-bold text-lg mb-2">{currentCharacter.name}</h1>
-        <p className="text-sm xl:text-base">{currentCharacter.backstory}</p>
+        <h1 className="font-bold text-lg flex flex-1 justify-center mb-4">{currentCharacter.name}</h1>
         <div className="flex flex-1 items-end justify-end mt-2">
           <SmallButtonText text="CHANGE" onClick={() => setIsChangeModalOpen(true)} disabled={false} />
         </div>
