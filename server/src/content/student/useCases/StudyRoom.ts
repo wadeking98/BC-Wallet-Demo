@@ -4,7 +4,7 @@ import { v4 as uuid } from 'uuid'
 
 import { StepType } from '../../types'
 
-const URL = '/public/student/useCases/study'
+const URL = '/public/student/useCases/school'
 
 const date = new Date()
 date.setFullYear(date.getFullYear() + 1)
@@ -21,23 +21,23 @@ export const StudyRoom: UseCase = {
   stepper: [
     {
       id: uuid(),
-      name: 'Connect with the gym',
-      description: 'Setup a secure connection with the gym.',
+      name: `Start booking the room`,
+      description: '',
       steps: 1,
       section: 1,
     },
     {
       id: uuid(),
-      name: 'Share your information',
-      description: 'Prove to the gym you are a student.',
-      steps: 3,
+      name: `Confirm the information to send`,
+      description: '',
+      steps: 2,
       section: 1,
     },
     {
       id: uuid(),
-      name: 'Obtain your membership',
-      description: 'Accept your free gym membership',
-      steps: 5,
+      name: `Done!`,
+      description: '',
+      steps: 3,
       section: 1,
     },
   ],
@@ -46,8 +46,8 @@ export const StudyRoom: UseCase = {
     {
       id: uuid(),
       entity: {
-        name: 'Pump IT Gym',
-        icon: `${URL}/logo-gym.png`,
+        name: 'BestBC College',
+        icon: `${URL}/logo-university.png`,
         imageUrl: 'https://i.imgur.com/CbkUgpH.png',
       },
       colors: {
@@ -59,7 +59,7 @@ export const StudyRoom: UseCase = {
           id: uuid(),
           name: 'Student Card',
           icon: '/public/student/icon-student.svg',
-          properties: ['student_first_name', 'student_last_name', 'expiry_date'],
+          properties: ['student_first_name'],
         },
       ],
       issueCredentials: [],
@@ -67,73 +67,36 @@ export const StudyRoom: UseCase = {
         {
           id: uuid(),
           type: StepType.START,
-          image: `${URL}/card-sport.svg`,
-          title: 'Join the gym',
-          description: `You heard that the local gym offers free memberships to students if they prove they've been enrolled. That should be easy with your university pass. Let's see!`,
+          image: `${URL}/card-school.svg`,
+          title: 'Book a study room',
+          description: `Alice has lots of work to do, and needs a study room for some peace and quiet. In this example, we'll present some info from our Student Card, but just what's needed to book the room.`,
         },
         {
           id: uuid(),
           type: StepType.CONNECTION,
-          title: 'Connect with the gym',
-          description:
-            'Just scan the QR-code to connect. The gym has connection details available online, as well as at the registration desk.',
-        },
-        {
-          id: uuid(),
-          type: StepType.INFO,
-          image: `${URL}/sport-fill-out.svg`,
-          title: 'Prove you are a student',
-          description: `Using this secure connection, you can prove you're a student to get the membership for free, using your verifiable credentials.`,
-        },
-        {
-          id: uuid(),
-          type: StepType.PROOF,
-          title: 'Share your information',
-          description: `Grab your wallet, you've received a request for some information!`,
-          requestOptions: {
-            name: 'Pump IT Gym Request',
-            comment: 'Pump IT Gym would like some of your personal information.',
+          title: 'Start booking the room',
+          description: `Imagine you're on the room booking page for BestBC College, abd you've chosen a data and time. Now they just need to confirm a few details. Scan the QR code to continue.`,
+          image: `${URL}/best-bc-college-no-overlay.png`,
+          overlay: {
+            header: 'Scan with your BC Wallet to login',
           },
         },
         {
           id: uuid(),
-          type: StepType.INFO,
-          image: `${URL}/sport-happy.svg`,
-          title: `You're eligible for the free membership!`,
-          description: `Great, you can get fit without breaking the bank, now get ready to receive your membership credential. You'll store it in your wallet, with the rest of your credentials.`,
-        },
-
-        {
-          id: uuid(),
-          type: StepType.CREDENTIAL,
-          title: 'Obtain your membership',
-          description: `Open your wallet, and accept your new gym membership.`,
+          type: StepType.PROOF,
+          title: 'Confirm the information to send',
+          description: `BC Wallet will now ask you to confirm what to send for the booking. Notice how they only need your first name so they can display it on the booking screen. By providing anything from your student card, they automatically know you're a current student as well.`,
+          requestOptions: {
+            name: 'BestBC College Request',
+            comment: 'BestBC College would like some of your personal information.',
+          },
         },
         {
           id: uuid(),
-          type: StepType.END,
-          title: `Congratulations, you did it!`,
-          description: 'Great job on finishing this use case. These are the steps you took.',
-          endStepper: [
-            {
-              id: uuid(),
-              title: `You connected with the gym.`,
-              description: `This secure channel can be used for all of your communication with the gym.`,
-              image: `${URL}/card-sport.svg`,
-            },
-            {
-              id: uuid(),
-              title: `You showed your university pass`,
-              description: `This proves you are eligible for the free membership.`,
-              image: `${URL}/sport-fill-out.svg`,
-            },
-            {
-              id: uuid(),
-              title: `Ready to work out!`,
-              description: `Meet people and work out on campus!`,
-              image: `${URL}/sport-pilates.svg`,
-            },
-          ],
+          type: StepType.STEP_END,
+          title: `You're done!`,
+          description: `The room is booked. Just by proving your first name, Best BC College could trust your are a current student, and could let others know there's a booking without revealing too much about you.`,
+          image: `${URL}/student-accepted.svg`,
         },
       ],
     },

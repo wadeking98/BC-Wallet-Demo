@@ -73,15 +73,19 @@ export const OnlineStore: UseCase = {
           title: `Start proving you're a student`,
           description: `Imagine, as Alice, you are in the checkout process for Cool Clothes Online. They're offering you a 15% discount on your purchase if you can prove you're a student. First, scan the QR code.`,
           image: `${URL}/cool-clothes-no-overlay.png`,
+          overlay: {
+            header: `Students get 15% off their entire order'`,
+            footer: `Scan the QR Code above with your digital wallet to prove you're a student`,
+          },
         },
         {
           id: uuid(),
           type: StepType.PROOF,
-          title: 'The university wants some information.',
+          title: 'Confirm the information to send',
           description: `Grab your wallet, you've received a request for some information! To finish the application process, share the information by accepting the request. `,
           requestOptions: {
-            name: 'University of Law Request',
-            comment: 'The university would like some of your personal information.',
+            name: 'Cool Clothes Online Request',
+            comment: 'Cool Clothes Online would like some of your personal information.',
           },
         },
         {

@@ -93,6 +93,12 @@ export interface Step {
   requestOptions?: RequestOptions
   useProof?: boolean
   endStepper?: EndStepperItem[]
+  overlay?: Overlay
+}
+
+export interface Overlay {
+  header?: string
+  footer?: string
 }
 
 export interface EndStepperItem {

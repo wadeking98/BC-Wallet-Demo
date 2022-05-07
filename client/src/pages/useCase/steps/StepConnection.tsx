@@ -47,7 +47,7 @@ export const StepConnection: React.FC<Props> = ({ step, connection, entity }) =>
   const renderCTA = !isCompleted ? (
     <motion.div variants={fade} key="openWallet">
       <p>
-        Scan the QR-code with your <a href={deepLink}>digital wallet {isMobile && 'or '}</a>
+        Scan the QR-code with your digital wallet {isMobile && 'or '}
         {isMobile && (
           <a href={deepLink} className="underline underline-offset-2 mt-2">
             open in your wallet
@@ -68,15 +68,13 @@ export const StepConnection: React.FC<Props> = ({ step, connection, entity }) =>
       <StepInfo title={step.title} description={step.description} />
       {step.image && !isMobile ? (
         <div
-          className="bg-contain bg-center bg-no-repeat h-full flex justify-center"
+          className="bg-contain bg-center bg-no-repeat h-full flex justify-end"
           style={{ backgroundImage: `url(${prependApiUrl(step.image)})` }}
         >
-          <div className="w-1/2 flex flex-col justify-self-center self-center justify-center items-center bg-white rounded-lg p-4 shadow-lg ">
-            <p className="w-3/4 text-center font-semibold mb-2">Students get 15% off their entire order</p>
+          <div className="max-w-xs flex flex-col self-center items-center bg-white rounded-lg p-4 mr-8 shadow-lg">
+            {step?.overlay?.header && <p className="w-3/4 text-center font-semibold mb-2">{step.overlay.header}</p>}
             {renderQRCode(true)}
-            <p className="w-3/4 text-center mt-2">
-              Scan the QR Code above with your <a href={deepLink}>digital wallet</a> to prove you're a student
-            </p>
+            {step?.overlay?.footer && <p className="w-3/4 text-center mt-2">{step.overlay.footer}</p>}
           </div>
         </div>
       ) : (
