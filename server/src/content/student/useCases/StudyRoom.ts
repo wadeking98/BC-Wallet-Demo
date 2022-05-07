@@ -14,8 +14,8 @@ export const StudyRoom: UseCase = {
   slug: 'study',
   card: {
     title: 'Book a study room',
-    image: `${URL}/card-sport.svg`,
-    description: ``,
+    // image: `${URL}/card-sport.svg`,
+    description: '',
   },
 
   stepper: [
@@ -57,24 +57,12 @@ export const StudyRoom: UseCase = {
       requestedCredentials: [
         {
           id: uuid(),
-          name: 'Student ID Card',
+          name: 'Student Card',
           icon: '/public/student/icon-student.svg',
           properties: ['student_first_name', 'student_last_name', 'expiry_date'],
         },
       ],
-      issueCredentials: [
-        {
-          id: uuid(),
-          name: 'BC Pilot',
-          attributes: [
-            { name: 'name', value: 'Jan van Dalen' },
-            { name: 'emailAddress', value: 'test@mail.com' },
-            { name: 'iss_dateint', value: '2025' },
-            { name: 'program', value: 'LSBC' },
-          ],
-          icon: `${URL}/icon-membership.png`,
-        },
-      ],
+      issueCredentials: [],
       steps: [
         {
           id: uuid(),
