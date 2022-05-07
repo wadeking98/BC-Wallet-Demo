@@ -56,7 +56,7 @@ export const WalletModal: React.FC<Props> = ({ isWalletModalOpen, setIsWalletMod
               className="bg-bcgov-white z-40 dark:bg-bcgov-black inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition transition-all duration-300 sm:my-8 sm:align-middle sm:max-w-xl sm:w-full dark:text-white"
             >
               <div className=" px-2 md:px-6 pt-2 sm:mt-4 sm:pb-4">
-                <div className="flex items-start px-4 sm:px-0 ">
+                {/* <div className="flex items-start px-4 sm:px-0 ">
                   <div className="w-48 hidden sm:block ">
                     <div className="p-4 dark:bg-bcgov-darkgrey rounded-lg ">
                       <QRCode size={164} value={wallet.url} />
@@ -78,9 +78,28 @@ export const WalletModal: React.FC<Props> = ({ isWalletModalOpen, setIsWalletMod
                       </a>
                     </div>
                   </div>
+                </div> */}
+                <div>
+                  <p className="font-semibold">iOS</p>
+                  <ul className="list-disc pl-4 my-2">
+                    <li>On your phone, open up the App Store</li>
+                    <li>Search for 'TestFlight'</li>
+                    <li>Install the TestFlight app</li>
+                    <li>
+                      On your phone, go to the email you received, with the subject: "Province of British Columbia has
+                      invited you to test BC Wallet"
+                    </li>
+                    <li>In the email, select 'View in TestFlight' and follow the instructions</li>
+                  </ul>
+                </div>
+                <div>
+                  <p className="font-semibold">Android</p>
+                  <ul className="list-disc pl-4 my-2">
+                    <li>{'<TODO>'}</li>
+                  </ul>
                 </div>
               </div>
-              {wallet.ledgerImage && (
+              {/* {wallet.ledgerImage && (
                 <>
                   <div className="px-8 opacity-20">
                     <hr />
@@ -109,7 +128,7 @@ export const WalletModal: React.FC<Props> = ({ isWalletModalOpen, setIsWalletMod
                     </div>
                   </div>
                 </>
-              )}
+              )} */}
               <div className="px-4 pb-4 flex justify-end">
                 <SmallButton onClick={onCompleted} text={'I HAVE MY WALLET'} />
               </div>
