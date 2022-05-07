@@ -3,15 +3,18 @@ import type { Section as ISection, StepperItem } from '../../slices/types'
 import type { CredentialRecord, ProofRecord } from '@aries-framework/core'
 
 import { AnimatePresence, motion } from 'framer-motion'
+import { track } from 'insights-js'
 import React, { useEffect, useState } from 'react'
 import { useMediaQuery } from 'react-responsive'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 import { fadeExit } from '../../FramerAnimations'
 import { BackButton } from '../../components/BackButton'
+import { Button } from '../../components/Button'
 import { Modal } from '../../components/Modal'
 import { SmallButton } from '../../components/SmallButton'
 import { useAppDispatch } from '../../hooks/hooks'
+import { useCaseCompleted } from '../../slices/preferences/preferencesSlice'
 import { StepType } from '../../slices/types'
 import { nextStep, prevStep } from '../../slices/useCases/useCasesSlice'
 
@@ -20,6 +23,7 @@ import { EndContainer } from './components/EndContainer'
 import { StartContainer } from './components/StartContainer'
 import { StepConnection } from './steps/StepConnection'
 import { StepCredential } from './steps/StepCredential'
+import { StepEnd } from './steps/StepEnd'
 import { StepInformation } from './steps/StepInformation'
 import { StepProof } from './steps/StepProof'
 import { StepProofOOB } from './steps/StepProofOOB'
@@ -76,6 +80,23 @@ export const Section: React.FC<Props> = ({
   const credentialsReceived = Object.values(credentials).every(
     (x) => x.state === 'credential-issued' || x.state === 'done'
   )
+
+  const [completed, setCompleted] = useState(false)
+  const { slug } = useParams()
+
+  useEffect(() => {
+    if (completed && slug) {
+      dispatch(useCaseCompleted(slug))
+      dispatch({ type: 'clearUseCase' })
+      navigate('/dashboard')
+      track({
+        id: 'use-case-completed',
+        parameters: {
+          useCase: slug,
+        },
+      })
+    }
+  }, [completed, dispatch, slug])
 
   useEffect(() => {
     if (step?.type === StepType.CONNECTION) {
@@ -204,10 +225,15 @@ export const Section: React.FC<Props> = ({
                     entity={section.entity}
                   />
                 )}
+                {step.type === StepType.STEP_END && <StepEnd key={step.id} step={step} />}
               </AnimatePresence>
               <div className="flex justify-between items-center ">
                 <BackButton onClick={prev} disabled={isBackDisabled} />
-                <SmallButton text="NEXT" onClick={next} disabled={isForwardDisabled} data-cy="use-case-next" />
+                {step.type === StepType.STEP_END ? (
+                  <Button text="COMPLETE" onClick={() => setCompleted(true)} />
+                ) : (
+                  <SmallButton text="NEXT" onClick={next} disabled={isForwardDisabled} data-cy="use-case-next" />
+                )}
               </div>
             </motion.div>
           </div>

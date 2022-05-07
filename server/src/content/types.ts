@@ -16,7 +16,7 @@ export interface UseCase {
 
 export interface UseCaseCard {
   title: string
-  image: string
+  image?: string
   description: string
 }
 
@@ -120,6 +120,7 @@ export enum StepType {
   PROOF,
   PROOF_OOB,
   CREDENTIAL,
+  STEP_END,
   END,
 }
 

@@ -112,6 +112,7 @@ export enum StepType {
   PROOF,
   PROOF_OOB,
   CREDENTIAL,
+  STEP_END,
   END,
 }
 

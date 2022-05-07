@@ -67,7 +67,7 @@ export const OnboardingContent = {
     iconLight: onboardingChooseLight,
     iconDark: onboardingChooseDark,
     title: `Meet Alice`,
-    text: `Meet Alice (That's you in this demo!). Alice is a student at BestBC College. To help make student life easier, BestBc College is going to offer Alice a DIgital Student Card to put in her BC Wallet`,
+    text: `Meet Alice (that's you in this demo!). Alice is a student at BestBC College. To help make student life easier, BestBC College is going to offer Alice a digital Student Card to put in her BC Wallet`,
   },
   [Progress.RECEIVE_IDENTITY]: {
     iconLight: onboardingConnectLight,
