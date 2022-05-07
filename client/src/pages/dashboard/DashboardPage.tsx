@@ -24,7 +24,7 @@ import { ProfileCard } from './components/ProfileCard'
 import { UseCaseContainer } from './components/UseCaseContainer'
 
 export const DashboardPage: React.FC = () => {
-  useTitle('Dashboard | Animo Self-Sovereign Identity Demo')
+  useTitle('Dashboard | BC Wallet Self-Sovereign Identity Demo')
 
   const navigate = useNavigate()
   const dispatch = useAppDispatch()

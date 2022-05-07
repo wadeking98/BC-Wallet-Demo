@@ -25,7 +25,7 @@ export const FailedRequestModal: React.FC<Props> = ({ action, close }) => {
       >
         <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
           <div
-            className="fixed inset-0 bg-animo-black bg-opacity-50 transition-opacity transition transition-all duration-300"
+            className="fixed inset-0 bg-bcgov-black bg-opacity-50 transition-opacity transition transition-all duration-300"
             aria-hidden="true"
             onClick={close}
           />
@@ -37,7 +37,7 @@ export const FailedRequestModal: React.FC<Props> = ({ action, close }) => {
             initial="hidden"
             animate="show"
             exit="exit"
-            className="bg-animo-white dark:bg-animo-black inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition transition-all duration-300 sm:my-8 sm:align-middle sm:max-w-lg sm:w-full dark:text-white"
+            className="bg-bcgov-white dark:bg-bcgov-black inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition transition-all duration-300 sm:my-8 sm:align-middle sm:max-w-lg sm:w-full dark:text-white"
           >
             <div className=" px-4 pt-2 mt-4 sm:pb-4">
               <div className="sm:flex sm:items-start">

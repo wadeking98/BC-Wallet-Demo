@@ -214,7 +214,7 @@ export const OnboardingContainer: React.FC<Props> = ({
 
   return (
     <motion.div
-      className="flex flex-row h-full justify-between bg-white dark:bg-animo-darkgrey rounded-lg p-2 w-full sxl:w-5/6 shadow"
+      className="flex flex-row h-full justify-between bg-white dark:bg-bcgov-darkgrey rounded-lg p-2 w-full sxl:w-5/6 shadow"
       style={style}
     >
       <div className="flex flex-col grid justify-items-end w-full lg:w-2/3 px-8">
@@ -233,7 +233,7 @@ export const OnboardingContainer: React.FC<Props> = ({
           onboardingCompleted={onboardingCompleted}
         />
       </div>
-      <div className="bg-animo-white dark:bg-animo-black hidden lg:flex lg:w-1/3 rounded-r-lg flex-col justify-center h-full select-none">
+      <div className="bg-bcgov-white dark:bg-bcgov-black hidden lg:flex lg:w-1/3 rounded-r-lg flex-col justify-center h-full select-none">
         <AnimatePresence exitBeforeEnter>{getImageToRender(onboardingStep)}</AnimatePresence>
       </div>
       {leaveModal && (

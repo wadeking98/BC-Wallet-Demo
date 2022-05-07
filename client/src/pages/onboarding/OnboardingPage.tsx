@@ -22,7 +22,7 @@ import { OnboardingContainer } from './OnboardingContainer'
 import { Stepper } from './components/Stepper'
 
 export const OnboardingPage: React.FC = () => {
-  useTitle('Get Started | Animo Self-Sovereign Identity Demo')
+  useTitle('Get Started | BC Wallet Self-Sovereign Identity Demo')
 
   const dispatch = useAppDispatch()
   const navigate = useNavigate()

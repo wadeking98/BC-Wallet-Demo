@@ -33,8 +33,8 @@ export const PickCharacter: React.FC<Props> = ({ content /*currentCharacter, cha
   // }
 
   // const renderCharacters = characters.map((char: Character) => {
-  //   const cardStyleSelected = `shadow-xl ring-4 ${darkMode ? 'ring-animo-blue' : 'ring-animo-coral'}`
-  //   const cardStyleUnselected = `ring-4 ${darkMode ? 'ring-animo-black' : 'ring-animo-white'}`
+  //   const cardStyleSelected = `shadow-xl ring-4 ${darkMode ? 'ring-bcgov-blue' : 'ring-bcgov-coral'}`
+  //   const cardStyleUnselected = `ring-4 ${darkMode ? 'ring-bcgov-black' : 'ring-bcgov-white'}`
 
   //   return (
   //     <motion.div
@@ -46,7 +46,7 @@ export const PickCharacter: React.FC<Props> = ({ content /*currentCharacter, cha
   //     >
   //       <motion.img
   //         whileHover={{ scale: 1.05 }}
-  //         className={`m-auto h-16 w-16 p-2 sm:h-20 sm:w-20 md:h-24 md:w-24 md:p-4 lg:h-36 lg:w-36 lg:p-8 rounded-full bg-animo-white dark:bg-animo-black my-6 shadow ${
+  //         className={`m-auto h-16 w-16 p-2 sm:h-20 sm:w-20 md:h-24 md:w-24 md:p-4 lg:h-36 lg:w-36 lg:p-8 rounded-full bg-bcgov-white dark:bg-bcgov-black my-6 shadow ${
   //           currentCharacter?.id === char.id ? cardStyleSelected : cardStyleUnselected
   //         }`}
   //         src={prependApiUrl(char.starterCredentials.find((x) => x.name.includes('Student'))?.icon ?? '')}

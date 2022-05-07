@@ -16,7 +16,7 @@ export const WalletItem: React.FC<Props> = ({ icon, name, organization, recommen
   return (
     <motion.div
       whileHover={listHover}
-      className="flex rounded-lg lg:m-2 p-2 items-center cursor-pointer border border-1 sm:w-full lg:w-4/5 border-animo-white dark:border-animo-black dark:bg-animo-black m-auto mt-4 shadow "
+      className="flex rounded-lg lg:m-2 p-2 items-center cursor-pointer border border-1 sm:w-full lg:w-4/5 border-bcgov-white dark:border-bcgov-black dark:bg-bcgov-black m-auto mt-4 shadow "
       variants={rowFadeX}
     >
       <div className="flex h-12 w-12 my-2 mx-2 md:mx-8 p-1">
