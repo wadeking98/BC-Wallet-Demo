@@ -109,9 +109,6 @@ export const OnboardingContainer: React.FC<Props> = ({
           connectionState={connectionState}
         />
       ),
-      [Progress.CONNECTION_COMPLETE]: (
-        <ConnectionComplete key={Progress.CONNECTION_COMPLETE} content={OnboardingContent[progress]} />
-      ),
       [Progress.ACCEPT_CREDENTIAL]: currentCharacter && connectionId && (
         <AcceptCredential
           key={Progress.ACCEPT_CREDENTIAL}
@@ -156,17 +153,6 @@ export const OnboardingContainer: React.FC<Props> = ({
           exit="exit"
           className="p-4"
           key={Progress.RECEIVE_IDENTITY}
-          src={darkMode ? OnboardingContent[progress].iconDark : OnboardingContent[progress].iconLight}
-        />
-      ),
-      [Progress.CONNECTION_COMPLETE]: (
-        <motion.img
-          variants={fadeExit}
-          initial="hidden"
-          animate="show"
-          exit="exit"
-          className="p-4"
-          key={Progress.CONNECTION_COMPLETE}
           src={darkMode ? OnboardingContent[progress].iconDark : OnboardingContent[progress].iconLight}
         />
       ),

@@ -12,7 +12,7 @@ export const Student: Character = {
   starterCredentials: [
     {
       id: uuid(),
-      name: 'Student ID Card',
+      name: 'Student Card',
       icon: '/public/student/icon-student.svg',
       attributes: [
         { name: 'student_first_name', value: 'Jan' },
