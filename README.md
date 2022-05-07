@@ -4,11 +4,11 @@
 
 </p>
 
-<h1 align="center"><b>Animo Self-Sovereign Identity Demo</b></h1>
+<h1 align="center"><b>BC Wallet Self-Sovereign Identity Demo</b></h1>
 <div align="center">
   
-  [![Continuous Integration](https://github.com/animo/animo-demo/actions/workflows/continuous-integration.yml/badge.svg)](https://github.com/animo/animo-demo/actions/workflows/continuous-integration.yml)
-  [![Continuous Deployment](https://github.com/animo/animo-demo/actions/workflows/continuous-deployment.yml/badge.svg)](https://github.com/animo/animo-demo/actions/workflows/continuous-deployment.yml)
+  <!-- [![Continuous Integration](https://github.com/animo/animo-demo/actions/workflows/continuous-integration.yml/badge.svg)](https://github.com/animo/animo-demo/actions/workflows/continuous-integration.yml) -->
+  <!-- [![Continuous Deployment](https://github.com/animo/animo-demo/actions/workflows/continuous-deployment.yml/badge.svg)](https://github.com/animo/animo-demo/actions/workflows/continuous-deployment.yml) -->
     <a
     href="https://raw.githubusercontent.com/hyperledger/aries-framework-javascript/main/LICENSE"
     ><img
@@ -21,7 +21,7 @@
 
 ## ✨ Hi there!
 
-Welcome to the repository of Animo's Self-Sovereign identity demo. This interactive app demonstrates the use of verifiable credentials. This demo is build using [Aries Framework Javascript (AFJ)](https://github.com/hyperledger/aries-framework-javascript). AFJ is a framework written in TypeScript for building SSI Agents and DIDComm services. This demo uses the REST API, which is part of the [Aries Framework JavaScript Extensions](https://github.com/hyperledger/aries-framework-javascript-ext) repository.
+Welcome to the repository of BC Wallet's Self-Sovereign identity demo. This interactive app demonstrates the use of verifiable credentials. This demo is build using [Aries Framework Javascript (AFJ)](https://github.com/hyperledger/aries-framework-javascript). AFJ is a framework written in TypeScript for building SSI Agents and DIDComm services. This demo uses the REST API, which is part of the [Aries Framework JavaScript Extensions](https://github.com/hyperledger/aries-framework-javascript-ext) repository.
 
 ## 🛠️ Usage
 

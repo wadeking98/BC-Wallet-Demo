@@ -186,7 +186,7 @@ export const Section: React.FC<Props> = ({
               initial="hidden"
               animate="show"
               exit="exit"
-              className="flex flex-col w-auto lg:w-2/3 p-8 bg-white dark:bg-animo-darkgrey rounded-lg shadow"
+              className="flex flex-col w-auto lg:w-2/3 p-8 bg-white dark:bg-bcgov-darkgrey rounded-lg shadow"
               style={style}
               data-cy="section"
             >

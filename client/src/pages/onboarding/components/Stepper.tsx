@@ -27,7 +27,7 @@ export const Stepper: React.FC<Props> = ({ steps, onboardingStep }) => {
     >
       <div className="mx-2 p-2 md:mx-4 md:p-4">
         <div className="flex items-center">
-          <div className="flex w-8 md:w-16 border-t-4 transition duration-500 ease-in-out border-animo-coral dark:border-animo-blue rounded-l-lg" />
+          <div className="flex w-8 md:w-16 border-t-4 transition duration-500 ease-in-out border-bcgov-coral dark:border-bcgov-blue rounded-l-lg" />
           {renderSteps}
         </div>
       </div>

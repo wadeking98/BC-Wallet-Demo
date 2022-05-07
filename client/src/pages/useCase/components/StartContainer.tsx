@@ -40,7 +40,7 @@ export const StartContainer: React.FC<Props> = ({ entity, requestedCredentials, 
       initial="hidden"
       animate="show"
       exit="exit"
-      className="flex flex-row bg-white dark:bg-animo-darkgrey rounded-lg p-2 h-max min-h-full my-8 shadow-sm"
+      className="flex flex-row bg-white dark:bg-bcgov-darkgrey rounded-lg p-2 h-max min-h-full my-8 shadow-sm"
       style={style}
       data-cy="start-container"
     >
@@ -53,12 +53,12 @@ export const StartContainer: React.FC<Props> = ({ entity, requestedCredentials, 
           issueCredentials={issueCredentials}
         />
 
-        <div className="flex justify-between content-center bg-animogrey dark:bg-animo-darkgrey ">
+        <div className="flex justify-between content-center bg-bcgovgrey dark:bg-bcgov-darkgrey ">
           <FiLogOut onClick={leave} className="ml-2 inline h-8 cursor-pointer" />
           <SmallButton onClick={next} text={'START'} disabled={false} />
         </div>
       </div>
-      <div className="bg-animo-white dark:bg-animo-black hidden lg:flex lg:w-1/3 rounded-r-lg flex content-center p-4 select-none">
+      <div className="bg-bcgov-white dark:bg-bcgov-black hidden lg:flex lg:w-1/3 rounded-r-lg flex content-center p-4 select-none">
         {step.image && <img className="p-8" src={prependApiUrl(step.image)} alt={step.title} />}
       </div>
     </motion.div>

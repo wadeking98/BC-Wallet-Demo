@@ -115,7 +115,7 @@ export const StepProofOOB: React.FC<Props> = ({ proof, proofUrl, step, requested
             initial="hidden"
             animate="show"
             exit="exit"
-            className="flex flex-row m-auto p-4 bg-animo-white rounded-lg"
+            className="flex flex-row m-auto p-4 bg-bcgov-white rounded-lg"
           >
             {proofUrl && <QR value={proofUrl} size={isMobile ? 256 : isLarge ? 384 : 448} />}
 

@@ -30,11 +30,11 @@ export const ProfileCard: React.FC<Props> = ({ currentCharacter }) => {
   }
 
   return (
-    <div className="bg-white dark:bg-animo-darkgrey rounded-lg h-auto w-auto shadow-sm p-4 md:p-6 lg:p-8 lg:mb-4">
+    <div className="bg-white dark:bg-bcgov-darkgrey rounded-lg h-auto w-auto shadow-sm p-4 md:p-6 lg:p-8 lg:mb-4">
       <motion.div initial="hidden" animate="show" exit="exit" variants={fade}>
         <motion.img
           whileHover={{ scale: 1.05 }}
-          className="m-auto h-32 w-32 md:h-36 md:w-36 p-4 rounded-full bg-animo-white dark:bg-animo-black ring-2 ring-white mb-4 shadow"
+          className="m-auto h-32 w-32 md:h-36 md:w-36 p-4 rounded-full bg-bcgov-white dark:bg-bcgov-black ring-2 ring-white mb-4 shadow"
           src={prependApiUrl(currentCharacter.starterCredentials[0].icon)}
           alt={currentCharacter.name}
         />
