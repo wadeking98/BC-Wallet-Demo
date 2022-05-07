@@ -72,6 +72,7 @@ export const OnlineStore: UseCase = {
           type: StepType.CONNECTION,
           title: `Start proving you're a student`,
           description: `Imagine, as Alice, you are in the checkout process for Cool Clothes Online. They're offering you a 15% discount on your purchase if you can prove you're a student. First, scan the QR code.`,
+          image: `${URL}/cool-clothes-no-overlay.png`,
         },
         {
           id: uuid(),

@@ -7,10 +7,12 @@ import { FiExternalLink } from 'react-icons/fi'
 import { useMediaQuery } from 'react-responsive'
 
 import { fade, fadeX } from '../../../FramerAnimations'
+import { Modal } from '../../../components/Modal'
 import { QRCode } from '../../../components/QRCode'
 import { useAppDispatch } from '../../../hooks/hooks'
 import { useInterval } from '../../../hooks/useInterval'
 import { createInvitation, fetchConnectionById } from '../../../slices/connection/connectionThunks'
+import { prependApiUrl } from '../../../utils/Url'
 import { StepInfo } from '../components/StepInfo'
 
 export interface Props {
@@ -35,7 +37,9 @@ export const StepConnection: React.FC<Props> = ({ step, connection, entity }) =>
     !isCompleted ? 1000 : null
   )
 
-  const renderQRCode = invitationUrl && <QRCode invitationUrl={invitationUrl} connectionState={state} />
+  const renderQRCode = (overlay?: boolean) => {
+    return invitationUrl ? <QRCode invitationUrl={invitationUrl} connectionState={state} overlay={overlay} /> : null
+  }
 
   const deepLink = `didcomm://aries_connection_invitation?${invitationUrl?.split('?')[1]}`
   const isMobile = useMediaQuery({ query: '(max-width: 768px)' })
@@ -43,14 +47,15 @@ export const StepConnection: React.FC<Props> = ({ step, connection, entity }) =>
   const renderCTA = !isCompleted ? (
     <motion.div variants={fade} key="openWallet">
       <p>
-        Scan the QR-code with your <a href={deepLink}>wallet {isMobile && 'or'}</a>
+        Scan the QR-code with your <a href={deepLink}>digital wallet {isMobile && 'or '}</a>
+        {isMobile && (
+          <a href={deepLink} className="underline underline-offset-2 mt-2">
+            open in your wallet
+            <FiExternalLink className="inline pb-1" />
+          </a>
+        )}{' '}
+        to prove your're a student
       </p>
-      {isMobile && (
-        <a href={deepLink} className="underline underline-offset-2 mt-2">
-          open in wallet
-          <FiExternalLink className="inline pb-1" />
-        </a>
-      )}
     </motion.div>
   ) : (
     <motion.div variants={fade} key="ctaCompleted">
@@ -61,8 +66,25 @@ export const StepConnection: React.FC<Props> = ({ step, connection, entity }) =>
   return (
     <motion.div variants={fadeX} initial="hidden" animate="show" exit="exit" className="flex flex-col h-full">
       <StepInfo title={step.title} description={step.description} />
-      {renderQRCode}
-      <div className="flex flex-col my-4 text-center font-semibold">{renderCTA}</div>
+      {step.image && !isMobile ? (
+        <div
+          className="bg-contain bg-center bg-no-repeat h-full flex justify-center"
+          style={{ backgroundImage: `url(${prependApiUrl(step.image)})` }}
+        >
+          <div className="w-1/2 flex flex-col justify-self-center self-center justify-center items-center bg-white rounded-lg p-4 shadow-lg ">
+            <p className="w-3/4 text-center font-semibold mb-2">Students get 15% off their entire order</p>
+            {renderQRCode(true)}
+            <p className="w-3/4 text-center mt-2">
+              Scan the QR Code above with your <a href={deepLink}>digital wallet</a> to prove you're a student
+            </p>
+          </div>
+        </div>
+      ) : (
+        <>
+          {renderQRCode()}
+          <div className="flex flex-col my-4 text-center font-semibold">{renderCTA}</div>
+        </>
+      )}
     </motion.div>
   )
 }
