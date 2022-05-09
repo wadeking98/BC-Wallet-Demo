@@ -13,7 +13,7 @@ export function TriangleDark() {
       width="24"
       height="28"
     >
-      <motion.path fill="black" stroke="#557EBA" strokeWidth={2} d="M1 1.87564L22 14L1 26.1244L1 1.87564Z" />
+      <motion.path fill="black" stroke="#FCBA19" strokeWidth={2} d="M1 1.87564L22 14L1 26.1244L1 1.87564Z" />
     </motion.svg>
   )
 }

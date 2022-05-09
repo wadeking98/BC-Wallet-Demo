@@ -33,7 +33,7 @@ export const PickCharacter: React.FC<Props> = ({ content /*currentCharacter, cha
   // }
 
   // const renderCharacters = characters.map((char: Character) => {
-  //   const cardStyleSelected = `shadow-xl ring-4 ${darkMode ? 'ring-bcgov-blue' : 'ring-bcgov-coral'}`
+  //   const cardStyleSelected = `shadow-xl ring-4 ${darkMode ? 'ring-bcgov-gold' : 'ring-bcgov-coral'}`
   //   const cardStyleUnselected = `ring-4 ${darkMode ? 'ring-bcgov-black' : 'ring-bcgov-white'}`
 
   //   return (

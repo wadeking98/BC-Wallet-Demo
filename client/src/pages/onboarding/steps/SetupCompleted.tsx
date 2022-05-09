@@ -13,7 +13,7 @@ export interface Props {
 export const SetupCompleted: React.FC<Props> = ({ content, characterName }) => {
   const lastIndex = content.title.lastIndexOf(' ')
   const lastWord = (
-    <p className="inline text-bcgov-coral dark:text-bcgov-blue">{content.title.substring(lastIndex + 1)}</p>
+    <p className="inline text-bcgov-coral dark:text-bcgov-gold">{content.title.substring(lastIndex + 1)}</p>
   )
   const newTitle = content.title.substring(0, lastIndex)
 
@@ -29,7 +29,7 @@ export const SetupCompleted: React.FC<Props> = ({ content, characterName }) => {
         <div className="pt-4 flex-1 mb-6">
           <div className="dark:text-white">
             <p>Your (pretend) Student Card is in your BC Wallet!</p>
-            <div className="bg-bcgov-white py-4 px-8">
+            <div className="bg-bcgov-white dark:bg-bcgov-black py-4 px-8">
               <ul className="list-disc">
                 <li>You control when you use the Student Card.</li>
                 <li>You can share part of the Student Card's information, or even just that you're a student.</li>
