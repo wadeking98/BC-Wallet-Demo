@@ -24,11 +24,11 @@ export const StepperItem: React.FC<Props> = ({ item, onboardingStep }) => {
         <div
           className={`rounded-full transition duration-1000 ease-in-out py-3 h-12 w-12 border-2 ${
             currentStepIsEqual
-              ? 'bg-white dark:bg-bcgov-black border-2 border-bcgov-coral dark:border-bcgov-gold '
+              ? 'bg-white dark:bg-bcgov-black border-2 border-bcgov-blue dark:border-bcgov-gold '
               : `${currentStepIsLower && currentStepIsNotEqual ? 'grayscale' : ''}`
           } ${
             currentStepIsHigher && currentStepIsNotEqual
-              ? ' border-2 border-bcgov-coral dark:border-bcgov-gold bg-white dark:bg-bcgov-black text-white'
+              ? ' border-2 border-bcgov-blue dark:border-bcgov-gold bg-white dark:bg-bcgov-black text-white'
               : ''
           } `}
         >
@@ -39,7 +39,7 @@ export const StepperItem: React.FC<Props> = ({ item, onboardingStep }) => {
         <div
           className={`flex-auto  transition duration-300 ease-in-out  ${
             currentStepIsHigher && currentStepIsNotEqual
-              ? ' border-t-4 border-bcgov-coral dark:border-bcgov-gold bg-bcgov-coral dark:bg-bcgov-gold'
+              ? ' border-t-4 border-bcgov-blue dark:border-bcgov-gold bg-bcgov-blue dark:bg-bcgov-gold'
               : ' border-t-2 border-grey bg-grey'
           }`}
         />
