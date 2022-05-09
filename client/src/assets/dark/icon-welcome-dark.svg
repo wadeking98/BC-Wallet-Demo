@@ -3,8 +3,8 @@
 <rect width="75" height="75" fill="url(#pattern0)"/>
 </mask>
 <g mask="url(#mask0_552_453)">
-<rect y="-1" width="75" height="78" fill="#557EBA"/>
-<rect x="67.1445" y="49" width="18" height="25" transform="rotate(43.2972 67.1445 49)" fill="#92AED7"/>
+<rect y="-1" width="75" height="78" fill="#FCBA19"/>
+<rect x="67.1445" y="49" width="18" height="25" transform="rotate(43.2972 67.1445 49)" fill="#FCBA19"/>
 </g>
 <defs>
 <pattern id="pattern0" patternContentUnits="objectBoundingBox" width="1" height="1">

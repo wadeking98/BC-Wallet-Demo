@@ -71,7 +71,7 @@ export const StepConnection: React.FC<Props> = ({ step, connection, entity }) =>
           className="bg-contain bg-center bg-no-repeat h-full flex justify-end"
           style={{ backgroundImage: `url(${prependApiUrl(step.image)})` }}
         >
-          <div className="max-w-xs flex flex-col self-center items-center bg-white rounded-lg p-4 mr-8 shadow-lg">
+          <div className="max-w-xs flex flex-col self-center items-center bg-white dark:bg-grey rounded-lg p-4 mr-8 shadow-lg">
             {step?.overlay?.header && <p className="w-3/4 text-center font-semibold mb-2">{step.overlay.header}</p>}
             {renderQRCode(true)}
             {step?.overlay?.footer && <p className="w-3/4 text-center mt-2">{step.overlay.footer}</p>}

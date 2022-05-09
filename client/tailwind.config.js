@@ -22,10 +22,10 @@ module.exports = {
       black: '#000000',
       'bcgov-white': '#F5F5F4',
       'bcgov-coral': '#EA6767',
-      'bcgov-blue': '#557EBA',
+      'bcgov-gold': '#FCBA19',
       'bcgov-black': '#202223',
       'bcgov-lightgrey': '#E5E5E5',
-      'bcogov-darkgrey': '#3A3B3B',
+      'bcgov-darkgrey': '#3A3B3B',
     },
     fontFamily: {
       sans: ['montserrat', 'sans-serif'],

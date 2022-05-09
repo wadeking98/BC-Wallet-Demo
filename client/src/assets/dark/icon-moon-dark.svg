@@ -12,9 +12,9 @@
 </g>
 </mask>
 <g mask="url(#mask0)">
-<rect width="75" height="75" fill="#557EBA"/>
-<rect x="1.75598" y="42" width="40.1283" height="25.0336" transform="rotate(43.2173 1.75598 42)" fill="#92AED7"/>
-<ellipse cx="52" cy="23" rx="8" ry="9" fill="#92AED7"/>
+<rect width="75" height="75" fill="#FCBA19"/>
+<rect x="1.75598" y="42" width="40.1283" height="25.0336" transform="rotate(43.2173 1.75598 42)" fill="#FCBA19"/>
+<ellipse cx="52" cy="23" rx="8" ry="9" fill="#FCBA19"/>
 </g>
 <defs>
 <clipPath id="clip0">
