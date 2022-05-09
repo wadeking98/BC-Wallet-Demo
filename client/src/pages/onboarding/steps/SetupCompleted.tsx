@@ -13,7 +13,7 @@ export interface Props {
 export const SetupCompleted: React.FC<Props> = ({ content, characterName }) => {
   const lastIndex = content.title.lastIndexOf(' ')
   const lastWord = (
-    <p className="inline text-bcgov-coral dark:text-bcgov-gold">{content.title.substring(lastIndex + 1)}</p>
+    <p className="inline text-bcgov-blue dark:text-bcgov-gold">{content.title.substring(lastIndex + 1)}</p>
   )
   const newTitle = content.title.substring(0, lastIndex)
 
