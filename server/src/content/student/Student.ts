@@ -22,7 +22,7 @@ export const Student: Character = {
           value: (function () {
             const expiry = new Date()
             expiry.setFullYear(expiry.getFullYear() + 4)
-            return expiry.toISOString()
+            return expiry.toISOString().split('T')[0].replace(/-/g, '')
           })(),
         },
       ],

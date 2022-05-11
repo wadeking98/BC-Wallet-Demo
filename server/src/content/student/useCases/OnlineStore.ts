@@ -6,6 +6,10 @@ import { StepType } from '../../types'
 
 const URL = '/public/student/useCases/store'
 
+const date = new Date()
+date.setFullYear(date.getFullYear() - 18)
+const todayDate = Number(date.toISOString().split('T')[0].replace(/-/g, ''))
+
 export const OnlineStore: UseCase = {
   slug: 'store',
   card: {
@@ -55,7 +59,8 @@ export const OnlineStore: UseCase = {
           id: uuid(),
           name: 'Student Card',
           icon: '/public/student/icon-student.svg',
-          properties: ['student_first_name', 'student_last_name', 'expiry_date'],
+          // properties: ['expiry_date'],
+          predicates: { name: 'expiry_date', value: todayDate, type: '>=' },
         },
       ],
       issueCredentials: [],
@@ -74,7 +79,7 @@ export const OnlineStore: UseCase = {
           description: `Imagine, as Alice, you are in the checkout process for Cool Clothes Online. They're offering you a 15% discount on your purchase if you can prove you're a student. First, scan the QR code.`,
           image: `${URL}/cool-clothes-no-overlay.png`,
           overlay: {
-            header: `Students get 15% off their entire order'`,
+            header: `Students get 15% off their entire order`,
             footer: `Scan the QR Code above with your digital wallet to prove you're a student`,
           },
         },
@@ -82,7 +87,7 @@ export const OnlineStore: UseCase = {
           id: uuid(),
           type: StepType.PROOF,
           title: 'Confirm the information to send',
-          description: `Grab your wallet, you've received a request for some information! To finish the application process, share the information by accepting the request. `,
+          description: `BC Wallet will now ask you to confirm what to send. Notice how it will only share that you're a current student (i.e. yes or no). You don't have to share anything else for it to be trustable.`,
           requestOptions: {
             name: 'Cool Clothes Online Request',
             comment: 'Cool Clothes Online would like some of your personal information.',

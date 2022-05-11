@@ -35,7 +35,7 @@ export const MainSection: React.FC = () => {
         <motion.button
           variants={fade}
           whileHover={buttonHover}
-          className="bg-bcgov-black dark:bg-bcgov-white text-bcgov-white dark:text-bcgov-black py-3 px-5 mx-8 rounded-lg font-semibold shadow-sm dark:shadow-none select-none "
+          className="bg-bcgov-blue dark:bg-bcgov-white text-bcgov-white dark:text-bcgov-black py-3 px-5 mx-8 rounded-lg font-semibold shadow-sm dark:shadow-none select-none "
           onClick={handleStart}
         >
           Try Demo &nbsp;
@@ -44,7 +44,7 @@ export const MainSection: React.FC = () => {
         <motion.button
           variants={fade}
           whileHover={buttonHover}
-          className="bg-white dark:bg-black text-black dark:text-white py-3 px-5 mx-8 mt-4 rounded-lg font-semibold shadow-sm dark:shadow-none select-none "
+          className="bg-white dark:bg-bcgov-blue text-black dark:text-white py-3 px-5 mx-8 mt-4 rounded-lg font-semibold shadow-sm dark:shadow-none select-none "
           onClick={() => null}
         >
           Get to know us &nbsp;
@@ -73,7 +73,7 @@ export const MainSection: React.FC = () => {
         <motion.button
           variants={fadeDelay}
           whileHover={buttonHover}
-          className="bg-bcgov-black dark:bg-bcgov-white text-bcgov-white dark:text-bcgov-black py-3 px-5 rounded-lg font-semibold shadow-sm dark:shadow-none select-none "
+          className="bg-bcgov-blue dark:bg-bcgov-white text-bcgov-white dark:text-bcgov-black py-3 px-5 rounded-lg font-semibold shadow-sm dark:shadow-none select-none "
           onClick={handleStart}
         >
           Get started &nbsp;
