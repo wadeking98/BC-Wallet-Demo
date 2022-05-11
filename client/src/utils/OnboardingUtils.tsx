@@ -69,14 +69,14 @@ export const OnboardingContent = {
   [Progress.PICK_CHARACTER]: {
     iconLight: onboardingChooseLight,
     iconDark: onboardingChooseDark,
-    title: 'Who do you want to be today?',
-    text: 'It’s time to pick your character. Every character has its own set of use cases, which explore the power of digital credentials. Don’t worry, you can change your character later.',
+    title: 'Meet Alice',
+    text: "Meet Alice. (That's you in this demo!)\n\nAlice is a student at BestBC College.\n\nTo help make student life easier, BestBc College is going to offer Alice a DIgital Student Card to put in her BC Wallet",
   },
   [Progress.RECEIVE_IDENTITY]: {
     iconLight: onboardingConnectLight,
     iconDark: onboardingConnectDark,
-    title: `Let's fill your wallet!`,
-    text: `Great choice! You’re almost ready. Grab your phone and open the mobile wallet you just downloaded. Use the wallet to scan the QR-code below.`,
+    title: `Connect with BestBC College`,
+    text: `Image, as Alice, you are logged into the BestBC College website (see below). They want to offer you a Digital Student Card.\n\nUse your BC Wallet to scan the QR code from the website.`,
   },
   [Progress.CONNECTION_COMPLETE]: {
     iconLight: onboardingSecureLight,
@@ -87,8 +87,8 @@ export const OnboardingContent = {
   [Progress.ACCEPT_CREDENTIAL]: {
     iconLight: onboardingCredentialLight,
     iconDark: onboardingCredentialDark,
-    title: 'Accept your new credentials.',
-    text: `You should have a notification from your phone. Check your wallet! We’ve sent you the credentials below to help you get started. `,
+    title: 'Accept your student card',
+    text: `Your wallet now has a secure and private connection with BestBC College.\nYou should have received an offer in BC Wallet for a Student Card.\nReview what they are sending, and choose 'Accept offer'.`,
   },
   [Progress.SETUP_COMPLETED]: {
     iconLight: onboardingCompletedLight,
