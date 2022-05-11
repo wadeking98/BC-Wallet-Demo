@@ -21,11 +21,15 @@ export const UseCaseItem: React.FC<Props> = ({ slug, card, isCompleted, required
   return (
     <motion.div variants={rowFadeX} key={slug}>
       <div
-        className={`flex flex-col bg-animo-white dark:bg-animo-black rounded-lg my-2 p-4 lg:p-4 lg:px-8 mt-2 h-auto shadow-sm`}
+        className={`flex flex-col bg-bcgov-white dark:bg-bcgov-black rounded-lg my-2 p-4 lg:p-4 lg:px-8 mt-2 h-auto shadow-sm`}
       >
         <h1 className="flex-none font-bold text-lg mb-2 h-6">{card.title}</h1>
         <div className="flex h-32 mt-2">
-          <img className="h-full w-1/2 mr-2 m-auto xl:w-1/5" src={prependApiUrl(card.image)} alt={card.title} />
+          {card?.image ? (
+            <img className="h-full w-1/2 mr-2 m-auto xl:w-1/5" src={prependApiUrl(card.image)} alt={card.title} />
+          ) : (
+            <div className="h-full w-1/2 mr-2 m-auto xl:w-1/5" />
+          )}
           <p className="hidden md:block text-xs md:text-sm xl:text-base py-2 px-4 w-2/3 xl:w-2/4">{card.description}</p>
           <div className="w-2/3 xl:w-1/3 flex flex-col">
             <h2 className="text-sm xl:text-base font-semibold mb-2">You'll be asked to share</h2>

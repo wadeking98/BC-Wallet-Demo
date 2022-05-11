@@ -7,7 +7,7 @@ export interface Props {
 
 export const StepInformation: React.FC<Props> = ({ title, text }) => {
   const lastIndex = title.lastIndexOf(' ')
-  const lastWord = <p className="inline text-animo-coral dark:text-animo-blue">{title.substring(lastIndex + 1)}</p>
+  const lastWord = <p className="inline text-bcgov-blue dark:text-bcgov-gold">{title.substring(lastIndex + 1)}</p>
   const newTitle = title.substring(0, lastIndex)
 
   return (

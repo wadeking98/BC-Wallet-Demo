@@ -15,7 +15,7 @@ export function TriangleLight() {
     >
       <motion.path
         fill="white"
-        stroke="#FB9C9C"
+        stroke="#003366"
         strokeWidth={2}
         d="M23.0255 26.2784L2.10756 14.0131L23.1886 2.03023L23.0255 26.2784Z"
       />

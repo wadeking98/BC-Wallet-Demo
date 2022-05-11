@@ -62,7 +62,7 @@ export const EndContainer: React.FC<Props> = ({ step }) => {
       initial="hidden"
       animate="show"
       exit="exit"
-      className="flex flex-col bg-white dark:bg-animo-darkgrey rounded-lg p-6 md:p-12 xl:p-16 my-8 h-max min-h-full md:h-5/6 shadow-sm "
+      className="flex flex-col bg-white dark:bg-bcgov-darkgrey rounded-lg p-6 md:p-12 xl:p-16 my-8 h-max min-h-full md:h-5/6 shadow-sm "
       style={style}
       data-cy="end-container"
     >

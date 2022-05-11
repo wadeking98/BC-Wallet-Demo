@@ -5,8 +5,8 @@ import { useMediaQuery } from 'react-responsive'
 import { useNavigate } from 'react-router-dom'
 
 import { buttonHover, fade, fadeDelay, landingTitle } from '../../../FramerAnimations'
-import homeIllustrationDark from '../../../assets/dark/animo-home-illustration-dark.svg'
-import homeIllustrationLight from '../../../assets/light/animo-home-illustration-light.svg'
+// import homeIllustrationDark from '../../../assets/dark/animo-home-illustration-dark.svg'
+// import homeIllustrationLight from '../../../assets/light/animo-home-illustration-light.svg'
 import { useDarkMode } from '../../../hooks/useDarkMode'
 
 export const MainSection: React.FC = () => {
@@ -27,7 +27,7 @@ export const MainSection: React.FC = () => {
         </div>
       </h1>
       <div className="overflow-hidden">
-        <motion.h2 variants={fade} className="text-lg font-normal mt-6 dark:text-animo-lightgrey text-animo-darkgrey">
+        <motion.h2 variants={fade} className="text-lg font-normal mt-6 dark:text-bcgov-lightgrey text-bcgov-darkgrey">
           Explore how you can use BC Wallet to prove things about yourself, in a way that's safe and secure.
         </motion.h2>
       </div>
@@ -35,7 +35,7 @@ export const MainSection: React.FC = () => {
         <motion.button
           variants={fade}
           whileHover={buttonHover}
-          className="bg-animo-black dark:bg-animo-white text-animo-white dark:text-animo-black py-3 px-5 mx-8 rounded-lg font-semibold shadow-sm dark:shadow-none select-none "
+          className="bg-bcgov-blue dark:bg-bcgov-white text-bcgov-white dark:text-bcgov-black py-3 px-5 mx-8 rounded-lg font-semibold shadow-sm dark:shadow-none select-none "
           onClick={handleStart}
         >
           Try Demo &nbsp;
@@ -44,8 +44,8 @@ export const MainSection: React.FC = () => {
         <motion.button
           variants={fade}
           whileHover={buttonHover}
-          className="bg-white dark:bg-black text-black dark:text-white py-3 px-5 mx-8 mt-4 rounded-lg font-semibold shadow-sm dark:shadow-none select-none "
-          onClick={() => window.open('https://animo.id', '_blank')}
+          className="bg-white dark:bg-bcgov-blue text-black dark:text-white py-3 px-5 mx-8 mt-4 rounded-lg font-semibold shadow-sm dark:shadow-none select-none "
+          onClick={() => null}
         >
           Get to know us &nbsp;
           <FiExternalLink className="inline h-6 pb-1" />
@@ -55,7 +55,7 @@ export const MainSection: React.FC = () => {
   )
 
   const renderDesktopTitle = (
-    <motion.div className="flex-1 text-left text-animo-black dark:text-animo-white font-semibold text-4xl lg:text-5xl xl:text-6xl m-auto">
+    <motion.div className="flex-1 text-left text-bcgov-black dark:text-bcgov-white font-semibold text-4xl lg:text-5xl xl:text-6xl m-auto">
       <h1>
         <div className="overflow-hidden py-1 leading-tight">
           <motion.p variants={landingTitle}>BC Wallet Showcase</motion.p>
@@ -64,7 +64,7 @@ export const MainSection: React.FC = () => {
       <div className="overflow-hidden">
         <motion.h2
           variants={fadeDelay}
-          className="text-base lg:text-lg font-normal mt-6 dark:text-animo-lightgrey text-animo-darkgrey"
+          className="text-base lg:text-lg font-normal mt-6 dark:text-bcgov-lightgrey text-bcgov-darkgrey"
         >
           Explore how you can use BC Wallet to prove things about yourself, in a way that's safe and secure.
         </motion.h2>
@@ -73,7 +73,7 @@ export const MainSection: React.FC = () => {
         <motion.button
           variants={fadeDelay}
           whileHover={buttonHover}
-          className="bg-animo-black dark:bg-animo-white text-animo-white dark:text-animo-black py-3 px-5 rounded-lg font-semibold shadow-sm dark:shadow-none select-none "
+          className="bg-bcgov-blue dark:bg-bcgov-white text-bcgov-white dark:text-bcgov-black py-3 px-5 rounded-lg font-semibold shadow-sm dark:shadow-none select-none "
           onClick={handleStart}
         >
           Get started &nbsp;
@@ -102,7 +102,7 @@ export const MainSection: React.FC = () => {
     >
       {isMobile ? renderMobileTitle : renderDesktopTitle}
       <div className="flex w-full md:w-1/3 lg:w-2/5 select-none">
-        <img src={darkMode ? homeIllustrationDark : homeIllustrationLight} alt="animo-phone-light" />
+        {/* <img src={darkMode ? homeIllustrationDark : homeIllustrationLight} alt="bcgov-phone-light" /> */}
       </div>
     </motion.div>
   )

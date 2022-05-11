@@ -10,9 +10,10 @@ const QR = require('qrcode.react')
 export interface Props {
   invitationUrl: string
   connectionState?: string
+  overlay?: boolean
 }
 
-export const QRCode: React.FC<Props> = ({ invitationUrl, connectionState }) => {
+export const QRCode: React.FC<Props> = ({ invitationUrl, connectionState, overlay }) => {
   const isMobile = useMediaQuery({ query: '(max-width: 768px)' })
   const isLarge = useMediaQuery({ query: '(max-width: 1242px)' })
 
@@ -27,7 +28,7 @@ export const QRCode: React.FC<Props> = ({ invitationUrl, connectionState }) => {
   }, [isCompleted])
 
   const renderQRCode = invitationUrl && (
-    <div className="relative m-auto rounded-lg bg-animo-lightgrey p-4">
+    <div className={`relative ${overlay ? 'bg-none' : 'rounded-lg bg-bcgov-lightgrey p-4 m-auto'}`}>
       <QR value={invitationUrl} size={isMobile ? 192 : isLarge ? 212 : 256} />
       {isCompleted && (
         <div className="absolute inset-0 flex justify-center items-center bg-grey bg-opacity-60 rounded-lg">
@@ -37,5 +38,5 @@ export const QRCode: React.FC<Props> = ({ invitationUrl, connectionState }) => {
     </div>
   )
 
-  return <div className="m-auto shadow-lg rounded-lg">{renderQRCode}</div>
+  return <div className={`${!overlay && 'shadow-lg m-auto'}`}>{renderQRCode}</div>
 }

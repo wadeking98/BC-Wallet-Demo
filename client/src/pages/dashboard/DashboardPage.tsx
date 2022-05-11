@@ -24,7 +24,7 @@ import { ProfileCard } from './components/ProfileCard'
 import { UseCaseContainer } from './components/UseCaseContainer'
 
 export const DashboardPage: React.FC = () => {
-  useTitle('Dashboard | Animo Self-Sovereign Identity Demo')
+  useTitle('Dashboard | BC Wallet Self-Sovereign Identity Demo')
 
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
@@ -47,16 +47,6 @@ export const DashboardPage: React.FC = () => {
   }, [completedUseCaseSlugs, useCases])
 
   const isMobile = useMediaQuery({ query: '(max-width: 976px)' })
-
-  const dashboardCard = (
-    <DashboardCard
-      title="Get to know Animo."
-      info="We’ve a lot more going on then just this (awesome) demo and we would love to discuss self-sovereign identity with you. Get in touch!"
-      button={
-        <SmallButtonText text="CONTACT" onClick={() => window.open('https://animo.id', '_blank')} disabled={false} />
-      }
-    />
-  )
 
   const ERROR_TITLE = `Woops...`
   const ERROR_DESCRIPTION = `That's not gone well. Please restart the demo.`
@@ -99,11 +89,9 @@ export const DashboardPage: React.FC = () => {
                 completedUseCaseSlugs={completedUseCaseSlugs}
                 useCases={useCases}
               />
-              {isMobile && <div className="m-4">{dashboardCard}</div>}
             </div>
             <div className="flex flex-1 flex-col p-2 mx-2 dark:text-white">
               <ProfileCard currentCharacter={currentCharacter} />
-              {!isMobile && dashboardCard}
             </div>
           </div>
         </>
