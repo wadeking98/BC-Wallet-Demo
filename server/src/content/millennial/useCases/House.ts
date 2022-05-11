@@ -52,7 +52,7 @@ export const House: UseCase = {
         imageUrl: 'https://i.imgur.com/VVMbbsL.png',
       },
       colors: {
-        primary: '#EF5050',
+        primary: '#003366',
         secondary: '#F2ABAB',
       },
       requestedCredentials: [
