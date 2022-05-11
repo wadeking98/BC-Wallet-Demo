@@ -17,8 +17,8 @@ export const BusinessWoman: Character = {
       attributes: [
         { name: 'student_first_name', value: 'Jan' },
         { name: 'student_last_name', value: 'Test' },
-        { name: 'expiry_date', value: "05-05-2025" }
+        { name: 'expiry_date', value: '05-05-2025' },
       ],
-    }
+    },
   ],
 }

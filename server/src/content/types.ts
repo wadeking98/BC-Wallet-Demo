@@ -16,7 +16,7 @@ export interface UseCase {
 
 export interface UseCaseCard {
   title: string
-  image: string
+  image?: string
   description: string
 }
 
@@ -93,6 +93,12 @@ export interface Step {
   requestOptions?: RequestOptions
   useProof?: boolean
   endStepper?: EndStepperItem[]
+  overlay?: Overlay
+}
+
+export interface Overlay {
+  header?: string
+  footer?: string
 }
 
 export interface EndStepperItem {
@@ -120,6 +126,7 @@ export enum StepType {
   PROOF,
   PROOF_OOB,
   CREDENTIAL,
+  STEP_END,
   END,
 }
 

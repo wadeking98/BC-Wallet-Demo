@@ -56,7 +56,7 @@ export const AirTravel: UseCase = {
           name: 'Student ID Card',
           icon: `/public/businesswoman/icon-businesswoman.svg`,
           properties: ['student_first_name', 'student_last_name', 'expiry_date'],
-        }
+        },
       ],
       issueCredentials: [
         {
@@ -65,8 +65,8 @@ export const AirTravel: UseCase = {
           attributes: [
             { name: 'name', value: 'Jan van Dalen' },
             { name: 'emailAddress', value: 'test@mail.com' },
-            { name: 'iss_dateint', value: "2025" },
-            { name: 'program', value: "LSBC" }
+            { name: 'iss_dateint', value: '2025' },
+            { name: 'program', value: 'LSBC' },
           ],
           icon: `${URL}/icon-ticket.png`,
         },

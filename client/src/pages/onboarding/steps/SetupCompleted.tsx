@@ -13,7 +13,7 @@ export interface Props {
 export const SetupCompleted: React.FC<Props> = ({ content, characterName }) => {
   const lastIndex = content.title.lastIndexOf(' ')
   const lastWord = (
-    <p className="inline text-animo-coral dark:text-animo-blue">{content.title.substring(lastIndex + 1)}</p>
+    <p className="inline text-bcgov-blue dark:text-bcgov-gold">{content.title.substring(lastIndex + 1)}</p>
   )
   const newTitle = content.title.substring(0, lastIndex)
 
@@ -28,28 +28,19 @@ export const SetupCompleted: React.FC<Props> = ({ content, characterName }) => {
         </div>
         <div className="pt-4 flex-1 mb-6">
           <div className="dark:text-white">
-            <p>
-              Your (Pretend) student card is in your BC Wallet!
-            </p>
-            <ul>
-              <li>
-                You control when you use the student card.
-              </li>
-              <li>
-                You can share part of the student card's information, or even just that you're a student.
-              </li>
-              <li>
-                No one else is told when you use it.
-              </li>
-              <li>
-                The information from your student card is always shared securely.
-              </li>
-              <li>Anyone who receives the information can trust it's legitimate</li>
-            </ul>
-            <p>We're done with this step. Next, we'll explore ways you can use your student card</p>
+            <p>Your (pretend) Student Card is in your BC Wallet!</p>
+            <div className="bg-bcgov-white dark:bg-bcgov-black py-4 px-8">
+              <ul className="list-disc">
+                <li>You control when you use the Student Card.</li>
+                <li>You can share part of the Student Card's information, or even just that you're a student.</li>
+                <li>No one else is told when you use it.</li>
+                <li>The information from your Student Card is always shared securely.</li>
+                <li>Anyone who receives the information can trust it's legitimate.</li>
+              </ul>
+            </div>
+
+            <p>We're done with this step. Next, we'll explore ways you can use your Student Card.</p>
           </div>
-
-
         </div>
       </div>
     </motion.div>

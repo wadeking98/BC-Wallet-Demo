@@ -8,16 +8,23 @@ export const Student: Character = {
   name: 'Alice',
   type: 'Student',
   backstory:
-    'Meet Alice. (That\'s you in this demo!)\n\nAlice is a student at BestBC College.\n\nTo help make student life easier, BestBc College is going to offer Alice a DIgital Student Card to put in her BC Wallet',
+    "Meet Alice (that's you in this demo!). Alice is a student at BestBC College. To help make student life easier, BestBC College is going to offer Alice a digital Student Card to put in her BC Wallet",
   starterCredentials: [
     {
       id: uuid(),
-      name: 'Student ID Card',
+      name: 'Student Card',
       icon: '/public/student/icon-student.svg',
       attributes: [
-        { name: 'student_first_name', value: 'Jan' },
-        { name: 'student_last_name', value: 'Test' },
-        { name: 'expiry_date', value: "05-05-2025" }
+        { name: 'student_first_name', value: 'Alice' },
+        { name: 'student_last_name', value: 'Smith' },
+        {
+          name: 'expiry_date',
+          value: (function () {
+            const expiry = new Date()
+            expiry.setFullYear(expiry.getFullYear() + 4)
+            return expiry.toISOString().split('T')[0].replace(/-/g, '')
+          })(),
+        },
       ],
     },
   ],

@@ -109,9 +109,6 @@ export const OnboardingContainer: React.FC<Props> = ({
           connectionState={connectionState}
         />
       ),
-      [Progress.CONNECTION_COMPLETE]: (
-        <ConnectionComplete key={Progress.CONNECTION_COMPLETE} content={OnboardingContent[progress]} />
-      ),
       [Progress.ACCEPT_CREDENTIAL]: currentCharacter && connectionId && (
         <AcceptCredential
           key={Progress.ACCEPT_CREDENTIAL}
@@ -135,17 +132,7 @@ export const OnboardingContainer: React.FC<Props> = ({
 
   const getImageToRender = (progress: Progress) => {
     const components = {
-      [Progress.SETUP_START]: (
-        <motion.img
-          variants={fadeExit}
-          initial="hidden"
-          animate="show"
-          exit="exit"
-          className="p-4"
-          key={Progress.SETUP_START}
-          src={darkMode ? OnboardingContent[progress].iconDark : OnboardingContent[progress].iconLight}
-        />
-      ),
+      [Progress.SETUP_START]: null,
       [Progress.CHOOSE_WALLET]: (
         <motion.img
           variants={fadeExit}
@@ -166,17 +153,6 @@ export const OnboardingContainer: React.FC<Props> = ({
           exit="exit"
           className="p-4"
           key={Progress.RECEIVE_IDENTITY}
-          src={darkMode ? OnboardingContent[progress].iconDark : OnboardingContent[progress].iconLight}
-        />
-      ),
-      [Progress.CONNECTION_COMPLETE]: (
-        <motion.img
-          variants={fadeExit}
-          initial="hidden"
-          animate="show"
-          exit="exit"
-          className="p-4"
-          key={Progress.CONNECTION_COMPLETE}
           src={darkMode ? OnboardingContent[progress].iconDark : OnboardingContent[progress].iconLight}
         />
       ),
@@ -238,7 +214,7 @@ export const OnboardingContainer: React.FC<Props> = ({
 
   return (
     <motion.div
-      className="flex flex-row h-full justify-between bg-white dark:bg-animo-darkgrey rounded-lg p-2 w-full sxl:w-5/6 shadow"
+      className="flex flex-row h-full justify-between bg-white dark:bg-bcgov-darkgrey rounded-lg p-2 w-full sxl:w-5/6 shadow"
       style={style}
     >
       <div className="flex flex-col grid justify-items-end w-full lg:w-2/3 px-8">
@@ -257,7 +233,7 @@ export const OnboardingContainer: React.FC<Props> = ({
           onboardingCompleted={onboardingCompleted}
         />
       </div>
-      <div className="bg-animo-white dark:bg-animo-black hidden lg:flex lg:w-1/3 rounded-r-lg flex-col justify-center h-full select-none">
+      <div className="bg-bcgov-white dark:bg-bcgov-black hidden lg:flex lg:w-1/3 rounded-r-lg flex-col justify-center h-full select-none">
         <AnimatePresence exitBeforeEnter>{getImageToRender(onboardingStep)}</AnimatePresence>
       </div>
       {leaveModal && (

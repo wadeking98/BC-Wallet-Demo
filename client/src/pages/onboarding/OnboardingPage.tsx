@@ -6,6 +6,7 @@ import { page } from '../../FramerAnimations'
 import { useAppDispatch } from '../../hooks/hooks'
 import { useTitle } from '../../hooks/useTitle'
 import { useCharacters } from '../../slices/characters/charactersSelectors'
+import { setCharacter } from '../../slices/characters/charactersSlice'
 import { fetchAllCharacters } from '../../slices/characters/charactersThunks'
 import { useConnection } from '../../slices/connection/connectionSelectors'
 import { clearConnection } from '../../slices/connection/connectionSlice'
@@ -21,7 +22,7 @@ import { OnboardingContainer } from './OnboardingContainer'
 import { Stepper } from './components/Stepper'
 
 export const OnboardingPage: React.FC = () => {
-  useTitle('Get Started | Animo Self-Sovereign Identity Demo')
+  useTitle('Get Started | BC Wallet Self-Sovereign Identity Demo')
 
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
@@ -47,6 +48,13 @@ export const OnboardingPage: React.FC = () => {
       setMounted(true)
     }
   }, [dispatch])
+
+  useEffect(() => {
+    // Ensures that the character is always Alice
+    if (characters?.length) {
+      dispatch(setCharacter(characters[0]))
+    }
+  }, [characters])
 
   return (
     <motion.div
