@@ -41,7 +41,7 @@ export class CredDefService {
 
   private async init() {
     const cd1 = await this.createCredentialDefinition({
-      schemaId: 'Trx3R1frdEzbn34Sp1jyX:2:student_id:1.0',
+      schemaId: 'Trx3R1frdEzbn34Sp1jyX:2:student_card:1.0',
       supportRevocation: false,
       tag: 'Student Card',
     })
