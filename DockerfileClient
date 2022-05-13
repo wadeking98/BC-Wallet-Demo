@@ -1,8 +1,8 @@
 FROM ubuntu:18.04 as base
 
-ENV DEBIAN_FRONTEND noninteractive
 
-RUN apt-get update -y && apt-get install -y \
+RUN apt-get update -y 
+RUN apt-get install -y \
     software-properties-common \
     apt-transport-https \
     curl \
@@ -23,19 +23,24 @@ RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
 # install depdencies
 RUN apt-get update -y && apt-get install -y --allow-unauthenticated \
     libindy \
+    libnullpay \
+    libvcx \
+    indy-cli \
     nodejs
 
 # Install yarn seperately due to `no-install-recommends` to skip nodejs install 
 RUN apt-get install -y --no-install-recommends yarn
 
-# AFJ specifc setup
-WORKDIR /www
+COPY ./ /www
+WORKDIR /www/client
 
-COPY build ./build
-COPY package.json package.json
+RUN yarn install
 
-RUN yarn install --production
+RUN ls -la
 
-EXPOSE 5000 5001
+RUN yarn build
 
-ENTRYPOINT [ "node", "build/index.js"]
+RUN npm install -g serve
+
+EXPOSE 3000
+ENTRYPOINT ["serve", "-s", "build"]
