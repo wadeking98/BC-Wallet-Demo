@@ -23,13 +23,18 @@ RUN apt-get update -y && apt-get install -y --allow-unauthenticated \
     libvcx \
     nodejs
 
+RUN chmod g+rwx /root
+
 COPY ./ /www
 WORKDIR /www
 RUN npm install
 
 WORKDIR /www/client
+RUN npm install
 RUN npm run build
 
+RUN chmod -R g+rwx /root
+RUN chmod -R g+rwx /www
 
 RUN npm install -g serve
 

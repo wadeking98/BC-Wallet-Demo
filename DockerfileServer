@@ -26,15 +26,18 @@ RUN apt-get update -y && apt-get install -y --allow-unauthenticated \
 
 # AFJ specifc setup
 
+RUN chmod g+rwx /root
+
 COPY ./ /www
 WORKDIR /www
 RUN npm install
 
 WORKDIR /www/server
-
+RUN npm install
 RUN npm run build
 
-
+RUN chmod -R g+rwx /root
+RUN chmod -R g+rwx /www
 
 EXPOSE 5000 5001
 
