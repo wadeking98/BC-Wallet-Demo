@@ -30,14 +30,15 @@ RUN chmod g+rwx /root
 
 COPY ./ /www
 WORKDIR /www
-RUN npm install
+RUN npm install -g yarn
+RUN yarn install
 
 WORKDIR /www/server
-RUN npm install
-RUN npm run build
+RUN yarn install
+RUN yarn build
 
-RUN chmod -R g+rwx /root
 RUN chmod -R g+rwx /www
+
 
 EXPOSE 5000 5001
 
