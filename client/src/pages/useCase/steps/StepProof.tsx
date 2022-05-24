@@ -8,7 +8,7 @@ import { fadeX } from '../../../FramerAnimations'
 import { ActionCTA } from '../../../components/ActionCTA'
 import { useAppDispatch } from '../../../hooks/hooks'
 import { useInterval } from '../../../hooks/useInterval'
-import { createProof, deleteProofById, fetchProofById } from '../../../slices/proof/proofThunks'
+import { createProof, deleteProofById, fetchProofById, acceptProofById } from '../../../slices/proof/proofThunks'
 import { FailedRequestModal } from '../../onboarding/components/FailedRequestModal'
 import { ProofAttributesCard } from '../components/ProofAttributesCard'
 import { StepInfo } from '../components/StepInfo'
@@ -73,6 +73,10 @@ export const StepProof: React.FC<Props> = ({ proof, step, connectionId, requeste
   useEffect(() => {
     if (!proof) createProofRequest()
   }, [])
+
+  useEffect(() => {
+    if (proofReceived) dispatch(acceptProofById(proof?.id))
+  }, [proofReceived])
 
   useInterval(
     () => {
