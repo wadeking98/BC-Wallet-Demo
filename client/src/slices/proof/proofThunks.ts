@@ -23,3 +23,8 @@ export const deleteProofById = createAsyncThunk('proof/deleteById', async (id: s
   await Api.deleteProofById(id)
   return id
 })
+
+export const acceptProofById = createAsyncThunk('proof/acceptById', async (id: string) => {
+  const response = await Api.acceptProofById(id)
+  return response.data
+})
