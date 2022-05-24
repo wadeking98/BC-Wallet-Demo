@@ -79,7 +79,7 @@ export const MainSection: React.FC = () => {
           Get started &nbsp;
           <FiArrowRight className="inline h-6 pb-1" />
         </motion.button>
-        <a href="#" target="_blank">
+        <a href="https://digital.gov.bc.ca/digital-trust/" target="_blank">
           <motion.button
             variants={fadeDelay}
             whileHover={buttonHover}
