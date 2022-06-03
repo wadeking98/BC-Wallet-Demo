@@ -11,12 +11,12 @@ export interface Props {
 
 export const DarkModeSwitch: React.FC<Props> = ({ darkMode, handleDarkMode }) => {
   return (
-    <div onClick={() => handleDarkMode()} className="flex items-center text-sm text-center py-3">
+    <button onClick={() => handleDarkMode()} className="flex items-center text-sm text-center py-3">
       <p className={`${!darkMode && 'font-semibold'}  flex-none w-16 dark:text-white`}>LIGHT</p>
       <div className="flex-1 p-2">{darkMode ? <Line color={'white'} /> : <Line color={'black'} />}</div>
       <p className={`${darkMode && 'font-semibold'} flex-none w-16  dark:text-white`}>DARK</p>
       <div className="absolute cursor-pointer">{darkMode ? <TriangleDark /> : <TriangleLight />}</div>
-    </div>
+    </button>
   )
 }
 

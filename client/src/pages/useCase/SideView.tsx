@@ -70,9 +70,13 @@ export const SideView: React.FC<Props> = ({
         colorPrimary={colors.primary}
         colorSecondary={colors.secondary}
       />
-      <motion.p variants={fadeDelay} className="flex p-0 md:p-4 fixed bottom-5 lg:relative">
-        <FiLogOut onClick={showLeaveModal} className="ml-2 inline h-8 cursor-pointer" />
-      </motion.p>
+      <motion.button
+        onClick={showLeaveModal}
+        variants={fadeDelay}
+        className="flex p-0 md:p-4 fixed bottom-5 lg:relative"
+      >
+        <FiLogOut className="ml-2 inline h-8 cursor-pointer" />
+      </motion.button>
     </motion.div>
   )
 }
