@@ -54,7 +54,9 @@ export const StartContainer: React.FC<Props> = ({ entity, requestedCredentials, 
         />
 
         <div className="flex justify-between content-center bg-bcgovgrey dark:bg-bcgov-darkgrey ">
-          <FiLogOut onClick={leave} className="ml-2 inline h-8 cursor-pointer" />
+          <button onClick={leave}>
+            <FiLogOut className="ml-2 inline h-8 cursor-pointer" />
+          </button>
           <SmallButton onClick={next} text={'START'} disabled={false} />
         </div>
       </div>

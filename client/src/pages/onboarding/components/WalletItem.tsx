@@ -14,13 +14,13 @@ export interface Props {
 
 export const WalletItem: React.FC<Props> = ({ icon, name, organization, recommended }) => {
   return (
-    <motion.div
+    <motion.button
       whileHover={listHover}
       className="flex rounded-lg lg:m-2 p-2 items-center cursor-pointer border border-1 sm:w-full lg:w-4/5 border-bcgov-white dark:border-bcgov-black dark:bg-bcgov-black m-auto mt-4 shadow "
       variants={rowFadeX}
     >
       <div className="flex h-12 w-12 my-2 mx-2 md:mx-8 p-1">
-        <img className="rounded-lg" src={prependApiUrl(icon)} alt="wallet-icon" />
+        <img className="rounded-lg" src={prependApiUrl(icon)} alt="wallet icon" />
       </div>
       <div className="flex flex-1 flex-col dark:text-white text-lg">
         <div className="flex flex-1 font-medium	 dark:text-white text-lg">
@@ -34,6 +34,6 @@ export const WalletItem: React.FC<Props> = ({ icon, name, organization, recommen
       >
         USE
       </div>
-    </motion.div>
+    </motion.button>
   )
 }
