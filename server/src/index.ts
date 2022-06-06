@@ -70,8 +70,7 @@ const run = async () => {
 
   const app: Express = createExpressServer({
     controllers: [__dirname + '/controllers/**/*.ts', __dirname + '/controllers/**/*.js'],
-    cors: true,
-    routePrefix: '/demo',
+    cors: true
   })
 
   httpInbound.app.get('/', async (req, res) => {
@@ -99,9 +98,10 @@ const run = async () => {
     res.send(job.lastDate())
   })
 
+  app.listen(5002)
+
   await startServer(agent, {
-    port: 5000,
-    app: app,
+    port: 5000
   })
 }
 

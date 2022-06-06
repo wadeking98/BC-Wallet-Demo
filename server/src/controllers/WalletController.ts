@@ -5,7 +5,7 @@ import { Service } from 'typedi'
 
 import { Wallets } from '../content/misc/Wallets'
 
-@JsonController('/wallets')
+@JsonController('/demo/wallets')
 @Service()
 export class WalletController {
   private wallets: Wallet[]

@@ -7,7 +7,7 @@ import useCases from '../content/UseCases'
 
 import { CredDefService } from './CredDefService'
 
-@JsonController('/usecases')
+@JsonController('/demo/usecases')
 @Service()
 export class UseCaseController {
   @Inject()

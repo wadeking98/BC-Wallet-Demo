@@ -7,7 +7,7 @@ import characters from '../content/Characters'
 
 import { CredDefService } from './CredDefService'
 
-@JsonController('/characters')
+@JsonController('/demo/characters')
 @Service()
 export class CharacterController {
   @Inject()
