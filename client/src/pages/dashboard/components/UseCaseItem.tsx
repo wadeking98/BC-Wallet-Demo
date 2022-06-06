@@ -36,7 +36,7 @@ export const UseCaseItem: React.FC<Props> = ({ slug, card, isCompleted, required
             {requiredCredentials.map((item) => {
               return (
                 <div key={item.id} className={`flex flex-row mb-2`}>
-                  <img className="w-4 h-4 lg:w-6 lg:h-6 mx-2" src={prependApiUrl(item.icon)} alt="credential-icon" />
+                  <img className="w-4 h-4 lg:w-6 lg:h-6 mx-2" src={prependApiUrl(item.icon)} alt="credential icon" />
                   <p className="text-xs sxl:text-sm">{item.name}&nbsp;</p>
                 </div>
               )
