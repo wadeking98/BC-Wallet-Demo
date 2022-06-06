@@ -142,6 +142,7 @@ export const OnboardingContainer: React.FC<Props> = ({
           className="p-4"
           key={Progress.CHOOSE_WALLET}
           src={darkMode ? OnboardingContent[progress].iconDark : OnboardingContent[progress].iconLight}
+          alt="choose wallet"
         />
       ),
       [Progress.PICK_CHARACTER]: <CharacterContent key={Progress.PICK_CHARACTER} character={currentCharacter} />,
@@ -154,6 +155,7 @@ export const OnboardingContainer: React.FC<Props> = ({
           className="p-4"
           key={Progress.RECEIVE_IDENTITY}
           src={darkMode ? OnboardingContent[progress].iconDark : OnboardingContent[progress].iconLight}
+          alt="recieve identity"
         />
       ),
       [Progress.ACCEPT_CREDENTIAL]: currentCharacter && connectionId && (
@@ -165,6 +167,7 @@ export const OnboardingContainer: React.FC<Props> = ({
           className="p-4"
           key={Progress.ACCEPT_CREDENTIAL}
           src={darkMode ? OnboardingContent[progress].iconDark : OnboardingContent[progress].iconLight}
+          alt="accept credential"
         />
       ),
       [Progress.SETUP_COMPLETED]: (
@@ -176,6 +179,7 @@ export const OnboardingContainer: React.FC<Props> = ({
           className="p-4"
           key={Progress.SETUP_COMPLETED}
           src={darkMode ? OnboardingContent[progress].iconDark : OnboardingContent[progress].iconLight}
+          alt="setup completed"
         />
       ),
     }
@@ -219,9 +223,9 @@ export const OnboardingContainer: React.FC<Props> = ({
     >
       <div className="flex flex-col grid justify-items-end w-full lg:w-2/3 px-8">
         <div className="w-full">
-          <motion.p variants={fadeDelay}>
-            <FiLogOut onClick={showLeaveModal} className="inline h-12 cursor-pointer dark:text-white" />
-          </motion.p>
+          <motion.button onClick={showLeaveModal} variants={fadeDelay}>
+            <FiLogOut className="inline h-12 cursor-pointer dark:text-white" />
+          </motion.button>
         </div>
         <AnimatePresence exitBeforeEnter>{getComponentToRender(onboardingStep)}</AnimatePresence>
         <OnboardingBottomNav

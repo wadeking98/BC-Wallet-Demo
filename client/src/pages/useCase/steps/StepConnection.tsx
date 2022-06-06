@@ -54,7 +54,7 @@ export const StepConnection: React.FC<Props> = ({ step, connection, entity }) =>
             <FiExternalLink className="inline pb-1" />
           </a>
         )}{' '}
-        to prove your're a student
+        to prove you're a student
       </p>
     </motion.div>
   ) : (
@@ -69,6 +69,7 @@ export const StepConnection: React.FC<Props> = ({ step, connection, entity }) =>
       {step.image && !isMobile ? (
         <div
           className="bg-contain bg-center bg-no-repeat h-full flex justify-end"
+          title={step.title}
           style={{ backgroundImage: `url(${prependApiUrl(step.image)})` }}
         >
           <div className="max-w-xs flex flex-col self-center items-center bg-white rounded-lg p-4 mr-8 shadow-lg dark:text-black">
