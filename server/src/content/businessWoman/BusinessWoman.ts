@@ -6,18 +6,20 @@ export const BusinessWoman: Character = {
   id: '2',
   image: '/public/businesswoman/businesswoman.svg',
   name: 'Joyce',
-  type: 'Businesswoman',
+  type: 'Lawyer',
   backstory:
     "Joyce is on her way to the top! She's the CEO of a fortune 500 company and is always working around the clock to keep business going, join her in her endeavor!",
   starterCredentials: [
     {
       id: uuid(),
-      name: 'Student ID Card',
+      name: 'Member Card',
       icon: '/public/businesswoman/icon-businesswoman.svg',
       attributes: [
-        { name: 'student_first_name', value: 'Jan' },
-        { name: 'student_last_name', value: 'Test' },
-        { name: 'expiry_date', value: '05-05-2025' },
+        { name: 'Member Status', value: 'Active' },
+        { name: 'Given Name', value: 'Joyce' },
+        { name: 'PPID', value: '42' },
+        { name: 'Member Status Code', value: '1' },
+        { name: 'Surname', value: 'Smith' },
       ],
     },
   ],

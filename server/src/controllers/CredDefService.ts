@@ -49,11 +49,11 @@ export class CredDefService {
     //   "Name", "Street", "City", "Date of birth", "Nationality"
     // ]
 
-    // const cd2 = await this.createCredentialDefinition({
-    //   schemaId: 'GW9GbSntDFutu2qQra2DXd:2:BC VC Pilot Certificate:1.0.1',
-    //   supportRevocation: false,
-    //   tag: 'BC Pilot',
-    // })
+    const cd2 = await this.createCredentialDefinition({
+      schemaId: `${this.agent?.publicDid?.did}:2:Member Card:1.5.1`,
+      supportRevocation: false,
+      tag: 'Member Card',
+    })
     //"attrNames": [
     //   "Security code", "Card number", "Issuer", "Holder", "Valid until"
     // ],
@@ -149,7 +149,7 @@ export class CredDefService {
     // ],
 
     // this.credentialDefinitions = [cd1, cd2, cd3, cd4, cd5, cd6, cd7, cd8, cd9, cd10, cd11, cd12]
-    this.credentialDefinitions = [cd1]
+    this.credentialDefinitions = [cd1, cd2]
   }
 
   private async createCredentialDefinition(credentialDefinitionRequest: {

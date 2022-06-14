@@ -55,7 +55,7 @@ export const Laptop: UseCase = {
       requestedCredentials: [
         {
           id: uuid(),
-          name: 'Student ID Card',
+          name: 'Student Card',
           icon: '/public/millennial/icon-millennial.svg',
           properties: ['student_first_name', 'student_last_name', 'expiry_date'],
         },

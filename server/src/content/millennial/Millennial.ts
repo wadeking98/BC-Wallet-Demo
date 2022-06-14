@@ -12,7 +12,7 @@ export const Millennial: Character = {
   starterCredentials: [
     {
       id: uuid(),
-      name: 'Student ID Card',
+      name: 'Student Card',
       icon: '/public/millennial/icon-millennial.svg',
       attributes: [
         { name: 'student_first_name', value: 'Jan' },

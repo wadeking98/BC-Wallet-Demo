@@ -53,7 +53,7 @@ export const AirTravel: UseCase = {
       requestedCredentials: [
         {
           id: uuid(),
-          name: 'Student ID Card',
+          name: 'Student Card',
           icon: `/public/businesswoman/icon-businesswoman.svg`,
           properties: ['student_first_name', 'student_last_name', 'expiry_date'],
         },
