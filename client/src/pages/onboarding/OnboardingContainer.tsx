@@ -76,6 +76,75 @@ export const OnboardingContainer: React.FC<Props> = ({
     dispatch(prevOnboardingStep())
   }
 
+  //override title and text content to make them character dependant
+  const getCharacterContent = (progress: number) => {
+    const ret: { [key: number]: { [key: string]: { [key: string]: string } } } = {
+      [Progress.PICK_CHARACTER]: {
+        Alice: {
+          title: 'Meet Alice',
+          text: "Meet Alice (that's you in this demo!). Alice is a student at BestBC College. To help make student life easier, BestBC College is going to offer Alice a digital Student Card to put in her BC Wallet",
+        },
+        Joyce: {
+          title: 'Meet Joyce',
+          text: "Meet Joyce (that's you in this demo!). Joyce is a Laywer. To help make court life easier, Court Services is going to offer Joyce a digital Member Card to put in her BC Wallet",
+        },
+        Default: {
+          title: '',
+          text: '',
+        },
+      },
+      [Progress.RECEIVE_IDENTITY]: {
+        Alice: {
+          title: 'Connect with BestBC College',
+          text: 'Imagine, as Alice, you are logged into the BestBC College website (see below). They want to offer you a Digital Student Card. Use your BC Wallet to scan the QR code from the website.',
+        },
+        Joyce: {
+          title: 'Connect with Court Services',
+          text: 'Under development',
+        },
+        Default: {
+          title: '',
+          text: '',
+        },
+      },
+      [Progress.ACCEPT_CREDENTIAL]: {
+        Alice: {
+          title: 'Accept your student card',
+          text: "Your wallet now has a secure and private connection with BestBC College. You should have received an offer in BC Wallet for a Student Card.\nReview what they are sending, and choose 'Accept offer'.",
+        },
+        Joyce: {
+          title: 'Accept your member card',
+          text: 'Under development',
+        },
+        Default: {
+          title: '',
+          text: '',
+        },
+      },
+      [Progress.SETUP_COMPLETED]: {
+        Alice: {
+          title: '',
+          text: 'Student Card',
+        },
+        Joyce: {
+          title: '',
+          text: 'Member Card',
+        },
+        Default: {
+          title: '',
+          text: '',
+        },
+      },
+    }
+    if (ret[progress]) {
+      const retval = ret[progress][currentCharacter?.name as string]
+      if (retval) {
+        return retval
+      }
+      return retval[progress]['Default']
+    }
+    return { title: '', text: '' }
+  }
   useEffect(() => {
     if (onboardingStep === Progress.RECEIVE_IDENTITY && connectionCompleted) {
       addOnboardingProgress()
@@ -98,6 +167,8 @@ export const OnboardingContainer: React.FC<Props> = ({
           content={OnboardingContent[progress]}
           currentCharacter={currentCharacter}
           characters={characters}
+          title={getCharacterContent(progress).title}
+          text={getCharacterContent(progress).text}
         />
       ),
       [Progress.RECEIVE_IDENTITY]: (
@@ -107,6 +178,8 @@ export const OnboardingContainer: React.FC<Props> = ({
           connectionId={connectionId}
           invitationUrl={invitationUrl}
           connectionState={connectionState}
+          title={getCharacterContent(progress).title}
+          text={getCharacterContent(progress).text}
         />
       ),
       [Progress.ACCEPT_CREDENTIAL]: currentCharacter && connectionId && (
@@ -116,6 +189,8 @@ export const OnboardingContainer: React.FC<Props> = ({
           connectionId={connectionId}
           credentials={credentials}
           currentCharacter={currentCharacter}
+          title={getCharacterContent(progress).title}
+          text={getCharacterContent(progress).text}
         />
       ),
       [Progress.SETUP_COMPLETED]: currentCharacter && (
@@ -123,6 +198,7 @@ export const OnboardingContainer: React.FC<Props> = ({
           key={Progress.SETUP_COMPLETED}
           content={OnboardingContent[progress]}
           characterName={currentCharacter.name}
+          credName={getCharacterContent(progress).text}
         />
       ),
     }

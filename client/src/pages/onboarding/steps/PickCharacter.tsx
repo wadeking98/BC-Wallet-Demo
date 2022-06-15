@@ -16,9 +16,11 @@ export interface Props {
   content: Content
   currentCharacter?: Character
   characters: Character[]
+  title: string
+  text: string
 }
 
-export const PickCharacter: React.FC<Props> = ({ content, currentCharacter, characters }) => {
+export const PickCharacter: React.FC<Props> = ({ content, currentCharacter, characters, title, text }) => {
   const dispatch = useAppDispatch()
   const darkMode = useDarkMode()
 
@@ -62,7 +64,7 @@ export const PickCharacter: React.FC<Props> = ({ content, currentCharacter, char
 
   return (
     <motion.div variants={fadeX} initial="hidden" animate="show" exit="exit">
-      <StepInformation title={content.title} text={content.text} />
+      <StepInformation title={title ? title : content.title} text={text ? text : content.text} />
       {
         <div className="flex flex-col lg:flex-row items-left lg:items-start justify-between px-8 h-full max-h-72 sm:max-h-96 overflow-y-scroll lg:overflow-y-hidden">
           {renderCharacters}
