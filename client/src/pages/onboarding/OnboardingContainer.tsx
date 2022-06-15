@@ -178,6 +178,7 @@ export const OnboardingContainer: React.FC<Props> = ({
           connectionId={connectionId}
           invitationUrl={invitationUrl}
           connectionState={connectionState}
+          currentCharacter={currentCharacter}
           title={getCharacterContent(progress).title}
           text={getCharacterContent(progress).text}
         />

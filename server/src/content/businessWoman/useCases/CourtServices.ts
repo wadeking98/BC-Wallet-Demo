@@ -19,25 +19,25 @@ export const CourtServices: UseCase = {
   },
 
   stepper: [
+    // {
+    //   id: uuid(),
+    //   name: `Start the login process`,
+    //   description: '',
+    //   steps: 1,
+    //   section: 1,
+    // },
     {
       id: uuid(),
-      name: `Start the login process`,
+      name: `Confirm the information to send`,
       description: '',
       steps: 1,
       section: 1,
     },
     {
       id: uuid(),
-      name: `Confirm the information to send`,
-      description: '',
-      steps: 2,
-      section: 1,
-    },
-    {
-      id: uuid(),
       name: `Done!`,
       description: '',
-      steps: 3,
+      steps: 2,
       section: 1,
     },
   ],
@@ -71,19 +71,19 @@ export const CourtServices: UseCase = {
           title: 'Login to Court Services',
           description: `Under Development`,
         },
+        // {
+        //   id: uuid(),
+        //   type: StepType.CONNECTION,
+        //   title: 'Start the Login Process',
+        //   description: `Under Development`,
+        //   image: `${URL}/best-bc-college-no-overlay.png`,
+        //   overlay: {
+        //     header: 'Scan with your BC Wallet to login',
+        //   },
+        // },
         {
           id: uuid(),
-          type: StepType.CONNECTION,
-          title: 'Start the Login Process',
-          description: `Under Development`,
-          image: `${URL}/best-bc-college-no-overlay.png`,
-          overlay: {
-            header: 'Scan with your BC Wallet to login',
-          },
-        },
-        {
-          id: uuid(),
-          type: StepType.PROOF,
+          type: StepType.PROOF_OOB,
           title: 'Confirm the information to send',
           description: `Under Development`,
           requestOptions: {

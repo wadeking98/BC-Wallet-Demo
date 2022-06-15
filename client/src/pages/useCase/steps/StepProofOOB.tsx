@@ -89,7 +89,7 @@ export const StepProofOOB: React.FC<Props> = ({ proof, proofUrl, step, requested
   const renderCTA = !proofReceived ? (
     <motion.div variants={fade} key="openWallet">
       <p>
-        Scan the QR-code with your <a href={deepLink}>wallet {isMobile && 'or'} </a>
+        Scan the OOB QR-code with your <a href={deepLink}>wallet {isMobile && 'or'} </a>
       </p>
       {isMobile && (
         <a href={deepLink} className="underline underline-offset-2 mt-2">
