@@ -7,7 +7,6 @@ import { StepType } from '../../types'
 const URL = '/public/student/useCases/store'
 
 const date = new Date()
-date.setFullYear(date.getFullYear() - 18)
 const todayDate = Number(date.toISOString().split('T')[0].replace(/-/g, ''))
 
 export const OnlineStore: UseCase = {
@@ -60,7 +59,7 @@ export const OnlineStore: UseCase = {
           name: 'Student Card',
           icon: '/public/student/icon-student.svg',
           // properties: ['expiry_date'],
-          predicates: { name: 'expiry_date', value: todayDate, type: '>=' },
+          predicates: { name: 'expiry_date', value: todayDate, type: '>' },
         },
       ],
       issueCredentials: [],
