@@ -39,7 +39,7 @@ export const PickCharacter: React.FC<Props> = ({ content, currentCharacter, char
     const cardStyleUnselected = `ring-4 ${darkMode ? 'ring-bcgov-black' : 'ring-bcgov-white'}`
 
     return (
-      <motion.div
+      <motion.button
         key={char.id}
         onClick={() => CharacterClickHandler(char)}
         whileHover={{ scale: 1.01 }}
@@ -58,13 +58,13 @@ export const PickCharacter: React.FC<Props> = ({ content, currentCharacter, char
           <h2 className="font-bold">{char.name}</h2>
           <p>{char.type}</p>
         </div>
-      </motion.div>
+      </motion.button>
     )
   })
 
   return (
     <motion.div variants={fadeX} initial="hidden" animate="show" exit="exit">
-      <StepInformation title={title ? title : content.title} text={text ? text : content.text} />
+      <StepInformation title={title ?? content.title} text={text ?? content.text} />
       {
         <div className="flex flex-col lg:flex-row items-left lg:items-start justify-between px-8 h-full max-h-72 sm:max-h-96 overflow-y-scroll lg:overflow-y-hidden">
           {renderCharacters}

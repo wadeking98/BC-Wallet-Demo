@@ -130,7 +130,7 @@ export const AcceptCredential: React.FC<Props> = ({
 
   return (
     <motion.div className="flex flex-col h-full" variants={fadeX} initial="hidden" animate="show" exit="exit">
-      <StepInformation title={title ? title : content.title} text={text ? text : content.text} />
+      <StepInformation title={title ?? content.title} text={text ?? content.text} />
       <div className="flex flex-row m-auto content-center">
         {currentCharacter.starterCredentials.length === credentials.length ? (
           <AnimatePresence exitBeforeEnter>

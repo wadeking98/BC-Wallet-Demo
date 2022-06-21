@@ -1,5 +1,6 @@
 import type { InitConfig } from '@aries-framework/core'
-import type { Express } from 'express'
+import type { Express, request } from 'express'
+import axios from 'axios'
 
 import {
   ConnectionInvitationMessage,
@@ -18,7 +19,7 @@ import { Container } from 'typedi'
 import { CredDefService } from './controllers/CredDefService'
 import { TestLogger } from './logger'
 import { AgentCleanup } from './utils/AgentCleanup'
-import { CANDY_DEV } from './utils/utils'
+import { CANDY_DEV, SOVRIN_MAINNET, SOVRIN_STAGINGNET } from './utils/utils'
 
 const logger = new TestLogger(process.env.NODE_ENV ? LogLevel.error : LogLevel.debug)
 
@@ -44,6 +45,16 @@ const run = async () => {
       {
         id: 'CandyDev',
         genesisTransactions: CANDY_DEV,
+        isProduction: false,
+      },
+      {
+        id: 'MainNet',
+        genesisTransactions: SOVRIN_MAINNET,
+        isProduction: false,
+      },
+      {
+        id: 'StagingNet',
+        genesisTransactions: SOVRIN_STAGINGNET,
         isProduction: false,
       },
     ],
@@ -83,6 +94,17 @@ const run = async () => {
         res.status(500)
         res.send({ detail: 'Unknown error occurred' })
       }
+    }
+  })
+
+  httpInbound.app.get('/url/:proofId', async (req, res) => {
+    const apiCall = axios.create({ baseURL: "http://localhost:5000" })
+    const proofData = await apiCall.get(`/proofs/${req.params.proofId}`)
+    const proofRequest = proofData.data.requestMessage
+    if(req.headers.accept === "application/json"){
+      res.json(proofRequest)
+    }else{
+      res.redirect(`/?d_m=${encodeURIComponent(Buffer.from(JSON.stringify(proofRequest)).toString('base64'))}`)
     }
   })
 

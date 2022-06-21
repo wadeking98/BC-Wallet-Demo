@@ -117,7 +117,7 @@ export const SetupConnection: React.FC<Props> = ({
       animate="show"
       exit="exit"
     >
-      <StepInformation title={title ? title : content.title} text={text ? text : content.text} />
+      <StepInformation title={title ?? content.title} text={text ?? content.text} />
       {renderQRCode}
       <div className="flex flex-col mt-4 text-center text-sm md:text-base font-semibold">{renderCTA}</div>
     </motion.div>

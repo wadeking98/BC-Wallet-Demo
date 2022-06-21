@@ -39,7 +39,7 @@ export const StepProofOOB: React.FC<Props> = ({ proof, proofUrl, step, requested
         proofs[item.name] = {
           restrictions: [
             {
-              cred_def_id: item.credentialDefinitionId,
+              schema_name: item.credentialDefinitionId?.split(':')[4],
             },
           ],
           names: item.properties,
@@ -49,7 +49,7 @@ export const StepProofOOB: React.FC<Props> = ({ proof, proofUrl, step, requested
         predicates[item.name] = {
           restrictions: [
             {
-              cred_def_id: item.credentialDefinitionId,
+              schema_name: item.credentialDefinitionId?.split(':')[4],
             },
           ],
           name: item.predicates?.name,
@@ -117,7 +117,9 @@ export const StepProofOOB: React.FC<Props> = ({ proof, proofUrl, step, requested
             exit="exit"
             className="flex flex-row m-auto p-4 bg-bcgov-white rounded-lg"
           >
-            {proofUrl && <QR value={proofUrl} size={isMobile ? 256 : isLarge ? 384 : 448} />}
+            {proofUrl && proof && (
+              <QR value={`${proofUrl.split('?')[0]}url/${proof.id}`} size={isMobile ? 192 : isLarge ? 212 : 256} />
+            )}
 
             {/* <div id="qr-target" /> */}
           </motion.div>
