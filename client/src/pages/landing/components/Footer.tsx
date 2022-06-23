@@ -9,7 +9,7 @@ export const Footer: React.FC = () => {
 
   return (
     <div>
-      <div className="flex dark:text-white justify-center content-center select-none">
+      <div className="flex dark:text-white justify-center content-center mt-2 select-none">
         <a href="mailto:Ditrust@gov.bc.ca">Ditrust@gov.bc.ca</a>
       </div>
       <div className="flex dark:text-white justify-center content-center select-none">

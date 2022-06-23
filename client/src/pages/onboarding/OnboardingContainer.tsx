@@ -132,7 +132,18 @@ export const OnboardingContainer: React.FC<Props> = ({
 
   const getImageToRender = (progress: Progress) => {
     const components = {
-      [Progress.SETUP_START]: null,
+      [Progress.SETUP_START]: (
+        <motion.img
+          variants={fadeExit}
+          initial="hidden"
+          animate="show"
+          exit="exit"
+          className="p-4"
+          key={Progress.SETUP_START}
+          src={OnboardingContent[progress].iconLight}
+          alt="BC Wallet"
+        />
+      ),
       [Progress.CHOOSE_WALLET]: (
         <motion.img
           variants={fadeExit}

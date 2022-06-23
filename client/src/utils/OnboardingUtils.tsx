@@ -9,6 +9,7 @@ import onboardingConnectDark from '../assets/dark/onboarding-connect-dark.svg'
 import onboardingCredentialDark from '../assets/dark/onboarding-credential-dark.svg'
 import onboardingStartDark from '../assets/dark/onboarding-started-dark.svg'
 import onboardingWalletDark from '../assets/dark/onboarding-wallet-dark.svg'
+import bcWalletIcon from '../assets/light/getStarted.svg'
 import balloonLight from '../assets/light/icon-balloon-light.svg'
 import moonLight from '../assets/light/icon-moon-light.svg'
 import notificationLight from '../assets/light/icon-notification-light.svg'
@@ -52,8 +53,8 @@ export const StepperItems = [
 
 export const OnboardingContent = {
   [Progress.SETUP_START]: {
-    iconLight: onboardingStartLight,
-    iconDark: onboardingStartDark,
+    iconLight: bcWalletIcon,
+    iconDark: bcWalletIcon,
     title: `Let's get started!`,
     text: `BC Wallet is a new app for storing and using credentials on your smartphone. Credentials are things like IDs, licenses and diplomas. In this demo, we'll show you how BC Wallet works. You'll learn how to put things into your wallet and use them where desired.`,
   },

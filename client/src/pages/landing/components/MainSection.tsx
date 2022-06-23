@@ -5,8 +5,7 @@ import { useMediaQuery } from 'react-responsive'
 import { useNavigate } from 'react-router-dom'
 
 import { buttonHover, fade, fadeDelay, landingTitle } from '../../../FramerAnimations'
-// import homeIllustrationDark from '../../../assets/dark/animo-home-illustration-dark.svg'
-// import homeIllustrationLight from '../../../assets/light/animo-home-illustration-light.svg'
+import landingScreen from '../../../assets/light/landingScreen.jpeg'
 import { useDarkMode } from '../../../hooks/useDarkMode'
 
 export const MainSection: React.FC = () => {
@@ -98,7 +97,7 @@ export const MainSection: React.FC = () => {
     >
       {isMobile ? renderMobileTitle : renderDesktopTitle}
       <div className="flex w-full md:w-1/3 lg:w-2/5 select-none">
-        {/* <img src={darkMode ? homeIllustrationDark : homeIllustrationLight} alt="bcgov-phone-light" /> */}
+        <img src={landingScreen} alt="bcgov-phone-light" />
       </div>
     </motion.div>
   )
