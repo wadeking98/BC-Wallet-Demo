@@ -11,8 +11,7 @@ export interface Props {
 
 export const DemoCompletedModal: React.FC<Props> = ({ action, cancel }) => {
   const TITLE = 'Demo completed!'
-  const DESCRIPTION =
-    'Congratulations on completing all use cases for this character. Feel free to try the demo again with a different character.'
+  const DESCRIPTION = ''
 
   return (
     <AnimatePresence>
@@ -42,6 +41,11 @@ export const DemoCompletedModal: React.FC<Props> = ({ action, cancel }) => {
                   <h2 className="text-xl font-medium text-grey-900">{TITLE}</h2>
                   <div className="mt-2 text-sm">
                     <p>{DESCRIPTION}</p>
+
+                    <br />
+                    <a href="https://animo.id/">
+                      Based on code by <u>Animo</u>
+                    </a>
                     <br />
                     <a href="https://storyset.com/business">
                       Business illustrations by <u>Storyset</u>

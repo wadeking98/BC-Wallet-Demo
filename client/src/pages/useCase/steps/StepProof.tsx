@@ -112,7 +112,12 @@ export const StepProof: React.FC<Props> = ({ proof, step, connectionId, requeste
       </div>
       <ActionCTA isCompleted={proofReceived} onFail={showFailedRequestModal} />
       {isFailedRequestModalOpen && (
-        <FailedRequestModal key="credentialModal" action={sendNewRequest} close={closeFailedRequestModal} />
+        <FailedRequestModal
+          key="credentialModal"
+          action={sendNewRequest}
+          close={closeFailedRequestModal}
+          proof={true}
+        />
       )}
     </motion.div>
   )
