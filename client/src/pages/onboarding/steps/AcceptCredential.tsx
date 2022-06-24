@@ -30,9 +30,18 @@ export interface Props {
   connectionId: string
   credentials: CredentialRecord[]
   currentCharacter: Character
+  title: string
+  text: string
 }
 
-export const AcceptCredential: React.FC<Props> = ({ content, connectionId, credentials, currentCharacter }) => {
+export const AcceptCredential: React.FC<Props> = ({
+  content,
+  connectionId,
+  credentials,
+  currentCharacter,
+  title,
+  text,
+}) => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
 
@@ -121,7 +130,7 @@ export const AcceptCredential: React.FC<Props> = ({ content, connectionId, crede
 
   return (
     <motion.div className="flex flex-col h-full" variants={fadeX} initial="hidden" animate="show" exit="exit">
-      <StepInformation title={content.title} text={content.text} />
+      <StepInformation title={title ?? content.title} text={text ?? content.text} />
       <div className="flex flex-row m-auto content-center">
         {currentCharacter.starterCredentials.length === credentials.length ? (
           <AnimatePresence exitBeforeEnter>

@@ -1,0 +1,8 @@
+export enum Progress {
+    SETUP_START = 0,
+    CHOOSE_WALLET,
+    PICK_CHARACTER,
+    RECEIVE_IDENTITY,
+    ACCEPT_CREDENTIAL,
+    SETUP_COMPLETED,
+  }
