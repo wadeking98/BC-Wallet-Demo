@@ -74,7 +74,7 @@ export const OnboardingContent = {
     iconLight: onboardingConnectLight,
     iconDark: onboardingConnectDark,
     title: `Connect with BestBC College`,
-    text: `Imagine, as Alice, you are logged into the BestBC College website (see below). They want to offer you a Digital Student Card. Use your BC Wallet to scan the QR code from the website.`,
+    text: `Imagine, as Alice, you are logged into the BestBC College website. They now want to offer you a Digital Student Card. Use your BC Wallet to scan the QR code from the website.`,
   },
   [Progress.ACCEPT_CREDENTIAL]: {
     iconLight: onboardingCredentialLight,

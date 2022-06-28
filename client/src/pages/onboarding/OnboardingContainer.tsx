@@ -107,6 +107,8 @@ export const OnboardingContainer: React.FC<Props> = ({
           connectionId={connectionId}
           invitationUrl={invitationUrl}
           connectionState={connectionState}
+          backgroundImage={currentCharacter?.backgroundImage}
+          onboardingText={currentCharacter?.onboardingText}
         />
       ),
       [Progress.ACCEPT_CREDENTIAL]: currentCharacter && connectionId && (

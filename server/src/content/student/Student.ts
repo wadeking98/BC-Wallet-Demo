@@ -7,6 +7,8 @@ export const Student: Character = {
   image: '/public/student/student.svg',
   name: 'Alice',
   type: 'Student',
+  backgroundImage: '/public/student/onboarding-overlay.png',
+  onboardingText: 'Add your Student ID to your digital wallet',
   backstory:
     "Meet Alice (that's you in this demo!). Alice is a student at BestBC College. To help make student life easier, BestBC College is going to offer Alice a digital Student Card to put in her BC Wallet",
   starterCredentials: [
