@@ -89,15 +89,10 @@ export const MainSection: React.FC = () => {
   )
 
   return (
-    <motion.div
-      className="flex flex-col md:flex-row dark:text-white flex-grow"
-      initial="hidden"
-      animate="show"
-      exit="exit"
-    >
+    <motion.div className="flex flex-col md:flex-row dark:text-white" initial="hidden" animate="show" exit="exit">
       {isMobile ? renderMobileTitle : renderDesktopTitle}
-      <div className="flex justify-center lg:w-2/5 select-none">
-        <img className="max-w-sm m-5" src={landingScreen} alt="bcgov-phone-light" />
+      <div className="flex justify-center">
+        <img className="m-5 max-w-sm" src={landingScreen} alt="bcgov-phone-light" />
       </div>
     </motion.div>
   )
