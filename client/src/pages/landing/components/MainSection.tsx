@@ -5,7 +5,7 @@ import { useMediaQuery } from 'react-responsive'
 import { useNavigate } from 'react-router-dom'
 
 import { buttonHover, fade, fadeDelay, landingTitle } from '../../../FramerAnimations'
-import landingScreen from '../../../assets/light/landingScreen.jpeg'
+import landingScreen from '../../../assets/light/landing-screen.svg'
 import { useDarkMode } from '../../../hooks/useDarkMode'
 
 export const MainSection: React.FC = () => {
@@ -89,10 +89,15 @@ export const MainSection: React.FC = () => {
   )
 
   return (
-    <motion.div className="flex flex-col md:flex-row dark:text-white" initial="hidden" animate="show" exit="exit">
+    <motion.div
+      className="flex flex-col md:flex-row dark:text-white flex-grow"
+      initial="hidden"
+      animate="show"
+      exit="exit"
+    >
       {isMobile ? renderMobileTitle : renderDesktopTitle}
-      <div className="flex justify-center">
-        <img className="m-5 max-w-sm" src={landingScreen} alt="bcgov-phone-light" />
+      <div className="flex justify-center flex-grow">
+        <img className="m-5 max-w-lg" src={landingScreen} alt="bcgov-phone-light" />
       </div>
     </motion.div>
   )
