@@ -86,7 +86,7 @@ export const OnlineStore: UseCase = {
           id: uuid(),
           type: StepType.PROOF,
           title: 'Confirm the information to send',
-          description: `BC Wallet will now ask you to confirm what to send. Notice how it will only share if the credential has expired or not—not even the expiry date itself gets shared. You don't have to share anything else for it to be trustable.`,
+          description: `BC Wallet will now ask you to confirm what to send. Notice how it will only share if the credential has expired, not even the expiry date itself gets shared. You don't have to share anything else for it to be trustable.`,
           requestOptions: {
             name: 'Cool Clothes Online Request',
             comment: 'Cool Clothes Online would like some of your personal information.',

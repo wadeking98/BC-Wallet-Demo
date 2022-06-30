@@ -4,9 +4,7 @@ import notificationDark from '../assets/dark/icon-notification-dark.svg'
 import personDark from '../assets/dark/icon-person-dark.svg'
 import walletDark from '../assets/dark/icon-wallet-dark.svg'
 import onboardingChooseDark from '../assets/dark/onboarding-choose-dark.svg'
-import onboardingCompletedDark from '../assets/dark/onboarding-completed-dark.svg'
 import onboardingConnectDark from '../assets/dark/onboarding-connect-dark.svg'
-import onboardingCredentialDark from '../assets/dark/onboarding-credential-dark.svg'
 import onboardingStartDark from '../assets/dark/onboarding-started-dark.svg'
 import onboardingWalletDark from '../assets/dark/onboarding-wallet-dark.svg'
 import bcWalletIcon from '../assets/light/getStarted.svg'
@@ -78,13 +76,13 @@ export const OnboardingContent = {
   },
   [Progress.ACCEPT_CREDENTIAL]: {
     iconLight: onboardingCredentialLight,
-    iconDark: onboardingCredentialDark,
+    iconDark: onboardingCredentialLight,
     title: `Accept your student card`,
     text: `Your wallet now has a secure and private connection with BestBC College. You should have received an offer in BC Wallet for a Student Card.\nReview what they are sending, and choose 'Accept offer'.`,
   },
   [Progress.SETUP_COMPLETED]: {
     iconLight: onboardingCompletedLight,
-    iconDark: onboardingCompletedDark,
+    iconDark: onboardingCompletedLight,
     title: `You're all set!`,
     text: `Congratulations, you’ve just received your first digital credentials. They are safely stored in your wallet and ready to be used. So, what are you waiting for? Let’s go!`,
   },
