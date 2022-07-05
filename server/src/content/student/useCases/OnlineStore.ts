@@ -69,7 +69,7 @@ export const OnlineStore: UseCase = {
           type: StepType.START,
           image: `${URL}/card-school.svg`,
           title: 'Getting a student discount',
-          description: `Alice (that's you in this demo!) can get a student discount on her online purchase. In this example, you will just tell Cool Clothes Online you're a student`,
+          description: `Alice (that's you in this demo!) can get a student discount on her online purchase. In this example, you will just tell Cool Clothes Online you're a student.`,
         },
         {
           id: uuid(),
@@ -86,7 +86,7 @@ export const OnlineStore: UseCase = {
           id: uuid(),
           type: StepType.PROOF,
           title: 'Confirm the information to send',
-          description: `BC Wallet will now ask you to confirm what to send. Notice how it will only share that you're a current student (i.e. yes or no). You don't have to share anything else for it to be trustable.`,
+          description: `BC Wallet will now ask you to confirm what to send. Notice how it will only share if the credential has expired, not even the expiry date itself gets shared. You don't have to share anything else for it to be trustable.`,
           requestOptions: {
             name: 'Cool Clothes Online Request',
             comment: 'Cool Clothes Online would like some of your personal information.',

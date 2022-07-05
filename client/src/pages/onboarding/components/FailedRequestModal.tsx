@@ -6,9 +6,10 @@ import { SmallButton } from '../../../components/SmallButton'
 export interface Props {
   action(): void
   close?(): void
+  proof?: boolean
 }
 
-export const FailedRequestModal: React.FC<Props> = ({ action, close }) => {
+export const FailedRequestModal: React.FC<Props> = ({ action, close, proof }) => {
   const MODAL_TITLE = `That's not what we expected.`
 
   return (
@@ -45,9 +46,9 @@ export const FailedRequestModal: React.FC<Props> = ({ action, close }) => {
                   <h2 className="text-xl font-medium text-grey-900">{MODAL_TITLE}</h2>
                   <div className="mt-2">
                     <p className="text-sm">
-                      Try closing the wallet on your phone and open it again. If the problem continues, we can{' '}
+                      Try closing the wallet on your phone and opening it again. If the problem continues,{' '}
                       <u className="cursor-pointer" onClick={action}>
-                        send a new request.
+                        send another {proof ? 'proof request' : 'credential'}.
                       </u>
                     </p>
                   </div>

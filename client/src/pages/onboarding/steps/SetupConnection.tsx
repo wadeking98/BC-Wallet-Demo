@@ -19,6 +19,7 @@ import { clearCredentials } from '../../../slices/credentials/credentialsSlice'
 import { completeOnboarding, setOnboardingConnectionId } from '../../../slices/onboarding/onboardingSlice'
 import { setConnectionDate } from '../../../slices/preferences/preferencesSlice'
 import { fetchAllUseCasesByCharId } from '../../../slices/useCases/useCasesThunks'
+import { prependApiUrl } from '../../../utils/Url'
 import { StepInformation } from '../components/StepInformation'
 
 export interface Props {
@@ -29,16 +30,20 @@ export interface Props {
   connectionState?: string
   title: string
   text: string
+  backgroundImage?: string
+  onboardingText?: string
 }
 
 export const SetupConnection: React.FC<Props> = ({
   content,
   connectionId,
   currentCharacter,
-  invitationUrl,
-  connectionState,
   title,
   text,
+  invitationUrl,
+  connectionState,
+  backgroundImage,
+  onboardingText,
 }) => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
@@ -77,13 +82,11 @@ export const SetupConnection: React.FC<Props> = ({
     !isCompleted ? 1000 : null
   )
 
-  const renderQRCode = invitationUrl ? (
-    <QRCode invitationUrl={invitationUrl} connectionState={connectionState} />
-  ) : (
-    <div className="m-auto">
-      <Loader />
-    </div>
-  )
+  const renderQRCode = (overlay?: boolean) => {
+    return invitationUrl ? (
+      <QRCode invitationUrl={invitationUrl} connectionState={connectionState} overlay={overlay} />
+    ) : null
+  }
 
   const deepLink = `didcomm://aries_connection_invitation?${invitationUrl?.split('?')[1]}`
   const isMobile = useMediaQuery({ query: '(max-width: 768px)' })
@@ -109,7 +112,7 @@ export const SetupConnection: React.FC<Props> = ({
     </motion.div>
   )
 
-  return (
+  return !backgroundImage || isMobile ? (
     <motion.div
       className="flex flex-col h-full  dark:text-white"
       variants={fadeX}
@@ -118,8 +121,30 @@ export const SetupConnection: React.FC<Props> = ({
       exit="exit"
     >
       <StepInformation title={title ?? content.title} text={text ?? content.text} />
-      {renderQRCode}
+      <div className="max-w-xs flex flex-col self-center items-center bg-white rounded-lg p-4  dark:text-black">
+        {renderQRCode(true)}
+      </div>
       <div className="flex flex-col mt-4 text-center text-sm md:text-base font-semibold">{renderCTA}</div>
+    </motion.div>
+  ) : (
+    <motion.div
+      className="flex flex-col h-full  dark:text-white"
+      variants={fadeX}
+      initial="hidden"
+      animate="show"
+      exit="exit"
+    >
+      <StepInformation title={content.title} text={content.text} />
+      <div
+        className="bg-contain position-relative bg-center bg-no-repeat h-full flex justify-center"
+        style={{ backgroundImage: `url(${prependApiUrl(backgroundImage as string)})` }}
+      >
+        <div className="max-w-xs flex flex-col self-center items-center bg-white rounded-lg p-4  dark:text-black">
+          {onboardingText && <p className="text-center font-semibold mb-2">{onboardingText}</p>}
+          <p className="text-center mb-2">Scan the QR Code below with your digital wallet.</p>
+          <div>{renderQRCode(true)}</div>
+        </div>
+      </div>
     </motion.div>
   )
 }

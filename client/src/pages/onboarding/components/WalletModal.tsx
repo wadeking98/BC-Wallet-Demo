@@ -95,7 +95,9 @@ export const WalletModal: React.FC<Props> = ({ isWalletModalOpen, setIsWalletMod
                 <div>
                   <p className="font-semibold">Android</p>
                   <ul className="list-disc pl-4 my-2">
-                    <li>{'<TODO>'}</li>
+                    <li>
+                      <i>coming soon</i>
+                    </li>
                   </ul>
                 </div>
               </div>
