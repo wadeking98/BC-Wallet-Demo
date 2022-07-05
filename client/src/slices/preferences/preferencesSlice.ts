@@ -8,6 +8,7 @@ interface PreferencesState {
   darkMode: boolean
   completedUseCaseSlugs: string[]
   demoCompleted: boolean
+  completeCanceled: boolean
   connectionDate?: Date
   lastServerReset?: Date
 }
@@ -16,6 +17,7 @@ const initialState: PreferencesState = {
   darkMode: false,
   completedUseCaseSlugs: [],
   demoCompleted: false,
+  completeCanceled: false,
   connectionDate: undefined,
   lastServerReset: undefined,
 }
@@ -39,10 +41,13 @@ const preferencesSlice = createSlice({
       state.connectionDate = action.payload
     },
     useCaseCompleted: (state, action: PayloadAction<string>) => {
-      state.completedUseCaseSlugs.push(action.payload)
+      if (!state.completedUseCaseSlugs.includes(action.payload)) {
+        state.completedUseCaseSlugs.push(action.payload)
+      }
+      state.completeCanceled = false
     },
-    setDemoCompleted: (state) => {
-      state.demoCompleted = true
+    setDemoCompleted: (state, val) => {
+      state.demoCompleted = val.payload
     },
     resetDashboard: (state) => {
       state.completedUseCaseSlugs = []

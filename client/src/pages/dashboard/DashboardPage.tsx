@@ -29,7 +29,7 @@ export const DashboardPage: React.FC = () => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const { issuedCredentials } = useCredentials()
-  const { completedUseCaseSlugs, demoCompleted } = usePreferences()
+  const { completedUseCaseSlugs, demoCompleted, completeCanceled } = usePreferences()
   const currentCharacter = useCurrentCharacter()
   const useCases = useAllUseCases()
 
@@ -41,8 +41,8 @@ export const DashboardPage: React.FC = () => {
   }, [])
 
   useEffect(() => {
-    if (completedUseCaseSlugs.length !== 0 && completedUseCaseSlugs.length === useCases.length) {
-      dispatch(setDemoCompleted())
+    if (completedUseCaseSlugs.length !== 0 && completedUseCaseSlugs.length === useCases.length && !completeCanceled) {
+      dispatch(setDemoCompleted(true))
     }
   }, [completedUseCaseSlugs, useCases])
 
@@ -67,6 +67,10 @@ export const DashboardPage: React.FC = () => {
         },
       })
     }
+  }
+
+  const cancelCompleteDemo = () => {
+    dispatch(setDemoCompleted(false))
   }
 
   return (
@@ -100,7 +104,7 @@ export const DashboardPage: React.FC = () => {
           <Modal title={ERROR_TITLE} description={ERROR_DESCRIPTION} onOk={routeError} />
         </AnimatePresence>
       )}
-      {demoCompleted && <DemoCompletedModal action={completeDemo} />}
+      {demoCompleted && <DemoCompletedModal action={completeDemo} cancel={cancelCompleteDemo} />}
       <Footer />
     </motion.div>
   )
