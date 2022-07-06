@@ -5,6 +5,8 @@ export interface Character {
   type: string
   backstory: string
   content: { [key: number]: { [key: string]: string } }
+  backgroundImage?: string
+  onboardingText?: string
   starterCredentials: StarterCredential[]
 }
 
@@ -95,10 +97,12 @@ export interface Step {
   useProof?: boolean
   endStepper?: EndStepperItem[]
   overlay?: Overlay
+  overlayImage?: boolean
 }
 
 export interface Overlay {
   header?: string
+  subheader?: string
   footer?: string
 }
 

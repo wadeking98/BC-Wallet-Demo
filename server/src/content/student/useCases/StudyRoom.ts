@@ -85,7 +85,7 @@ export const StudyRoom: UseCase = {
           id: uuid(),
           type: StepType.PROOF,
           title: 'Confirm the information to send',
-          description: `BC Wallet will now ask you to confirm what to send for the booking. Notice how they only need your first name so they can display it on the booking screen. By providing anything from your student card, they automatically know you're a current student as well.`,
+          description: `BC Wallet will now ask you to confirm what to send for the booking. Notice how they only need your first name so they can display it on the booking screen. By providing anything from your student card, they automatically know your student card hasn't been revoked.`,
           requestOptions: {
             name: 'BestBC College Request',
             comment: 'BestBC College would like some of your personal information.',
@@ -95,7 +95,7 @@ export const StudyRoom: UseCase = {
           id: uuid(),
           type: StepType.STEP_END,
           title: `You're done!`,
-          description: `The room is booked. Just by proving your first name, Best BC College could trust your are a current student, and could let others know there's a booking without revealing too much about you.`,
+          description: `The room is booked. Just by proving your first name, Best BC College could trust you are a current student, and could let others know there's a booking without revealing too much about you.`,
           image: `${URL}/student-accepted.svg`,
         },
       ],

@@ -19,10 +19,10 @@ export const StartButton: React.FC<Props> = ({ text, onClick, disabled, isComple
       <motion.button
         whileHover={buttonHover}
         className={`text-sm bg-bcgov-blue dark:bg-bcgov-white text-white dark:text-black w-24 h-8 py-1.5 px-4 rounded font-semibold shadow-sm ${
-          disabled || isCompleted ? 'opacity-20 cursor-not-allowed' : 'opacity-100'
+          disabled ? 'opacity-20 cursor-not-allowed' : 'opacity-100'
         }`}
         onClick={onClick ?? undefined}
-        disabled={disabled ? true : isCompleted ? true : false}
+        disabled={disabled}
         data-cy="select-use-case"
       >
         {disabled && (

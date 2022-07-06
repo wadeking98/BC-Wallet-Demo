@@ -5,8 +5,7 @@ import { useMediaQuery } from 'react-responsive'
 import { useNavigate } from 'react-router-dom'
 
 import { buttonHover, fade, fadeDelay, landingTitle } from '../../../FramerAnimations'
-// import homeIllustrationDark from '../../../assets/dark/animo-home-illustration-dark.svg'
-// import homeIllustrationLight from '../../../assets/light/animo-home-illustration-light.svg'
+import landingScreen from '../../../assets/light/landing-screen.svg'
 import { useDarkMode } from '../../../hooks/useDarkMode'
 
 export const MainSection: React.FC = () => {
@@ -79,7 +78,7 @@ export const MainSection: React.FC = () => {
           <motion.button
             variants={fadeDelay}
             whileHover={buttonHover}
-            className="bg-white dark:bg-black text-black dark:text-white py-3 px-5 ml-4 rounded-lg font-semibold shadow-sm dark:shadow-none select-none "
+            className="bg-white dark:bg-bcgov-gold text-black dark:text-bcgov-black py-3 px-5 ml-4 rounded-lg font-semibold shadow-sm dark:shadow-none select-none "
           >
             <p className="inline">Get to know us &nbsp;</p>
             <FiExternalLink className="inline h-6 pb-1" />
@@ -97,8 +96,8 @@ export const MainSection: React.FC = () => {
       exit="exit"
     >
       {isMobile ? renderMobileTitle : renderDesktopTitle}
-      <div className="flex w-full md:w-1/3 lg:w-2/5 select-none">
-        {/* <img src={darkMode ? homeIllustrationDark : homeIllustrationLight} alt="bcgov-phone-light" /> */}
+      <div className="flex justify-center flex-grow">
+        <img className="m-5 max-w-lg" src={landingScreen} alt="bcgov-phone-light" />
       </div>
     </motion.div>
   )
