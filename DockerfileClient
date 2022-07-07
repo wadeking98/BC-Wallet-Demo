@@ -23,15 +23,13 @@ RUN apt-get update -y && apt-get install -y --allow-unauthenticated \
     libvcx \
     nodejs
 
-RUN chmod g+rwx /root
-
 COPY ./ /www
 WORKDIR /www
-RUN npm install
+RUN npm install -g yarn
+RUN umask 002 && yarn install
 
 WORKDIR /www/client
-RUN npm install
-
+RUN umask 002 && yarn install
 
 EXPOSE 3000
-ENTRYPOINT ["npm", "run", "start"]
+ENTRYPOINT ["yarn", "dev"]
