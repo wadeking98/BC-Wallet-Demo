@@ -21,11 +21,11 @@ export const Student: Character = {
         { name: 'student_last_name', value: 'Smith' },
         {
           name: 'expiry_date',
-          value: (function () {
+          value() {
             const expiry = new Date()
             expiry.setFullYear(expiry.getFullYear() + 4)
             return expiry.toISOString().split('T')[0].replace(/-/g, '')
-          })(),
+          },
         },
       ],
     },

@@ -50,7 +50,7 @@ export interface RequestedCredential {
   name: string
   icon: string
   properties?: string[]
-  predicates?: { name: string; value: string | number; type: string }
+  predicates?: { name: string; value?: string | number | (() => string | number); type: string }
   credentialDefinitionId?: string
 }
 
@@ -74,7 +74,7 @@ export interface IssueCredential {
 
 export interface Attribute {
   name: string
-  value: string | number
+  value: string | number | (() => string | number)
 }
 
 export interface StepperItem {
