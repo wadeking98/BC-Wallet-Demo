@@ -6,14 +6,6 @@ import { StepType } from '../../types'
 
 const URL = '/public/student/useCases/store'
 
-
-// need to limit the scope of `date` so that is it destroyed and 
-// re-created whenever we send a proof request
-function getDate() {
-  const date = new Date()
-  return Number(date.toISOString().split('T')[0].replace(/-/g, ''))
-}
-
 export const OnlineStore: UseCase = {
   slug: 'store',
   card: {
@@ -64,7 +56,12 @@ export const OnlineStore: UseCase = {
           name: 'Student Card',
           icon: '/public/student/icon-student.svg',
           // properties: ['expiry_date'],
-          predicates: { name: 'expiry_date', value: getDate(), type: '>=' },
+          predicates: {
+            name: 'expiry_date', value() {
+              const date = new Date()
+              return Number(date.toISOString().split('T')[0].replace(/-/g, ''))
+            }, type: '>='
+          },
         },
       ],
       issueCredentials: [],
