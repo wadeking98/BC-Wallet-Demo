@@ -4,6 +4,7 @@ export interface Character {
   name: string
   type: string
   backstory: string
+  content: { [key: number]: { [key: string]: string } }
   backgroundImage?: string
   onboardingText?: string
   starterCredentials: StarterCredential[]
