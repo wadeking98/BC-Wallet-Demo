@@ -65,8 +65,8 @@ export const OnboardingContent = {
   [Progress.PICK_CHARACTER]: {
     iconLight: onboardingChooseLight,
     iconDark: onboardingChooseDark,
-    title: `Meet Alice`,
-    text: `Meet Alice (that's you in this demo!). Alice is a student at BestBC College. To help make student life easier, BestBC College is going to offer Alice a digital Student Card to put in her BC Wallet.`,
+    title: `Who do you want to be today?`,
+    text: 'It’s time to pick your character. Every character has its own set of use cases, which explore the power of digital credentials. Don’t worry, you can change your character later.',
   },
   [Progress.RECEIVE_IDENTITY]: {
     iconLight: onboardingConnectLight,

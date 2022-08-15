@@ -76,6 +76,14 @@ export const OnboardingContainer: React.FC<Props> = ({
     dispatch(prevOnboardingStep())
   }
 
+  //override title and text content to make them character dependant
+  const getCharacterContent = (progress: number) => {
+    const characterContent = currentCharacter?.content[progress]
+    if (characterContent) {
+      return characterContent
+    }
+    return { title: '', text: '' }
+  }
   useEffect(() => {
     if (onboardingStep === Progress.RECEIVE_IDENTITY && connectionCompleted) {
       addOnboardingProgress()
@@ -83,6 +91,7 @@ export const OnboardingContainer: React.FC<Props> = ({
   }, [connectionState])
 
   const getComponentToRender = (progress: Progress) => {
+    const { text, title } = getCharacterContent(progress)
     const components = {
       [Progress.SETUP_START]: <SetupStart key={Progress.SETUP_START} content={OnboardingContent[progress]} />,
       [Progress.CHOOSE_WALLET]: (
@@ -98,6 +107,8 @@ export const OnboardingContainer: React.FC<Props> = ({
           content={OnboardingContent[progress]}
           currentCharacter={currentCharacter}
           characters={characters}
+          title={title}
+          text={text}
         />
       ),
       [Progress.RECEIVE_IDENTITY]: (
@@ -107,6 +118,9 @@ export const OnboardingContainer: React.FC<Props> = ({
           connectionId={connectionId}
           invitationUrl={invitationUrl}
           connectionState={connectionState}
+          currentCharacter={currentCharacter}
+          title={title}
+          text={text}
           backgroundImage={currentCharacter?.backgroundImage}
           onboardingText={currentCharacter?.onboardingText}
         />
@@ -118,6 +132,8 @@ export const OnboardingContainer: React.FC<Props> = ({
           connectionId={connectionId}
           credentials={credentials}
           currentCharacter={currentCharacter}
+          title={title}
+          text={text}
         />
       ),
       [Progress.SETUP_COMPLETED]: currentCharacter && (
@@ -125,6 +141,7 @@ export const OnboardingContainer: React.FC<Props> = ({
           key={Progress.SETUP_COMPLETED}
           content={OnboardingContent[progress]}
           characterName={currentCharacter.name}
+          credName={text}
         />
       ),
     }

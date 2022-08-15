@@ -8,9 +8,10 @@ import { fadeX } from '../../../FramerAnimations'
 export interface Props {
   content: Content
   characterName: string
+  credName: string
 }
 
-export const SetupCompleted: React.FC<Props> = ({ content, characterName }) => {
+export const SetupCompleted: React.FC<Props> = ({ content, characterName, credName }) => {
   const lastIndex = content.title.lastIndexOf(' ')
   const lastWord = (
     <p className="inline text-bcgov-blue dark:text-bcgov-gold">{content.title.substring(lastIndex + 1)}</p>
@@ -28,18 +29,18 @@ export const SetupCompleted: React.FC<Props> = ({ content, characterName }) => {
         </div>
         <div className="pt-4 flex-1 mb-6">
           <div className="dark:text-white">
-            <p>Your (pretend) Student Card is in your BC Wallet!</p>
+            <p>Your (pretend) {credName} is in your BC Wallet!</p>
             <div className="bg-bcgov-white dark:bg-bcgov-black py-4 px-8">
               <ul className="list-disc">
-                <li>You control when you use the Student Card.</li>
-                <li>You can share part of the Student Card's information, or even just that you're a student.</li>
+                <li>You control when you use the {credName}.</li>
+                <li>You can share part of the {credName}'s information, or even just that you're a member.</li>
                 <li>No one else is told when you use it.</li>
-                <li>The information from your Student Card is always shared securely.</li>
+                <li>The information from your {credName} is always shared securely.</li>
                 <li>Anyone who receives the information can trust it's legitimate.</li>
               </ul>
             </div>
 
-            <p>We're done with this step. Next, we'll explore ways you can use your Student Card.</p>
+            <p>We're done with this step. Next, we'll explore ways you can use your {credName}.</p>
           </div>
         </div>
       </div>

@@ -53,7 +53,9 @@ function App() {
         <AnimatePresence exitBeforeEnter>
           <Routes location={location} key={location.pathname}>
             <Route path="/" element={<LandingPage />} />
+            <Route path="/:slug" element={<LandingPage />} />
             <Route path="/demo" element={<OnboardingPage />} />
+            <Route path="/demo/:slug" element={<OnboardingPage />} />
             <Route
               path="/dashboard"
               element={

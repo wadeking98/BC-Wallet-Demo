@@ -54,7 +54,7 @@ export const StepConnection: React.FC<Props> = ({ step, connection, entity }) =>
             <FiExternalLink className="inline pb-1" />
           </a>
         )}{' '}
-        to prove you're a student.
+        to prove things about yourself
       </p>
     </motion.div>
   ) : (

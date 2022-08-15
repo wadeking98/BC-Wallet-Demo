@@ -1,6 +1,8 @@
+import type { Character } from '../../slices/types'
+
 import { AnimatePresence, motion } from 'framer-motion'
 import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 import { page } from '../../FramerAnimations'
 import { useAppDispatch } from '../../hooks/hooks'
@@ -23,6 +25,8 @@ import { Stepper } from './components/Stepper'
 
 export const OnboardingPage: React.FC = () => {
   useTitle('Get Started | BC Wallet Self-Sovereign Identity Demo')
+
+  const { slug } = useParams()
 
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
@@ -50,9 +54,13 @@ export const OnboardingPage: React.FC = () => {
   }, [dispatch])
 
   useEffect(() => {
-    // Ensures that the character is always Alice
+    // use character from route
     if (characters?.length) {
-      dispatch(setCharacter(characters[0]))
+      let character: Character | undefined = characters[0]
+      if (slug) {
+        character = characters.find((char) => char.type.toLowerCase() === slug)
+      }
+      dispatch(setCharacter(character ?? characters[0]))
     }
   }, [characters])
 

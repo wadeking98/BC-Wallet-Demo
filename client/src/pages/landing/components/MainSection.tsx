@@ -2,7 +2,7 @@ import { motion } from 'framer-motion'
 import React from 'react'
 import { FiExternalLink, FiArrowRight } from 'react-icons/fi'
 import { useMediaQuery } from 'react-responsive'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 import { buttonHover, fade, fadeDelay, landingTitle } from '../../../FramerAnimations'
 import landingScreen from '../../../assets/light/landing-screen.svg'
@@ -11,11 +11,16 @@ import { useDarkMode } from '../../../hooks/useDarkMode'
 export const MainSection: React.FC = () => {
   const isMobile = useMediaQuery({ query: '(max-width: 768px)' })
   const darkMode = useDarkMode()
+  const { slug } = useParams()
 
   const navigate = useNavigate()
 
   const handleStart = () => {
-    navigate('/demo')
+    if (slug) {
+      navigate(`/demo/${slug}`)
+    } else {
+      navigate('/demo')
+    }
   }
 
   const renderMobileTitle = (

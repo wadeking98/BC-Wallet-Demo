@@ -1,26 +1,35 @@
+import type { Character } from '../../../slices/types'
 import type { Content } from '../../../utils/OnboardingUtils'
 
 import { motion } from 'framer-motion'
 import React, { useEffect } from 'react'
 import { FiExternalLink } from 'react-icons/fi'
 import { useMediaQuery } from 'react-responsive'
+import { useNavigate } from 'react-router-dom'
 
 import { fade, fadeX } from '../../../FramerAnimations'
+import { Button } from '../../../components/Button'
 import { Loader } from '../../../components/Loader'
 import { QRCode } from '../../../components/QRCode'
 import { useAppDispatch } from '../../../hooks/hooks'
 import { useInterval } from '../../../hooks/useInterval'
+import { clearConnection } from '../../../slices/connection/connectionSlice'
 import { createInvitation, fetchConnectionById } from '../../../slices/connection/connectionThunks'
-import { setOnboardingConnectionId } from '../../../slices/onboarding/onboardingSlice'
+import { clearCredentials } from '../../../slices/credentials/credentialsSlice'
+import { completeOnboarding, setOnboardingConnectionId } from '../../../slices/onboarding/onboardingSlice'
 import { setConnectionDate } from '../../../slices/preferences/preferencesSlice'
+import { fetchAllUseCasesByCharId } from '../../../slices/useCases/useCasesThunks'
 import { prependApiUrl } from '../../../utils/Url'
 import { StepInformation } from '../components/StepInformation'
 
 export interface Props {
   content: Content
   connectionId?: string
+  currentCharacter?: Character
   invitationUrl?: string
   connectionState?: string
+  title: string
+  text: string
   backgroundImage?: string
   onboardingText?: string
 }
@@ -28,12 +37,28 @@ export interface Props {
 export const SetupConnection: React.FC<Props> = ({
   content,
   connectionId,
+  currentCharacter,
+  title,
+  text,
   invitationUrl,
   connectionState,
   backgroundImage,
   onboardingText,
 }) => {
   const dispatch = useAppDispatch()
+  const navigate = useNavigate()
+  const onboardingCompleted = () => {
+    if (connectionId && currentCharacter) {
+      navigate('/dashboard')
+      dispatch(clearCredentials())
+      dispatch(clearConnection())
+      dispatch(completeOnboarding())
+      dispatch(fetchAllUseCasesByCharId(currentCharacter.id))
+    } else {
+      // something went wrong so reset
+      dispatch({ type: 'demo/RESET' })
+    }
+  }
   const isCompleted = connectionState === 'responded' || connectionState === 'complete'
 
   useEffect(() => {
@@ -77,6 +102,9 @@ export const SetupConnection: React.FC<Props> = ({
           <FiExternalLink className="inline pb-1" />
         </a>
       )}
+      {currentCharacter?.type === 'Lawyer' && (
+        <Button text="I Already Have my Credential" onClick={onboardingCompleted}></Button>
+      )}
     </motion.div>
   ) : (
     <motion.div variants={fade} key="ctaCompleted">
@@ -92,8 +120,10 @@ export const SetupConnection: React.FC<Props> = ({
       animate="show"
       exit="exit"
     >
-      <StepInformation title={content.title} text={content.text} />
-      {renderQRCode(false)}
+      <StepInformation title={title ?? content.title} text={text ?? content.text} />
+      <div className="max-w-xs flex flex-col self-center items-center bg-white rounded-lg p-4  dark:text-black">
+        {renderQRCode(true)}
+      </div>
       <div className="flex flex-col mt-4 text-center text-sm md:text-base font-semibold">{renderCTA}</div>
     </motion.div>
   ) : (
