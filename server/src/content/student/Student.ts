@@ -48,4 +48,8 @@ export const Student: Character = {
       ],
     },
   ],
+  onboardingEntity:{
+    name:"BestBC College",
+    icon:"#"
+  }
 }

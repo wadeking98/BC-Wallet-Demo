@@ -62,7 +62,7 @@ export const SetupConnection: React.FC<Props> = ({
   const isCompleted = connectionState === 'responded' || connectionState === 'complete'
 
   useEffect(() => {
-    if (!isCompleted) dispatch(createInvitation())
+    if (!isCompleted) dispatch(createInvitation(currentCharacter?.onboardingEntity))
   }, [])
 
   useEffect(() => {
