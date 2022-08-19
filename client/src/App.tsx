@@ -1,6 +1,6 @@
 import { AnimatePresence } from 'framer-motion'
 import { useEffect } from 'react'
-import { Routes, Route, useLocation, useNavigate } from 'react-router-dom'
+import { Routes, Route, useLocation, useNavigate, Navigate } from 'react-router-dom'
 
 import { useAppDispatch } from './hooks/hooks'
 import { useAnalytics } from './hooks/useAnalytics'
@@ -13,6 +13,7 @@ import { usePreferences } from './slices/preferences/preferencesSelectors'
 import { setDarkMode } from './slices/preferences/preferencesSlice'
 import { fetchLastServerReset } from './slices/preferences/preferencesThunks'
 import { AuthProvider } from './utils/AuthContext'
+import { basePath } from './utils/BasePath'
 import { PrivateRoute } from './utils/PrivateRoute'
 import { ThemeProvider } from './utils/ThemeContext'
 
@@ -41,7 +42,7 @@ function App() {
   useEffect(() => {
     if (connectionDate && lastServerReset) {
       if (connectionDate < lastServerReset) {
-        navigate('/')
+        navigate(`${basePath}/`)
         dispatch({ type: 'demo/RESET' })
       }
     }
@@ -52,12 +53,13 @@ function App() {
       <AuthProvider>
         <AnimatePresence exitBeforeEnter>
           <Routes location={location} key={location.pathname}>
-            <Route path="/" element={<LandingPage />} />
-            <Route path="/:slug" element={<LandingPage />} />
-            <Route path="/demo" element={<OnboardingPage />} />
-            <Route path="/demo/:slug" element={<OnboardingPage />} />
+            {basePath !== '/' && <Route path="/" element={<Navigate to={basePath} />}></Route>}
+            <Route path={`${basePath}/`} element={<LandingPage />} />
+            <Route path={`${basePath}/:slug`} element={<LandingPage />} />
+            <Route path={`${basePath}/demo`} element={<OnboardingPage />} />
+            <Route path={`${basePath}/demo/:slug`} element={<OnboardingPage />} />
             <Route
-              path="/dashboard"
+              path={`${basePath}/dashboard`}
               element={
                 <PrivateRoute>
                   <DashboardPage />
@@ -65,7 +67,7 @@ function App() {
               }
             />
             <Route
-              path="/uc/:slug"
+              path={`${basePath}/uc/:slug`}
               element={
                 <PrivateRoute>
                   <UseCasePage />

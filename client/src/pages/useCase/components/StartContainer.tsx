@@ -10,6 +10,7 @@ import { fadeExit } from '../../../FramerAnimations'
 import { SmallButton } from '../../../components/SmallButton'
 import { useAppDispatch } from '../../../hooks/hooks'
 import { nextStep } from '../../../slices/useCases/useCasesSlice'
+import { basePath } from '../../../utils/BasePath'
 import { prependApiUrl } from '../../../utils/Url'
 
 import { StarterInfo } from './StarterInfo'
@@ -28,7 +29,7 @@ export const StartContainer: React.FC<Props> = ({ entity, requestedCredentials, 
   const style = isMobile ? { minHeight: '85vh' } : { maxHeight: '940px' }
 
   const leave = () => {
-    navigate('/dashboard')
+    navigate(`${basePath}/dashboard`)
   }
 
   const next = () => {

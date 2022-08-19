@@ -20,6 +20,7 @@ import { StepType } from '../../slices/types'
 import { useUseCaseState } from '../../slices/useCases/useCasesSelectors'
 import { nextSection } from '../../slices/useCases/useCasesSlice'
 import { fetchUseCaseBySlug } from '../../slices/useCases/useCasesThunks'
+import { basePath } from '../../utils/BasePath'
 
 import { Section } from './Section'
 
@@ -67,7 +68,7 @@ export const UseCasePage: React.FC = () => {
   const ERROR_TITLE = `Woops...`
   const ERROR_DESCRIPTION = `You haven't picked your character yet. Please restart the demo.`
   const routeError = () => {
-    navigate('/demo')
+    navigate(`${basePath}/demo`)
   }
 
   return (

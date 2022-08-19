@@ -21,6 +21,7 @@ import {
   fetchCredentialsByConId,
   issueCredential,
 } from '../../../slices/credentials/credentialsThunks'
+import { basePath } from '../../../utils/BasePath'
 import { FailedRequestModal } from '../components/FailedRequestModal'
 import { StarterCredentials } from '../components/StarterCredentials'
 import { StepInformation } from '../components/StepInformation'
@@ -105,7 +106,7 @@ export const AcceptCredential: React.FC<Props> = ({
   )
 
   const routeError = () => {
-    navigate('/demo')
+    navigate(`${basePath}/demo`)
     dispatch({ type: 'demo/RESET' })
   }
 

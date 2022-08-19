@@ -19,6 +19,7 @@ import { clearCredentials } from '../../../slices/credentials/credentialsSlice'
 import { completeOnboarding, setOnboardingConnectionId } from '../../../slices/onboarding/onboardingSlice'
 import { setConnectionDate } from '../../../slices/preferences/preferencesSlice'
 import { fetchAllUseCasesByCharId } from '../../../slices/useCases/useCasesThunks'
+import { basePath } from '../../../utils/BasePath'
 import { prependApiUrl } from '../../../utils/Url'
 import { StepInformation } from '../components/StepInformation'
 
@@ -49,13 +50,14 @@ export const SetupConnection: React.FC<Props> = ({
   const navigate = useNavigate()
   const onboardingCompleted = () => {
     if (connectionId && currentCharacter) {
-      navigate('/dashboard')
+      navigate(`${basePath}/dashboard`)
       dispatch(clearCredentials())
       dispatch(clearConnection())
       dispatch(completeOnboarding())
       dispatch(fetchAllUseCasesByCharId(currentCharacter.id))
     } else {
       // something went wrong so reset
+      navigate(`${basePath}/`)
       dispatch({ type: 'demo/RESET' })
     }
   }

@@ -15,6 +15,7 @@ import { usePreferences } from '../../slices/preferences/preferencesSelectors'
 import { setDemoCompleted } from '../../slices/preferences/preferencesSlice'
 import { useAllUseCases } from '../../slices/useCases/useCasesSelectors'
 import { fetchAllUseCasesByCharId } from '../../slices/useCases/useCasesThunks'
+import { basePath } from '../../utils/BasePath'
 import { Footer } from '../landing/components/Footer'
 import { NavBar } from '../landing/components/Navbar'
 
@@ -51,12 +52,12 @@ export const DashboardPage: React.FC = () => {
   const ERROR_TITLE = `Woops...`
   const ERROR_DESCRIPTION = `That's not gone well. Please restart the demo.`
   const routeError = () => {
-    navigate('/demo')
+    navigate(`${basePath}/demo`)
     dispatch({ type: 'demo/RESET' })
   }
 
   const completeDemo = () => {
-    navigate('/')
+    navigate(`${basePath}/`)
     dispatch({ type: 'demo/RESET' })
 
     if (currentCharacter) {

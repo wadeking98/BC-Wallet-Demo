@@ -17,6 +17,7 @@ import { useAppDispatch } from '../../hooks/hooks'
 import { useCaseCompleted } from '../../slices/preferences/preferencesSlice'
 import { StepType } from '../../slices/types'
 import { nextStep, prevStep } from '../../slices/useCases/useCasesSlice'
+import { basePath } from '../../utils/BasePath'
 
 import { SideView } from './SideView'
 import { EndContainer } from './components/EndContainer'
@@ -68,7 +69,7 @@ export const Section: React.FC<Props> = ({
   const step = section.steps[stepCount]
 
   const leave = () => {
-    navigate('/dashboard')
+    navigate(`${basePath}/dashboard`)
     dispatch({ type: 'clearUseCase' })
   }
 
@@ -88,7 +89,7 @@ export const Section: React.FC<Props> = ({
     if (completed && slug) {
       dispatch(useCaseCompleted(slug))
       dispatch({ type: 'clearUseCase' })
-      navigate('/dashboard')
+      navigate(`${basePath}/dashboard`)
       track({
         id: 'use-case-completed',
         parameters: {

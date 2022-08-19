@@ -16,6 +16,7 @@ import { clearConnection } from '../../slices/connection/connectionSlice'
 import { clearCredentials } from '../../slices/credentials/credentialsSlice'
 import { completeOnboarding, nextOnboardingStep, prevOnboardingStep } from '../../slices/onboarding/onboardingSlice'
 import { fetchAllUseCasesByCharId } from '../../slices/useCases/useCasesThunks'
+import { basePath } from '../../utils/BasePath'
 import { Progress, OnboardingContent } from '../../utils/OnboardingUtils'
 
 import { CharacterContent } from './components/CharacterContent'
@@ -220,13 +221,14 @@ export const OnboardingContainer: React.FC<Props> = ({
   const navigate = useNavigate()
   const onboardingCompleted = () => {
     if (connectionId && currentCharacter) {
-      navigate('/dashboard')
+      navigate(`${basePath}/dashboard`)
       dispatch(clearCredentials())
       dispatch(clearConnection())
       dispatch(completeOnboarding())
       dispatch(fetchAllUseCasesByCharId(currentCharacter.id))
     } else {
       // something went wrong so reset
+      navigate(`${basePath}/`)
       dispatch({ type: 'demo/RESET' })
     }
   }
@@ -242,7 +244,7 @@ export const OnboardingContainer: React.FC<Props> = ({
   const closeLeave = () => setLeaveModal(false)
 
   const leave = () => {
-    navigate('/')
+    navigate(`${basePath}/`)
     dispatch({ type: 'demo/RESET' })
   }
 
