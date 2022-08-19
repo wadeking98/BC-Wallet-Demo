@@ -21,10 +21,10 @@ import {
   fetchCredentialsByConId,
   issueCredential,
 } from '../../../slices/credentials/credentialsThunks'
+import { basePath } from '../../../utils/BasePath'
 import { FailedRequestModal } from '../components/FailedRequestModal'
 import { StarterCredentials } from '../components/StarterCredentials'
 import { StepInformation } from '../components/StepInformation'
-import { basePath } from '../../../utils/BasePath'
 
 export interface Props {
   content: Content

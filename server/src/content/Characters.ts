@@ -1,7 +1,7 @@
 import type { Character } from './types'
 
-import { Student } from './student/Student'
 import { BusinessWoman } from './businessWoman/BusinessWoman'
+import { Student } from './student/Student'
 
 const characters: Character[] = [Student, BusinessWoman]
 

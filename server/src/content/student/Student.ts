@@ -1,6 +1,8 @@
 import type { Character } from '../types'
-import { Progress } from '../../utils/progress'
+
 import { v4 as uuid } from 'uuid'
+
+import { Progress } from '../../utils/progress'
 
 export const Student: Character = {
   id: '1',
@@ -10,7 +12,7 @@ export const Student: Character = {
   backgroundImage: '/public/student/onboarding-overlay.png',
   onboardingText: 'Add your Student ID to your digital wallet',
   backstory:
-  "Meet Alice (that's you in this demo!). Alice is a student at BestBC College. To help make student life easier, BestBC College is going to offer Alice a digital Student Card to put in her BC Wallet.",
+    "Meet Alice (that's you in this demo!). Alice is a student at BestBC College. To help make student life easier, BestBC College is going to offer Alice a digital Student Card to put in her BC Wallet.",
   content: {
     [Progress.PICK_CHARACTER]: {
       title: 'Meet Alice',
@@ -27,7 +29,7 @@ export const Student: Character = {
     [Progress.SETUP_COMPLETED]: {
       title: '',
       text: 'Student Card',
-    }
+    },
   },
   starterCredentials: [
     {

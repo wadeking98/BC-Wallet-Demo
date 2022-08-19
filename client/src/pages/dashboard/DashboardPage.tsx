@@ -15,6 +15,7 @@ import { usePreferences } from '../../slices/preferences/preferencesSelectors'
 import { setDemoCompleted } from '../../slices/preferences/preferencesSlice'
 import { useAllUseCases } from '../../slices/useCases/useCasesSelectors'
 import { fetchAllUseCasesByCharId } from '../../slices/useCases/useCasesThunks'
+import { basePath } from '../../utils/BasePath'
 import { Footer } from '../landing/components/Footer'
 import { NavBar } from '../landing/components/Navbar'
 
@@ -22,7 +23,6 @@ import { DashboardCard } from './components/DashboardCard'
 import { DemoCompletedModal } from './components/DemoCompletedModal'
 import { ProfileCard } from './components/ProfileCard'
 import { UseCaseContainer } from './components/UseCaseContainer'
-import { basePath } from '../../utils/BasePath'
 
 export const DashboardPage: React.FC = () => {
   useTitle('Dashboard | BC Wallet Self-Sovereign Identity Demo')

@@ -17,6 +17,7 @@ import { useAppDispatch } from '../../hooks/hooks'
 import { useCaseCompleted } from '../../slices/preferences/preferencesSlice'
 import { StepType } from '../../slices/types'
 import { nextStep, prevStep } from '../../slices/useCases/useCasesSlice'
+import { basePath } from '../../utils/BasePath'
 
 import { SideView } from './SideView'
 import { EndContainer } from './components/EndContainer'
@@ -27,7 +28,6 @@ import { StepEnd } from './steps/StepEnd'
 import { StepInformation } from './steps/StepInformation'
 import { StepProof } from './steps/StepProof'
 import { StepProofOOB } from './steps/StepProofOOB'
-import { basePath } from '../../utils/BasePath'
 
 export interface Props {
   section: ISection

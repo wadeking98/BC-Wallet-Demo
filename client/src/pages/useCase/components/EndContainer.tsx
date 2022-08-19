@@ -10,8 +10,8 @@ import { fadeExit } from '../../../FramerAnimations'
 import { Button } from '../../../components/Button'
 import { useAppDispatch } from '../../../hooks/hooks'
 import { useCaseCompleted } from '../../../slices/preferences/preferencesSlice'
-import { prependApiUrl } from '../../../utils/Url'
 import { basePath } from '../../../utils/BasePath'
+import { prependApiUrl } from '../../../utils/Url'
 
 export interface Props {
   step: Step

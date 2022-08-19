@@ -19,9 +19,9 @@ import { clearCredentials } from '../../../slices/credentials/credentialsSlice'
 import { completeOnboarding, setOnboardingConnectionId } from '../../../slices/onboarding/onboardingSlice'
 import { setConnectionDate } from '../../../slices/preferences/preferencesSlice'
 import { fetchAllUseCasesByCharId } from '../../../slices/useCases/useCasesThunks'
+import { basePath } from '../../../utils/BasePath'
 import { prependApiUrl } from '../../../utils/Url'
 import { StepInformation } from '../components/StepInformation'
-import { basePath } from '../../../utils/BasePath'
 
 export interface Props {
   content: Content
@@ -57,6 +57,7 @@ export const SetupConnection: React.FC<Props> = ({
       dispatch(fetchAllUseCasesByCharId(currentCharacter.id))
     } else {
       // something went wrong so reset
+      navigate(`${basePath}/`)
       dispatch({ type: 'demo/RESET' })
     }
   }

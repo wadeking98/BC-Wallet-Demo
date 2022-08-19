@@ -8,9 +8,9 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { dashboardSub, dashboardTitle, rowContainer } from '../../../FramerAnimations'
+import { basePath } from '../../../utils/BasePath'
 
 import { UseCaseItem } from './UseCaseItem'
-import { basePath } from '../../../utils/BasePath'
 
 export interface Props {
   useCases: UseCase[]

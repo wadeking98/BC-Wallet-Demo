@@ -1,14 +1,15 @@
 import type { Character } from '../types'
-import { Progress } from '../../utils/progress'
+
 import { v4 as uuid } from 'uuid'
+
+import { Progress } from '../../utils/progress'
 
 export const BusinessWoman: Character = {
   id: '2',
   image: '/public/businesswoman/businesswoman.svg',
   name: 'Joyce',
   type: 'Lawyer',
-  backstory:
-    "Joyce is under development",
+  backstory: 'Joyce is under development',
   content: {
     [Progress.PICK_CHARACTER]: {
       title: 'Meet Joyce',
@@ -25,7 +26,7 @@ export const BusinessWoman: Character = {
     [Progress.SETUP_COMPLETED]: {
       title: '',
       text: 'Member Card',
-    }
+    },
   },
   starterCredentials: [
     {
