@@ -1,6 +1,6 @@
 import { AnimatePresence } from 'framer-motion'
 import { useEffect } from 'react'
-import { Routes, Route, useLocation, useNavigate } from 'react-router-dom'
+import { Routes, Route, useLocation, useNavigate, Navigate } from 'react-router-dom'
 
 import { useAppDispatch } from './hooks/hooks'
 import { useAnalytics } from './hooks/useAnalytics'
@@ -53,6 +53,7 @@ function App() {
       <AuthProvider>
         <AnimatePresence exitBeforeEnter>
           <Routes location={location} key={location.pathname}>
+            {basePath !== '/' && <Route path="/" element={<Navigate to={basePath} />}></Route>}
             <Route path={`${basePath}/`} element={<LandingPage />} />
             <Route path={`${basePath}/:slug`} element={<LandingPage />} />
             <Route path={`${basePath}/demo`} element={<OnboardingPage />} />
