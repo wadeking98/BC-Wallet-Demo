@@ -57,10 +57,12 @@ export const OnlineStore: UseCase = {
           icon: '/public/student/icon-student.svg',
           // properties: ['expiry_date'],
           predicates: {
-            name: 'expiry_date', value() {
+            name: 'expiry_date',
+            value() {
               const date = new Date()
               return Number(date.toISOString().split('T')[0].replace(/-/g, ''))
-            }, type: '>='
+            },
+            type: '>=',
           },
         },
       ],

@@ -16,6 +16,7 @@ import { clearConnection } from '../../slices/connection/connectionSlice'
 import { clearCredentials } from '../../slices/credentials/credentialsSlice'
 import { completeOnboarding, nextOnboardingStep, prevOnboardingStep } from '../../slices/onboarding/onboardingSlice'
 import { fetchAllUseCasesByCharId } from '../../slices/useCases/useCasesThunks'
+import { basePath } from '../../utils/BasePath'
 import { Progress, OnboardingContent } from '../../utils/OnboardingUtils'
 
 import { CharacterContent } from './components/CharacterContent'
@@ -27,7 +28,6 @@ import { PickCharacter } from './steps/PickCharacter'
 import { SetupCompleted } from './steps/SetupCompleted'
 import { SetupConnection } from './steps/SetupConnection'
 import { SetupStart } from './steps/SetupStart'
-import { basePath } from '../../utils/BasePath'
 
 export interface Props {
   characters: Character[]
@@ -228,6 +228,7 @@ export const OnboardingContainer: React.FC<Props> = ({
       dispatch(fetchAllUseCasesByCharId(currentCharacter.id))
     } else {
       // something went wrong so reset
+      navigate(`${basePath}/`)
       dispatch({ type: 'demo/RESET' })
     }
   }

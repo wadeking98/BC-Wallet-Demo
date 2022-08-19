@@ -20,9 +20,9 @@ import { StepType } from '../../slices/types'
 import { useUseCaseState } from '../../slices/useCases/useCasesSelectors'
 import { nextSection } from '../../slices/useCases/useCasesSlice'
 import { fetchUseCaseBySlug } from '../../slices/useCases/useCasesThunks'
+import { basePath } from '../../utils/BasePath'
 
 import { Section } from './Section'
-import { basePath } from '../../utils/BasePath'
 
 export const UseCasePage: React.FC = () => {
   const dispatch = useAppDispatch()

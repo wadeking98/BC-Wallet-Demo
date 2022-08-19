@@ -1,6 +1,5 @@
 import type { InitConfig } from '@aries-framework/core'
 import type { Express, request } from 'express'
-import axios from 'axios'
 
 import {
   ConnectionInvitationMessage,
@@ -11,6 +10,7 @@ import {
 } from '@aries-framework/core'
 import { agentDependencies, HttpInboundTransport } from '@aries-framework/node'
 import { startServer } from '@aries-framework/rest'
+import axios from 'axios'
 import { static as stx } from 'express'
 import { connect } from 'ngrok'
 import { createExpressServer, useContainer } from 'routing-controllers'
@@ -98,12 +98,12 @@ const run = async () => {
   })
 
   httpInbound.app.get('/url/:proofId', async (req, res) => {
-    const apiCall = axios.create({ baseURL: "http://localhost:5000" })
+    const apiCall = axios.create({ baseURL: 'http://localhost:5000' })
     const proofData = await apiCall.get(`/proofs/${req.params.proofId}`)
     const proofRequest = proofData.data.requestMessage
-    if(req.headers.accept === "application/json"){
+    if (req.headers.accept === 'application/json') {
       res.json(proofRequest)
-    }else{
+    } else {
       res.redirect(`/?d_m=${encodeURIComponent(Buffer.from(JSON.stringify(proofRequest)).toString('base64'))}`)
     }
   })

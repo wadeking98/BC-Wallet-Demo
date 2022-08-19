@@ -2,11 +2,13 @@ import type { Character } from '../../../slices/types'
 
 import { motion } from 'framer-motion'
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import { fade } from '../../../FramerAnimations'
 import { Modal } from '../../../components/Modal'
 import { SmallButtonText } from '../../../components/SmallButtonText'
 import { useAppDispatch } from '../../../hooks/hooks'
+import { basePath } from '../../../utils/BasePath'
 import { prependApiUrl } from '../../../utils/Url'
 
 export interface Props {
@@ -16,6 +18,7 @@ export interface Props {
 export const ProfileCard: React.FC<Props> = ({ currentCharacter }) => {
   const [isChangeModalOpen, setIsChangeModalOpen] = useState(false)
   const dispatch = useAppDispatch()
+  const navigate = useNavigate()
 
   const MODAL_TITLE = 'This will reset your dashboard.'
   const MODAL_DESCRIPTION = `Your current credentials will become invalid. Please make sure you've completed all the use cases
@@ -23,6 +26,7 @@ export const ProfileCard: React.FC<Props> = ({ currentCharacter }) => {
 
   const reset = () => {
     dispatch({ type: 'demo/RESET' })
+    navigate(`${basePath}/`)
   }
 
   const cancel = () => {

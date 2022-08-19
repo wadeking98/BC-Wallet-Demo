@@ -2,6 +2,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { KBarProvider, KBarPortal, KBarPositioner, KBarAnimator, KBarSearch } from 'kbar'
 import { useEffect, useState } from 'react'
 import Confetti from 'react-confetti'
+import { useNavigate } from 'react-router-dom'
 
 import { confettiFade } from '../FramerAnimations'
 import { useAppDispatch } from '../hooks/hooks'
@@ -10,12 +11,14 @@ import { usePreferences } from '../slices/preferences/preferencesSelectors'
 import { resetDashboard, setDarkMode } from '../slices/preferences/preferencesSlice'
 import { fetchWallets } from '../slices/wallets/walletsThunks'
 
+import { basePath } from './BasePath'
 import { RenderResults } from './RenderResults'
 
 export const KBar: React.FC = ({ children }) => {
   const dispatch = useAppDispatch()
   const { demoCompleted } = usePreferences()
   const [confettiPieces, setConfettiPieces] = useState(0)
+  const navigate = useNavigate()
 
   useEffect(() => {
     if (demoCompleted && location.pathname.includes('dashboard')) {
@@ -54,6 +57,7 @@ export const KBar: React.FC = ({ children }) => {
       shortcut: ['r'],
       keywords: 'Reset demo',
       perform: () => {
+        navigate(`${basePath}/`)
         dispatch({ type: 'demo/RESET' })
         dispatch(fetchWallets())
         dispatch(fetchAllCharacters())
