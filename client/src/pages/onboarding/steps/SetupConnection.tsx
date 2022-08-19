@@ -21,6 +21,7 @@ import { setConnectionDate } from '../../../slices/preferences/preferencesSlice'
 import { fetchAllUseCasesByCharId } from '../../../slices/useCases/useCasesThunks'
 import { prependApiUrl } from '../../../utils/Url'
 import { StepInformation } from '../components/StepInformation'
+import { basePath } from '../../../utils/BasePath'
 
 export interface Props {
   content: Content
@@ -49,7 +50,7 @@ export const SetupConnection: React.FC<Props> = ({
   const navigate = useNavigate()
   const onboardingCompleted = () => {
     if (connectionId && currentCharacter) {
-      navigate('/dashboard')
+      navigate(`${basePath}/dashboard`)
       dispatch(clearCredentials())
       dispatch(clearConnection())
       dispatch(completeOnboarding())

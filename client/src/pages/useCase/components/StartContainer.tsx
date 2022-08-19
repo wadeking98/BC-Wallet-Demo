@@ -13,6 +13,7 @@ import { nextStep } from '../../../slices/useCases/useCasesSlice'
 import { prependApiUrl } from '../../../utils/Url'
 
 import { StarterInfo } from './StarterInfo'
+import { basePath } from '../../../utils/BasePath'
 
 export interface Props {
   step: Step
@@ -28,7 +29,7 @@ export const StartContainer: React.FC<Props> = ({ entity, requestedCredentials, 
   const style = isMobile ? { minHeight: '85vh' } : { maxHeight: '940px' }
 
   const leave = () => {
-    navigate('/dashboard')
+    navigate(`${basePath}/dashboard`)
   }
 
   const next = () => {

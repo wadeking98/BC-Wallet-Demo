@@ -27,6 +27,7 @@ import { StepEnd } from './steps/StepEnd'
 import { StepInformation } from './steps/StepInformation'
 import { StepProof } from './steps/StepProof'
 import { StepProofOOB } from './steps/StepProofOOB'
+import { basePath } from '../../utils/BasePath'
 
 export interface Props {
   section: ISection
@@ -68,7 +69,7 @@ export const Section: React.FC<Props> = ({
   const step = section.steps[stepCount]
 
   const leave = () => {
-    navigate('/dashboard')
+    navigate(`${basePath}/dashboard`)
     dispatch({ type: 'clearUseCase' })
   }
 
@@ -88,7 +89,7 @@ export const Section: React.FC<Props> = ({
     if (completed && slug) {
       dispatch(useCaseCompleted(slug))
       dispatch({ type: 'clearUseCase' })
-      navigate('/dashboard')
+      navigate(`${basePath}/dashboard`)
       track({
         id: 'use-case-completed',
         parameters: {

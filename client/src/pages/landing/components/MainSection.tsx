@@ -7,6 +7,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { buttonHover, fade, fadeDelay, landingTitle } from '../../../FramerAnimations'
 import landingScreen from '../../../assets/light/landing-screen.svg'
 import { useDarkMode } from '../../../hooks/useDarkMode'
+import { basePath } from '../../../utils/BasePath'
 
 export const MainSection: React.FC = () => {
   const isMobile = useMediaQuery({ query: '(max-width: 768px)' })
@@ -17,9 +18,9 @@ export const MainSection: React.FC = () => {
 
   const handleStart = () => {
     if (slug) {
-      navigate(`/demo/${slug}`)
+      navigate(`${basePath}/demo/${slug}`)
     } else {
-      navigate('/demo')
+      navigate(`${basePath}/demo`)
     }
   }
 

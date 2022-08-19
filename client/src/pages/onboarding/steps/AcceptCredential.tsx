@@ -24,6 +24,7 @@ import {
 import { FailedRequestModal } from '../components/FailedRequestModal'
 import { StarterCredentials } from '../components/StarterCredentials'
 import { StepInformation } from '../components/StepInformation'
+import { basePath } from '../../../utils/BasePath'
 
 export interface Props {
   content: Content
@@ -105,7 +106,7 @@ export const AcceptCredential: React.FC<Props> = ({
   )
 
   const routeError = () => {
-    navigate('/demo')
+    navigate(`${basePath}/demo`)
     dispatch({ type: 'demo/RESET' })
   }
 

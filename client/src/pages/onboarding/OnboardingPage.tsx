@@ -18,6 +18,7 @@ import { useOnboarding } from '../../slices/onboarding/onboardingSelectors'
 import { completeOnboarding } from '../../slices/onboarding/onboardingSlice'
 import { fetchAllUseCasesByCharId } from '../../slices/useCases/useCasesThunks'
 import { fetchWallets } from '../../slices/wallets/walletsThunks'
+import { basePath } from '../../utils/BasePath'
 import { Progress, StepperItems } from '../../utils/OnboardingUtils'
 
 import { OnboardingContainer } from './OnboardingContainer'
@@ -44,7 +45,7 @@ export const OnboardingPage: React.FC = () => {
       dispatch(clearCredentials())
       dispatch(clearConnection())
       dispatch(fetchAllUseCasesByCharId(currentCharacter.id))
-      navigate('/dashboard')
+      navigate(`${basePath}/dashboard`)
     } else {
       dispatch({ type: 'demo/RESET' })
       dispatch(fetchWallets())

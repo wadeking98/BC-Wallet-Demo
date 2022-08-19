@@ -22,6 +22,7 @@ import { nextSection } from '../../slices/useCases/useCasesSlice'
 import { fetchUseCaseBySlug } from '../../slices/useCases/useCasesThunks'
 
 import { Section } from './Section'
+import { basePath } from '../../utils/BasePath'
 
 export const UseCasePage: React.FC = () => {
   const dispatch = useAppDispatch()
@@ -67,7 +68,7 @@ export const UseCasePage: React.FC = () => {
   const ERROR_TITLE = `Woops...`
   const ERROR_DESCRIPTION = `You haven't picked your character yet. Please restart the demo.`
   const routeError = () => {
-    navigate('/demo')
+    navigate(`${basePath}/demo`)
   }
 
   return (

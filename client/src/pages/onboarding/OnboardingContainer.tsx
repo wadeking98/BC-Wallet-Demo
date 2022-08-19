@@ -27,6 +27,7 @@ import { PickCharacter } from './steps/PickCharacter'
 import { SetupCompleted } from './steps/SetupCompleted'
 import { SetupConnection } from './steps/SetupConnection'
 import { SetupStart } from './steps/SetupStart'
+import { basePath } from '../../utils/BasePath'
 
 export interface Props {
   characters: Character[]
@@ -220,7 +221,7 @@ export const OnboardingContainer: React.FC<Props> = ({
   const navigate = useNavigate()
   const onboardingCompleted = () => {
     if (connectionId && currentCharacter) {
-      navigate('/dashboard')
+      navigate(`${basePath}/dashboard`)
       dispatch(clearCredentials())
       dispatch(clearConnection())
       dispatch(completeOnboarding())
@@ -242,7 +243,7 @@ export const OnboardingContainer: React.FC<Props> = ({
   const closeLeave = () => setLeaveModal(false)
 
   const leave = () => {
-    navigate('/')
+    navigate(`${basePath}/`)
     dispatch({ type: 'demo/RESET' })
   }
 

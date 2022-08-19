@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom'
 import { dashboardSub, dashboardTitle, rowContainer } from '../../../FramerAnimations'
 
 import { UseCaseItem } from './UseCaseItem'
+import { basePath } from '../../../utils/BasePath'
 
 export interface Props {
   useCases: UseCase[]
@@ -21,7 +22,7 @@ export const UseCaseContainer: React.FC<Props> = ({ useCases, completedUseCaseSl
   const navigate = useNavigate()
 
   const startUseCase = (slug: string) => {
-    navigate(`/uc/${slug}`)
+    navigate(`${basePath}/uc/${slug}`)
   }
 
   const renderUseCases = useCases.map((item) => {

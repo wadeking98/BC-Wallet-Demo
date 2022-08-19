@@ -11,6 +11,7 @@ import { Button } from '../../../components/Button'
 import { useAppDispatch } from '../../../hooks/hooks'
 import { useCaseCompleted } from '../../../slices/preferences/preferencesSlice'
 import { prependApiUrl } from '../../../utils/Url'
+import { basePath } from '../../../utils/BasePath'
 
 export interface Props {
   step: Step
@@ -28,7 +29,7 @@ export const EndContainer: React.FC<Props> = ({ step }) => {
     if (completed && slug) {
       dispatch(useCaseCompleted(slug))
       dispatch({ type: 'clearUseCase' })
-      navigate('/dashboard')
+      navigate(`${basePath}/dashboard`)
       track({
         id: 'use-case-completed',
         parameters: {

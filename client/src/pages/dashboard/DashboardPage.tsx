@@ -22,6 +22,7 @@ import { DashboardCard } from './components/DashboardCard'
 import { DemoCompletedModal } from './components/DemoCompletedModal'
 import { ProfileCard } from './components/ProfileCard'
 import { UseCaseContainer } from './components/UseCaseContainer'
+import { basePath } from '../../utils/BasePath'
 
 export const DashboardPage: React.FC = () => {
   useTitle('Dashboard | BC Wallet Self-Sovereign Identity Demo')
@@ -51,12 +52,12 @@ export const DashboardPage: React.FC = () => {
   const ERROR_TITLE = `Woops...`
   const ERROR_DESCRIPTION = `That's not gone well. Please restart the demo.`
   const routeError = () => {
-    navigate('/demo')
+    navigate(`${basePath}/demo`)
     dispatch({ type: 'demo/RESET' })
   }
 
   const completeDemo = () => {
-    navigate('/')
+    navigate(`${basePath}/`)
     dispatch({ type: 'demo/RESET' })
 
     if (currentCharacter) {
