@@ -23,6 +23,7 @@ export interface Character {
   backgroundImage?: string
   onboardingText?: string
   starterCredentials: CredentialData[]
+  onboardingEntity?: Entity
 }
 
 export interface UseCase {

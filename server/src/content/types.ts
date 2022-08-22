@@ -8,6 +8,7 @@ export interface Character {
   backgroundImage?: string
   onboardingText?: string
   starterCredentials: StarterCredential[]
+  onboardingEntity?: Entity
 }
 
 export interface UseCase {
