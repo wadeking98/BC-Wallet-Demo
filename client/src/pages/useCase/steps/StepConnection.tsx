@@ -41,7 +41,7 @@ export const StepConnection: React.FC<Props> = ({ step, connection, entity }) =>
     return invitationUrl ? <QRCode invitationUrl={invitationUrl} connectionState={state} overlay={overlay} /> : null
   }
 
-  const deepLink = `didcomm://aries_connection_invitation?${invitationUrl?.split('?')[1]}`
+  const deepLink = `bcwallet://aries_connection_invitation?${invitationUrl?.split('?')[1]}`
   const isMobile = useMediaQuery({ query: '(max-width: 768px)' })
 
   const renderCTA = !isCompleted ? (

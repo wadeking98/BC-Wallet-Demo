@@ -16,10 +16,10 @@ export const ActionCTA: React.FC<Props> = ({ isCompleted, onFail }) => {
   const renderCTA = !isCompleted ? (
     <motion.div variants={fade} key="openWallet">
       <p>
-        Accept the request in your <a href="didcomm://">wallet {isMobile && 'or'}</a>
+        Accept the request in your <a href="bcwallet://">wallet {isMobile && 'or'}</a>
       </p>
       {isMobile && (
-        <a href="didcomm://" className="underline underline-offset-2 mt-2">
+        <a href="bcwallet://" className="underline underline-offset-2 mt-2">
           open in wallet
           <FiExternalLink className="inline pb-1" />
         </a>
