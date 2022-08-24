@@ -1,1 +1,1 @@
-export const basePath: string = '/showcase'
+export const basePath: string = '/digital-trust/showcase'

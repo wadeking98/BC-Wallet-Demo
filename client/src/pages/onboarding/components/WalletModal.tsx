@@ -1,8 +1,9 @@
 import { AnimatePresence, motion } from 'framer-motion'
 
 import { standardFade, dropIn } from '../../../FramerAnimations'
-import appStore from '../../../assets/light/icon-app-store.png'
-import playStore from '../../../assets/light/icon-play-store.png'
+import { baseUrl } from '../../../api/BaseUrl'
+import appStore from '../../../assets/light/app-store-badge.svg'
+import playStore from '../../../assets/light/google-play-badge.png'
 import { SmallButton } from '../../../components/SmallButton'
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -26,6 +27,9 @@ export interface Props {
 }
 
 export const WalletModal: React.FC<Props> = ({ isWalletModalOpen, setIsWalletModalOpen, wallet, onCompleted }) => {
+  function isMobile() {
+    return window.innerWidth <= 760
+  }
   return (
     <AnimatePresence>
       {isWalletModalOpen && (
@@ -55,82 +59,55 @@ export const WalletModal: React.FC<Props> = ({ isWalletModalOpen, setIsWalletMod
               exit="exit"
               className="bg-bcgov-white z-40 dark:bg-bcgov-black inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition transition-all duration-300 sm:my-8 sm:align-middle sm:max-w-xl sm:w-full dark:text-white"
             >
-              <div className=" px-2 md:px-6 pt-2 sm:mt-4 sm:pb-4">
-                {/* <div className="flex items-start px-4 sm:px-0 ">
-                  <div className="w-48 hidden sm:block ">
-                    <div className="p-4 dark:bg-bcgov-darkgrey rounded-lg ">
-                      <QRCode size={164} value={wallet.url} />
+              <div style={{ display: 'flex', alignItems: 'flex-start' }}>
+                <div className="px-2 md:px-6 pt-2 sm:mt-4 sm:pb-4">
+                  <div className="mt-5">
+                    <p className="font-semibold">1. Download BC Wallet on your phone</p>
+                    <p className="mt-5 mb-5">
+                      To download,{' '}
+                      {isMobile()
+                        ? 'select the apps store icon below'
+                        : 'scan the QR code on your phone or select the apps store icon below'}
+                      . You can also search for BC Wallet in your phone's apps store.
+                    </p>
+                    <div
+                      style={{
+                        display: 'flex',
+                        flexDirection: isMobile() ? 'column' : 'row',
+                        marginBottom: '10px',
+                      }}
+                    >
+                      <a href="https://apps.apple.com/us/app/bc-wallet/id1587380443">
+                        <img
+                          src={appStore}
+                          style={
+                            isMobile()
+                              ? { width: '200px', marginBottom: '10px' }
+                              : { height: '50px', marginRight: '10px' }
+                          }
+                          alt="app store"
+                        />
+                      </a>
+                      <a href="https://play.google.com/store/apps/details?id=ca.bc.gov.BCWallet">
+                        <img
+                          src={playStore}
+                          style={isMobile() ? { width: '200px' } : { height: '50px' }}
+                          alt="google play store"
+                        />
+                      </a>
                     </div>
                   </div>
-                  <div className="mt-3 pl-2 sm:mt-0 sm:ml-4 text-left">
-                    <h2 className="text-lg leading-loose font-medium">1. Download the {wallet.name}</h2>
-                    <div className="mt-2">
-                      <p className="text-sm">
-                        You can scan the QR-code or click the button to your favorite download store below.
-                      </p>
-                    </div>
-                    <div className="flex flex-row my-2 mb-4 justify-center sm:justify-start">
-                      <a href={wallet.apple} target="_blank" rel="noreferrer">
-                        <img className="h-8 m-2" src={appStore} alt="app-store" />
-                      </a>
-                      <a href={wallet.android} target="_blank" rel="noreferrer">
-                        <img className="h-8 m-2" src={playStore} alt="play-store" />
-                      </a>
-                    </div>
+                  <div>
+                    <p className="font-semibold">2. Complete the setup</p>
+                    <p className="mt-5">Complete the onboarding process and setup your PIN.</p>
                   </div>
-                </div> */}
-                <div>
-                  <p className="font-semibold">iOS</p>
-                  <ul className="list-disc pl-4 my-2">
-                    <li>On your phone, open up the App Store</li>
-                    <li>Search for 'TestFlight'</li>
-                    <li>Install the TestFlight app</li>
-                    <li>
-                      On your phone, go to the email you received, with the subject: "Province of British Columbia has
-                      invited you to test BC Wallet"
-                    </li>
-                    <li>In the email, select 'View in TestFlight' and follow the instructions</li>
-                  </ul>
                 </div>
-                <div>
-                  <p className="font-semibold">Android</p>
-                  <ul className="list-disc pl-4 my-2">
-                    <li>
-                      <i>coming soon</i>
-                    </li>
-                  </ul>
-                </div>
+                {!isMobile() && (
+                  <div className="mt-10 mr-10">
+                    <QRCode value={`${baseUrl}/qr`} size={125} />
+                  </div>
+                )}
               </div>
-              {/* {wallet.ledgerImage && (
-                <>
-                  <div className="px-8 opacity-20">
-                    <hr />
-                  </div>
-                  <div className="px-2 md:px-6 pt-2 sm:mt-4 sm:pb-4">
-                    <div className="flex flex-col sm:flex-row sm:items-start px-4 sm:px-0">
-                      <div className="flex-1-1 order-last my-4 sm:my-0 sm:order-first w-48 m-auto">
-                        <div className="dark:bg-bcgov-darkgrey rounded-lg ">
-                          <img
-                            className="shadow-lg rounded-lg border border-1 border-bcgov-lightgrey"
-                            src={wallet.ledgerImage}
-                            alt={wallet.name}
-                          />
-                        </div>
-                      </div>
-                      <div className="mt-3 pl-2 flex-1 sm:mt-0 sm:ml-4 text-left">
-                        <h2 className="text-lg leading-loose font-medium">2. Changing the network</h2>
-                        <div className="mt-2">
-                          <p className="text-sm pb-2">- Open the settings</p>
-                          <p className="text-sm pb-2">- Change the network to:</p>
-                          <p className="text-sm pb-2">
-                            &nbsp;&nbsp;&nbsp;&nbsp; <strong>Bcovrin Test Network</strong>
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </>
-              )} */}
               <div className="px-4 pb-4 flex justify-end">
                 <SmallButton onClick={onCompleted} text={'I HAVE MY WALLET'} />
               </div>
