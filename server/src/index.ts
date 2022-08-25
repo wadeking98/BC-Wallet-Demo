@@ -121,6 +121,24 @@ const run = async () => {
     res.send(job.lastDate())
   })
 
+  // Redirect QR code scans for installing bc wallet to the apple or google play store 
+  const androidUrl = 'https://play.google.com/store/apps/details?id=ca.bc.gov.BCWallet'
+  const appleUrl= 'https://apps.apple.com/us/app/bc-wallet/id1587380443'
+  app.get('/qr', async (req, res) => {
+    const appleMatchers = [
+      /iPhone/i,
+      /iPad/i,
+      /iPod/i
+    ]
+    let url = androidUrl
+    const isApple = appleMatchers.some((item)=>req.get('User-Agent')?.match(item))
+    if(isApple){
+      url = appleUrl
+    }
+    res.redirect(url)
+    return res
+  })
+
   await startServer(agent, {
     port: 5000,
     app: app,
