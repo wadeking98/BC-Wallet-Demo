@@ -21,7 +21,7 @@ import { TestLogger } from './logger'
 import { AgentCleanup } from './utils/AgentCleanup'
 import { CANDY_DEV, SOVRIN_MAINNET, SOVRIN_STAGINGNET } from './utils/utils'
 
-const logger = new TestLogger(process.env.NODE_ENV ? LogLevel.error : LogLevel.debug)
+const logger = new TestLogger(process.env.NODE_ENV ? LogLevel.error : LogLevel.trace)
 
 process.on('unhandledRejection', (error) => {
   if (error instanceof Error) {

@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import type { ProofRequestData } from '../slices/types'
 import type { AxiosResponse } from 'axios'
 
@@ -16,6 +15,22 @@ export const createProofRequest = (data: ProofRequestData): Promise<AxiosRespons
     connectionId: data.connectionId,
     proofRequest: proofRequest,
     comment: data.requestOptions?.comment,
+  })
+}
+
+export const createDeepProofRequest = (data: ProofRequestData): Promise<AxiosResponse> => {
+  const proofRequest = {
+    requested_attributes: Object.assign({}, data.attributes),
+    requested_predicates: Object.assign({}, data.predicates),
+    version: '1.0.0',
+    name: data.requestOptions?.name ?? 'Proof Request',
+  }
+
+  return apiCall.post(`/demo/deeplink/request-proof`, {
+    connectionId: data.connectionId,
+    proofRequest: proofRequest,
+    comment: data.requestOptions?.comment ?? '',
+    autoAcceptProof: 'always',
   })
 }
 

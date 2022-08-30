@@ -1,7 +1,9 @@
-import type { Character } from '../../../slices/types'
+import type { Character, CredentialData } from '../../../slices/types'
 import type { Content } from '../../../utils/OnboardingUtils'
 
+import { CredentialRecord } from '@aries-framework/core'
 import { motion } from 'framer-motion'
+import { track } from 'insights-js'
 import React, { useEffect } from 'react'
 import { FiExternalLink } from 'react-icons/fi'
 import { useMediaQuery } from 'react-responsive'
@@ -13,20 +15,25 @@ import { Loader } from '../../../components/Loader'
 import { QRCode } from '../../../components/QRCode'
 import { useAppDispatch } from '../../../hooks/hooks'
 import { useInterval } from '../../../hooks/useInterval'
-import { clearConnection } from '../../../slices/connection/connectionSlice'
+import { clearConnection, setDeepLink } from '../../../slices/connection/connectionSlice'
 import { createInvitation, fetchConnectionById } from '../../../slices/connection/connectionThunks'
 import { clearCredentials } from '../../../slices/credentials/credentialsSlice'
-import { completeOnboarding, setOnboardingConnectionId } from '../../../slices/onboarding/onboardingSlice'
+import {
+  completeOnboarding,
+  nextOnboardingStep,
+  setOnboardingConnectionId,
+} from '../../../slices/onboarding/onboardingSlice'
 import { setConnectionDate } from '../../../slices/preferences/preferencesSlice'
 import { fetchAllUseCasesByCharId } from '../../../slices/useCases/useCasesThunks'
 import { basePath } from '../../../utils/BasePath'
+import { Progress } from '../../../utils/OnboardingUtils'
 import { prependApiUrl } from '../../../utils/Url'
 import { StepInformation } from '../components/StepInformation'
 
 export interface Props {
   content: Content
   connectionId?: string
-  currentCharacter?: Character
+  currentCharacter: Character
   invitationUrl?: string
   connectionState?: string
   title: string
@@ -46,6 +53,8 @@ export const SetupConnection: React.FC<Props> = ({
   backgroundImage,
   onboardingText,
 }) => {
+  const deepLink = `bcwallet://aries_connection_invitation?${invitationUrl?.split('?')[1]}`
+  const isMobile = useMediaQuery({ query: '(max-width: 768px)' })
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const onboardingCompleted = () => {
@@ -62,6 +71,16 @@ export const SetupConnection: React.FC<Props> = ({
     }
   }
   const isCompleted = connectionState === 'responded' || connectionState === 'complete'
+
+  const addOnboardingProgress = () => {
+    dispatch(nextOnboardingStep())
+    track({
+      id: 'onboarding-step-completed',
+      parameters: {
+        step: Progress.RECEIVE_IDENTITY.toString(),
+      },
+    })
+  }
 
   useEffect(() => {
     if (!isCompleted) dispatch(createInvitation(currentCharacter?.onboardingEntity))
@@ -90,8 +109,15 @@ export const SetupConnection: React.FC<Props> = ({
     ) : null
   }
 
-  const deepLink = `bcwallet://aries_connection_invitation?${invitationUrl?.split('?')[1]}`
-  const isMobile = useMediaQuery({ query: '(max-width: 768px)' })
+  const handleDeepLink = () => {
+    if (connectionId) {
+      dispatch(setDeepLink())
+      addOnboardingProgress()
+      setTimeout(() => {
+        window.location.href = deepLink
+      }, 250)
+    }
+  }
 
   const renderCTA = !isCompleted ? (
     <motion.div variants={fade} key="openWallet">
@@ -99,14 +125,13 @@ export const SetupConnection: React.FC<Props> = ({
         Scan the QR-code with your <a href={deepLink}>wallet {isMobile && 'or'} </a>
       </p>
       {isMobile && (
-        <a href={deepLink} className="underline underline-offset-2 mt-2">
+        <a onClick={handleDeepLink} className="underline underline-offset-2 mt-2">
           open in wallet
           <FiExternalLink className="inline pb-1" />
         </a>
       )}
-      {currentCharacter?.type === 'Lawyer' && (
-        <Button text="I Already Have my Credential" onClick={onboardingCompleted}></Button>
-      )}
+
+      <Button text="I Already Have my Credential" onClick={onboardingCompleted}></Button>
     </motion.div>
   ) : (
     <motion.div variants={fade} key="ctaCompleted">
