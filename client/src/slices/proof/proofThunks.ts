@@ -9,6 +9,11 @@ export const createProof = createAsyncThunk('proof/createProof', async (data: Pr
   return response.data
 })
 
+export const createDeepProof = createAsyncThunk('proof/createProof', async (data: ProofRequestData) => {
+  const response = await Api.createDeepProofRequest(data)
+  return response.data
+})
+
 export const createProofOOB = createAsyncThunk('proof/createProofOOB', async (data: ProofRequestData) => {
   const response = await Api.createOOBProofRequest(data)
   return response.data
@@ -26,5 +31,10 @@ export const deleteProofById = createAsyncThunk('proof/deleteById', async (id: s
 
 export const acceptProofById = createAsyncThunk('proof/acceptById', async (id: string) => {
   const response = await Api.acceptProofById(id)
+  return response.data
+})
+
+export const acceptDeepProofById = createAsyncThunk('proof/acceptById', async (id: string) => {
+  const response = await Api.getProofById(id)
   return response.data
 })

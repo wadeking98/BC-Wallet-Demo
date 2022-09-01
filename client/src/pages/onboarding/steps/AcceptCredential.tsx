@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import type { Character } from '../../../slices/types'
 import type { Content } from '../../../utils/OnboardingUtils'
 import type { CredReqMetadata } from 'indy-sdk'
@@ -15,11 +14,13 @@ import { Loader } from '../../../components/Loader'
 import { Modal } from '../../../components/Modal'
 import { useAppDispatch } from '../../../hooks/hooks'
 import { useInterval } from '../../../hooks/useInterval'
+import { useConnection } from '../../../slices/connection/connectionSelectors'
 import { useCredentials } from '../../../slices/credentials/credentialsSelectors'
 import {
   deleteCredentialById,
   fetchCredentialsByConId,
   issueCredential,
+  issueDeepCredential,
 } from '../../../slices/credentials/credentialsThunks'
 import { basePath } from '../../../utils/BasePath'
 import { FailedRequestModal } from '../components/FailedRequestModal'
@@ -53,6 +54,8 @@ export const AcceptCredential: React.FC<Props> = ({
 
   const { isIssueCredentialLoading, error } = useCredentials()
 
+  const { isDeepLink } = useConnection()
+
   const showFailedRequestModal = () => setIsFailedRequestModalOpen(true)
   const closeFailedRequestModal = () => setIsFailedRequestModalOpen(false)
 
@@ -63,7 +66,11 @@ export const AcceptCredential: React.FC<Props> = ({
   useEffect(() => {
     if (credentials.length === 0) {
       currentCharacter.starterCredentials.forEach((item) => {
-        dispatch(issueCredential({ connectionId: connectionId, cred: item }))
+        if (isDeepLink) {
+          dispatch(issueDeepCredential({ connectionId: connectionId, cred: item }))
+        } else {
+          dispatch(issueCredential({ connectionId: connectionId, cred: item }))
+        }
         track({
           id: 'credential-issued',
         })

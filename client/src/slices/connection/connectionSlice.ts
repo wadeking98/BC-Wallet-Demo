@@ -1,3 +1,5 @@
+import type { ProofRecord } from '@aries-framework/core'
+
 import { createSlice } from '@reduxjs/toolkit'
 
 import { createInvitation, fetchConnectionById } from './connectionThunks'
@@ -7,6 +9,7 @@ export interface ConnectionState {
   state?: string
   invitationUrl?: string
   isLoading: boolean
+  isDeepLink: boolean
 }
 
 const initialState: ConnectionState = {
@@ -14,17 +17,22 @@ const initialState: ConnectionState = {
   state: undefined,
   invitationUrl: undefined,
   isLoading: false,
+  isDeepLink: false,
 }
 
 const connectionSlice = createSlice({
   name: 'connection',
   initialState,
   reducers: {
+    setDeepLink: (state) => {
+      state.isDeepLink = true
+    },
     clearConnection: (state) => {
       state.id = undefined
       state.state = undefined
       state.invitationUrl = undefined
       state.isLoading = false
+      state.isDeepLink = false
     },
   },
   extraReducers: (builder) => {
@@ -54,6 +62,6 @@ const connectionSlice = createSlice({
   },
 })
 
-export const { clearConnection } = connectionSlice.actions
+export const { clearConnection, setDeepLink } = connectionSlice.actions
 
 export default connectionSlice.reducer
