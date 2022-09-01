@@ -170,6 +170,7 @@ export const SetupConnection: React.FC<Props> = ({
           {onboardingText && <p className="text-center font-semibold mb-2">{onboardingText}</p>}
           <p className="text-center mb-2">Scan the QR Code below with your digital wallet.</p>
           <div>{renderQRCode(true)}</div>
+          <Button text="I Already Have my Credential" onClick={onboardingCompleted}></Button>
         </div>
       </div>
     </motion.div>
