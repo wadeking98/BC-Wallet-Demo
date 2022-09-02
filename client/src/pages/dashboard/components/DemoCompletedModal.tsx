@@ -1,17 +1,20 @@
 import { AnimatePresence, motion } from 'framer-motion'
+import { useNavigate } from 'react-router-dom'
 
 import { standardFade, dropIn } from '../../../FramerAnimations'
+import { Button } from '../../../components/Button'
 import { SmallButton } from '../../../components/SmallButton'
 import { SmallButtonText } from '../../../components/SmallButtonText'
-
 export interface Props {
   action(): void
   cancel?(): void
 }
 
 export const DemoCompletedModal: React.FC<Props> = ({ action, cancel }) => {
-  const TITLE = 'Demo completed!'
-  const DESCRIPTION = ''
+  const navigate = useNavigate()
+
+  const TITLE = 'Showcase Completed!'
+  const DESCRIPTION = 'Looking to leave some feedback? Take our survey and connect with us!'
 
   return (
     <AnimatePresence>
@@ -41,6 +44,19 @@ export const DemoCompletedModal: React.FC<Props> = ({ action, cancel }) => {
                   <h2 className="text-xl font-medium text-grey-900">{TITLE}</h2>
                   <div className="mt-2 text-sm">
                     <p>{DESCRIPTION}</p>
+
+                    <a
+                      href="https://chefs.nrs.gov.bc.ca/app/form/submit?f=245707da-c13b-4ae0-8d1f-ba318b25269d"
+                      target="_blank"
+                    >
+                      <motion.button
+                        whileTap={{ scale: 0.8 }}
+                        className={`bg-bcgov-blue dark:bg-white text-white font-semibold dark:text-bcgov-black my-5 py-2.5 px-10 rounded transition duration-300 ease-in-out transform text-sm shadow-sm`}
+                        data-cy="standard-button"
+                      >
+                        {'Give feedback'}
+                      </motion.button>
+                    </a>
 
                     <br />
                     <a href="https://animo.id/">
