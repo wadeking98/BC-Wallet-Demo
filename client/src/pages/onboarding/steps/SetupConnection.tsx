@@ -130,8 +130,9 @@ export const SetupConnection: React.FC<Props> = ({
           <FiExternalLink className="inline pb-1" />
         </a>
       )}
-
-      <Button text="I Already Have my Credential" onClick={onboardingCompleted}></Button>
+      <div className="my-5">
+        <Button text="I Already Have my Credential" onClick={onboardingCompleted}></Button>
+      </div>
     </motion.div>
   ) : (
     <motion.div variants={fade} key="ctaCompleted">
@@ -170,7 +171,9 @@ export const SetupConnection: React.FC<Props> = ({
           {onboardingText && <p className="text-center font-semibold mb-2">{onboardingText}</p>}
           <p className="text-center mb-2">Scan the QR Code below with your digital wallet.</p>
           <div>{renderQRCode(true)}</div>
-          <Button text="I Already Have my Credential" onClick={onboardingCompleted}></Button>
+          <div className="mt-5">
+            <Button text="I Already Have my Credential" onClick={onboardingCompleted}></Button>
+          </div>
         </div>
       </div>
     </motion.div>
