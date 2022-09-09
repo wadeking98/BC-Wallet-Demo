@@ -46,7 +46,7 @@ export const DemoCompletedModal: React.FC<Props> = ({ action, cancel }) => {
                     <p>{DESCRIPTION}</p>
 
                     <a
-                      href="https://chefs.nrs.gov.bc.ca/app/form/submit?f=245707da-c13b-4ae0-8d1f-ba318b25269d"
+                      href="https://submit.digital.gov.bc.ca/app/form/submit?f=d61da710-acc3-46fc-b692-111cf6e348de"
                       target="_blank"
                     >
                       <motion.button
