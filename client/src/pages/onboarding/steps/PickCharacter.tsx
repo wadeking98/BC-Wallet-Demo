@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import type { Character } from '../../../slices/types'
 import type { Content } from '../../../utils/OnboardingUtils'
 
@@ -20,8 +19,6 @@ export interface Props {
   title: string
   text: string
 }
-
-console.log(JSON.stringify(process.env))
 
 export const PickCharacter: React.FC<Props> = ({ content, currentCharacter, characters, title, text }) => {
   const dispatch = useAppDispatch()
