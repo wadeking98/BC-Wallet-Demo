@@ -1,11 +1,9 @@
 import type { CharWithUseCases } from '../types'
 
 import { Millennial } from './Millennial'
-import { House } from './useCases/House'
-import { Job } from './useCases/Job'
-import { Laptop } from './useCases/Laptop'
+import { CourtServices } from './useCases/CourtServices'
 
 export const MillennialUseCases: CharWithUseCases = {
   characterId: Millennial.id,
-  useCases: [Job, House, Laptop],
+  useCases: [CourtServices],
 }
