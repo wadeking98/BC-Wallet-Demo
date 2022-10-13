@@ -10,34 +10,34 @@ const date = new Date()
 date.setFullYear(date.getFullYear() + 1)
 const nextYear = Number(date.toISOString().replace('-', '').split('T')[0].replace('-', ''))
 
-export const StudyRoom: UseCase = {
-  slug: 'study',
+export const DigitalID: UseCase = {
+  slug: 'vp',
   card: {
-    title: 'Book a study room',
+    title: 'Login To BC Digital ID',
     // image: `${URL}/card-sport.svg`,
     description: '',
   },
 
   stepper: [
+    // {
+    //   id: uuid(),
+    //   name: `Start the login process`,
+    //   description: '',
+    //   steps: 1,
+    //   section: 1,
+    // },
     {
       id: uuid(),
-      name: `Start booking the room`,
+      name: `Confirm the information to send`,
       description: '',
       steps: 1,
       section: 1,
     },
     {
       id: uuid(),
-      name: `Confirm the information to send`,
-      description: '',
-      steps: 2,
-      section: 1,
-    },
-    {
-      id: uuid(),
       name: `Done!`,
       description: '',
-      steps: 3,
+      steps: 2,
       section: 1,
     },
   ],
@@ -46,7 +46,7 @@ export const StudyRoom: UseCase = {
     {
       id: uuid(),
       entity: {
-        name: 'BestBC College',
+        name: 'BC Digital ID',
         icon: `${URL}/logo-university.png`,
         imageUrl: 'https://i.imgur.com/CbkUgpH.png',
       },
@@ -57,9 +57,9 @@ export const StudyRoom: UseCase = {
       requestedCredentials: [
         {
           id: uuid(),
-          name: 'student_card',
-          icon: '/public/student/icon-student.svg',
-          properties: ['student_first_name'],
+          name: 'Person',
+          icon: '/public/businesswoman/icon-businesswoman.svg',
+          properties: ['parent_1_full_name', 'locality', 'picture', 'postal_code', 'parent_2_full_name', 'country', 'birthdate_dateint', 'street_address', 'given_names', 'expiry_date_dateint', 'family_name', 'region'],
         },
       ],
       issueCredentials: [],
@@ -68,15 +68,14 @@ export const StudyRoom: UseCase = {
           id: uuid(),
           type: StepType.START,
           image: `${URL}/card-school.svg`,
-          title: 'Book a study room',
-          description: `Alice has lots of work to do, and needs a study room for some peace and quiet. In this example, we'll present some info from our Student Card, but just what's needed to book the room.`,
+          title: 'Login to BC Digital ID',
+          description: `Under Development`,
         },
         {
           id: uuid(),
           type: StepType.CONNECTION,
-          title: 'Start booking the room',
-          description: `Imagine you're on the room booking page for BestBC College, abd you've chosen a data and time. Now they just need to confirm a few details. Scan the QR code to continue.`,
-          image: `${URL}/best-bc-college-no-overlay.png`,
+          title: 'Start the Login Process',
+          description: `Under Development`,
           overlay: {
             header: 'Scan with your BC Wallet to login',
           },
@@ -85,17 +84,17 @@ export const StudyRoom: UseCase = {
           id: uuid(),
           type: StepType.PROOF,
           title: 'Confirm the information to send',
-          description: `BC Wallet will now ask you to confirm what to send for the booking. Notice how they only need your first name so they can display it on the booking screen. By providing anything from your student card, they automatically know your student card hasn't been revoked.`,
+          description: `Under Development`,
           requestOptions: {
-            name: 'BestBC College Request',
-            comment: 'BestBC College would like some of your personal information.',
+            name: 'BC Digital ID Request',
+            comment: 'BC Digital ID would like some of your personal information.',
           },
         },
         {
           id: uuid(),
           type: StepType.STEP_END,
           title: `You're done!`,
-          description: `The room is booked. Just by proving your first name, Best BC College could trust you are a current student, and could let others know there's a booking without revealing too much about you.`,
+          description: `Under Development`,
           image: `${URL}/student-accepted.svg`,
         },
       ],

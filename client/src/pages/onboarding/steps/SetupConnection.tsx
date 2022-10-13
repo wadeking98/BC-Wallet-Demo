@@ -121,14 +121,18 @@ export const SetupConnection: React.FC<Props> = ({
 
   const renderCTA = !isCompleted ? (
     <motion.div variants={fade} key="openWallet">
-      <p>
-        Scan the QR-code with your <a href={deepLink}>wallet {isMobile && 'or'} </a>
-      </p>
-      {isMobile && (
-        <a onClick={handleDeepLink} className="underline underline-offset-2 mt-2">
-          open in wallet
-          <FiExternalLink className="inline pb-1" />
-        </a>
+      {currentCharacter.starterCredentials.length > 0 && (
+        <>
+          <p>
+            Scan the QR-code with your <a href={deepLink}>wallet {isMobile && 'or'} </a>
+          </p>
+          {isMobile && (
+            <a onClick={handleDeepLink} className="underline underline-offset-2 mt-2">
+              open in wallet
+              <FiExternalLink className="inline pb-1" />
+            </a>
+          )}
+        </>
       )}
       <div className="my-5">
         <Button text="I Already Have my Credential" onClick={onboardingCompleted}></Button>
@@ -149,9 +153,11 @@ export const SetupConnection: React.FC<Props> = ({
       exit="exit"
     >
       <StepInformation title={title ?? content.title} text={text ?? content.text} />
-      <div className="max-w-xs flex flex-col self-center items-center bg-white rounded-lg p-4  dark:text-black">
-        {renderQRCode(true)}
-      </div>
+      {currentCharacter.starterCredentials.length > 0 && (
+        <div className="max-w-xs flex flex-col self-center items-center bg-white rounded-lg p-4  dark:text-black">
+          {renderQRCode(true)}
+        </div>
+      )}
       <div className="flex flex-col mt-4 text-center text-sm md:text-base font-semibold">{renderCTA}</div>
     </motion.div>
   ) : (

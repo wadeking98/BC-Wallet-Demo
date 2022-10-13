@@ -53,7 +53,7 @@ export const OnlineStore: UseCase = {
       requestedCredentials: [
         {
           id: uuid(),
-          name: 'Student Card',
+          name: 'student_card',
           icon: '/public/student/icon-student.svg',
           // properties: ['expiry_date'],
           predicates: {
