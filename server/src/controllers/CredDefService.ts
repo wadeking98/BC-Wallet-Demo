@@ -43,7 +43,7 @@ export class CredDefService {
     const cd1 = await this.createCredentialDefinition({
       schemaId: `${this.agent?.publicDid?.did}:2:student_card:1.0`,
       supportRevocation: false,
-      tag: 'Student Card',
+      tag: 'student_card',
     })
     // "attributes": [
     //   "Name", "Street", "City", "Date of birth", "Nationality"
@@ -57,6 +57,16 @@ export class CredDefService {
     //"attrNames": [
     //   "Security code", "Card number", "Issuer", "Holder", "Valid until"
     // ],
+
+    // phony credential here that we won't be initialising
+    const cd3 = {
+      id: "xxxxxxxx:3:CL:26908:Person",
+      schemaId: "26908",
+      ver: "0.1",
+      type: "CL",
+      tag: "Person",
+      value: {primary:{}}
+    }
 
     // const cd3 = await this.createCredentialDefinition({
     //   schemaId: 'q7ATwTYbQDgiigVijUAej:2:Airplane Ticket:1.0',
@@ -149,7 +159,7 @@ export class CredDefService {
     // ],
 
     // this.credentialDefinitions = [cd1, cd2, cd3, cd4, cd5, cd6, cd7, cd8, cd9, cd10, cd11, cd12]
-    this.credentialDefinitions = [cd1, cd2]
+    this.credentialDefinitions = [cd1, cd2, cd3]
   }
 
   private async createCredentialDefinition(credentialDefinitionRequest: {
