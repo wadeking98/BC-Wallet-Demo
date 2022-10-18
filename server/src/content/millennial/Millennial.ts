@@ -8,7 +8,7 @@ export const Millennial: Character = {
   id: '3',
   image: '/public/millennial/millennial.svg',
   name: 'Noah',
-  type: 'Millennial',
+  type: 'Lawyer2',
   content: {
     [Progress.PICK_CHARACTER]: {
       title: 'Under Development',
@@ -27,18 +27,23 @@ export const Millennial: Character = {
       text: 'Under Development',
     },
   },
-  backstory:
-    'Web designer Noah loves to explore. He has spent the last year as a digital nomad, traveling and working around the globe, guide him through his next adventure!',
+  backstory: 'lawyer2 is under development',
   starterCredentials: [
     {
       id: uuid(),
-      name: 'Student ID Card',
-      icon: '/public/millennial/icon-millennial.svg',
+      name: 'Member Card',
+      icon: '/public/millennial/millennial.svg',
       attributes: [
-        { name: 'student_first_name', value: 'Jan' },
-        { name: 'student_last_name', value: 'Test' },
-        { name: 'expiry_date', value: '05-05-2025' },
+        { name: 'Member Status', value: 'Active' },
+        { name: 'Given Name', value: 'Lawyer2' },
+        { name: 'PPID', value: '43' },
+        { name: 'Member Status Code', value: '1' },
+        { name: 'Surname', value: 'Lawyerson' },
       ],
     },
   ],
+  onboardingEntity: {
+    name: "Law Society BC",
+    icon: "#"
+  }
 }
