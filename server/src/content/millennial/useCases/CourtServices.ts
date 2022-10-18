@@ -11,7 +11,7 @@ date.setFullYear(date.getFullYear() + 1)
 const nextYear = Number(date.toISOString().replace('-', '').split('T')[0].replace('-', ''))
 
 export const CourtServices: UseCase = {
-  slug: 'court',
+  slug: 'court2',
   card: {
     title: 'Login To Court Services',
     // image: `${URL}/card-sport.svg`,
@@ -59,7 +59,13 @@ export const CourtServices: UseCase = {
           id: uuid(),
           name: 'Member Card',
           icon: '/public/millennial/millennial.svg',
-          properties: ['Member Status'],
+          properties: ['Given Name', 'Surname', 'PPID', 'Member Status Code'],
+        },
+        {
+          id: uuid(),
+          name: 'Person',
+          icon: '/public/millennial/millennial.svg',
+          properties: ['given_names', 'family_name'],
         },
       ],
       issueCredentials: [],
@@ -71,19 +77,18 @@ export const CourtServices: UseCase = {
           title: 'Login to Court Services',
           description: `Under Development`,
         },
-        // {
-        //   id: uuid(),
-        //   type: StepType.CONNECTION,
-        //   title: 'Start the Login Process',
-        //   description: `Under Development`,
-        //   image: `${URL}/best-bc-college-no-overlay.png`,
-        //   overlay: {
-        //     header: 'Scan with your BC Wallet to login',
-        //   },
-        // },
         {
           id: uuid(),
-          type: StepType.PROOF_OOB,
+          type: StepType.CONNECTION,
+          title: 'Start the Login Process',
+          description: `Under Development`,
+          overlay: {
+            header: 'Scan with your BC Wallet to login',
+          },
+        },
+        {
+          id: uuid(),
+          type: StepType.PROOF,
           title: 'Confirm the information to send',
           description: `Under Development`,
           requestOptions: {

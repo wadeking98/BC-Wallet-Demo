@@ -1,4 +1,3 @@
-/* eslint-disable no-console*/
 import { AnimatePresence, motion } from 'framer-motion'
 import { track } from 'insights-js'
 import React, { useEffect } from 'react'
@@ -41,10 +40,6 @@ export const DashboardPage: React.FC = () => {
       dispatch(fetchAllUseCasesByCharId(currentCharacter.id))
     }
   }, [])
-
-  useEffect(() => {
-    console.log(JSON.stringify(currentCharacter))
-  })
 
   useEffect(() => {
     if (completedUseCaseSlugs.length !== 0 && completedUseCaseSlugs.length === useCases.length && !completeCanceled) {
