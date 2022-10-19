@@ -4,6 +4,7 @@ export interface Character {
   name: string
   type: string
   backstory: string
+  skipWalletPrompt?: boolean
   content: { [key: number]: { [key: string]: string } }
   backgroundImage?: string
   onboardingText?: string
