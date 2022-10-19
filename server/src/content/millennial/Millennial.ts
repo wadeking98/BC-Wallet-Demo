@@ -43,7 +43,7 @@ export const Millennial: Character = {
     },
   ],
   onboardingEntity: {
-    name: "Law Society BC",
-    icon: "#"
-  }
+    name: 'Law Society BC',
+    icon: '#',
+  },
 }

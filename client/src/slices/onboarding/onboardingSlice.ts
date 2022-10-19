@@ -25,6 +25,9 @@ const onboardingSlice = createSlice({
     completeOnboarding(state) {
       state.isCompleted = true
     },
+    setOnboardingStep(state, action) {
+      state.onboardingStep = action.payload
+    },
     setOnboardingConnectionId(state, action) {
       state.connectionId = action.payload
     },
@@ -40,6 +43,7 @@ export const {
   nextOnboardingStep,
   prevOnboardingStep,
   completeOnboarding,
+  setOnboardingStep,
   setOnboardingConnectionId,
   resetOnboarding,
 } = onboardingSlice.actions

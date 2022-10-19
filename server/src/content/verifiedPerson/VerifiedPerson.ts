@@ -28,10 +28,9 @@ export const VerifiedPerson: Character = {
       text: 'Verified Person Credential',
     },
   },
-  starterCredentials: [
-  ],
-  onboardingEntity:{
-    name:"BC Digital ID",
-    icon:"#"
-  }
+  starterCredentials: [],
+  onboardingEntity: {
+    name: 'BC Digital ID',
+    icon: '#',
+  },
 }

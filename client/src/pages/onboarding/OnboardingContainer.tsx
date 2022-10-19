@@ -14,7 +14,12 @@ import { useAppDispatch } from '../../hooks/hooks'
 import { useDarkMode } from '../../hooks/useDarkMode'
 import { clearConnection } from '../../slices/connection/connectionSlice'
 import { clearCredentials } from '../../slices/credentials/credentialsSlice'
-import { completeOnboarding, nextOnboardingStep, prevOnboardingStep } from '../../slices/onboarding/onboardingSlice'
+import {
+  completeOnboarding,
+  nextOnboardingStep,
+  prevOnboardingStep,
+  setOnboardingStep,
+} from '../../slices/onboarding/onboardingSlice'
 import { fetchAllUseCasesByCharId } from '../../slices/useCases/useCasesThunks'
 import { basePath } from '../../utils/BasePath'
 import { Progress, OnboardingContent } from '../../utils/OnboardingUtils'
@@ -64,7 +69,11 @@ export const OnboardingContainer: React.FC<Props> = ({
     (onboardingStep === Progress.PICK_CHARACTER && !currentCharacter)
 
   const addOnboardingProgress = () => {
-    dispatch(nextOnboardingStep())
+    if (currentCharacter?.skipWalletPrompt && onboardingStep === Progress.SETUP_START) {
+      dispatch(setOnboardingStep(Progress.PICK_CHARACTER))
+    } else {
+      dispatch(nextOnboardingStep())
+    }
     track({
       id: 'onboarding-step-completed',
       parameters: {
@@ -74,7 +83,11 @@ export const OnboardingContainer: React.FC<Props> = ({
   }
 
   const removeOnboardingProgress = () => {
-    dispatch(prevOnboardingStep())
+    if (currentCharacter?.skipWalletPrompt && onboardingStep === Progress.PICK_CHARACTER) {
+      dispatch(setOnboardingStep(Progress.SETUP_START))
+    } else {
+      dispatch(prevOnboardingStep())
+    }
   }
 
   //override title and text content to make them character dependant

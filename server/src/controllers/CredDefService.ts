@@ -60,12 +60,12 @@ export class CredDefService {
 
     // phony credential here that we won't be initialising
     const cd3 = {
-      id: "xxxxxxxx:3:CL:26908:Person",
-      schemaId: "26908",
-      ver: "0.1",
-      type: "CL",
-      tag: "Person",
-      value: {primary:{}}
+      id: 'xxxxxxxx:3:CL:26908:Person',
+      schemaId: '26908',
+      ver: '0.1',
+      type: 'CL',
+      tag: 'Person',
+      value: { primary: {} },
     }
 
     // const cd3 = await this.createCredentialDefinition({
