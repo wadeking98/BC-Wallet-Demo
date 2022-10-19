@@ -5,7 +5,7 @@ import { v4 as uuid } from 'uuid'
 import { Progress } from '../../utils/progress'
 
 export const VerifiedPerson: Character = {
-  id: '3',
+  id: '4',
   image: '/public/businesswoman/businesswoman.svg',
   name: 'Mallory',
   type: 'Person',
