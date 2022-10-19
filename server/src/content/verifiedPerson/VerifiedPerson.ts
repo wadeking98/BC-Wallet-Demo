@@ -10,6 +10,7 @@ export const VerifiedPerson: Character = {
   name: 'Mallory',
   type: 'Person',
   backstory: 'Mallory is under development',
+  skipWalletPrompt: true,
   content: {
     [Progress.PICK_CHARACTER]: {
       title: 'Meet Mallory',
