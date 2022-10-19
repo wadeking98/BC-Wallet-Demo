@@ -42,8 +42,8 @@ export const BusinessWoman: Character = {
       ],
     },
   ],
-  onboardingEntity:{
-    name:"Law Society BC",
-    icon:"#"
-  }
+  onboardingEntity: {
+    name: 'Law Society BC',
+    icon: '#',
+  },
 }
