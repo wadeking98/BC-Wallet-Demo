@@ -9,6 +9,11 @@ export const Millennial: Character = {
   image: '/public/millennial/millennial.svg',
   name: 'Noah',
   type: 'Lawyer2',
+  customScreens: {
+    startAt: Progress.SETUP_START,
+    screens: ['Test1', 'Test2'],
+    endAt: Progress.SETUP_START + 2,
+  },
   content: {
     [Progress.PICK_CHARACTER]: {
       title: 'Under Development',

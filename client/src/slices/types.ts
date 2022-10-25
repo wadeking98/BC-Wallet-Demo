@@ -19,12 +19,19 @@ export interface Character {
   name: string
   type: string
   backstory: string
+  customScreens?: CustomScreens
   skipWalletPrompt?: boolean
   content: { [key: number]: { [key: string]: string } }
   backgroundImage?: string
   onboardingText?: string
   starterCredentials: CredentialData[]
   onboardingEntity?: Entity
+}
+
+export interface CustomScreens {
+  startAt: number
+  screens: string[]
+  endAt: number
 }
 
 export interface UseCase {

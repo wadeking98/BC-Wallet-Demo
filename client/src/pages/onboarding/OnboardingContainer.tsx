@@ -1,3 +1,4 @@
+/*eslint-disable */
 import type { Character } from '../../slices/types'
 import type { CredentialRecord } from '@aries-framework/core'
 
@@ -16,9 +17,12 @@ import { clearConnection } from '../../slices/connection/connectionSlice'
 import { clearCredentials } from '../../slices/credentials/credentialsSlice'
 import {
   completeOnboarding,
+  nextCustomOnboardingStep,
+  setCustomOnboardingStep,
   nextOnboardingStep,
   prevOnboardingStep,
   setOnboardingStep,
+  prevCustomOnboardingStep,
 } from '../../slices/onboarding/onboardingSlice'
 import { fetchAllUseCasesByCharId } from '../../slices/useCases/useCasesThunks'
 import { basePath } from '../../utils/BasePath'
@@ -29,6 +33,7 @@ import { OnboardingBottomNav } from './components/OnboardingBottomNav'
 import { AcceptCredential } from './steps/AcceptCredential'
 import { ChooseWallet } from './steps/ChooseWallet'
 import { ConnectionComplete } from './steps/ConnectionComplete'
+import { CustomContent } from './steps/CustomSteps'
 import { PickCharacter } from './steps/PickCharacter'
 import { SetupCompleted } from './steps/SetupCompleted'
 import { SetupConnection } from './steps/SetupConnection'
@@ -41,6 +46,7 @@ export interface Props {
   connectionState?: string
   invitationUrl?: string
   onboardingStep: number
+  customOnboardingStep?: number
   credentials: CredentialRecord[]
 }
 
@@ -48,6 +54,7 @@ export const OnboardingContainer: React.FC<Props> = ({
   characters,
   currentCharacter,
   onboardingStep,
+  customOnboardingStep,
   connectionId,
   connectionState,
   invitationUrl,
@@ -60,7 +67,7 @@ export const OnboardingContainer: React.FC<Props> = ({
   const credentialsAccepted = Object.values(credentials).every(
     (x) => x.state === 'credential-issued' || x.state === 'done'
   )
-  const isBackDisabled = [Progress.SETUP_START, Progress.ACCEPT_CREDENTIAL].includes(onboardingStep)
+  const isBackDisabled = [Progress.SETUP_START, Progress.ACCEPT_CREDENTIAL].includes(onboardingStep) && customOnboardingStep === undefined
   const isForwardDisabled =
     onboardingStep === Progress.CHOOSE_WALLET ||
     (onboardingStep === Progress.RECEIVE_IDENTITY && !connectionCompleted) ||
@@ -69,7 +76,17 @@ export const OnboardingContainer: React.FC<Props> = ({
     (onboardingStep === Progress.PICK_CHARACTER && !currentCharacter)
 
   const addOnboardingProgress = () => {
-    if (currentCharacter?.skipWalletPrompt && onboardingStep === Progress.SETUP_START) {
+    if (onboardingStep === currentCharacter?.customScreens?.startAt) {
+      // if character custom content is enabled
+      if (customOnboardingStep === undefined || customOnboardingStep < currentCharacter?.customScreens?.screens?.length - 1) {
+        // if we are not at the end of the current user's custom content
+        dispatch(nextCustomOnboardingStep())
+      } else {
+        // we are at end of custom content so increment the onboarding screen
+        dispatch(nextCustomOnboardingStep())
+        dispatch(setOnboardingStep(currentCharacter?.customScreens?.endAt))
+      }
+    } else if (currentCharacter?.skipWalletPrompt && onboardingStep === Progress.SETUP_START) {
       dispatch(setOnboardingStep(Progress.PICK_CHARACTER))
     } else {
       dispatch(nextOnboardingStep())
@@ -83,7 +100,19 @@ export const OnboardingContainer: React.FC<Props> = ({
   }
 
   const removeOnboardingProgress = () => {
-    if (currentCharacter?.skipWalletPrompt && onboardingStep === Progress.PICK_CHARACTER) {
+    // if character custom content is enabled
+    if(onboardingStep === currentCharacter?.customScreens?.endAt){
+      dispatch(setOnboardingStep(currentCharacter?.customScreens?.startAt))
+      dispatch(prevCustomOnboardingStep())
+    } else if (onboardingStep === currentCharacter?.customScreens?.startAt) {
+      // if character custom content is enabled
+      if (customOnboardingStep !== undefined && customOnboardingStep > 0) {
+        // if we are not at the beggining of the current user's custom content
+        dispatch(prevCustomOnboardingStep())
+      }else{
+        dispatch(setCustomOnboardingStep(undefined))
+      }
+    } else if (currentCharacter?.skipWalletPrompt && onboardingStep === Progress.PICK_CHARACTER) {
       dispatch(setOnboardingStep(Progress.SETUP_START))
     } else {
       dispatch(prevOnboardingStep())
@@ -160,7 +189,11 @@ export const OnboardingContainer: React.FC<Props> = ({
       ),
     }
 
-    return components[progress]
+    let customContentId = undefined
+    if (customOnboardingStep != undefined) {
+      customContentId = currentCharacter?.customScreens?.screens[customOnboardingStep]
+    }
+    return customContentId ? CustomContent[customContentId] : components[progress]
   }
 
   const getImageToRender = (progress: Progress) => {
