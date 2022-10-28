@@ -4,13 +4,13 @@ import { v4 as uuid } from 'uuid'
 
 import { Progress } from '../../utils/progress'
 
-export const Millennial: Character = {
+export const Lawyer2: Character = {
   id: '3',
   image: '/public/businesswoman/businesswoman.svg',
   name: 'Joyce',
   type: 'Lawyer2',
   disableSkipConnection: true,
-  backstory: 'Joyce is under development',
+  backstory: 'Joyce is a member of Law Society of BC looking to access court materials online',
   content: {
     [Progress.PICK_CHARACTER]: {
       title: 'Meet Joyce',
@@ -26,12 +26,12 @@ export const Millennial: Character = {
     },
     [Progress.SETUP_COMPLETED]: {
       title: '',
-      text: 'Member Card',
+      text: 'Member Card and Verified Person credential',
     },
   },
   customScreens: {
     startAt: Progress.PICK_CHARACTER,
-    screens: ['LAWYER2_PREAMBLE', 'LAWYER2_MEMBER_CONNECT', 'LAWYER2_MEMBER_ISSUE'],
+    screens: ['LAWYER2_PREAMBLE', 'LAWYER2_LSBC_PREAMBLE', 'LAWYER2_MEMBER_CONNECT', 'LAWYER2_MEMBER_ISSUE', 'LAWYER2_BCSC_PREAMBLE'],
     endAt: Progress.PICK_CHARACTER + 1,
   },
   starterCredentials: [
@@ -43,7 +43,7 @@ export const Millennial: Character = {
         { name: 'postal_code', value: 'V8N2X6' },
         { name: 'picture', value: '' },
         { name: 'given_names', value: 'Joyce' },
-        { name: 'family_name', value: 'Smith' },
+        { name: 'family_name', value: 'Lee-Martinez' },
         { name: 'locality', value: 'BC' },
         { name: 'region', value: 'Victoria' },
         { name: 'street_address', value: '123 Test Rd' },
@@ -60,15 +60,15 @@ export const Millennial: Character = {
       icon: '/public/businesswoman/icon-businesswoman.svg',
       attributes: [
         { name: 'Member Status', value: 'Active' },
-        { name: 'Given Name', value: 'Lawyer2' },
-        { name: 'PPID', value: '43' },
+        { name: 'Given Name', value: 'Joyce' },
+        { name: 'PPID', value: 'MC12349' },
         { name: 'Member Status Code', value: '1' },
-        { name: 'Surname', value: 'Lawyerson' },
+        { name: 'Surname', value: 'Lee-Martinez' },
       ],
     },
   ],
   onboardingEntity: {
-    name: 'Law Society of BC (DEMO)',
+    name: 'Service BC (DEMO)',
     icon: '#',
   },
 }

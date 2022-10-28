@@ -1,4 +1,4 @@
-import type { Character, CredentialData } from '../../../slices/types'
+import type { Character, CredentialData, Entity } from '../../../slices/types'
 import type { Content } from '../../../utils/OnboardingUtils'
 
 import { CredentialRecord } from '@aries-framework/core'
@@ -38,8 +38,8 @@ export interface Props {
   invitationUrl?: string
   connectionState?: string
   newConnection?: boolean
-  completeTriggerNextPage?: boolean
   disableSkipConnection?: boolean
+  customIssuer?: Entity
   title: string
   text: string
   backgroundImage?: string
@@ -55,7 +55,7 @@ export const SetupConnection: React.FC<Props> = ({
   invitationUrl,
   connectionState,
   newConnection,
-  completeTriggerNextPage,
+  customIssuer,
   disableSkipConnection,
   backgroundImage,
   onboardingText,
@@ -86,7 +86,7 @@ export const SetupConnection: React.FC<Props> = ({
 
   useEffect(() => {
     if (!isCompleted || newConnection) {
-      dispatch(createInvitation(currentCharacter?.onboardingEntity))
+      dispatch(createInvitation(customIssuer ?? currentCharacter?.onboardingEntity))
       dispatch(clearCredentials())
     }
   }, [])
