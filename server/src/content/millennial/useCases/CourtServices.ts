@@ -58,14 +58,14 @@ export const CourtServices: UseCase = {
         {
           id: uuid(),
           name: 'Member Card',
-          icon: '/public/millennial/millennial.svg',
+          icon: '/public/businesswoman/icon-businesswoman.svg',
           properties: ['Given Name', 'Surname', 'PPID', 'Member Status Code'],
         },
         {
           id: uuid(),
           name: 'Person',
-          icon: '/public/millennial/millennial.svg',
-          properties: ['given_names', 'family_name'],
+          icon: '/public/businesswoman/icon-businesswoman.svg',
+          properties: ['expiry_date_dateint'],
         },
       ],
       issueCredentials: [],
@@ -92,8 +92,8 @@ export const CourtServices: UseCase = {
           title: 'Confirm the information to send',
           description: `Under Development`,
           requestOptions: {
-            name: 'Court Services Request',
-            comment: 'Court Services would like some of your personal information.',
+            name: 'Court Services Branch (DEMO) Request',
+            comment: 'Court Services Branch (DEMO) would like some of your personal information.',
           },
         },
         {

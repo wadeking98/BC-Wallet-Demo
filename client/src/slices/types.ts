@@ -24,7 +24,9 @@ export interface Character {
   content: { [key: number]: { [key: string]: string } }
   backgroundImage?: string
   onboardingText?: string
+  disableSkipConnection?: boolean
   starterCredentials: CredentialData[]
+  additionalCredentials?: CredentialData[]
   onboardingEntity?: Entity
 }
 

@@ -18,6 +18,7 @@ import { useInterval } from '../../../hooks/useInterval'
 import { clearConnection, setDeepLink } from '../../../slices/connection/connectionSlice'
 import { createInvitation, fetchConnectionById } from '../../../slices/connection/connectionThunks'
 import { clearCredentials } from '../../../slices/credentials/credentialsSlice'
+import { useOnboarding } from '../../../slices/onboarding/onboardingSelectors'
 import {
   completeOnboarding,
   nextOnboardingStep,
@@ -26,16 +27,19 @@ import {
 import { setConnectionDate } from '../../../slices/preferences/preferencesSlice'
 import { fetchAllUseCasesByCharId } from '../../../slices/useCases/useCasesThunks'
 import { basePath } from '../../../utils/BasePath'
-import { Progress } from '../../../utils/OnboardingUtils'
+import { addOnboardingProgress, Progress } from '../../../utils/OnboardingUtils'
 import { prependApiUrl } from '../../../utils/Url'
 import { StepInformation } from '../components/StepInformation'
 
 export interface Props {
-  content: Content
+  content?: Content
   connectionId?: string
   currentCharacter: Character
   invitationUrl?: string
   connectionState?: string
+  newConnection?: boolean
+  completeTriggerNextPage?: boolean
+  disableSkipConnection?: boolean
   title: string
   text: string
   backgroundImage?: string
@@ -50,6 +54,9 @@ export const SetupConnection: React.FC<Props> = ({
   text,
   invitationUrl,
   connectionState,
+  newConnection,
+  completeTriggerNextPage,
+  disableSkipConnection,
   backgroundImage,
   onboardingText,
 }) => {
@@ -72,18 +79,16 @@ export const SetupConnection: React.FC<Props> = ({
   }
   const isCompleted = connectionState === 'responded' || connectionState === 'complete'
 
-  const addOnboardingProgress = () => {
-    dispatch(nextOnboardingStep())
-    track({
-      id: 'onboarding-step-completed',
-      parameters: {
-        step: Progress.RECEIVE_IDENTITY.toString(),
-      },
-    })
+  const nextSlide = () => {
+    const { onboardingStep, customOnboardingStep } = useOnboarding()
+    addOnboardingProgress(dispatch, onboardingStep, customOnboardingStep, currentCharacter)
   }
 
   useEffect(() => {
-    if (!isCompleted) dispatch(createInvitation(currentCharacter?.onboardingEntity))
+    if (!isCompleted || newConnection) {
+      dispatch(createInvitation(currentCharacter?.onboardingEntity))
+      dispatch(clearCredentials())
+    }
   }, [])
 
   useEffect(() => {
@@ -112,7 +117,7 @@ export const SetupConnection: React.FC<Props> = ({
   const handleDeepLink = () => {
     if (connectionId) {
       dispatch(setDeepLink())
-      addOnboardingProgress()
+      nextSlide()
       setTimeout(() => {
         window.location.href = deepLink
       }, 250)
@@ -134,9 +139,11 @@ export const SetupConnection: React.FC<Props> = ({
           )}
         </>
       )}
-      <div className="my-5">
-        <Button text="I Already Have my Credential" onClick={onboardingCompleted}></Button>
-      </div>
+      {!disableSkipConnection && (
+        <div className="my-5">
+          <Button text="I Already Have my Credential" onClick={onboardingCompleted}></Button>
+        </div>
+      )}
     </motion.div>
   ) : (
     <motion.div variants={fade} key="ctaCompleted">
@@ -152,7 +159,7 @@ export const SetupConnection: React.FC<Props> = ({
       animate="show"
       exit="exit"
     >
-      <StepInformation title={title ?? content.title} text={text ?? content.text} />
+      <StepInformation title={title ?? content?.title} text={text ?? content?.text} />
       {currentCharacter.starterCredentials.length > 0 && (
         <div className="max-w-xs flex flex-col self-center items-center bg-white rounded-lg p-4  dark:text-black">
           {renderQRCode(true)}
@@ -168,7 +175,7 @@ export const SetupConnection: React.FC<Props> = ({
       animate="show"
       exit="exit"
     >
-      <StepInformation title={content.title} text={content.text} />
+      <StepInformation title={title ?? content?.title} text={text ?? content?.text} />
       <div
         className="bg-contain position-relative bg-center bg-no-repeat h-full flex justify-center"
         style={{ backgroundImage: `url(${prependApiUrl(backgroundImage as string)})` }}

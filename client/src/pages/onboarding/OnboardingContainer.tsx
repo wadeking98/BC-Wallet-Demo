@@ -1,4 +1,3 @@
-/*eslint-disable */
 import type { Character } from '../../slices/types'
 import type { CredentialRecord } from '@aries-framework/core'
 
@@ -26,7 +25,12 @@ import {
 } from '../../slices/onboarding/onboardingSlice'
 import { fetchAllUseCasesByCharId } from '../../slices/useCases/useCasesThunks'
 import { basePath } from '../../utils/BasePath'
-import { Progress, OnboardingContent } from '../../utils/OnboardingUtils'
+import {
+  Progress,
+  OnboardingContent,
+  addOnboardingProgress,
+  removeOnboardingProgress,
+} from '../../utils/OnboardingUtils'
 
 import { CharacterContent } from './components/CharacterContent'
 import { OnboardingBottomNav } from './components/OnboardingBottomNav'
@@ -67,56 +71,30 @@ export const OnboardingContainer: React.FC<Props> = ({
   const credentialsAccepted = Object.values(credentials).every(
     (x) => x.state === 'credential-issued' || x.state === 'done'
   )
-  const isBackDisabled = [Progress.SETUP_START, Progress.ACCEPT_CREDENTIAL].includes(onboardingStep) && customOnboardingStep === undefined
+
+  let customScreenName: string | undefined = undefined
+
+  if (customOnboardingStep !== undefined) {
+    customScreenName = currentCharacter?.customScreens?.screens?.[customOnboardingStep]
+  }
+
+  const isBackDisabled =
+    ([Progress.SETUP_START, Progress.ACCEPT_CREDENTIAL].includes(onboardingStep) &&
+      customOnboardingStep === undefined) ||
+    (customScreenName !== undefined && CustomContent[customScreenName].isBackDisabled)
   const isForwardDisabled =
     onboardingStep === Progress.CHOOSE_WALLET ||
     (onboardingStep === Progress.RECEIVE_IDENTITY && !connectionCompleted) ||
     (onboardingStep === Progress.ACCEPT_CREDENTIAL && !credentialsAccepted) ||
-    (onboardingStep === Progress.ACCEPT_CREDENTIAL && credentials.length === 0) ||
+    (onboardingStep === Progress.ACCEPT_CREDENTIAL && credentials.length === 0 && customOnboardingStep === undefined) ||
     (onboardingStep === Progress.PICK_CHARACTER && !currentCharacter)
 
-  const addOnboardingProgress = () => {
-    if (onboardingStep === currentCharacter?.customScreens?.startAt) {
-      // if character custom content is enabled
-      if (customOnboardingStep === undefined || customOnboardingStep < currentCharacter?.customScreens?.screens?.length - 1) {
-        // if we are not at the end of the current user's custom content
-        dispatch(nextCustomOnboardingStep())
-      } else {
-        // we are at end of custom content so increment the onboarding screen
-        dispatch(nextCustomOnboardingStep())
-        dispatch(setOnboardingStep(currentCharacter?.customScreens?.endAt))
-      }
-    } else if (currentCharacter?.skipWalletPrompt && onboardingStep === Progress.SETUP_START) {
-      dispatch(setOnboardingStep(Progress.PICK_CHARACTER))
-    } else {
-      dispatch(nextOnboardingStep())
-    }
-    track({
-      id: 'onboarding-step-completed',
-      parameters: {
-        step: onboardingStep.toString(),
-      },
-    })
+  const nextOnboardingPage = () => {
+    addOnboardingProgress(dispatch, onboardingStep, customOnboardingStep, currentCharacter)
   }
 
-  const removeOnboardingProgress = () => {
-    // if character custom content is enabled
-    if(onboardingStep === currentCharacter?.customScreens?.endAt){
-      dispatch(setOnboardingStep(currentCharacter?.customScreens?.startAt))
-      dispatch(prevCustomOnboardingStep())
-    } else if (onboardingStep === currentCharacter?.customScreens?.startAt) {
-      // if character custom content is enabled
-      if (customOnboardingStep !== undefined && customOnboardingStep > 0) {
-        // if we are not at the beggining of the current user's custom content
-        dispatch(prevCustomOnboardingStep())
-      }else{
-        dispatch(setCustomOnboardingStep(undefined))
-      }
-    } else if (currentCharacter?.skipWalletPrompt && onboardingStep === Progress.PICK_CHARACTER) {
-      dispatch(setOnboardingStep(Progress.SETUP_START))
-    } else {
-      dispatch(prevOnboardingStep())
-    }
+  const prevOnboardingPage = () => {
+    removeOnboardingProgress(dispatch, onboardingStep, customOnboardingStep, currentCharacter)
   }
 
   //override title and text content to make them character dependant
@@ -128,8 +106,16 @@ export const OnboardingContainer: React.FC<Props> = ({
     return { title: '', text: '' }
   }
   useEffect(() => {
-    if (onboardingStep === Progress.RECEIVE_IDENTITY && connectionCompleted) {
-      addOnboardingProgress()
+    const customScreenName =
+      customOnboardingStep !== undefined && currentCharacter?.customScreens != undefined
+        ? currentCharacter?.customScreens?.screens?.[customOnboardingStep as number]
+        : ''
+    if (
+      (onboardingStep === Progress.RECEIVE_IDENTITY || customScreenName?.endsWith('CONNECT')) &&
+      connectionCompleted
+    ) {
+      // if we are on a connection screen either custom or regular onboarding
+      nextOnboardingPage()
     }
   }, [connectionState])
 
@@ -141,7 +127,7 @@ export const OnboardingContainer: React.FC<Props> = ({
         <ChooseWallet
           key={Progress.CHOOSE_WALLET}
           content={OnboardingContent[progress]}
-          addOnboardingProgress={addOnboardingProgress}
+          addOnboardingProgress={nextOnboardingPage}
         />
       ),
       [Progress.PICK_CHARACTER]: (
@@ -160,6 +146,8 @@ export const OnboardingContainer: React.FC<Props> = ({
           content={OnboardingContent[progress]}
           connectionId={connectionId}
           invitationUrl={invitationUrl}
+          newConnection
+          disableSkipConnection={currentCharacter?.disableSkipConnection}
           connectionState={connectionState}
           currentCharacter={currentCharacter as Character}
           title={title}
@@ -189,11 +177,7 @@ export const OnboardingContainer: React.FC<Props> = ({
       ),
     }
 
-    let customContentId = undefined
-    if (customOnboardingStep != undefined) {
-      customContentId = currentCharacter?.customScreens?.screens[customOnboardingStep]
-    }
-    return customContentId ? CustomContent[customContentId] : components[progress]
+    return customScreenName ? CustomContent[customScreenName]?.element : components[progress]
   }
 
   const getImageToRender = (progress: Progress) => {
@@ -261,7 +245,9 @@ export const OnboardingContainer: React.FC<Props> = ({
       ),
     }
 
-    return components[progress]
+    return customScreenName && CustomContent[customScreenName]?.image
+      ? CustomContent[customScreenName]?.image
+      : components[progress]
   }
 
   const navigate = useNavigate()
@@ -308,8 +294,8 @@ export const OnboardingContainer: React.FC<Props> = ({
         <AnimatePresence exitBeforeEnter>{getComponentToRender(onboardingStep)}</AnimatePresence>
         <OnboardingBottomNav
           onboardingStep={onboardingStep}
-          addOnboardingStep={addOnboardingProgress}
-          removeOnboardingStep={removeOnboardingProgress}
+          addOnboardingStep={nextOnboardingPage}
+          removeOnboardingStep={prevOnboardingPage}
           forwardDisabled={isForwardDisabled}
           backDisabled={isBackDisabled}
           onboardingCompleted={onboardingCompleted}
