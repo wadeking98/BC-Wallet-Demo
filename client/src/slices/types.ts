@@ -13,6 +13,13 @@ export interface ProofRequestData {
   requestOptions?: RequestOptions
 }
 
+export interface CharacterContent {
+  title: string
+  text: string
+  element?: JSX.Element
+  image?: string
+}
+
 export interface Character {
   id: string
   image: string
@@ -21,7 +28,7 @@ export interface Character {
   backstory: string
   customScreens?: CustomScreens
   skipWalletPrompt?: boolean
-  content: { [key: number]: { [key: string]: string } }
+  content: { [key: number]: CharacterContent }
   backgroundImage?: string
   onboardingText?: string
   disableSkipConnection?: boolean

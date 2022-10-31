@@ -7,6 +7,7 @@ import { fadeX, fadeExit } from '../../../FramerAnimations'
 import { useCharacters } from '../../../slices/characters/charactersSelectors'
 import { useConnection } from '../../../slices/connection/connectionSelectors'
 import { useCredentials } from '../../../slices/credentials/credentialsSelectors'
+import { prependApiUrl } from '../../../utils/Url'
 import { StepInformation } from '../components/StepInformation'
 
 import { AcceptCredential } from './AcceptCredential'
@@ -46,7 +47,7 @@ export const LAWYER2_LSBC_PREAMBLE_IMAGE: React.FC = () => {
       animate="show"
       exit="exit"
       className="p-4"
-      src={'x'}
+      src={prependApiUrl('/public/lawyer2/onboarding/loginLSBC.svg')}
       alt="LSBC Portal Image"
     />
   )
@@ -73,7 +74,7 @@ export const LAWYER2_BCSC_PREAMBLE_IMAGE: React.FC = () => {
       animate="show"
       exit="exit"
       className="p-4"
-      src={'x'}
+      src={prependApiUrl('/public/lawyer2/onboarding/serviceBC.svg')}
       alt="BCSC App Image"
     />
   )

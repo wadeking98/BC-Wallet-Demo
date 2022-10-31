@@ -6,10 +6,6 @@ import { StepType } from '../../types'
 
 const URL = '/public/student/useCases/school'
 
-const date = new Date()
-date.setFullYear(date.getFullYear() + 1)
-const nextYear = Number(date.toISOString().replace('-', '').split('T')[0].replace('-', ''))
-
 export const CourtServices: UseCase = {
   slug: 'court2',
   card: {
@@ -46,7 +42,7 @@ export const CourtServices: UseCase = {
     {
       id: uuid(),
       entity: {
-        name: 'Court Services',
+        name: 'Court Services Branch (DEMO)',
         icon: `${URL}/logo-university.png`,
         imageUrl: 'https://i.imgur.com/CbkUgpH.png',
       },
@@ -58,13 +54,13 @@ export const CourtServices: UseCase = {
         {
           id: uuid(),
           name: 'Member Card',
-          icon: '/public/businesswoman/icon-businesswoman.svg',
+          icon: '/public/lawyer2/icon-lawyer2.svg',
           properties: ['Given Name', 'Surname', 'PPID'],
         },
         {
           id: uuid(),
           name: 'Person',
-          icon: '/public/businesswoman/icon-businesswoman.svg',
+          icon: '/public/lawyer2/icon-lawyer2.svg',
           properties: ['given_names', 'family_name'],
         },
       ],
@@ -73,7 +69,7 @@ export const CourtServices: UseCase = {
         {
           id: uuid(),
           type: StepType.START,
-          image: '/public/businesswoman/businesswoman.svg',
+          image: '/public/lawyer2/useCases/courtServices/bothCreds.svg',
           title: 'Login to Court Services',
           description: `Joyce wants to access court materials online instead of going in person, in order to get in she needs to prove who she is with her Person credential and a practicing lawyer with the LSBC credential. You will be asked for those now`,
         },
@@ -101,7 +97,7 @@ export const CourtServices: UseCase = {
           type: StepType.STEP_END,
           title: `You're logged in!`,
           description: `Joyce successfully logged in to Court Services online using her Member Card and Person credential. She can now access court documents remotely.`,
-          image: `${URL}/student-accepted.svg`,
+          image: '/public/lawyer2/onboarding/lawyer2Success.svg',
         },
       ],
     },

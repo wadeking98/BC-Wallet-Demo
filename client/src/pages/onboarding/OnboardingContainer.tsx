@@ -31,6 +31,7 @@ import {
   addOnboardingProgress,
   removeOnboardingProgress,
 } from '../../utils/OnboardingUtils'
+import { prependApiUrl } from '../../utils/Url'
 
 import { CharacterContent } from './components/CharacterContent'
 import { OnboardingBottomNav } from './components/OnboardingBottomNav'
@@ -190,7 +191,11 @@ export const OnboardingContainer: React.FC<Props> = ({
           exit="exit"
           className="p-4"
           key={Progress.SETUP_START}
-          src={OnboardingContent[progress].iconLight}
+          src={
+            currentCharacter?.content?.[progress]?.image
+              ? prependApiUrl(currentCharacter.content[progress].image as string)
+              : OnboardingContent[progress].iconLight
+          }
           alt="BC Wallet"
         />
       ),
@@ -239,7 +244,11 @@ export const OnboardingContainer: React.FC<Props> = ({
           exit="exit"
           className="p-4"
           key={Progress.SETUP_COMPLETED}
-          src={darkMode ? OnboardingContent[progress].iconDark : OnboardingContent[progress].iconLight}
+          src={
+            currentCharacter?.content?.[progress]?.image
+              ? prependApiUrl(currentCharacter.content[progress].image as string)
+              : OnboardingContent[progress].iconLight
+          }
           alt="setup completed"
         />
       ),
