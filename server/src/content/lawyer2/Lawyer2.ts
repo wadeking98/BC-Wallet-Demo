@@ -8,8 +8,8 @@ export const Lawyer2: Character = {
   id: '3',
   image: '/public/lawyer2/lawyer2.svg',
   name: 'Joyce',
-  type: 'Lawyer2',
-  backstory: 'Joyce is a member of Law Society of BC looking to access court materials online',
+  type: 'Joyce',
+  backstory: 'Joyce is a member of the Law Society of British Columbia looking to access court materials online.',
   content: {
     [Progress.SETUP_START]: {
       title: '',
@@ -26,7 +26,7 @@ export const Lawyer2: Character = {
       title: 'Meet Joyce',
       text: `Meet Joyce (that's you in this demo!). Joyce is a lawyer in good standing with The Law Society of British Columbia. We know this because she's got her physical Law Society of British Columbia Member Card.
 
-      She's also a resident of British Columbia and has gone through the process to prove her identity with Service BC and has obtained a BC Services Card.
+      She's also a resident of British Columbia and has gone through the process to prove her identity with Service BC and has obtained a physical BC Services Card.
         
       This has allowed her to use in person services.
       `,
@@ -34,15 +34,18 @@ export const Lawyer2: Character = {
     [Progress.RECEIVE_IDENTITY]: {
       title: 'Get Person credential',
       text: 'Joyce gets her Person credential from the BC Services Card app. She starts the process within BC Wallet. For this demo you will scan this QR code to receive the credential offer.',
+      isBackDisabled: true,
+      image: '/public/lawyer2/onboarding/personCredPhone.svg'
     },
     [Progress.ACCEPT_CREDENTIAL]: {
-      title: 'Accept your BC Person Credential',
-      text: 'This Credential proves who you say you are',
+      title: 'Accept your Person credential',
+      text: 'Check your phone. You’ve received a credential offer from Service BC in your BC Wallet. You can use this credential to prove who you are online.',
+      image: '/public/lawyer2/onboarding/personCredPhone.svg'
     },
     [Progress.SETUP_COMPLETED]: {
       title: '',
-      text: 'Member Card and Verified Person credential',
-      image: '/public/lawyer2/onboarding/lawyer2Success.svg',
+      text: 'Member Card and Person credential',
+      image: '/public/lawyer2/onboarding/lawyerPersonCredPhone.svg',
     },
   },
   customScreens: {
@@ -52,9 +55,8 @@ export const Lawyer2: Character = {
       'LAWYER2_LSBC_PREAMBLE',
       'LAWYER2_MEMBER_CONNECT',
       'LAWYER2_MEMBER_ISSUE',
-      'LAWYER2_BCSC_PREAMBLE',
     ],
-    endAt: Progress.PICK_CHARACTER + 1,
+    endAt: Progress.RECEIVE_IDENTITY,
   },
   starterCredentials: [
     {

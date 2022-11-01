@@ -74,7 +74,7 @@ export const addOnboardingProgress = (
     // if character custom content is enabled
     if (
       customOnboardingStep === undefined ||
-      customOnboardingStep < currentCharacter?.customScreens?.screens?.length - 1
+      customOnboardingStep < currentCharacter?.customScreens?.screens?.length - inc
     ) {
       // if we are not at the end of the current user's custom content
       dispatch(nextCustomOnboardingStep(inc))
@@ -127,7 +127,7 @@ export const OnboardingContent = {
     iconDark: bcWalletIcon,
     title: `Let's get started!`,
     text: `BC Wallet is a new app for storing and using credentials on your smartphone. Credentials are things like IDs, licenses and diplomas. \nUsing your BC Wallet is fast and simple. In the future it can be used online and in person.
-    You approve every use, and share only what is needed. \nIn this demo, you will use two credentials to prove who you are and access court materials online instead of in-person`,
+    You approve every use, and share only what is needed. \nIn this demo, you will use two credentials to prove who you are and access court materials online instead of in-person.`,
   },
   [Progress.CHOOSE_WALLET]: {
     iconLight: onboardingWalletLight,

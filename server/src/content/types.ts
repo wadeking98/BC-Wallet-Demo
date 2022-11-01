@@ -8,6 +8,7 @@ export interface CharacterContent {
   text: string
   textWithImage?: TextWithImage[]
   image?: string
+  isBackDisabled?: boolean
 }
 
 export interface Character {

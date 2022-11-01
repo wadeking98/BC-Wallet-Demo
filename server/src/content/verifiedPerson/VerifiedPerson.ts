@@ -21,12 +21,12 @@ export const VerifiedPerson: Character = {
       text: 'Under development',
     },
     [Progress.ACCEPT_CREDENTIAL]: {
-      title: 'Accept your verified person credential',
+      title: 'Accept your Person credential',
       text: 'Under development',
     },
     [Progress.SETUP_COMPLETED]: {
       title: '',
-      text: 'Verified Person Credential',
+      text: 'Person Credential',
     },
   },
   starterCredentials: [],

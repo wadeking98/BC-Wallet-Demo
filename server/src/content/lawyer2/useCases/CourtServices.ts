@@ -9,7 +9,7 @@ const URL = '/public/student/useCases/school'
 export const CourtServices: UseCase = {
   slug: 'court2',
   card: {
-    title: 'Gain access to Court materials online',
+    title: 'Gain access to court materials online',
     // image: `${URL}/card-sport.svg`,
     description: '',
   },

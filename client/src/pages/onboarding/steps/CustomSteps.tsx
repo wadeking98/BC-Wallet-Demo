@@ -20,7 +20,7 @@ export const LAWYER2_PREAMBLE: React.FC = () => {
   return (
     <motion.div variants={fadeX} initial="hidden" animate="show" exit="exit">
       <StepInformation
-        title={'Going Digital'}
+        title={'Going digital'}
         text={`Over time, The Government of B.C. and the Law Society of British Columbia has been making things more convenient by offering a choice of accessing services online and in-person. 
 
           Joyce has accumulated all physical credentials and has gone digital. She has been verified as a practising lawyer in B.C. and verified herself with the BC Services Card app.
@@ -39,7 +39,7 @@ export const LAWYER2_PREAMBLE_IMAGE: React.FC = () => {
       exit="exit"
       className="p-4"
       src={prependApiUrl('/public/lawyer2/onboarding/goingDigital.svg')}
-      alt="Going Digital"
+      alt="Going digital"
     />
   )
 }
@@ -71,33 +71,6 @@ export const LAWYER2_LSBC_PREAMBLE_IMAGE: React.FC = () => {
   )
 }
 
-export const LAWYER2_BCSC_PREAMBLE: React.FC = () => {
-  return (
-    <motion.div variants={fadeX} initial="hidden" animate="show" exit="exit">
-      <StepInformation
-        title={'Login to BC Services Card App'}
-        text={
-          'Before Joyce can recieve her Verified Person Credential, she first needs to log in to the BC Services Card app. Once she is logged in, Service BC will issue her a Verified Person credential.'
-        }
-      />
-    </motion.div>
-  )
-}
-
-export const LAWYER2_BCSC_PREAMBLE_IMAGE: React.FC = () => {
-  return (
-    <motion.img
-      variants={fadeExit}
-      initial="hidden"
-      animate="show"
-      exit="exit"
-      className="p-4"
-      src={prependApiUrl('/public/lawyer2/onboarding/serviceBC.svg')}
-      alt="BCSC App Image"
-    />
-  )
-}
-
 export const LAWYER2_MEMBER_CONNECT: React.FC = () => {
   const dispatch = useAppDispatch()
   const { onboardingStep, customOnboardingStep } = useOnboarding()
@@ -119,12 +92,26 @@ export const LAWYER2_MEMBER_CONNECT: React.FC = () => {
       customIssuer={{ name: 'Law Society of BC (Demo)', icon: '#' }}
       connectionState={state}
       currentCharacter={currentCharacter as Character}
-      title={'Get your LSBC Credential'}
+      title={'Get your lawyer credential'}
       text={
         'Joyce is now ready to be issued her Law Society of British Columbia Member Card. She has logged into her member portal and is ready to accept a digital version of that card. Open the BC Wallet app on your phone, hit the scan button and accept.'
       }
       backgroundImage={'/public/lawyer2/onboarding/LSBCPortalOverlay.png'}
       onboardingText={currentCharacter?.onboardingText}
+    />
+  )
+}
+
+export const LAWYER2_MEMBER_IMAGE: React.FC = () => {
+  return (
+    <motion.img
+      variants={fadeExit}
+      initial="hidden"
+      animate="show"
+      exit="exit"
+      className="p-4"
+      src={prependApiUrl('/public/lawyer2/onboarding/lawyerCredPhone.svg')}
+      alt="Member card image"
     />
   )
 }
@@ -139,8 +126,10 @@ export const LAWYER2_MEMBER_ISSUE: React.FC = () => {
       useAltCreds={true}
       credentials={credentials}
       currentCharacter={currentCharacter}
-      title={'Accept your LSBC Member Card'}
-      text={'This credential proves that Joyce is a lawyer'}
+      title={'Accept your lawyer credential'}
+      text={
+        'Check your phone. You’ve received a credential offer from the Law Society of British Columbia in your BC Wallet. You can use this credential to prove you’re a lawyer online.'
+      }
     />
   ) : null
 }
@@ -158,11 +147,10 @@ export const CustomContent: { [key: string]: CustomContentContainer } = {
     image: <LAWYER2_LSBC_PREAMBLE_IMAGE />,
     isBackDisabled: false,
   },
-  LAWYER2_MEMBER_CONNECT: { element: <LAWYER2_MEMBER_CONNECT />, isBackDisabled: false },
-  LAWYER2_MEMBER_ISSUE: { element: <LAWYER2_MEMBER_ISSUE />, isBackDisabled: true },
-  LAWYER2_BCSC_PREAMBLE: {
-    element: <LAWYER2_BCSC_PREAMBLE />,
-    image: <LAWYER2_BCSC_PREAMBLE_IMAGE />,
-    isBackDisabled: true,
+  LAWYER2_MEMBER_CONNECT: {
+    element: <LAWYER2_MEMBER_CONNECT />,
+    image: <LAWYER2_MEMBER_IMAGE />,
+    isBackDisabled: false,
   },
+  LAWYER2_MEMBER_ISSUE: { element: <LAWYER2_MEMBER_ISSUE />, image: <LAWYER2_MEMBER_IMAGE />, isBackDisabled: true },
 }
