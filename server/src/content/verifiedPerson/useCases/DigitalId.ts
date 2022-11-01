@@ -46,7 +46,7 @@ export const DigitalID: UseCase = {
     {
       id: uuid(),
       entity: {
-        name: 'BC Digital ID',
+        name: 'Court Services',
         icon: `${URL}/logo-university.png`,
         imageUrl: 'https://i.imgur.com/CbkUgpH.png',
       },
@@ -59,18 +59,7 @@ export const DigitalID: UseCase = {
           id: uuid(),
           name: 'Person',
           icon: '/public/businesswoman/icon-businesswoman.svg',
-          properties: [
-            'picture',
-            'family_name',
-            'given_names',
-            'locality',
-            'region',
-            'postal_code',
-            'street_address',
-            'country',
-            'expiry_date_dateint',
-            'birthdate_dateint',
-          ],
+          properties: ['given_names', 'family_name'],
         },
       ],
       issueCredentials: [],

@@ -33,6 +33,14 @@ export class CharacterController {
       credentialDefinitionId: this.service.getCredentialDefinitionIdByTag(x.name),
     }))
 
+    if (character.additionalCredentials !== undefined) {
+      const altCreds = character.additionalCredentials.map((x) => ({
+        ...x,
+        credentialDefinitionId: this.service.getCredentialDefinitionIdByTag(x.name),
+      }))
+      character.additionalCredentials = altCreds
+    }
+
     character.starterCredentials = lol
     return character
   }
@@ -50,6 +58,12 @@ export class CharacterController {
           ...x,
           credentialDefinitionId: this.service.getCredentialDefinitionIdByTag(x.name),
         })),
+        additionalCredentials: !char.additionalCredentials
+          ? char.additionalCredentials
+          : char.additionalCredentials.map((x) => ({
+              ...x,
+              credentialDefinitionId: this.service.getCredentialDefinitionIdByTag(x.name),
+            })),
       })
     })
     return arr

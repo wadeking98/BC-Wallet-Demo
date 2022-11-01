@@ -1,4 +1,4 @@
-import type { Character, CredentialData } from '../../../slices/types'
+import type { Character, CredentialData, Entity } from '../../../slices/types'
 import type { Content } from '../../../utils/OnboardingUtils'
 
 import { CredentialRecord } from '@aries-framework/core'
@@ -18,24 +18,26 @@ import { useInterval } from '../../../hooks/useInterval'
 import { clearConnection, setDeepLink } from '../../../slices/connection/connectionSlice'
 import { createInvitation, fetchConnectionById } from '../../../slices/connection/connectionThunks'
 import { clearCredentials } from '../../../slices/credentials/credentialsSlice'
-import {
-  completeOnboarding,
-  nextOnboardingStep,
-  setOnboardingConnectionId,
-} from '../../../slices/onboarding/onboardingSlice'
+import { useOnboarding } from '../../../slices/onboarding/onboardingSelectors'
+import { completeOnboarding, setOnboardingConnectionId } from '../../../slices/onboarding/onboardingSlice'
 import { setConnectionDate } from '../../../slices/preferences/preferencesSlice'
 import { fetchAllUseCasesByCharId } from '../../../slices/useCases/useCasesThunks'
 import { basePath } from '../../../utils/BasePath'
-import { Progress } from '../../../utils/OnboardingUtils'
+import { addOnboardingProgress, Progress } from '../../../utils/OnboardingUtils'
 import { prependApiUrl } from '../../../utils/Url'
 import { StepInformation } from '../components/StepInformation'
 
 export interface Props {
-  content: Content
+  content?: Content
   connectionId?: string
   currentCharacter: Character
+  skipIssuance(): void
+  nextSlide(): void
   invitationUrl?: string
   connectionState?: string
+  newConnection?: boolean
+  disableSkipConnection?: boolean
+  customIssuer?: Entity
   title: string
   text: string
   backgroundImage?: string
@@ -46,10 +48,15 @@ export const SetupConnection: React.FC<Props> = ({
   content,
   connectionId,
   currentCharacter,
+  skipIssuance,
+  nextSlide,
   title,
   text,
   invitationUrl,
   connectionState,
+  newConnection,
+  customIssuer,
+  disableSkipConnection,
   backgroundImage,
   onboardingText,
 }) => {
@@ -72,18 +79,11 @@ export const SetupConnection: React.FC<Props> = ({
   }
   const isCompleted = connectionState === 'responded' || connectionState === 'complete'
 
-  const addOnboardingProgress = () => {
-    dispatch(nextOnboardingStep())
-    track({
-      id: 'onboarding-step-completed',
-      parameters: {
-        step: Progress.RECEIVE_IDENTITY.toString(),
-      },
-    })
-  }
-
   useEffect(() => {
-    if (!isCompleted) dispatch(createInvitation(currentCharacter?.onboardingEntity))
+    if (!isCompleted || newConnection) {
+      dispatch(createInvitation(customIssuer ?? currentCharacter?.onboardingEntity))
+      dispatch(clearCredentials())
+    }
   }, [])
 
   useEffect(() => {
@@ -112,7 +112,7 @@ export const SetupConnection: React.FC<Props> = ({
   const handleDeepLink = () => {
     if (connectionId) {
       dispatch(setDeepLink())
-      addOnboardingProgress()
+      nextSlide()
       setTimeout(() => {
         window.location.href = deepLink
       }, 250)
@@ -134,9 +134,11 @@ export const SetupConnection: React.FC<Props> = ({
           )}
         </>
       )}
-      <div className="my-5">
-        <Button text="I Already Have my Credential" onClick={onboardingCompleted}></Button>
-      </div>
+      {!disableSkipConnection && (
+        <div className="my-5">
+          <Button text="I Already Have my Credential" onClick={skipIssuance}></Button>
+        </div>
+      )}
     </motion.div>
   ) : (
     <motion.div variants={fade} key="ctaCompleted">
@@ -152,7 +154,7 @@ export const SetupConnection: React.FC<Props> = ({
       animate="show"
       exit="exit"
     >
-      <StepInformation title={title ?? content.title} text={text ?? content.text} />
+      <StepInformation title={title ?? content?.title} text={text ?? content?.text} />
       {currentCharacter.starterCredentials.length > 0 && (
         <div className="max-w-xs flex flex-col self-center items-center bg-white rounded-lg p-4  dark:text-black">
           {renderQRCode(true)}
@@ -168,7 +170,7 @@ export const SetupConnection: React.FC<Props> = ({
       animate="show"
       exit="exit"
     >
-      <StepInformation title={content.title} text={content.text} />
+      <StepInformation title={title ?? content?.title} text={text ?? content?.text} />
       <div
         className="bg-contain position-relative bg-center bg-no-repeat h-full flex justify-center"
         style={{ backgroundImage: `url(${prependApiUrl(backgroundImage as string)})` }}
@@ -178,7 +180,7 @@ export const SetupConnection: React.FC<Props> = ({
           <p className="text-center mb-2">Scan the QR Code below with your digital wallet.</p>
           <div>{renderQRCode(true)}</div>
           <div className="mt-5">
-            <Button text="I Already Have my Credential" onClick={onboardingCompleted}></Button>
+            <Button text="I Already Have my Credential" onClick={skipIssuance}></Button>
           </div>
         </div>
       </div>

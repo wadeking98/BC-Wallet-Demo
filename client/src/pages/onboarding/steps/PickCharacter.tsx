@@ -1,4 +1,4 @@
-import type { Character } from '../../../slices/types'
+import type { Character, TextWithImage } from '../../../slices/types'
 import type { Content } from '../../../utils/OnboardingUtils'
 
 import { motion } from 'framer-motion'
@@ -18,9 +18,17 @@ export interface Props {
   characters: Character[]
   title: string
   text: string
+  textWithImage?: TextWithImage[]
 }
 
-export const PickCharacter: React.FC<Props> = ({ content, currentCharacter, characters, title, text }) => {
+export const PickCharacter: React.FC<Props> = ({
+  content,
+  currentCharacter,
+  characters,
+  title,
+  text,
+  textWithImage,
+}) => {
   const dispatch = useAppDispatch()
   const darkMode = useDarkMode()
 
@@ -64,7 +72,7 @@ export const PickCharacter: React.FC<Props> = ({ content, currentCharacter, char
 
   return (
     <motion.div variants={fadeX} initial="hidden" animate="show" exit="exit">
-      <StepInformation title={title ?? content.title} text={text ?? content.text} />
+      <StepInformation title={title ?? content.title} text={text ?? content.text} textWithImage={textWithImage} />
       {process.env.REACT_APP_INSIGHTS_PROJECT_ID === 'FULL_DEMO' && (
         <div className="flex flex-col lg:flex-row items-left lg:items-start justify-between px-8 h-full max-h-72 sm:max-h-96 overflow-y-scroll lg:overflow-y-hidden">
           {renderCharacters}

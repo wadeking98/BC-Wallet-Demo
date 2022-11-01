@@ -60,7 +60,7 @@ export const UseCaseContainer: React.FC<Props> = ({ useCases, completedUseCaseSl
   return (
     <div className="flex flex-col mx-4 lg:mx-4 my-2 p-4 md:p-6 lg:p-8 bg-white dark:bg-bcgov-darkgrey dark:text-white rounded-lg shadow-sm">
       <motion.h1 variants={dashboardTitle} className="text-3xl md:text-4xl font-bold mb-2">
-        Using your Credential
+        Using your Credentials
       </motion.h1>
       <motion.div variants={rowContainer} className="flex flex-col w-auto overflow-x-hidden md:overflow-x-visible">
         {renderUseCases}

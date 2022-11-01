@@ -1,3 +1,8 @@
+import type { Character } from '../slices/types'
+import type { Dispatch } from 'react'
+
+import { track } from 'insights-js'
+
 import balloonDark from '../assets/dark/icon-balloon-dark.svg'
 import moonDark from '../assets/dark/icon-moon-dark.svg'
 import notificationDark from '../assets/dark/icon-notification-dark.svg'
@@ -19,6 +24,14 @@ import onboardingConnectLight from '../assets/light/onboarding-connect-light.svg
 import onboardingCredentialLight from '../assets/light/onboarding-credential-light.svg'
 import onboardingStartLight from '../assets/light/onboarding-started-light.svg'
 import onboardingWalletLight from '../assets/light/onboarding-wallet-light.svg'
+import {
+  nextCustomOnboardingStep,
+  nextOnboardingStep,
+  prevCustomOnboardingStep,
+  prevOnboardingStep,
+  setCustomOnboardingStep,
+  setOnboardingStep,
+} from '../slices/onboarding/onboardingSlice'
 
 export enum Progress {
   SETUP_START = 0,
@@ -49,12 +62,72 @@ export const StepperItems = [
   { name: 'balloon', onboardingStep: Progress.SETUP_COMPLETED, iconLight: balloonLight, iconDark: balloonDark },
 ]
 
+export const addOnboardingProgress = (
+  dispatch: Dispatch<any>,
+  onboardingStep: number,
+  customOnboardingStep?: number,
+  currentCharacter?: Character,
+  step?: number
+) => {
+  const inc = step ?? 1
+  if (onboardingStep === currentCharacter?.customScreens?.startAt) {
+    // if character custom content is enabled
+    if (
+      customOnboardingStep === undefined ||
+      customOnboardingStep < currentCharacter?.customScreens?.screens?.length - 1
+    ) {
+      // if we are not at the end of the current user's custom content
+      dispatch(nextCustomOnboardingStep(inc))
+    } else {
+      // we are at end of custom content so increment the onboarding screen
+      dispatch(nextCustomOnboardingStep(inc))
+      dispatch(setOnboardingStep(currentCharacter?.customScreens?.endAt))
+    }
+  } else if (currentCharacter?.skipWalletPrompt && onboardingStep === Progress.SETUP_START) {
+    dispatch(setOnboardingStep(Progress.PICK_CHARACTER))
+  } else {
+    dispatch(nextOnboardingStep(inc))
+  }
+  track({
+    id: 'onboarding-step-completed',
+    parameters: {
+      step: onboardingStep.toString(),
+    },
+  })
+}
+
+export const removeOnboardingProgress = (
+  dispatch: Dispatch<any>,
+  onboardingStep: number,
+  customOnboardingStep?: number,
+  currentCharacter?: Character
+) => {
+  // if character custom content is enabled
+  if (onboardingStep === currentCharacter?.customScreens?.endAt) {
+    dispatch(setOnboardingStep(currentCharacter?.customScreens?.startAt))
+    dispatch(prevCustomOnboardingStep())
+  } else if (onboardingStep === currentCharacter?.customScreens?.startAt) {
+    // if character custom content is enabled
+    if (customOnboardingStep !== undefined && customOnboardingStep > 0) {
+      // if we are not at the beggining of the current user's custom content
+      dispatch(prevCustomOnboardingStep())
+    } else {
+      dispatch(setCustomOnboardingStep(undefined))
+    }
+  } else if (currentCharacter?.skipWalletPrompt && onboardingStep === Progress.PICK_CHARACTER) {
+    dispatch(setOnboardingStep(Progress.SETUP_START))
+  } else {
+    dispatch(prevOnboardingStep())
+  }
+}
+
 export const OnboardingContent = {
   [Progress.SETUP_START]: {
     iconLight: bcWalletIcon,
     iconDark: bcWalletIcon,
     title: `Let's get started!`,
-    text: `BC Wallet is a new app for storing and using credentials on your smartphone. Credentials are things like IDs, licenses and diplomas. In this demo, we'll show you how BC Wallet works. You'll learn how to put things into your wallet and use them where desired.`,
+    text: `BC Wallet is a new app for storing and using credentials on your smartphone. Credentials are things like IDs, licenses and diplomas. \nUsing your BC Wallet is fast and simple. In the future it can be used online and in person.
+    You approve every use, and share only what is needed. \nIn this demo, you will use two credentials to prove who you are and access court materials online instead of in-person`,
   },
   [Progress.CHOOSE_WALLET]: {
     iconLight: onboardingWalletLight,

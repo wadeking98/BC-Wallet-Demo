@@ -1,15 +1,36 @@
+export interface TextWithImage {
+  text?: string
+  image?: string
+}
+
+export interface CharacterContent {
+  title: string
+  text: string
+  textWithImage?: TextWithImage[]
+  image?: string
+}
+
 export interface Character {
   id: string
   image: string
   name: string
   type: string
   backstory: string
+  customScreens?: CustomScreens
   skipWalletPrompt?: boolean
-  content: { [key: number]: { [key: string]: string } }
+  content: { [key: number]: CharacterContent }
   backgroundImage?: string
   onboardingText?: string
+  disableSkipConnection?: boolean
   starterCredentials: StarterCredential[]
+  additionalCredentials?: StarterCredential[]
   onboardingEntity?: Entity
+}
+
+export interface CustomScreens {
+  startAt: number
+  screens: string[]
+  endAt: number
 }
 
 export interface UseCase {

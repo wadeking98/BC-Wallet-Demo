@@ -15,7 +15,9 @@ import { Modal } from '../../../components/Modal'
 import { useAppDispatch } from '../../../hooks/hooks'
 import { useInterval } from '../../../hooks/useInterval'
 import { useConnection } from '../../../slices/connection/connectionSelectors'
+import { clearConnection } from '../../../slices/connection/connectionSlice'
 import { useCredentials } from '../../../slices/credentials/credentialsSelectors'
+import { clearCredentials } from '../../../slices/credentials/credentialsSlice'
 import {
   deleteCredentialById,
   fetchCredentialsByConId,
@@ -28,10 +30,11 @@ import { StarterCredentials } from '../components/StarterCredentials'
 import { StepInformation } from '../components/StepInformation'
 
 export interface Props {
-  content: Content
+  content?: Content
   connectionId: string
   credentials: CredentialRecord[]
   currentCharacter: Character
+  useAltCreds?: boolean
   title: string
   text: string
 }
@@ -41,6 +44,7 @@ export const AcceptCredential: React.FC<Props> = ({
   connectionId,
   credentials,
   currentCharacter,
+  useAltCreds,
   title,
   text,
 }) => {
@@ -59,13 +63,19 @@ export const AcceptCredential: React.FC<Props> = ({
   const showFailedRequestModal = () => setIsFailedRequestModalOpen(true)
   const closeFailedRequestModal = () => setIsFailedRequestModalOpen(false)
 
+  const getCharacterCreds = () => {
+    return useAltCreds && currentCharacter.additionalCredentials != undefined
+      ? currentCharacter.additionalCredentials
+      : currentCharacter.starterCredentials
+  }
+
   const credentialsAccepted = Object.values(credentials).every(
     (x) => x.state === 'credential-issued' || x.state === 'done'
   )
 
   useEffect(() => {
     if (credentials.length === 0) {
-      currentCharacter.starterCredentials.forEach((item) => {
+      getCharacterCreds().forEach((item) => {
         if (isDeepLink) {
           dispatch(issueDeepCredential({ connectionId: connectionId, cred: item }))
         } else {
@@ -122,7 +132,7 @@ export const AcceptCredential: React.FC<Props> = ({
       if (cred.state !== 'credential-issued' && cred.state !== 'done') {
         dispatch(deleteCredentialById(cred.id))
 
-        const newCredential = currentCharacter.starterCredentials.find((item) => {
+        const newCredential = getCharacterCreds().find((item) => {
           const credClass = JsonTransformer.fromJSON(cred, CredentialRecord)
           return (
             item.credentialDefinitionId ===
@@ -138,12 +148,12 @@ export const AcceptCredential: React.FC<Props> = ({
 
   return (
     <motion.div className="flex flex-col h-full" variants={fadeX} initial="hidden" animate="show" exit="exit">
-      <StepInformation title={title ?? content.title} text={text ?? content.text} />
+      <StepInformation title={title ?? content?.title} text={text ?? content?.text} />
       <div className="flex flex-row m-auto content-center">
-        {currentCharacter.starterCredentials.length === credentials.length ? (
+        {getCharacterCreds().length === credentials.length ? (
           <AnimatePresence exitBeforeEnter>
             <motion.div className={`flex flex-1 flex-col m-auto`} variants={fade} animate="show" exit="exit">
-              <StarterCredentials credentialData={currentCharacter.starterCredentials} credentials={credentials} />
+              <StarterCredentials credentialData={getCharacterCreds()} credentials={credentials} />
             </motion.div>
           </AnimatePresence>
         ) : (

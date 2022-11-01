@@ -58,15 +58,11 @@ export class CredDefService {
     //   "Security code", "Card number", "Issuer", "Holder", "Valid until"
     // ],
 
-    // phony credential here that we won't be initialising
-    const cd3 = {
-      id: 'xxxxxxxx:3:CL:26908:Person',
-      schemaId: '26908',
-      ver: '0.1',
-      type: 'CL',
+    const cd3 = await this.createCredentialDefinition({
+      schemaId: `${this.agent?.publicDid?.did}:2:Person:1.0`,
+      supportRevocation: false,
       tag: 'Person',
-      value: { primary: {} },
-    }
+    })
 
     // const cd3 = await this.createCredentialDefinition({
     //   schemaId: 'q7ATwTYbQDgiigVijUAej:2:Airplane Ticket:1.0',
