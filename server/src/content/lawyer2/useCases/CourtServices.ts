@@ -9,7 +9,7 @@ const URL = '/public/student/useCases/school'
 export const CourtServices: UseCase = {
   slug: 'court2',
   card: {
-    title: 'Login To Court Services',
+    title: 'Gain access to Court materials online',
     // image: `${URL}/card-sport.svg`,
     description: '',
   },
@@ -70,14 +70,15 @@ export const CourtServices: UseCase = {
           id: uuid(),
           type: StepType.START,
           image: '/public/lawyer2/useCases/courtServices/bothCreds.svg',
-          title: 'Login to Court Services',
-          description: `Joyce wants to access court materials online instead of going in person, in order to get in she needs to prove who she is with her Person credential and a practicing lawyer with the LSBC credential. You will be asked for those now`,
+          title: 'Gain access to court materials online',
+          description: `Joyce can gain entry to Access to Court Materials, a service online by Court Services Branch where lawyers can access court documents online. They require proof that you’re a practising lawyer in B.C. and a matching name to your lawyer member card.`,
         },
         {
           id: uuid(),
           type: StepType.CONNECTION,
-          title: 'Start the Login Process',
-          description: `Court Services is asking Joyce for her Member Card and Verified Person credential so she can access court materials online`,
+          title: 'Start proving you’re a lawyer',
+          description: `As Joyce you’re now ready to prove you’re a practising lawyer in B.C. and your name to Court Services Branch and gain entry to Access to Court Materials online. Scan the QR code.`,
+          image: '/public/lawyer2/useCases/courtServices/courtServicesOverlay.png',
           overlay: {
             header: 'Scan with your BC Wallet to login',
           },
@@ -86,7 +87,7 @@ export const CourtServices: UseCase = {
           id: uuid(),
           type: StepType.PROOF,
           title: 'Confirm the information to send',
-          description: `Confirm the verifiable information that you're sending from your BC Wallet to Court Services`,
+          description: `BC Wallet will now ask you to confirm what to send. Notice how you’re not sharing your entire credential. Court Services Branch is requesting that you prove only what is needed.`,
           requestOptions: {
             name: 'Court Services Branch (DEMO) Request',
             comment: 'Court Services Branch (DEMO) would like some of your personal information.',
@@ -95,8 +96,8 @@ export const CourtServices: UseCase = {
         {
           id: uuid(),
           type: StepType.STEP_END,
-          title: `You're logged in!`,
-          description: `Joyce successfully logged in to Court Services online using her Member Card and Person credential. She can now access court documents remotely.`,
+          title: `You're done!`,
+          description: `You’ve proved to Court Services Branch that you’re a practising lawyer from B.C. and your identity using your Person credential. You can now access court materials online from the comfort of your own home. It only took a few seconds and you revealed minimal information that Court Services Branch could easily and automatically trust.`,
           image: '/public/lawyer2/onboarding/lawyer2Success.svg',
         },
       ],

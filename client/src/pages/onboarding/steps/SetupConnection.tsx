@@ -19,11 +19,7 @@ import { clearConnection, setDeepLink } from '../../../slices/connection/connect
 import { createInvitation, fetchConnectionById } from '../../../slices/connection/connectionThunks'
 import { clearCredentials } from '../../../slices/credentials/credentialsSlice'
 import { useOnboarding } from '../../../slices/onboarding/onboardingSelectors'
-import {
-  completeOnboarding,
-  nextOnboardingStep,
-  setOnboardingConnectionId,
-} from '../../../slices/onboarding/onboardingSlice'
+import { completeOnboarding, setOnboardingConnectionId } from '../../../slices/onboarding/onboardingSlice'
 import { setConnectionDate } from '../../../slices/preferences/preferencesSlice'
 import { fetchAllUseCasesByCharId } from '../../../slices/useCases/useCasesThunks'
 import { basePath } from '../../../utils/BasePath'
@@ -35,6 +31,8 @@ export interface Props {
   content?: Content
   connectionId?: string
   currentCharacter: Character
+  skipIssuance(): void
+  nextSlide(): void
   invitationUrl?: string
   connectionState?: string
   newConnection?: boolean
@@ -50,6 +48,8 @@ export const SetupConnection: React.FC<Props> = ({
   content,
   connectionId,
   currentCharacter,
+  skipIssuance,
+  nextSlide,
   title,
   text,
   invitationUrl,
@@ -78,11 +78,6 @@ export const SetupConnection: React.FC<Props> = ({
     }
   }
   const isCompleted = connectionState === 'responded' || connectionState === 'complete'
-
-  const nextSlide = () => {
-    const { onboardingStep, customOnboardingStep } = useOnboarding()
-    addOnboardingProgress(dispatch, onboardingStep, customOnboardingStep, currentCharacter)
-  }
 
   useEffect(() => {
     if (!isCompleted || newConnection) {
@@ -141,7 +136,7 @@ export const SetupConnection: React.FC<Props> = ({
       )}
       {!disableSkipConnection && (
         <div className="my-5">
-          <Button text="I Already Have my Credential" onClick={onboardingCompleted}></Button>
+          <Button text="I Already Have my Credential" onClick={skipIssuance}></Button>
         </div>
       )}
     </motion.div>
@@ -185,7 +180,7 @@ export const SetupConnection: React.FC<Props> = ({
           <p className="text-center mb-2">Scan the QR Code below with your digital wallet.</p>
           <div>{renderQRCode(true)}</div>
           <div className="mt-5">
-            <Button text="I Already Have my Credential" onClick={onboardingCompleted}></Button>
+            <Button text="I Already Have my Credential" onClick={skipIssuance}></Button>
           </div>
         </div>
       </div>

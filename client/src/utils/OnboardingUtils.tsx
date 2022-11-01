@@ -66,8 +66,10 @@ export const addOnboardingProgress = (
   dispatch: Dispatch<any>,
   onboardingStep: number,
   customOnboardingStep?: number,
-  currentCharacter?: Character
+  currentCharacter?: Character,
+  step?: number
 ) => {
+  const inc = step ?? 1
   if (onboardingStep === currentCharacter?.customScreens?.startAt) {
     // if character custom content is enabled
     if (
@@ -75,16 +77,16 @@ export const addOnboardingProgress = (
       customOnboardingStep < currentCharacter?.customScreens?.screens?.length - 1
     ) {
       // if we are not at the end of the current user's custom content
-      dispatch(nextCustomOnboardingStep())
+      dispatch(nextCustomOnboardingStep(inc))
     } else {
       // we are at end of custom content so increment the onboarding screen
-      dispatch(nextCustomOnboardingStep())
+      dispatch(nextCustomOnboardingStep(inc))
       dispatch(setOnboardingStep(currentCharacter?.customScreens?.endAt))
     }
   } else if (currentCharacter?.skipWalletPrompt && onboardingStep === Progress.SETUP_START) {
     dispatch(setOnboardingStep(Progress.PICK_CHARACTER))
   } else {
-    dispatch(nextOnboardingStep())
+    dispatch(nextOnboardingStep(inc))
   }
   track({
     id: 'onboarding-step-completed',
@@ -124,7 +126,8 @@ export const OnboardingContent = {
     iconLight: bcWalletIcon,
     iconDark: bcWalletIcon,
     title: `Let's get started!`,
-    text: `BC Wallet is a new app for storing and using credentials on your smartphone. Credentials are things like IDs, licenses and diplomas. In this demo, we'll show you how BC Wallet works. You'll learn how to put things into your wallet and use them where desired.`,
+    text: `BC Wallet is a new app for storing and using credentials on your smartphone. Credentials are things like IDs, licenses and diplomas. \nUsing your BC Wallet is fast and simple. In the future it can be used online and in person.
+    You approve every use, and share only what is needed. \nIn this demo, you will use two credentials to prove who you are and access court materials online instead of in-person`,
   },
   [Progress.CHOOSE_WALLET]: {
     iconLight: onboardingWalletLight,

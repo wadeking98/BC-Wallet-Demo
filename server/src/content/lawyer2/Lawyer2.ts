@@ -9,21 +9,31 @@ export const Lawyer2: Character = {
   image: '/public/lawyer2/lawyer2.svg',
   name: 'Joyce',
   type: 'Lawyer2',
-  disableSkipConnection: true,
   backstory: 'Joyce is a member of Law Society of BC looking to access court materials online',
   content: {
     [Progress.SETUP_START]: {
       title: '',
-      text: '',
+      text: `BC Wallet is a new app for storing and using credentials on your smartphone. Credentials are things like IDs, licences and diplomas.
+ 
+      Using your BC Wallet is fast and simple. In the future it can be used online and in person.
+      You approve every use, and share only what is needed.
+       
+      In this demo, you will use two credentials to prove who you are and access court materials online instead of in-person.
+      `,
       image: '/public/lawyer2/onboarding/scan.svg',
     },
     [Progress.PICK_CHARACTER]: {
       title: 'Meet Joyce',
-      text: "Meet Joyce (that's you in this demo!). Joyce is a Lawyer who has been acessing court materials in person now needs a way to verify herself to view them online, currently she has to go to the court house to get those and then new way is...",
+      text: `Meet Joyce (that's you in this demo!). Joyce is a lawyer in good standing with The Law Society of British Columbia. We know this because she's got her physical Law Society of British Columbia Member Card.
+
+      She's also a resident of British Columbia and has gone through the process to prove her identity with Service BC and has obtained a BC Services Card.
+        
+      This has allowed her to use in person services.
+      `,
     },
     [Progress.RECEIVE_IDENTITY]: {
-      title: 'Connect with Service BC (DEMO)',
-      text: 'Joyce can now be issued her Person credential through the BCSC app',
+      title: 'Get Person credential',
+      text: 'Joyce gets her Person credential from the BC Services Card app. She starts the process within BC Wallet. For this demo you will scan this QR code to receive the credential offer.',
     },
     [Progress.ACCEPT_CREDENTIAL]: {
       title: 'Accept your BC Person Credential',

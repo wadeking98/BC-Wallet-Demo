@@ -25,11 +25,12 @@ export const OnboardingBottomNav: React.FC<Props> = ({
 }) => {
   const [label, setLabel] = useState('NEXT')
   const isCompleted = onboardingStep === Progress.SETUP_COMPLETED
-  const hidden = onboardingStep === Progress.CHOOSE_WALLET
 
   useEffect(() => {
     if (isCompleted) {
       setLabel('FINISH')
+    } else if (onboardingStep === Progress.CHOOSE_WALLET) {
+      setLabel('SKIP')
     } else {
       setLabel('NEXT')
     }
@@ -47,15 +48,13 @@ export const OnboardingBottomNav: React.FC<Props> = ({
         <BackButton onClick={removeOnboardingStep} disabled={backDisabled} data-cy="prev-onboarding-step" />
       </div>
       <AnimatePresence exitBeforeEnter>
-        {!hidden && (
-          <motion.div variants={fadeExit} initial="hidden" animate="show" exit="exit" data-cy="next-onboarding-step">
-            <Button
-              onClick={isCompleted ? onboardingCompleted : addOnboardingStep}
-              text={label}
-              disabled={forwardDisabled}
-            />
-          </motion.div>
-        )}
+        <motion.div variants={fadeExit} initial="hidden" animate="show" exit="exit" data-cy="next-onboarding-step">
+          <Button
+            onClick={isCompleted ? onboardingCompleted : addOnboardingStep}
+            text={label}
+            disabled={forwardDisabled}
+          />
+        </motion.div>
       </AnimatePresence>
     </motion.div>
   )

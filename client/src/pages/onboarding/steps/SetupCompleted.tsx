@@ -32,15 +32,18 @@ export const SetupCompleted: React.FC<Props> = ({ content, characterName, credNa
             <p>Your (pretend) {credName} is in your BC Wallet!</p>
             <div className="bg-bcgov-white dark:bg-bcgov-black py-4 px-8">
               <ul className="list-disc">
-                <li>You control when you use the {credName}.</li>
-                <li>You can share part of the {credName}'s information, or even just that you're a member.</li>
-                <li>No one else is told when you use it.</li>
-                <li>The information from your {credName} is always shared securely.</li>
-                <li>Anyone who receives the information can trust it's legitimate.</li>
+                <li>You control when you use your credentials</li>
+                <li>You can share all or parts of your credentials</li>
+                <li>No one else is told when you use them</li>
+                <li>The information on your credentials is always shared over a secure connection</li>
+                <li>Anyone who receives information from your credentials can trust its legitimacy</li>
               </ul>
             </div>
-
-            <p>We're done with this step. Next, we'll explore ways you can use your {credName}.</p>
+            {characterName === 'Joyce' ? (
+              <p>Next, we’ll explore how Joyce can use her new credentials to access court materials online.</p>
+            ) : (
+              <p>We're done with this step. Next, we'll explore ways you can use your {credName}.</p>
+            )}
           </div>
         </div>
       </div>

@@ -18,8 +18,9 @@ const onboardingSlice = createSlice({
   name: 'onboarding',
   initialState,
   reducers: {
-    nextOnboardingStep(state) {
-      state.onboardingStep++
+    nextOnboardingStep(state, action?) {
+      const inc = action?.payload ?? 1
+      state.onboardingStep += inc
     },
     prevOnboardingStep(state) {
       state.onboardingStep--
@@ -30,9 +31,10 @@ const onboardingSlice = createSlice({
     setOnboardingStep(state, action) {
       state.onboardingStep = action.payload
     },
-    nextCustomOnboardingStep(state) {
+    nextCustomOnboardingStep(state, action?) {
+      const inc = action?.payload ?? 1
       if (state.customOnboardingStep != undefined) {
-        state.customOnboardingStep++
+        state.customOnboardingStep += inc
       } else {
         state.customOnboardingStep = 0
       }

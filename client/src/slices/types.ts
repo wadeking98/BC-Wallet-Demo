@@ -13,10 +13,15 @@ export interface ProofRequestData {
   requestOptions?: RequestOptions
 }
 
+export interface TextWithImage {
+  text?: string
+  image?: string
+}
+
 export interface CharacterContent {
   title: string
   text: string
-  element?: JSX.Element
+  textWithImage?: TextWithImage[]
   image?: string
 }
 

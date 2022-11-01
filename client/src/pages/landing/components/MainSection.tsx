@@ -5,7 +5,7 @@ import { useMediaQuery } from 'react-responsive'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import { buttonHover, fade, fadeDelay, landingTitle } from '../../../FramerAnimations'
-import landingScreen from '../../../assets/light/landing-screen.png'
+import landingScreen from '../../../assets/light/landing-screen.svg'
 import { useDarkMode } from '../../../hooks/useDarkMode'
 import { basePath } from '../../../utils/BasePath'
 

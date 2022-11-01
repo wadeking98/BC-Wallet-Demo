@@ -2,6 +2,7 @@ import type { Character } from '../../slices/types'
 import type { CredentialRecord } from '@aries-framework/core'
 
 import { AnimatePresence, motion } from 'framer-motion'
+import { Item } from 'framer-motion/types/components/Reorder/Item'
 import { track } from 'insights-js'
 import React, { useEffect, useState } from 'react'
 import { FiLogOut } from 'react-icons/fi'
@@ -84,11 +85,14 @@ export const OnboardingContainer: React.FC<Props> = ({
       customOnboardingStep === undefined) ||
     (customScreenName !== undefined && CustomContent[customScreenName].isBackDisabled)
   const isForwardDisabled =
-    onboardingStep === Progress.CHOOSE_WALLET ||
     (onboardingStep === Progress.RECEIVE_IDENTITY && !connectionCompleted) ||
     (onboardingStep === Progress.ACCEPT_CREDENTIAL && !credentialsAccepted) ||
     (onboardingStep === Progress.ACCEPT_CREDENTIAL && credentials.length === 0 && customOnboardingStep === undefined) ||
     (onboardingStep === Progress.PICK_CHARACTER && !currentCharacter)
+
+  const jumpOnboardingPage = () => {
+    addOnboardingProgress(dispatch, onboardingStep, customOnboardingStep, currentCharacter, 2)
+  }
 
   const nextOnboardingPage = () => {
     addOnboardingProgress(dispatch, onboardingStep, customOnboardingStep, currentCharacter)
@@ -139,6 +143,9 @@ export const OnboardingContainer: React.FC<Props> = ({
           characters={characters}
           title={title}
           text={text}
+          textWithImage={currentCharacter?.content?.[progress]?.textWithImage?.map((contentItem) => {
+            return { ...contentItem, image: contentItem?.image ? prependApiUrl(contentItem.image) : '' }
+          })}
         />
       ),
       [Progress.RECEIVE_IDENTITY]: (
@@ -146,6 +153,8 @@ export const OnboardingContainer: React.FC<Props> = ({
           key={Progress.RECEIVE_IDENTITY}
           content={OnboardingContent[progress]}
           connectionId={connectionId}
+          skipIssuance={jumpOnboardingPage}
+          nextSlide={nextOnboardingPage}
           invitationUrl={invitationUrl}
           newConnection
           disableSkipConnection={currentCharacter?.disableSkipConnection}
