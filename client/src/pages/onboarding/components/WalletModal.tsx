@@ -67,7 +67,7 @@ export const WalletModal: React.FC<Props> = ({ isWalletModalOpen, setIsWalletMod
                       To download,{' '}
                       {isMobile()
                         ? 'select the apps store icon below'
-                        : 'scan the QR code on your phone or select the apps store icon below'}
+                        : 'scan this QR code with your phone or select the apps store icon below'}
                       . You can also search for BC Wallet in your phone's apps store.
                     </p>
                     <div
@@ -99,7 +99,7 @@ export const WalletModal: React.FC<Props> = ({ isWalletModalOpen, setIsWalletMod
                   </div>
                   <div>
                     <p className="font-semibold">2. Complete the setup</p>
-                    <p className="mt-5">Complete the onboarding process and setup your PIN.</p>
+                    <p className="mt-5">Complete the onboarding process in the app.</p>
                   </div>
                 </div>
                 {!isMobile() && (

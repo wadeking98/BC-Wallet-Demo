@@ -83,8 +83,11 @@ export const OnboardingContainer: React.FC<Props> = ({
   const isBackDisabled =
     ([Progress.SETUP_START, Progress.ACCEPT_CREDENTIAL].includes(onboardingStep) &&
       customOnboardingStep === undefined) ||
-    (customScreenName !== undefined && CustomContent[customScreenName].isBackDisabled)
+    (customScreenName !== undefined && CustomContent[customScreenName].isBackDisabled) ||
+    !!currentCharacter?.content?.[onboardingStep]?.isBackDisabled
   const isForwardDisabled =
+    (customScreenName?.endsWith('CONNECT') && !connectionCompleted) ||
+    (customScreenName?.endsWith('ISSUE') && !credentialsAccepted) ||
     (onboardingStep === Progress.RECEIVE_IDENTITY && !connectionCompleted) ||
     (onboardingStep === Progress.ACCEPT_CREDENTIAL && !credentialsAccepted) ||
     (onboardingStep === Progress.ACCEPT_CREDENTIAL && credentials.length === 0 && customOnboardingStep === undefined) ||
@@ -191,6 +194,9 @@ export const OnboardingContainer: React.FC<Props> = ({
   }
 
   const getImageToRender = (progress: Progress) => {
+    const image = currentCharacter?.content?.[progress]?.image
+      ? prependApiUrl(currentCharacter.content[progress].image as string)
+      : OnboardingContent[progress].iconLight
     const components = {
       [Progress.SETUP_START]: (
         <motion.img
@@ -200,11 +206,7 @@ export const OnboardingContainer: React.FC<Props> = ({
           exit="exit"
           className="p-4"
           key={Progress.SETUP_START}
-          src={
-            currentCharacter?.content?.[progress]?.image
-              ? prependApiUrl(currentCharacter.content[progress].image as string)
-              : OnboardingContent[progress].iconLight
-          }
+          src={image}
           alt="BC Wallet"
         />
       ),
@@ -229,7 +231,7 @@ export const OnboardingContainer: React.FC<Props> = ({
           exit="exit"
           className="p-4"
           key={Progress.RECEIVE_IDENTITY}
-          src={darkMode ? OnboardingContent[progress].iconDark : OnboardingContent[progress].iconLight}
+          src={image}
           alt="recieve identity"
         />
       ),
@@ -241,7 +243,7 @@ export const OnboardingContainer: React.FC<Props> = ({
           exit="exit"
           className="p-4"
           key={Progress.ACCEPT_CREDENTIAL}
-          src={darkMode ? OnboardingContent[progress].iconDark : OnboardingContent[progress].iconLight}
+          src={image}
           alt="accept credential"
         />
       ),
@@ -253,11 +255,7 @@ export const OnboardingContainer: React.FC<Props> = ({
           exit="exit"
           className="p-4"
           key={Progress.SETUP_COMPLETED}
-          src={
-            currentCharacter?.content?.[progress]?.image
-              ? prependApiUrl(currentCharacter.content[progress].image as string)
-              : OnboardingContent[progress].iconLight
-          }
+          src={image}
           alt="setup completed"
         />
       ),
