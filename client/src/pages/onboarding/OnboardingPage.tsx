@@ -56,10 +56,13 @@ export const OnboardingPage: React.FC = () => {
 
   useEffect(() => {
     // use character from route
-    if (characters?.length) {
-      let character: Character | undefined = characters[0]
+    if (characters?.length && !currentCharacter) {
+      let character: Character = characters[0]
       if (slug) {
-        character = characters.find((char) => char.type.toLowerCase() === slug)
+        const res = characters.find((char) => char.type.toLowerCase() === slug)
+        if (res) {
+          character = res
+        }
       }
       dispatch(setCharacter(character ?? characters[0]))
     }

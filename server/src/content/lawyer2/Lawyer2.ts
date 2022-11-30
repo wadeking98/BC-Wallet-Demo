@@ -35,12 +35,12 @@ export const Lawyer2: Character = {
       title: 'Get Person credential',
       text: 'Joyce gets her Person credential from the BC Services Card app. She starts the process within BC Wallet. For this demo you will scan this QR code to receive the credential offer.',
       isBackDisabled: true,
-      image: '/public/lawyer2/onboarding/personCredPhone.svg'
+      image: '/public/lawyer2/onboarding/personCredPhone.svg',
     },
     [Progress.ACCEPT_CREDENTIAL]: {
       title: 'Accept your Person credential',
       text: 'Check your phone. You’ve received a credential offer from Service BC in your BC Wallet. You can use this credential to prove who you are online.',
-      image: '/public/lawyer2/onboarding/personCredPhone.svg'
+      image: '/public/lawyer2/onboarding/personCredPhone.svg',
     },
     [Progress.SETUP_COMPLETED]: {
       title: '',
@@ -50,12 +50,7 @@ export const Lawyer2: Character = {
   },
   customScreens: {
     startAt: Progress.PICK_CHARACTER,
-    screens: [
-      'LAWYER2_PREAMBLE',
-      'LAWYER2_LSBC_PREAMBLE',
-      'LAWYER2_MEMBER_CONNECT',
-      'LAWYER2_MEMBER_ISSUE',
-    ],
+    screens: ['LAWYER2_PREAMBLE', 'LAWYER2_LSBC_PREAMBLE', 'LAWYER2_MEMBER_CONNECT', 'LAWYER2_MEMBER_ISSUE'],
     endAt: Progress.RECEIVE_IDENTITY,
   },
   starterCredentials: [
