@@ -127,7 +127,7 @@ export const StepProof: React.FC<Props> = ({ proof, step, connectionId, requeste
     <motion.div variants={fadeX} initial="hidden" animate="show" exit="exit" className="flex flex-col h-full">
       <StepInfo title={step.title} description={step.description} />
       <div className="flex flex-row m-auto w-full">
-        <div className="w-full lg:w-5/6 sxl:w-2/3 m-auto">
+        <div className="w-full lg:w-2/3 sxl:w-2/3 m-auto">
           {proof && (
             <ProofAttributesCard
               entity={entity}

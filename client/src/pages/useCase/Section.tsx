@@ -54,7 +54,7 @@ export const Section: React.FC<Props> = ({
   const navigate = useNavigate()
 
   const isMobile = useMediaQuery({ query: '(max-width: 976px)' })
-  const style = isMobile ? { height: '680px' } : { minHeight: '680px', height: '80vh', maxHeight: '920px' }
+  const style = isMobile ? { height: '700px' } : { minHeight: '800px', height: '80vh' }
 
   const [isBackDisabled, setIsBackDisabled] = useState(false)
   const [isForwardDisabled, setIsForwardDisabled] = useState(false)
@@ -228,7 +228,7 @@ export const Section: React.FC<Props> = ({
                 )}
                 {step.type === StepType.STEP_END && <StepEnd key={step.id} step={step} />}
               </AnimatePresence>
-              <div className="flex justify-between items-center ">
+              <div className="flex justify-between items-center">
                 <BackButton onClick={prev} disabled={isBackDisabled} />
                 {step.type === StepType.STEP_END ? (
                   <Button text="COMPLETE" onClick={() => setCompleted(true)} />
