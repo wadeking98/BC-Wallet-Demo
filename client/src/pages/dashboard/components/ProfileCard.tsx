@@ -1,4 +1,3 @@
-/*eslint-disable*/
 import type { Character } from '../../../slices/types'
 
 import { motion } from 'framer-motion'
@@ -25,7 +24,6 @@ export const ProfileCard: React.FC<Props> = ({ currentCharacter }) => {
 
   const reset = () => {
     const slug = currentCharacter.type.toLowerCase()
-    console.log(`${basePath}/${slug}/`)
     dispatch({ type: 'demo/RESET' })
     // regular navigate function doesn't work with character slugs
     window.location.href = `${basePath}/${slug}`

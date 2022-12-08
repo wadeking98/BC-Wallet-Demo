@@ -283,7 +283,7 @@ export const OnboardingContainer: React.FC<Props> = ({
 
   const isMobile = useMediaQuery({ query: '(max-width: 976px)' })
 
-  const style = isMobile ? { minHeight: '85vh' } : { minHeight: '620px', height: '75vh', maxHeight: '940px' }
+  const style = isMobile ? { minHeight: '85vh' } : { minHeight: '680px', height: '75vh', maxHeight: '940px' }
 
   const [leaveModal, setLeaveModal] = useState(false)
   const LEAVE_MODAL_TITLE = 'Are you sure you want to leave?'
