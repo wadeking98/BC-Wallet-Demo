@@ -10,8 +10,17 @@ export const createProof = createAsyncThunk('proof/createProof', async (data: Pr
 })
 
 export const createDeepProof = createAsyncThunk('proof/createProof', async (data: ProofRequestData) => {
-  const response = await Api.createDeepProofRequest(data)
-  return response.data
+  let success = false
+  let response = undefined
+  while (!success) {
+    try {
+      response = await await Api.createDeepProofRequest(data)
+      success = true
+    } catch {
+      // pass
+    }
+  }
+  return response?.data
 })
 
 export const createProofOOB = createAsyncThunk('proof/createProofOOB', async (data: ProofRequestData) => {

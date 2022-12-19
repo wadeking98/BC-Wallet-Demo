@@ -20,8 +20,17 @@ export const issueCredential = createAsyncThunk(
 export const issueDeepCredential = createAsyncThunk(
   'credentials/issueCredential',
   async (data: { connectionId: string; cred: CredentialData }) => {
-    const response = await Api.issueDeepCredential(data.connectionId, data.cred)
-    return response.data
+    let success = false
+    let response = undefined
+    while (!success) {
+      try {
+        response = await Api.issueDeepCredential(data.connectionId, data.cred)
+        success = true
+      } catch {
+        // pass
+      }
+    }
+    return response?.data
   }
 )
 
