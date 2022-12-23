@@ -4,8 +4,8 @@ export interface TextWithImage {
 }
 
 export interface CharacterContent {
-  title: string
-  text: string
+  title?: string
+  text?: string
   textWithImage?: TextWithImage[]
   image?: string
   isBackDisabled?: boolean
@@ -17,21 +17,13 @@ export interface Character {
   name: string
   type: string
   backstory: string
-  customScreens?: CustomScreens
   skipWalletPrompt?: boolean
   content: { [key: number]: CharacterContent }
   backgroundImage?: string
   onboardingText?: string
   disableSkipConnection?: boolean
-  starterCredentials: StarterCredential[]
-  additionalCredentials?: StarterCredential[]
+  starterCredentials: Record<number, StarterCredential>
   onboardingEntity?: Entity
-}
-
-export interface CustomScreens {
-  startAt: number
-  screens: string[]
-  endAt: number
 }
 
 export interface UseCase {

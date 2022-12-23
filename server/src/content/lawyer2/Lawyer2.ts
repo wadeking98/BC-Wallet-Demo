@@ -2,7 +2,18 @@ import type { Character } from '../types'
 
 import { v4 as uuid } from 'uuid'
 
-import { Progress } from '../../utils/progress'
+enum Progress {
+  SETUP_START = 0,
+  CHOOSE_WALLET,
+  PICK_CHARACTER,
+  GOING_DIGITAL,
+  ACCESS_COURT_MATERIALS,
+  CONNECT_LSBC,
+  ACCEPT_LSBC,
+  CONNECT_PERSON,
+  ACCEPT_PERSON,
+  SETUP_COMPLETED,
+}
 
 export const Lawyer2: Character = {
   id: '3',
@@ -31,30 +42,32 @@ export const Lawyer2: Character = {
       This has allowed her to use in person services.
       `,
     },
-    [Progress.RECEIVE_IDENTITY]: {
-      title: 'Get Person credential',
-      text: 'Joyce gets her Person credential from the BC Services Card app. She starts the process within BC Wallet. For this demo you will scan this QR code to receive the credential offer.',
-      isBackDisabled: true,
+    [Progress.GOING_DIGITAL]: {
+      image: '/public/lawyer2/onboarding/goingDigital.svg',
+    },
+    [Progress.ACCESS_COURT_MATERIALS]: {
+      image: '/public/lawyer2/onboarding/loginLSBC.svg',
+    },
+    [Progress.CONNECT_LSBC]: {
+      image: '/public/lawyer2/onboarding/lawyerCredPhone.svg',
+    },
+    [Progress.ACCEPT_LSBC]: {
+      image: '/public/lawyer2/onboarding/lawyerCredPhone.svg',
+    },
+    [Progress.CONNECT_PERSON]: {
       image: '/public/lawyer2/onboarding/personCredPhone.svg',
     },
-    [Progress.ACCEPT_CREDENTIAL]: {
-      title: 'Accept your Person credential',
-      text: 'Check your phone. You’ve received a credential offer from Service BC in your BC Wallet. You can use this credential to prove who you are online.',
+    [Progress.ACCEPT_PERSON]: {
       image: '/public/lawyer2/onboarding/personCredPhone.svg',
     },
     [Progress.SETUP_COMPLETED]: {
       title: '',
       text: 'Member Card and Person credential',
-      image: '/public/lawyer2/onboarding/lawyerPersonCredPhone.svg',
+      image: '/public/lawyer2/onboarding/lawyer2Success.svg',
     },
   },
-  customScreens: {
-    startAt: Progress.PICK_CHARACTER,
-    screens: ['LAWYER2_PREAMBLE', 'LAWYER2_LSBC_PREAMBLE', 'LAWYER2_MEMBER_CONNECT', 'LAWYER2_MEMBER_ISSUE'],
-    endAt: Progress.RECEIVE_IDENTITY,
-  },
-  starterCredentials: [
-    {
+  starterCredentials: {
+    [Progress.ACCEPT_PERSON]: {
       id: uuid(),
       name: 'Person',
       icon: '/public/lawyer2/icon-lawyer2.svg',
@@ -71,9 +84,7 @@ export const Lawyer2: Character = {
         { name: 'birthdate_dateint', value: '23051993' },
       ],
     },
-  ],
-  additionalCredentials: [
-    {
+    [Progress.ACCEPT_LSBC]: {
       id: uuid(),
       name: 'Member Card',
       icon: '/public/lawyer2/icon-lawyer2.svg',
@@ -85,7 +96,7 @@ export const Lawyer2: Character = {
         { name: 'Surname', value: 'Lee-Martinez' },
       ],
     },
-  ],
+  },
   onboardingEntity: {
     name: 'Service BC (DEMO)',
     icon: '#',

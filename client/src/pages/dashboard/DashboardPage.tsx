@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom'
 import { page } from '../../FramerAnimations'
 import { Modal } from '../../components/Modal'
 import { SmallButtonText } from '../../components/SmallButtonText'
+import { getConfiguration } from '../../configuration/configuration'
 import { useAppDispatch } from '../../hooks/hooks'
 import { useTitle } from '../../hooks/useTitle'
 import { useCurrentCharacter } from '../../slices/characters/charactersSelectors'
@@ -33,6 +34,7 @@ export const DashboardPage: React.FC = () => {
   const { completedUseCaseSlugs, demoCompleted, completeCanceled } = usePreferences()
   const currentCharacter = useCurrentCharacter()
   const useCases = useAllUseCases()
+  const { DashboardHeader, StepperItems } = getConfiguration(currentCharacter)
 
   useEffect(() => {
     // if user doesn't come from onboarding flow
@@ -82,6 +84,7 @@ export const DashboardPage: React.FC = () => {
       animate="show"
       exit="exit"
     >
+      <DashboardHeader steps={StepperItems} onboardingDone demoDone={demoCompleted} />
       <div className="mx-8 my-4">
         <NavBar />
       </div>

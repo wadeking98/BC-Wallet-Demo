@@ -1,4 +1,4 @@
-import type { Character } from '../../slices/types'
+import type { Character } from '../../../slices/types'
 import type { CredentialRecord } from '@aries-framework/core'
 
 import { AnimatePresence, motion } from 'framer-motion'
@@ -9,31 +9,32 @@ import { FiLogOut } from 'react-icons/fi'
 import { useMediaQuery } from 'react-responsive'
 import { useNavigate } from 'react-router-dom'
 
-import { fadeDelay, fadeExit } from '../../FramerAnimations'
-import { Modal } from '../../components/Modal'
-import { useAppDispatch } from '../../hooks/hooks'
-import { useDarkMode } from '../../hooks/useDarkMode'
-import { clearConnection } from '../../slices/connection/connectionSlice'
-import { clearCredentials } from '../../slices/credentials/credentialsSlice'
-import { completeOnboarding } from '../../slices/onboarding/onboardingSlice'
-import { fetchAllUseCasesByCharId } from '../../slices/useCases/useCasesThunks'
-import { basePath } from '../../utils/BasePath'
+import { fadeDelay, fadeExit } from '../../../FramerAnimations'
+import { Modal } from '../../../components/Modal'
+import { useAppDispatch } from '../../../hooks/hooks'
+import { useDarkMode } from '../../../hooks/useDarkMode'
+import { CharacterContent } from '../../../pages/onboarding/components/CharacterContent'
+import { AcceptCredential } from '../../../pages/onboarding/steps/AcceptCredential'
+import { BasicSlide } from '../../../pages/onboarding/steps/BasicSlide'
+import { ChooseWallet } from '../../../pages/onboarding/steps/ChooseWallet'
+import { PickCharacter } from '../../../pages/onboarding/steps/PickCharacter'
+import { SetupCompleted } from '../../../pages/onboarding/steps/SetupCompleted'
+import { SetupConnection } from '../../../pages/onboarding/steps/SetupConnection'
+import { SetupStart } from '../../../pages/onboarding/steps/SetupStart'
+import { clearConnection } from '../../../slices/connection/connectionSlice'
+import { clearCredentials } from '../../../slices/credentials/credentialsSlice'
+import { completeOnboarding } from '../../../slices/onboarding/onboardingSlice'
+import { fetchAllUseCasesByCharId } from '../../../slices/useCases/useCasesThunks'
+import { basePath } from '../../../utils/BasePath'
+import { prependApiUrl } from '../../../utils/Url'
 import {
   Progress,
   OnboardingContent,
   addOnboardingProgress,
   removeOnboardingProgress,
-} from '../../utils/OnboardingUtils'
-import { prependApiUrl } from '../../utils/Url'
+} from '../onboardingUtils/OnboardingUtils'
 
-import { CharacterContent } from './components/CharacterContent'
 import { OnboardingBottomNav } from './components/OnboardingBottomNav'
-import { AcceptCredential } from './steps/AcceptCredential'
-import { ChooseWallet } from './steps/ChooseWallet'
-import { PickCharacter } from './steps/PickCharacter'
-import { SetupCompleted } from './steps/SetupCompleted'
-import { SetupConnection } from './steps/SetupConnection'
-import { SetupStart } from './steps/SetupStart'
 
 export interface Props {
   characters: Character[]
@@ -62,15 +63,15 @@ export const OnboardingContainer: React.FC<Props> = ({
     (x) => x.state === 'credential-issued' || x.state === 'done'
   )
 
-  const customScreenName: string | undefined = undefined
-
   const isBackDisabled =
-    [Progress.SETUP_START, Progress.ACCEPT_CREDENTIAL].includes(onboardingStep) ||
+    [Progress.SETUP_START, Progress.ACCEPT_LSBC, Progress.ACCEPT_PERSON].includes(onboardingStep) ||
     !!currentCharacter?.content?.[onboardingStep]?.isBackDisabled
   const isForwardDisabled =
-    (onboardingStep === Progress.RECEIVE_IDENTITY && !connectionCompleted) ||
-    (onboardingStep === Progress.ACCEPT_CREDENTIAL && !credentialsAccepted) ||
-    (onboardingStep === Progress.ACCEPT_CREDENTIAL && credentials.length === 0) ||
+    ((onboardingStep === Progress.CONNECT_PERSON || onboardingStep === Progress.CONNECT_LSBC) &&
+      !connectionCompleted) ||
+    ((onboardingStep === Progress.ACCEPT_LSBC || onboardingStep === Progress.ACCEPT_PERSON) && !credentialsAccepted) ||
+    ((onboardingStep === Progress.ACCEPT_LSBC || onboardingStep === Progress.ACCEPT_PERSON) &&
+      credentials.length === 0) ||
     (onboardingStep === Progress.PICK_CHARACTER && !currentCharacter)
 
   const jumpOnboardingPage = () => {
@@ -94,7 +95,11 @@ export const OnboardingContainer: React.FC<Props> = ({
     return { title: '', text: '' }
   }
   useEffect(() => {
-    if (onboardingStep === Progress.RECEIVE_IDENTITY && connectionCompleted) {
+    if (
+      (onboardingStep === Progress.CONNECT_LSBC || onboardingStep === Progress.CONNECT_PERSON) &&
+      connectionCompleted
+    ) {
+      // if we are on a connection screen either custom or regular onboarding
       nextOnboardingPage()
     }
   }, [connectionState])
@@ -123,9 +128,25 @@ export const OnboardingContainer: React.FC<Props> = ({
           })}
         />
       ),
-      [Progress.RECEIVE_IDENTITY]: (
+      [Progress.GOING_DIGITAL]: (
+        <BasicSlide
+          content={OnboardingContent[progress]}
+          textWithImage={currentCharacter?.content?.[progress]?.textWithImage?.map((contentItem) => {
+            return { ...contentItem, image: contentItem?.image ? prependApiUrl(contentItem.image) : '' }
+          })}
+        />
+      ),
+      [Progress.ACCESS_COURT_MATERIALS]: (
+        <BasicSlide
+          content={OnboardingContent[progress]}
+          textWithImage={currentCharacter?.content?.[progress]?.textWithImage?.map((contentItem) => {
+            return { ...contentItem, image: contentItem?.image ? prependApiUrl(contentItem.image) : '' }
+          })}
+        />
+      ),
+      [Progress.CONNECT_LSBC]: (
         <SetupConnection
-          key={Progress.RECEIVE_IDENTITY}
+          key={Progress.CONNECT_LSBC}
           content={OnboardingContent[progress]}
           connectionId={connectionId}
           skipIssuance={jumpOnboardingPage}
@@ -137,17 +158,46 @@ export const OnboardingContainer: React.FC<Props> = ({
           currentCharacter={currentCharacter as Character}
           title={title}
           text={text}
-          backgroundImage={currentCharacter?.backgroundImage}
+          backgroundImage={'/public/lawyer2/onboarding/LSBCPortalOverlay.png'}
           onboardingText={currentCharacter?.onboardingText}
         />
       ),
-      [Progress.ACCEPT_CREDENTIAL]: currentCharacter && connectionId && (
+      [Progress.ACCEPT_LSBC]: currentCharacter && connectionId && (
         <AcceptCredential
-          key={Progress.ACCEPT_CREDENTIAL}
+          key={Progress.ACCEPT_LSBC}
           content={OnboardingContent[progress]}
           connectionId={connectionId}
           credentials={credentials}
-          credSelection={[Progress.ACCEPT_CREDENTIAL]}
+          credSelection={[Progress.ACCEPT_LSBC]}
+          currentCharacter={currentCharacter}
+          title={title}
+          text={text}
+        />
+      ),
+      [Progress.CONNECT_PERSON]: (
+        <SetupConnection
+          key={Progress.CONNECT_PERSON}
+          content={OnboardingContent[progress]}
+          connectionId={connectionId}
+          skipIssuance={jumpOnboardingPage}
+          nextSlide={nextOnboardingPage}
+          invitationUrl={invitationUrl}
+          newConnection
+          disableSkipConnection={currentCharacter?.disableSkipConnection}
+          connectionState={connectionState}
+          currentCharacter={currentCharacter as Character}
+          title={title}
+          text={text}
+          onboardingText={currentCharacter?.onboardingText}
+        />
+      ),
+      [Progress.ACCEPT_PERSON]: currentCharacter && connectionId && (
+        <AcceptCredential
+          key={Progress.ACCEPT_PERSON}
+          content={OnboardingContent[progress]}
+          connectionId={connectionId}
+          credentials={credentials}
+          credSelection={[Progress.ACCEPT_PERSON]}
           currentCharacter={currentCharacter}
           title={title}
           text={text}
@@ -196,26 +246,72 @@ export const OnboardingContainer: React.FC<Props> = ({
         />
       ),
       [Progress.PICK_CHARACTER]: <CharacterContent key={Progress.PICK_CHARACTER} character={currentCharacter} />,
-      [Progress.RECEIVE_IDENTITY]: (
+      [Progress.GOING_DIGITAL]: (
         <motion.img
           variants={fadeExit}
           initial="hidden"
           animate="show"
           exit="exit"
           className="p-4"
-          key={Progress.RECEIVE_IDENTITY}
+          src={image}
+          alt="Going digital"
+        />
+      ),
+      [Progress.ACCESS_COURT_MATERIALS]: (
+        <motion.img
+          variants={fadeExit}
+          initial="hidden"
+          animate="show"
+          exit="exit"
+          className="p-4"
+          src={image}
+          alt="LSBC Portal Image"
+        />
+      ),
+      [Progress.CONNECT_LSBC]: (
+        <motion.img
+          variants={fadeExit}
+          initial="hidden"
+          animate="show"
+          exit="exit"
+          className="p-4"
+          key={Progress.CONNECT_LSBC}
           src={image}
           alt="recieve identity"
         />
       ),
-      [Progress.ACCEPT_CREDENTIAL]: currentCharacter && connectionId && (
+      [Progress.ACCEPT_LSBC]: currentCharacter && connectionId && (
         <motion.img
           variants={fadeExit}
           initial="hidden"
           animate="show"
           exit="exit"
           className="p-4"
-          key={Progress.ACCEPT_CREDENTIAL}
+          key={Progress.ACCEPT_LSBC}
+          src={image}
+          alt="accept credential"
+        />
+      ),
+      [Progress.CONNECT_PERSON]: (
+        <motion.img
+          variants={fadeExit}
+          initial="hidden"
+          animate="show"
+          exit="exit"
+          className="p-4"
+          key={Progress.CONNECT_PERSON}
+          src={image}
+          alt="recieve identity"
+        />
+      ),
+      [Progress.ACCEPT_PERSON]: currentCharacter && connectionId && (
+        <motion.img
+          variants={fadeExit}
+          initial="hidden"
+          animate="show"
+          exit="exit"
+          className="p-4"
+          key={Progress.ACCEPT_PERSON}
           src={image}
           alt="accept credential"
         />

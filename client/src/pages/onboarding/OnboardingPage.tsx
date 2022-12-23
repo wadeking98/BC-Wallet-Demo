@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import { page } from '../../FramerAnimations'
+import { getConfiguration } from '../../configuration/configuration'
 import { useAppDispatch } from '../../hooks/hooks'
 import { useTitle } from '../../hooks/useTitle'
 import { useCharacters } from '../../slices/characters/charactersSelectors'
@@ -19,10 +20,6 @@ import { completeOnboarding } from '../../slices/onboarding/onboardingSlice'
 import { fetchAllUseCasesByCharId } from '../../slices/useCases/useCasesThunks'
 import { fetchWallets } from '../../slices/wallets/walletsThunks'
 import { basePath } from '../../utils/BasePath'
-import { Progress, StepperItems } from '../../utils/OnboardingUtils'
-
-import { OnboardingContainer } from './OnboardingContainer'
-import { Stepper } from './components/Stepper'
 
 export const OnboardingPage: React.FC = () => {
   useTitle('Get Started | BC Wallet Self-Sovereign Identity Demo')
@@ -32,15 +29,16 @@ export const OnboardingPage: React.FC = () => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const { characters, currentCharacter } = useCharacters()
+  const { Stepper, OnboardingContainer, OnboardingComplete, StepperItems } = getConfiguration(currentCharacter)
 
-  const { onboardingStep, isCompleted, customOnboardingStep } = useOnboarding()
+  const { onboardingStep, isCompleted } = useOnboarding()
   const { id, state, invitationUrl } = useConnection()
   const { credentials } = useCredentials()
 
   const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
-    if ((onboardingStep === Progress.SETUP_COMPLETED || isCompleted) && currentCharacter) {
+    if ((OnboardingComplete(onboardingStep) || isCompleted) && currentCharacter) {
       dispatch(completeOnboarding())
       dispatch(clearCredentials())
       dispatch(clearConnection())
@@ -82,7 +80,6 @@ export const OnboardingPage: React.FC = () => {
           <OnboardingContainer
             characters={characters}
             currentCharacter={currentCharacter}
-            customOnboardingStep={customOnboardingStep}
             onboardingStep={onboardingStep}
             connectionId={id}
             connectionState={state}

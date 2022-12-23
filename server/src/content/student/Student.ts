@@ -31,8 +31,8 @@ export const Student: Character = {
       text: 'Student Card',
     },
   },
-  starterCredentials: [
-    {
+  starterCredentials: {
+    [Progress.ACCEPT_CREDENTIAL]: {
       id: uuid(),
       name: 'student_card',
       icon: '/public/student/icon-student.svg',
@@ -49,7 +49,7 @@ export const Student: Character = {
         },
       ],
     },
-  ],
+  },
   onboardingEntity: {
     name: 'BestBC College',
     icon: '#',
