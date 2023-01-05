@@ -5,6 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { page } from '../../FramerAnimations'
 import { Loader } from '../../components/Loader'
 import { Modal } from '../../components/Modal'
+import { getConfiguration } from '../../configuration/configuration'
 import { useAppDispatch } from '../../hooks/hooks'
 import { useTitle } from '../../hooks/useTitle'
 import { useCurrentCharacter } from '../../slices/characters/charactersSelectors'
@@ -33,6 +34,7 @@ export const UseCasePage: React.FC = () => {
   const connection = useConnection()
   const { credentials } = useCredentials()
   const { proof, proofUrl } = useProof()
+  const { DashboardHeader, StepperItems } = getConfiguration(currentCharacter)
 
   const navigate = useNavigate()
   useTitle(`${currentUseCase?.card.title ?? 'Use case'} | BC Wallet Self-Sovereign Identity Demo`)
@@ -79,6 +81,11 @@ export const UseCasePage: React.FC = () => {
       exit="exit"
       className="container flex flex-col h-auto lg:h-screen p-4 lg:p-6 xl:p-8 dark:text-white"
     >
+      <DashboardHeader
+        steps={StepperItems}
+        onboardingDone
+        demoDone={currentUseCase?.sections[sectionCount].steps.length === stepCount + 1}
+      />
       {isLoading ? (
         <div className="m-auto">
           <Loader />

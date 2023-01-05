@@ -1,4 +1,4 @@
-import type { Character } from '../../../slices/types'
+import type { Character, CredentialData } from '../../../slices/types'
 import type { Content } from '../../../utils/OnboardingUtils'
 import type { CredReqMetadata } from 'indy-sdk'
 
@@ -34,7 +34,7 @@ export interface Props {
   connectionId: string
   credentials: CredentialRecord[]
   currentCharacter: Character
-  useAltCreds?: boolean
+  credSelection: number[]
   title: string
   text: string
 }
@@ -44,7 +44,7 @@ export const AcceptCredential: React.FC<Props> = ({
   connectionId,
   credentials,
   currentCharacter,
-  useAltCreds,
+  credSelection,
   title,
   text,
 }) => {
@@ -63,10 +63,14 @@ export const AcceptCredential: React.FC<Props> = ({
   const showFailedRequestModal = () => setIsFailedRequestModalOpen(true)
   const closeFailedRequestModal = () => setIsFailedRequestModalOpen(false)
 
-  const getCharacterCreds = () => {
-    return useAltCreds && currentCharacter.additionalCredentials != undefined
-      ? currentCharacter.additionalCredentials
-      : currentCharacter.starterCredentials
+  const getCharacterCreds = (): CredentialData[] => {
+    const creds: CredentialData[] = []
+    credSelection.forEach((item) => {
+      if (currentCharacter.starterCredentials[item]) {
+        creds.push(currentCharacter.starterCredentials[item])
+      }
+    })
+    return creds
   }
 
   const credentialsAccepted = Object.values(credentials).every(
@@ -76,14 +80,16 @@ export const AcceptCredential: React.FC<Props> = ({
   useEffect(() => {
     if (credentials.length === 0) {
       getCharacterCreds().forEach((item) => {
-        if (isDeepLink) {
-          dispatch(issueDeepCredential({ connectionId: connectionId, cred: item }))
-        } else {
-          dispatch(issueCredential({ connectionId: connectionId, cred: item }))
+        if (item !== undefined) {
+          if (isDeepLink) {
+            dispatch(issueDeepCredential({ connectionId: connectionId, cred: item }))
+          } else {
+            dispatch(issueCredential({ connectionId: connectionId, cred: item }))
+          }
+          track({
+            id: 'credential-issued',
+          })
         }
-        track({
-          id: 'credential-issued',
-        })
       })
       setCredentialsIssued(true)
     }
@@ -135,7 +141,7 @@ export const AcceptCredential: React.FC<Props> = ({
         const newCredential = getCharacterCreds().find((item) => {
           const credClass = JsonTransformer.fromJSON(cred, CredentialRecord)
           return (
-            item.credentialDefinitionId ===
+            item?.credentialDefinitionId ===
             credClass.metadata.get<CredReqMetadata>('_internal/indyCredential')?.credentialDefinitionId
           )
         })

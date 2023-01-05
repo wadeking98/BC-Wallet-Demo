@@ -1,4 +1,4 @@
-import type { Character } from '../content/types'
+import type { Character, StarterCredential } from '../content/types'
 
 import { Get, JsonController, NotFoundError, Param } from 'routing-controllers'
 import { Inject, Service } from 'typedi'
@@ -17,6 +17,19 @@ export class CharacterController {
     this.service = service
   }
 
+  private getCreds = (initCreds: Record<number, StarterCredential>) => {
+    const lol: Record<number, StarterCredential> = {}
+    Object.entries(initCreds).forEach((entry) => {
+      const [key, x] = entry
+      const index = parseInt(key)
+      lol[index] = {
+        ...x,
+        credentialDefinitionId: this.service.getCredentialDefinitionIdByTag(x.name),
+      }
+    })
+    return lol
+  }
+
   /**
    * Retrieve character by id
    */
@@ -28,20 +41,7 @@ export class CharacterController {
       throw new NotFoundError(`character with characterId "${characterId}" not found.`)
     }
 
-    const lol = character.starterCredentials.map((x) => ({
-      ...x,
-      credentialDefinitionId: this.service.getCredentialDefinitionIdByTag(x.name),
-    }))
-
-    if (character.additionalCredentials !== undefined) {
-      const altCreds = character.additionalCredentials.map((x) => ({
-        ...x,
-        credentialDefinitionId: this.service.getCredentialDefinitionIdByTag(x.name),
-      }))
-      character.additionalCredentials = altCreds
-    }
-
-    character.starterCredentials = lol
+    character.starterCredentials = this.getCreds(character.starterCredentials)
     return character
   }
 
@@ -54,16 +54,7 @@ export class CharacterController {
     characters.forEach((char) => {
       arr.push({
         ...char,
-        starterCredentials: char.starterCredentials.map((x) => ({
-          ...x,
-          credentialDefinitionId: this.service.getCredentialDefinitionIdByTag(x.name),
-        })),
-        additionalCredentials: !char.additionalCredentials
-          ? char.additionalCredentials
-          : char.additionalCredentials.map((x) => ({
-              ...x,
-              credentialDefinitionId: this.service.getCredentialDefinitionIdByTag(x.name),
-            })),
+        starterCredentials: this.getCreds(char.starterCredentials),
       })
     })
     return arr

@@ -1,5 +1,13 @@
 import type { ProofAttribute, ProofPredicateInfo } from '@aries-framework/core'
 
+export interface Configuration {
+  DashboardHeader: React.FC<any>
+  Stepper: React.FC<any>
+  OnboardingContainer: React.FC<any>
+  OnboardingComplete: (onboardingStep: number) => boolean
+  StepperItems: any[]
+}
+
 export interface Connection {
   id: string
   state: string
@@ -32,21 +40,13 @@ export interface Character {
   name: string
   type: string
   backstory: string
-  customScreens?: CustomScreens
   skipWalletPrompt?: boolean
   content: { [key: number]: CharacterContent }
   backgroundImage?: string
   onboardingText?: string
   disableSkipConnection?: boolean
-  starterCredentials: CredentialData[]
-  additionalCredentials?: CredentialData[]
+  starterCredentials: Record<number, CredentialData>
   onboardingEntity?: Entity
-}
-
-export interface CustomScreens {
-  startAt: number
-  screens: string[]
-  endAt: number
 }
 
 export interface UseCase {

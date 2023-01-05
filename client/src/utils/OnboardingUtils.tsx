@@ -24,14 +24,7 @@ import onboardingConnectLight from '../assets/light/onboarding-connect-light.svg
 import onboardingCredentialLight from '../assets/light/onboarding-credential-light.svg'
 import onboardingStartLight from '../assets/light/onboarding-started-light.svg'
 import onboardingWalletLight from '../assets/light/onboarding-wallet-light.svg'
-import {
-  nextCustomOnboardingStep,
-  nextOnboardingStep,
-  prevCustomOnboardingStep,
-  prevOnboardingStep,
-  setCustomOnboardingStep,
-  setOnboardingStep,
-} from '../slices/onboarding/onboardingSlice'
+import { nextOnboardingStep, prevOnboardingStep, setOnboardingStep } from '../slices/onboarding/onboardingSlice'
 
 export enum Progress {
   SETUP_START = 0,
@@ -47,6 +40,10 @@ export interface Content {
   iconDark: string
   title: string
   text: string
+}
+
+export const OnboardingComplete = (onboardingStep: number): boolean => {
+  return onboardingStep === Progress.SETUP_COMPLETED
 }
 
 export const StepperItems = [
@@ -65,25 +62,11 @@ export const StepperItems = [
 export const addOnboardingProgress = (
   dispatch: Dispatch<any>,
   onboardingStep: number,
-  customOnboardingStep?: number,
   currentCharacter?: Character,
   step?: number
 ) => {
   const inc = step ?? 1
-  if (onboardingStep === currentCharacter?.customScreens?.startAt) {
-    // if character custom content is enabled
-    if (
-      customOnboardingStep === undefined ||
-      customOnboardingStep < currentCharacter?.customScreens?.screens?.length - inc
-    ) {
-      // if we are not at the end of the current user's custom content
-      dispatch(nextCustomOnboardingStep(inc))
-    } else {
-      // we are at end of custom content so increment the onboarding screen
-      dispatch(nextCustomOnboardingStep(inc))
-      dispatch(setOnboardingStep(currentCharacter?.customScreens?.endAt))
-    }
-  } else if (currentCharacter?.skipWalletPrompt && onboardingStep === Progress.SETUP_START) {
+  if (currentCharacter?.skipWalletPrompt && onboardingStep === Progress.SETUP_START) {
     dispatch(setOnboardingStep(Progress.PICK_CHARACTER))
   } else {
     dispatch(nextOnboardingStep(inc))
@@ -99,22 +82,9 @@ export const addOnboardingProgress = (
 export const removeOnboardingProgress = (
   dispatch: Dispatch<any>,
   onboardingStep: number,
-  customOnboardingStep?: number,
   currentCharacter?: Character
 ) => {
-  // if character custom content is enabled
-  if (onboardingStep === currentCharacter?.customScreens?.endAt) {
-    dispatch(setOnboardingStep(currentCharacter?.customScreens?.startAt))
-    dispatch(prevCustomOnboardingStep())
-  } else if (onboardingStep === currentCharacter?.customScreens?.startAt) {
-    // if character custom content is enabled
-    if (customOnboardingStep !== undefined && customOnboardingStep > 0) {
-      // if we are not at the beggining of the current user's custom content
-      dispatch(prevCustomOnboardingStep())
-    } else {
-      dispatch(setCustomOnboardingStep(undefined))
-    }
-  } else if (currentCharacter?.skipWalletPrompt && onboardingStep === Progress.PICK_CHARACTER) {
+  if (currentCharacter?.skipWalletPrompt && onboardingStep === Progress.PICK_CHARACTER) {
     dispatch(setOnboardingStep(Progress.SETUP_START))
   } else {
     dispatch(prevOnboardingStep())

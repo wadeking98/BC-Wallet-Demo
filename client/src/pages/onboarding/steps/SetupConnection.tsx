@@ -23,7 +23,6 @@ import { completeOnboarding, setOnboardingConnectionId } from '../../../slices/o
 import { setConnectionDate } from '../../../slices/preferences/preferencesSlice'
 import { fetchAllUseCasesByCharId } from '../../../slices/useCases/useCasesThunks'
 import { basePath } from '../../../utils/BasePath'
-import { addOnboardingProgress, Progress } from '../../../utils/OnboardingUtils'
 import { prependApiUrl } from '../../../utils/Url'
 import { StepInformation } from '../components/StepInformation'
 
@@ -121,7 +120,7 @@ export const SetupConnection: React.FC<Props> = ({
 
   const renderCTA = !isCompleted ? (
     <motion.div variants={fade} key="openWallet">
-      {currentCharacter.starterCredentials.length > 0 && (
+      {currentCharacter.starterCredentials && (
         <>
           <p>
             Scan the QR-code with your <a href={deepLink}>wallet {isMobile && 'or'} </a>
@@ -155,7 +154,7 @@ export const SetupConnection: React.FC<Props> = ({
       exit="exit"
     >
       <StepInformation title={title ?? content?.title} text={text ?? content?.text} />
-      {currentCharacter.starterCredentials.length > 0 && (
+      {currentCharacter.starterCredentials && (
         <div className="max-w-xs flex flex-col self-center items-center bg-white rounded-lg p-4  dark:text-black">
           {renderQRCode(true)}
         </div>
