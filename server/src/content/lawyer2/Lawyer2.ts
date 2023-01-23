@@ -3,9 +3,9 @@ import type { Character } from '../types'
 import { v4 as uuid } from 'uuid'
 
 enum Progress {
-  SETUP_START = 0,
+  PICK_CHARACTER = 0,
+  SETUP_START,
   CHOOSE_WALLET,
-  PICK_CHARACTER,
   GOING_DIGITAL,
   ACCESS_COURT_MATERIALS,
   CONNECT_LSBC,
@@ -16,12 +16,21 @@ enum Progress {
 }
 
 export const Lawyer2: Character = {
-  id: '3',
+  id: '2',
   image: '/public/lawyer2/lawyer2.svg',
   name: 'Joyce',
-  type: 'Joyce',
+  type: 'Lawyer',
   backstory: 'Joyce is a member of the Law Society of British Columbia looking to access court materials online.',
   content: {
+    [Progress.PICK_CHARACTER]: {
+      title: 'Meet Joyce',
+      text: `Meet Joyce (that's you in this demo!). Joyce is a lawyer in good standing with The Law Society of British Columbia. We know this because she's got her physical Law Society of British Columbia Member Card.
+
+      She's also a resident of British Columbia and has gone through the process to prove her identity with Service BC and has obtained a physical BC Services Card.
+        
+      This has allowed her to use in person services.
+      `,
+    },
     [Progress.SETUP_START]: {
       title: '',
       text: `BC Wallet is a new app for storing and using credentials on your smartphone. Credentials are things like IDs, licences and diplomas.
@@ -32,15 +41,6 @@ export const Lawyer2: Character = {
       In this demo, you will use two credentials to prove who you are and access court materials online instead of in-person.
       `,
       image: '/public/lawyer2/onboarding/scan.svg',
-    },
-    [Progress.PICK_CHARACTER]: {
-      title: 'Meet Joyce',
-      text: `Meet Joyce (that's you in this demo!). Joyce is a lawyer in good standing with The Law Society of British Columbia. We know this because she's got her physical Law Society of British Columbia Member Card.
-
-      She's also a resident of British Columbia and has gone through the process to prove her identity with Service BC and has obtained a physical BC Services Card.
-        
-      This has allowed her to use in person services.
-      `,
     },
     [Progress.GOING_DIGITAL]: {
       image: '/public/lawyer2/onboarding/goingDigital.svg',
@@ -56,6 +56,7 @@ export const Lawyer2: Character = {
     },
     [Progress.CONNECT_PERSON]: {
       image: '/public/lawyer2/onboarding/personCredPhone.svg',
+      isBackDisabled: true
     },
     [Progress.ACCEPT_PERSON]: {
       image: '/public/lawyer2/onboarding/personCredPhone.svg',
@@ -64,6 +65,7 @@ export const Lawyer2: Character = {
       title: '',
       text: 'Member Card and Person credential',
       image: '/public/lawyer2/onboarding/lawyer2Success.svg',
+      isBackDisabled: true
     },
   },
   starterCredentials: {

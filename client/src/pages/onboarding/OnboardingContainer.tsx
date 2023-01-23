@@ -65,7 +65,7 @@ export const OnboardingContainer: React.FC<Props> = ({
   const customScreenName: string | undefined = undefined
 
   const isBackDisabled =
-    [Progress.SETUP_START, Progress.ACCEPT_CREDENTIAL].includes(onboardingStep) ||
+    [Progress.PICK_CHARACTER, Progress.ACCEPT_CREDENTIAL].includes(onboardingStep) ||
     !!currentCharacter?.content?.[onboardingStep]?.isBackDisabled
   const isForwardDisabled =
     (onboardingStep === Progress.RECEIVE_IDENTITY && !connectionCompleted) ||
@@ -102,14 +102,6 @@ export const OnboardingContainer: React.FC<Props> = ({
   const getComponentToRender = (progress: Progress) => {
     const { text, title } = getCharacterContent(progress)
     const components = {
-      [Progress.SETUP_START]: <SetupStart key={Progress.SETUP_START} content={OnboardingContent[progress]} />,
-      [Progress.CHOOSE_WALLET]: (
-        <ChooseWallet
-          key={Progress.CHOOSE_WALLET}
-          content={OnboardingContent[progress]}
-          addOnboardingProgress={nextOnboardingPage}
-        />
-      ),
       [Progress.PICK_CHARACTER]: (
         <PickCharacter
           key={Progress.PICK_CHARACTER}
@@ -121,6 +113,14 @@ export const OnboardingContainer: React.FC<Props> = ({
           textWithImage={currentCharacter?.content?.[progress]?.textWithImage?.map((contentItem) => {
             return { ...contentItem, image: contentItem?.image ? prependApiUrl(contentItem.image) : '' }
           })}
+        />
+      ),
+      [Progress.SETUP_START]: <SetupStart key={Progress.SETUP_START} content={OnboardingContent[progress]} />,
+      [Progress.CHOOSE_WALLET]: (
+        <ChooseWallet
+          key={Progress.CHOOSE_WALLET}
+          content={OnboardingContent[progress]}
+          addOnboardingProgress={nextOnboardingPage}
         />
       ),
       [Progress.RECEIVE_IDENTITY]: (
@@ -171,6 +171,7 @@ export const OnboardingContainer: React.FC<Props> = ({
       ? prependApiUrl(currentCharacter.content[progress].image as string)
       : OnboardingContent[progress].iconLight
     const components = {
+      [Progress.PICK_CHARACTER]: <CharacterContent key={Progress.PICK_CHARACTER} character={currentCharacter} />,
       [Progress.SETUP_START]: (
         <motion.img
           variants={fadeExit}
@@ -195,7 +196,6 @@ export const OnboardingContainer: React.FC<Props> = ({
           alt="choose wallet"
         />
       ),
-      [Progress.PICK_CHARACTER]: <CharacterContent key={Progress.PICK_CHARACTER} character={currentCharacter} />,
       [Progress.RECEIVE_IDENTITY]: (
         <motion.img
           variants={fadeExit}

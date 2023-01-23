@@ -25,9 +25,9 @@ import onboardingWalletLight from '../../../assets/light/onboarding-wallet-light
 import { nextOnboardingStep, prevOnboardingStep, setOnboardingStep } from '../../../slices/onboarding/onboardingSlice'
 
 export enum Progress {
-  SETUP_START = 0,
+  PICK_CHARACTER = 0,
+  SETUP_START,
   CHOOSE_WALLET,
-  PICK_CHARACTER,
   GOING_DIGITAL,
   ACCESS_COURT_MATERIALS,
   CONNECT_LSBC,
@@ -49,8 +49,8 @@ export const OnboardingComplete = (onboardingStep: number): boolean => {
 }
 
 export const StepperItems = [
-  { name: 'moon', onboardingStep: Progress.SETUP_START, iconLight: moonLight, iconDark: moonDark },
   { name: 'person', onboardingStep: Progress.PICK_CHARACTER, iconLight: personLight, iconDark: personDark },
+  { name: 'moon', onboardingStep: Progress.SETUP_START, iconLight: moonLight, iconDark: moonDark },
   { name: 'wallet', onboardingStep: Progress.CONNECT_LSBC, iconLight: walletLight, iconDark: walletDark },
   {
     name: 'notification',
@@ -69,7 +69,7 @@ export const addOnboardingProgress = (
 ) => {
   const inc = step ?? 1
   if (currentCharacter?.skipWalletPrompt && onboardingStep === Progress.SETUP_START) {
-    dispatch(setOnboardingStep(Progress.PICK_CHARACTER))
+    dispatch(setOnboardingStep(Progress.GOING_DIGITAL))
   } else {
     dispatch(nextOnboardingStep(inc))
   }
@@ -86,7 +86,7 @@ export const removeOnboardingProgress = (
   onboardingStep: number,
   currentCharacter?: Character
 ) => {
-  if (currentCharacter?.skipWalletPrompt && onboardingStep === Progress.PICK_CHARACTER) {
+  if (currentCharacter?.skipWalletPrompt && onboardingStep === Progress.GOING_DIGITAL) {
     dispatch(setOnboardingStep(Progress.SETUP_START))
   } else {
     dispatch(prevOnboardingStep())
@@ -94,6 +94,12 @@ export const removeOnboardingProgress = (
 }
 
 export const OnboardingContent = {
+  [Progress.PICK_CHARACTER]: {
+    iconLight: onboardingChooseLight,
+    iconDark: onboardingChooseDark,
+    title: `Who do you want to be today?`,
+    text: 'It’s time to pick your character. Every character has its own set of use cases, which explore the power of digital credentials. Don’t worry, you can change your character later.',
+  },
   [Progress.SETUP_START]: {
     iconLight: bcWalletIcon,
     iconDark: bcWalletIcon,
@@ -106,12 +112,6 @@ export const OnboardingContent = {
     iconDark: onboardingWalletDark,
     title: `Install BC Wallet`,
     text: `First, install the BC Wallet app onto your smartphone. Select the button below for instructions and the next step.`,
-  },
-  [Progress.PICK_CHARACTER]: {
-    iconLight: onboardingChooseLight,
-    iconDark: onboardingChooseDark,
-    title: `Who do you want to be today?`,
-    text: 'It’s time to pick your character. Every character has its own set of use cases, which explore the power of digital credentials. Don’t worry, you can change your character later.',
   },
   [Progress.GOING_DIGITAL]: {
     iconLight: onboardingChooseLight,

@@ -19,7 +19,7 @@ const defaultConfigurations: Configuration = {
   StepperItems: StepperItems,
 }
 const configurations: Record<string, Configuration> = {
-  joyce: {
+  lawyer: {
     ...defaultConfigurations,
     DashboardHeader: StepperJoyce,
     Stepper: StepperJoyce,

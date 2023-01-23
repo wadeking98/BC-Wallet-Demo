@@ -5,7 +5,7 @@ import { v4 as uuid } from 'uuid'
 import { Progress } from '../../utils/progress'
 
 export const BusinessWoman: Character = {
-  id: '2',
+  id: '3',
   image: '/public/businesswoman/businesswoman.svg',
   name: 'Joyce',
   type: 'Lawyer',

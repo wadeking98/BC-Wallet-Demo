@@ -19,8 +19,8 @@ export interface StepperStep {
 }
 
 export const steps: StepperStep[] = [
-  { name: 'moon', onboardingStep: Progress.SETUP_START, iconLight: moonLight, iconDark: moonDark },
   { name: 'person', onboardingStep: Progress.PICK_CHARACTER, iconLight: personLight, iconDark: personDark },
+  { name: 'moon', onboardingStep: Progress.SETUP_START, iconLight: moonLight, iconDark: moonDark },
   { name: 'wallet', onboardingStep: Progress.CONNECT_LSBC, iconLight: walletLight, iconDark: walletDark },
   {
     name: 'notification',
