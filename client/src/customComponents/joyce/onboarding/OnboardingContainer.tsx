@@ -64,7 +64,7 @@ export const OnboardingContainer: React.FC<Props> = ({
   )
 
   const isBackDisabled =
-    [Progress.SETUP_START, Progress.ACCEPT_LSBC, Progress.ACCEPT_PERSON].includes(onboardingStep) ||
+    [Progress.PICK_CHARACTER, Progress.ACCEPT_LSBC, Progress.ACCEPT_PERSON].includes(onboardingStep) ||
     !!currentCharacter?.content?.[onboardingStep]?.isBackDisabled
   const isForwardDisabled =
     ((onboardingStep === Progress.CONNECT_PERSON || onboardingStep === Progress.CONNECT_LSBC) &&
