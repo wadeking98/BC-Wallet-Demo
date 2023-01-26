@@ -69,6 +69,7 @@ export interface RequestedCredential {
   properties?: string[]
   predicates?: { name: string; value?: string | number | (() => string | number); type: string }
   credentialDefinitionId?: string
+  schemaName: string
 }
 
 export interface CredentialData {

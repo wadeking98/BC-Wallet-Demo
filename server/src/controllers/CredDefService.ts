@@ -42,8 +42,8 @@ export class CredDefService {
   private async init() {
     const cd1 = await this.createCredentialDefinition({
       schemaId: `${this.agent?.publicDid?.did}:2:student_card:1.0`,
-      supportRevocation: false,
-      tag: 'student_card',
+      supportRevocation: true,
+      tag: 'Student card',
     })
     // "attributes": [
     //   "Name", "Street", "City", "Date of birth", "Nationality"
@@ -51,7 +51,7 @@ export class CredDefService {
 
     const cd2 = await this.createCredentialDefinition({
       schemaId: `${this.agent?.publicDid?.did}:2:Member Card:1.5.1`,
-      supportRevocation: false,
+      supportRevocation: true,
       tag: 'Member Card',
     })
     //"attrNames": [
@@ -60,7 +60,7 @@ export class CredDefService {
 
     const cd3 = await this.createCredentialDefinition({
       schemaId: `${this.agent?.publicDid?.did}:2:Person:1.0`,
-      supportRevocation: false,
+      supportRevocation: true,
       tag: 'Person',
     })
 

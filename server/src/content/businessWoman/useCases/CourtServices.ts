@@ -60,6 +60,7 @@ export const CourtServices: UseCase = {
           name: 'Member Card',
           icon: '/public/businesswoman/icon-businesswoman.svg',
           properties: ['Member Status'],
+          schemaName: 'Member Card'
         },
       ],
       issueCredentials: [],
