@@ -24,6 +24,7 @@ RUN apt-get update -y && apt-get install -y --allow-unauthenticated \
     nodejs
 
 RUN chmod g+rwx /root
+RUN chmod -R g+rwx /root/.npm
 
 COPY ./ /www
 WORKDIR /www
