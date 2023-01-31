@@ -57,10 +57,9 @@ export const StudyRoom: UseCase = {
       requestedCredentials: [
         {
           id: uuid(),
-          name: 'Student card',
+          name: 'student_card',
           icon: '/public/student/icon-student.svg',
           properties: ['student_first_name'],
-          schemaName: 'student_card'
         },
       ],
       issueCredentials: [],
@@ -70,7 +69,7 @@ export const StudyRoom: UseCase = {
           type: StepType.START,
           image: `${URL}/card-school.svg`,
           title: 'Book a study room',
-          description: `Alice has lots of work to do, and needs a study room for some peace and quiet. In this example, we'll present some info from our Student card, but just what's needed to book the room.`,
+          description: `Alice has lots of work to do, and needs a study room for some peace and quiet. In this example, we'll present some info from our Student Card, but just what's needed to book the room.`,
         },
         {
           id: uuid(),

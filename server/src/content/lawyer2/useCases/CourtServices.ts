@@ -56,14 +56,12 @@ export const CourtServices: UseCase = {
           name: 'Member Card',
           icon: '/public/lawyer2/icon-lawyer2.svg',
           properties: ['Given Name', 'Surname', 'PPID'],
-          schemaName: 'Member Card'
         },
         {
           id: uuid(),
           name: 'Person',
           icon: '/public/lawyer2/icon-lawyer2.svg',
           properties: ['given_names', 'family_name'],
-          schemaName: 'Person'
         },
       ],
       issueCredentials: [],

@@ -115,13 +115,13 @@ export const OnboardingContent = {
     iconLight: onboardingConnectLight,
     iconDark: onboardingConnectDark,
     title: `Connect with BestBC College`,
-    text: `Imagine, as Alice, you are logged into the BestBC College website. They now want to offer you a Digital Student card. Use your BC Wallet to scan the QR code from the website.`,
+    text: `Imagine, as Alice, you are logged into the BestBC College website. They now want to offer you a Digital Student Card. Use your BC Wallet to scan the QR code from the website.`,
   },
   [Progress.ACCEPT_CREDENTIAL]: {
     iconLight: onboardingCredentialLight,
     iconDark: onboardingCredentialLight,
     title: `Accept your student card`,
-    text: `Your wallet now has a secure and private connection with BestBC College. You should have received an offer in BC Wallet for a Student card.\nReview what they are sending, and choose 'Accept offer'.`,
+    text: `Your wallet now has a secure and private connection with BestBC College. You should have received an offer in BC Wallet for a Student Card.\nReview what they are sending, and choose 'Accept offer'.`,
   },
   [Progress.SETUP_COMPLETED]: {
     iconLight: onboardingCompletedLight,

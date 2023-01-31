@@ -126,7 +126,7 @@ export const OnboardingContent = {
     iconLight: onboardingChooseLight,
     iconDark: onboardingChooseDark,
     title: 'Accessing court materials',
-    text: `Joyce has been going to the courthouse in person to access court audio and other confidential materials. Court Services Branch has let her know that she now has the choice of accessing court materials online.
+    text: `Joyce has been going to the courthouse in person to access voice recordings and other confidential materials. Court Services Branch has let her know that she now has the choice of accessing court materials online.
 
     She just needs to prove she's a practising lawyer from B.C. and have a government issued ID with a matching name. She can get a digital lawyer member card from the Law Society of British Columbia and her Person credential from her BC Services Card app.`,
   },
