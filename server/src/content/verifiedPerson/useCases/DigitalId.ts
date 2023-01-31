@@ -60,7 +60,6 @@ export const DigitalID: UseCase = {
           name: 'Person',
           icon: '/public/businesswoman/icon-businesswoman.svg',
           properties: ['given_names', 'family_name'],
-          schemaName:'Person'
         },
       ],
       issueCredentials: [],

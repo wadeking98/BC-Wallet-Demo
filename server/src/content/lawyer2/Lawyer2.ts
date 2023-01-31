@@ -20,7 +20,7 @@ export const Lawyer2: Character = {
   image: '/public/lawyer2/lawyer2.svg',
   name: 'Joyce',
   type: 'Lawyer',
-  backstory: 'Joyce now has her Member card and Person credential in her BC Wallet. She\'s ready to use them to access court materials online.',
+  backstory: 'Joyce is a member of the Law Society of British Columbia looking to access court materials online.',
   content: {
     [Progress.PICK_CHARACTER]: {
       title: 'Meet Joyce',

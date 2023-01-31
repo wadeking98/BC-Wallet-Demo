@@ -1,4 +1,3 @@
-/* eslint-disable */
 import type { Entity, RequestedCredential, Step } from '../../../slices/types'
 import type { ProofRecord } from '@aries-framework/core'
 
@@ -47,12 +46,11 @@ export const StepProof: React.FC<Props> = ({ proof, step, connectionId, requeste
     const predicates: any = []
 
     requestedCredentials?.forEach((item) => {
-      console.log(item)
       if (item.properties) {
         proofs[item.name] = {
           restrictions: [
             {
-              schema_name: item.schemaName,
+              schema_name: item.credentialDefinitionId?.split(':')[4],
             },
           ],
           names: item.properties,
@@ -62,7 +60,7 @@ export const StepProof: React.FC<Props> = ({ proof, step, connectionId, requeste
         predicates[item.name] = {
           restrictions: [
             {
-              schema_name: item.schemaName,
+              schema_name: item.credentialDefinitionId?.split(':')[4],
             },
           ],
           name: item.predicates?.name,
