@@ -24,7 +24,6 @@ RUN apt-get update -y && apt-get install -y --allow-unauthenticated \
     nodejs
 
 RUN chmod g+rwx /root
-RUN chmod -R g+rwx /root/.npm
 
 COPY ./ /www
 WORKDIR /www
@@ -33,6 +32,7 @@ RUN npm install
 WORKDIR /www/client
 RUN npm install
 
+RUN chmod -R g+rwx /root/.npm
 
 EXPOSE 3000
 ENTRYPOINT ["npm", "run", "start"]
