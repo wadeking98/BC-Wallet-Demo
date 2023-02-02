@@ -32,6 +32,7 @@ RUN npm install
 WORKDIR /www/client
 RUN npm install
 
+RUN chmod -R g+rwx /root/.npm
 
 EXPOSE 3000
 ENTRYPOINT ["npm", "run", "start"]
