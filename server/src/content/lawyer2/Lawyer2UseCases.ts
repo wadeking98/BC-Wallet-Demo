@@ -1,9 +1,8 @@
 import type { CharWithUseCases } from '../types'
 
-import { Lawyer2 } from './Lawyer2'
-import { CourtServices } from './useCases/CourtServices'
+import { Lawyer, LawyerUseCase } from '../../../../config/lawyer'
 
 export const Lawyer2UseCases: CharWithUseCases = {
-  characterId: Lawyer2.id,
-  useCases: [CourtServices],
+  characterId: Lawyer.id,
+  useCases: [LawyerUseCase],
 }
