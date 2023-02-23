@@ -15,25 +15,25 @@ export const CourtServices: UseCase = {
   },
 
   stepper: [
-    // {
-    //   id: uuid(),
-    //   name: `Start the login process`,
-    //   description: '',
-    //   steps: 1,
-    //   section: 1,
-    // },
     {
       id: uuid(),
-      name: `Confirm the information to send`,
+      name: `Scan the QR code`,
       description: '',
       steps: 1,
       section: 1,
     },
     {
       id: uuid(),
-      name: `Done!`,
+      name: `Confirm the information to send`,
       description: '',
       steps: 2,
+      section: 1,
+    },
+    {
+      id: uuid(),
+      name: `Done!`,
+      description: '',
+      steps: 3,
       section: 1,
     },
   ],

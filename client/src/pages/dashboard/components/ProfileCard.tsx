@@ -23,10 +23,7 @@ export const ProfileCard: React.FC<Props> = ({ currentCharacter }) => {
   before you do this.`
 
   const reset = () => {
-    const slug = currentCharacter.type.toLowerCase()
     dispatch({ type: 'demo/RESET' })
-    // regular navigate function doesn't work with character slugs
-    window.location.href = `${basePath}/${slug}`
   }
 
   const cancel = () => {
