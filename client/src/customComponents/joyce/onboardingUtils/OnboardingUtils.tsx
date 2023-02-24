@@ -11,6 +11,7 @@ import walletDark from '../../../assets/dark/icon-wallet-dark.svg'
 import onboardingChooseDark from '../../../assets/dark/onboarding-choose-dark.svg'
 import onboardingConnectDark from '../../../assets/dark/onboarding-connect-dark.svg'
 import onboardingWalletDark from '../../../assets/dark/onboarding-wallet-dark.svg'
+import onboardingWalletLight from '../../../assets/light/app-store-screenshots.png'
 import bcWalletIcon from '../../../assets/light/getStarted.svg'
 import balloonLight from '../../../assets/light/icon-balloon-light.svg'
 import moonLight from '../../../assets/light/icon-moon-light.svg'
@@ -21,7 +22,6 @@ import onboardingChooseLight from '../../../assets/light/onboarding-choose-light
 import onboardingCompletedLight from '../../../assets/light/onboarding-completed-light.svg'
 import onboardingConnectLight from '../../../assets/light/onboarding-connect-light.svg'
 import onboardingCredentialLight from '../../../assets/light/onboarding-credential-light.svg'
-import onboardingWalletLight from '../../../assets/light/onboarding-wallet-light.svg'
 import { nextOnboardingStep, prevOnboardingStep, setOnboardingStep } from '../../../slices/onboarding/onboardingSlice'
 
 export enum Progress {
@@ -109,7 +109,7 @@ export const OnboardingContent = {
   },
   [Progress.CHOOSE_WALLET]: {
     iconLight: onboardingWalletLight,
-    iconDark: onboardingWalletDark,
+    iconDark: onboardingWalletLight,
     title: `Install BC Wallet`,
     text: `First, install the BC Wallet app onto your smartphone. Select the button below for instructions and the next step.`,
   },
