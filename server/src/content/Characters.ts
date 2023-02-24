@@ -1,8 +1,8 @@
 import type { Character } from './types'
 
-import { Lawyer2 } from './lawyer2/Lawyer2'
-import { Student } from './student/Student'
+import { Lawyer } from '../../../config/lawyer'
+import { Student } from '../../../config/student'
 
-const characters: Character[] = [Student, Lawyer2]
+const characters: Character[] = [Student, Lawyer]
 
 export default characters
