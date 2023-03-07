@@ -186,6 +186,7 @@ export const OnboardingContainer: React.FC<Props> = ({
           disableSkipConnection={currentCharacter?.disableSkipConnection}
           connectionState={connectionState}
           currentCharacter={currentCharacter as Character}
+          customIssuer={currentCharacter?.additionalEntity}
           title={title}
           text={text}
           onboardingText={currentCharacter?.onboardingText}

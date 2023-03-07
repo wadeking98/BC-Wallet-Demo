@@ -19,7 +19,7 @@ import { Container } from 'typedi'
 import { CredDefService } from './controllers/CredDefService'
 import { TestLogger } from './logger'
 import { AgentCleanup } from './utils/AgentCleanup'
-import { CANDY_DEV, SOVRIN_MAINNET, SOVRIN_STAGINGNET } from './utils/utils'
+import { CANDY_DEV, SOVRIN_MAINNET, SOVRIN_STAGINGNET } from './utils/ledgers'
 
 const logger = new TestLogger(process.env.NODE_ENV ? LogLevel.error : LogLevel.trace)
 

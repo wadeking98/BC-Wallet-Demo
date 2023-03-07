@@ -1,6 +1,6 @@
-import { Character, UseCase, StepType } from 'server/src/content/types'
+import type { Character, UseCase } from 'server/src/content/types'
 
-
+import { StepType } from 'server/src/content/types'
 import { v4 as uuid } from 'uuid'
 
 enum StudentProgress {
@@ -11,7 +11,6 @@ enum StudentProgress {
   ACCEPT_CREDENTIAL,
   SETUP_COMPLETED,
 }
-
 
 export const Student: Character = {
   id: '1',
@@ -62,6 +61,8 @@ export const Student: Character = {
   onboardingEntity: {
     name: 'BestBC College',
     icon: '#',
+    imageUrl: '/public/student/connection/best-bc-logo.png',
+    imageFromBackend: true,
   },
 }
 
@@ -171,7 +172,6 @@ export const OnlineStore: UseCase = {
 
 const URLschool = '/public/student/useCases/school'
 
-
 export const StudyRoom: UseCase = {
   slug: 'study',
   card: {
@@ -210,7 +210,8 @@ export const StudyRoom: UseCase = {
       entity: {
         name: 'BestBC College',
         icon: `${URLschool}/logo-university.png`,
-        imageUrl: 'https://i.imgur.com/CbkUgpH.png',
+        imageUrl: '/public/student/connection/best-bc-logo.png',
+        imageFromBackend: true,
       },
       colors: {
         primary: '#92E3A9',
