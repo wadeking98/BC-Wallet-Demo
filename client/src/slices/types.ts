@@ -47,6 +47,7 @@ export interface Character {
   disableSkipConnection?: boolean
   starterCredentials: Record<number, CredentialData>
   onboardingEntity?: Entity
+  additionalEntity?: Entity
 }
 
 export interface UseCase {
@@ -133,6 +134,7 @@ export interface Entity {
   name: string
   icon: string
   imageUrl?: string
+  imageFromBackend?: boolean
 }
 
 export interface Colors {
