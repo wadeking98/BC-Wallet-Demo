@@ -35,11 +35,10 @@ RUN yarn install
 
 WORKDIR /www/server
 RUN yarn install
-RUN yarn build
 
 RUN chmod -R g+rwx /www
 
 
 EXPOSE 5000 5001
 
-ENTRYPOINT [ "node", "build/server/src/index.js"]
+ENTRYPOINT [ "yarn", "dev"]
