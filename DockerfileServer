@@ -42,4 +42,4 @@ RUN chmod -R g+rwx /www
 
 EXPOSE 5000 5001
 
-ENTRYPOINT [ "node", "build/index.js"]
+ENTRYPOINT [ "node", "build/server/src/index.js"]
