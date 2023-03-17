@@ -31,6 +31,10 @@ export const PickCharacter: React.FC<Props> = ({
 }) => {
   const dispatch = useAppDispatch()
   const darkMode = useDarkMode()
+  const defaultTitle = `Who do you want to be today?`
+  const defaultText = `It’s time to pick your character. Every character has its own set of use cases, which explore the power of digital credentials. Don’t worry, you can change your character later.`
+  const titleText = title ?? content.title
+  const mainText = text ?? content.text
 
   const CharacterClickHandler = (char: Character) => {
     dispatch(setCharacter(char))
@@ -72,7 +76,11 @@ export const PickCharacter: React.FC<Props> = ({
 
   return (
     <motion.div variants={fadeX} initial="hidden" animate="show" exit="exit">
-      <StepInformation title={title ?? content.title} text={text ?? content.text} textWithImage={textWithImage} />
+      <StepInformation
+        title={titleText === '' ? defaultTitle : titleText}
+        text={mainText === '' ? defaultText : mainText}
+        textWithImage={textWithImage}
+      />
       {process.env.REACT_APP_INSIGHTS_PROJECT_ID === 'FULL_DEMO' && (
         <div className="flex flex-col lg:flex-row items-left lg:items-start justify-between px-8 h-full max-h-72 sm:max-h-96 overflow-y-scroll lg:overflow-y-hidden">
           {renderCharacters}

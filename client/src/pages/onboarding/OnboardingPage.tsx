@@ -1,5 +1,3 @@
-import type { Character } from '../../slices/types'
-
 import { AnimatePresence, motion } from 'framer-motion'
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
@@ -51,20 +49,6 @@ export const OnboardingPage: React.FC = () => {
       setMounted(true)
     }
   }, [dispatch])
-
-  useEffect(() => {
-    // use character from route
-    if (characters?.length && !currentCharacter) {
-      let character: Character = characters[0]
-      if (slug) {
-        const res = characters.find((char) => char.type.toLowerCase() === slug)
-        if (res) {
-          character = res
-        }
-      }
-      dispatch(setCharacter(character ?? characters[0]))
-    }
-  }, [characters])
 
   return (
     <motion.div
