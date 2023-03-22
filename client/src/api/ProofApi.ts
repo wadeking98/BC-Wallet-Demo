@@ -11,7 +11,7 @@ export const createProofRequest = (data: ProofRequestData): Promise<AxiosRespons
     name: data.requestOptions?.name,
   }
 
-  return apiCall.post(`/proofs/request-proof`, {
+  return apiCall.post(`/proofs/requestProof`, {
     connectionId: data.connectionId,
     proofRequest: proofRequest,
     comment: data.requestOptions?.comment,

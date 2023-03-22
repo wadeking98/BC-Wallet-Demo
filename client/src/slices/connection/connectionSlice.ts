@@ -42,7 +42,6 @@ const connectionSlice = createSlice({
         state.isLoading = true
       })
       .addCase(createInvitation.fulfilled, (state, action) => {
-        console.log(JSON.stringify(action))
         state.isLoading = false
         state.id = action.payload.id
         state.state = "invited"
@@ -52,7 +51,6 @@ const connectionSlice = createSlice({
         state.isLoading = true
       })
       .addCase(fetchConnectionById.fulfilled, (state, action) => {
-        console.log(action.payload.state)
         state.isLoading = false
         state.state = action.payload.state
         state.id = action.payload.id ?? state.id

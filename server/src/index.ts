@@ -17,7 +17,8 @@ import { createExpressServer, useContainer } from 'routing-controllers'
 import { Container } from 'typedi'
 
 import { createInvitation, getConnectionStateByOobId } from './agentRoutes/ConnectionController'
-import {issueCredential} from './agentRoutes/CredentialController'
+import { issueCredential } from './agentRoutes/CredentialController'
+import { issueProof, getProofStatus } from './agentRoutes/ProofController'
 import { CredDefService } from './controllers/CredDefService'
 import { TestLogger } from './logger'
 import { AgentCleanup } from './utils/AgentCleanup'
@@ -152,13 +153,28 @@ const run = async () => {
     return res
   })
 
-  app.post('/credentials/offerCredential', async(req, res)=>{
-      const connId = req.body.connectionId
-      const credDefId = req.body.credentialDefinitionId
-      const attributes = req.body.preview.attributes
-      const credentialData = await issueCredential(agent, connId, credDefId, attributes)
-      res.json(credentialData)
-      return res
+  app.post('/credentials/offerCredential', async (req, res) => {
+    const connId = req.body.connectionId
+    const credDefId = req.body.credentialDefinitionId
+    const attributes = req.body.preview.attributes
+    const credentialData = await issueCredential(agent, connId, credDefId, attributes)
+    res.json(credentialData)
+    return res
+  })
+
+  app.post('/proofs/requestProof', async (req, res) => {
+    const proofObject = req.body.proofRequest
+    const connId = req.body.connectionId
+    const proofRecord = await issueProof(agent, connId, proofObject)
+    res.json(proofRecord)
+    return res
+  })
+
+  app.get('/proofs/:proofId', async (req, res) =>{
+    const proofId = req.params.proofId
+    const proofRecord = await getProofStatus(agent, proofId)
+    res.json(proofRecord)
+    return res
   })
 
   app.listen(5000)

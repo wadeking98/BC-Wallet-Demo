@@ -4,7 +4,7 @@ import type { AxiosResponse } from 'axios'
 import { apiCall } from './BaseUrl'
 
 export const issueCredential = async (connectionId: string, data: CredentialData): Promise<AxiosResponse> => {
-  return apiCall.post(`/credentials/offer-credential`, {
+  return apiCall.post(`/credentials/offerCredential`, {
     connectionId: connectionId,
     credentialDefinitionId: data.credentialDefinitionId,
     preview: {
@@ -15,7 +15,7 @@ export const issueCredential = async (connectionId: string, data: CredentialData
 }
 
 export const issueDeepCredential = async (connectionId: string, data: CredentialData): Promise<AxiosResponse> => {
-  return apiCall.post(`/demo/deeplink/offer-credential`, {
+  return apiCall.post(`/demo/deeplink/offerCredential`, {
     connectionId: connectionId,
     credentialDefinitionId: data.credentialDefinitionId,
     preview: {
