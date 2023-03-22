@@ -61,7 +61,7 @@ export const Student: Character = {
   onboardingEntity: {
     name: 'BestBC College',
     icon: '#',
-    imageUrl: '/public/student/connection/best-bc-logo.png',
+    // imageUrl: '/public/student/connection/best-bc-logo.png',
     imageFromBackend: true,
   },
 }

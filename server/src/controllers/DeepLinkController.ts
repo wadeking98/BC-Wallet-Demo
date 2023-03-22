@@ -19,8 +19,8 @@ export class DeeplinkController {
   @Post('/offer-credential')
   public async offerCredential(@Body() params: any) {
     const state = await this.waitUntilConnected(params.connectionId)
-    if (state === 'complete' || state === 'responded') {
-      const resp = await apiCall.post('/credentials/offer-credential', params)
+    if (state === 'complete' || state === 'responded' || state === 'completed') {
+      const resp = await apiCall.post('/credentials/offerCredential', params)
       return resp.data
     }
   }
@@ -28,7 +28,7 @@ export class DeeplinkController {
   @Post('/request-proof')
   public async requestProof(@Body() params: any) {
     const state = await this.waitUntilConnected(params.connectionId)
-    if (state === 'complete' || state === 'responded') {
+    if (state === 'complete' || state === 'responded' || state === 'completed') {
       const resp = await apiCall.post('/proofs/request-proof', params)
       return resp.data
     }

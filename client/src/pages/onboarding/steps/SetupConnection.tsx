@@ -1,3 +1,4 @@
+/* eslint-disable */
 import type { Character, CredentialData, Entity } from '../../../slices/types'
 import type { Content } from '../../../utils/OnboardingUtils'
 
@@ -76,7 +77,8 @@ export const SetupConnection: React.FC<Props> = ({
       dispatch({ type: 'demo/RESET' })
     }
   }
-  const isCompleted = connectionState === 'responded' || connectionState === 'complete'
+  const isCompleted = connectionState === 'responded' || connectionState === 'complete' || connectionState === 'completed'
+  console.log(isCompleted)
 
   useEffect(() => {
     if (!isCompleted || newConnection) {

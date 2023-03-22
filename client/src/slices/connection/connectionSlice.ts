@@ -1,3 +1,4 @@
+/* eslint-disable */
 import type { ProofRecord } from '@aries-framework/core'
 
 import { createSlice } from '@reduxjs/toolkit'
@@ -41,17 +42,20 @@ const connectionSlice = createSlice({
         state.isLoading = true
       })
       .addCase(createInvitation.fulfilled, (state, action) => {
+        console.log(JSON.stringify(action))
         state.isLoading = false
-        state.id = action.payload.connection.id
-        state.state = action.payload.connection.state
+        state.id = action.payload.id
+        state.state = "invited"
         state.invitationUrl = action.payload.invitationUrl
       })
       .addCase(fetchConnectionById.pending, (state) => {
         state.isLoading = true
       })
       .addCase(fetchConnectionById.fulfilled, (state, action) => {
+        console.log(action.payload.state)
         state.isLoading = false
         state.state = action.payload.state
+        state.id = action.payload.id ?? state.id
       })
       .addCase('clearUseCase', (state) => {
         state.id = undefined

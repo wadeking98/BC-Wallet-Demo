@@ -1,3 +1,4 @@
+/* eslint-disable */
 import type { Entity } from '../../slices/types'
 
 import { createAsyncThunk } from '@reduxjs/toolkit'

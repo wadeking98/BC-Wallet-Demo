@@ -1,5 +1,5 @@
 import type { InitConfig } from '@aries-framework/core'
-import type { Express, request } from 'express'
+import type { Express } from 'express'
 
 import {
   ConnectionInvitationMessage,
@@ -11,11 +11,13 @@ import {
 import { agentDependencies, HttpInboundTransport } from '@aries-framework/node'
 import { startServer } from '@aries-framework/rest'
 import axios from 'axios'
-import { static as stx } from 'express'
+import { json, static as stx } from 'express'
 import { connect } from 'ngrok'
 import { createExpressServer, useContainer } from 'routing-controllers'
 import { Container } from 'typedi'
 
+import { createInvitation, getConnectionStateByOobId } from './agentRoutes/ConnectionController'
+import {issueCredential} from './agentRoutes/CredentialController'
 import { CredDefService } from './controllers/CredDefService'
 import { TestLogger } from './logger'
 import { AgentCleanup } from './utils/AgentCleanup'
@@ -85,6 +87,8 @@ const run = async () => {
     routePrefix: '/demo',
   })
 
+  app.use(json())
+
   httpInbound.app.get('/', async (req, res) => {
     if (typeof req.query.c_i === 'string') {
       try {
@@ -135,10 +139,29 @@ const run = async () => {
     return res
   })
 
-  await startServer(agent, {
-    port: 5000,
-    app: app,
+  // connection handlers
+  app.post('/connection/createInvite', async (req, res) => {
+    const inviteData = await createInvitation(agent, req.body?.imageUrl, req.body?.label)
+    res.json(inviteData)
+    return res
   })
+
+  app.get('/connection/getConnectionStatus/:connId', async (req, res) => {
+    const connectionData = await getConnectionStateByOobId(agent, req.params.connId)
+    res.json(connectionData)
+    return res
+  })
+
+  app.post('/credentials/offerCredential', async(req, res)=>{
+      const connId = req.body.connectionId
+      const credDefId = req.body.credentialDefinitionId
+      const attributes = req.body.preview.attributes
+      const credentialData = await issueCredential(agent, connId, credDefId, attributes)
+      res.json(credentialData)
+      return res
+  })
+
+  app.listen(5000)
 }
 
 run()

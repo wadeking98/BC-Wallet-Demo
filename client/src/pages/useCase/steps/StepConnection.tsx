@@ -28,7 +28,7 @@ export interface Props {
 export const StepConnection: React.FC<Props> = ({ step, connection, entity }) => {
   const dispatch = useAppDispatch()
   const { id, state, invitationUrl } = connection
-  const isCompleted = state === 'responded' || state === 'complete'
+  const isCompleted = state === 'responded' || state === 'complete' || state === 'completed'
   const deepLink = `bcwallet://aries_connection_invitation?${invitationUrl?.split('?')[1]}`
   const isMobile = useMediaQuery({ query: '(max-width: 768px)' })
 
