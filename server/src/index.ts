@@ -141,13 +141,13 @@ const run = async () => {
   })
 
   // connection handlers
-  app.post('/connection/createInvite', async (req, res) => {
+  app.post('/connections/createInvite', async (req, res) => {
     const inviteData = await createInvitation(agent, req.body?.imageUrl, req.body?.label)
     res.json(inviteData)
     return res
   })
 
-  app.get('/connection/getConnectionStatus/:connId', async (req, res) => {
+  app.get('/connections/getConnectionStatus/:connId', async (req, res) => {
     const connectionData = await getConnectionStateByOobId(agent, req.params.connId)
     res.json(connectionData)
     return res
@@ -165,7 +165,8 @@ const run = async () => {
   app.post('/proofs/requestProof', async (req, res) => {
     const proofObject = req.body.proofRequest
     const connId = req.body.connectionId
-    const proofRecord = await issueProof(agent, connId, proofObject)
+    const comment = req.body.comment
+    const proofRecord = await issueProof(agent, connId, comment, proofObject)
     res.json(proofRecord)
     return res
   })

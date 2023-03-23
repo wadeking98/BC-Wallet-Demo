@@ -7,6 +7,7 @@ import { createInvitation, fetchConnectionById } from './connectionThunks'
 
 export interface ConnectionState {
   id?: string
+  inviteId?: string
   state?: string
   invitationUrl?: string
   isLoading: boolean
@@ -43,7 +44,7 @@ const connectionSlice = createSlice({
       })
       .addCase(createInvitation.fulfilled, (state, action) => {
         state.isLoading = false
-        state.id = action.payload.id
+        state.inviteId = action.payload.id
         state.state = "invited"
         state.invitationUrl = action.payload.invitationUrl
       })
@@ -56,6 +57,7 @@ const connectionSlice = createSlice({
         state.id = action.payload.id ?? state.id
       })
       .addCase('clearUseCase', (state) => {
+        state.inviteId = undefined
         state.id = undefined
         state.state = undefined
         state.invitationUrl = undefined
