@@ -1,4 +1,3 @@
-/* eslint-disable */
 import type { ProofRecord } from '@aries-framework/core'
 
 import { createSlice } from '@reduxjs/toolkit'
@@ -45,7 +44,7 @@ const connectionSlice = createSlice({
       .addCase(createInvitation.fulfilled, (state, action) => {
         state.isLoading = false
         state.inviteId = action.payload.id
-        state.state = "invited"
+        state.state = 'invited'
         state.invitationUrl = action.payload.invitationUrl
       })
       .addCase(fetchConnectionById.pending, (state) => {

@@ -1,4 +1,3 @@
-/* eslint-disable */
 import type { ProofRecord } from '@aries-framework/core'
 
 import { createSlice } from '@reduxjs/toolkit'
@@ -49,7 +48,7 @@ const proofSlice = createSlice({
       })
       .addCase(fetchProofById.fulfilled, (state, action) => {
         state.isLoading = false
-        if(action.payload.id){
+        if (action.payload.id) {
           state.proof = action.payload
         }
       })
