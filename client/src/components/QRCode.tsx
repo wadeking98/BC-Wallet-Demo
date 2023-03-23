@@ -14,7 +14,8 @@ export interface Props {
 }
 
 export const QRCode: React.FC<Props> = ({ invitationUrl, connectionState, overlay }) => {
-  const isCompleted = connectionState === 'responded' || connectionState === 'complete'
+  const isCompleted =
+    connectionState === 'responded' || connectionState === 'complete' || connectionState === 'completed'
 
   useEffect(() => {
     if (isCompleted) {

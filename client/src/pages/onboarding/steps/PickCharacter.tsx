@@ -81,11 +81,10 @@ export const PickCharacter: React.FC<Props> = ({
         text={mainText === '' ? defaultText : mainText}
         textWithImage={textWithImage}
       />
-      {process.env.REACT_APP_INSIGHTS_PROJECT_ID === 'FULL_DEMO' && (
-        <div className="flex flex-col lg:flex-row items-left lg:items-start justify-between px-8 h-full max-h-72 sm:max-h-96 overflow-y-scroll lg:overflow-y-hidden">
-          {renderCharacters}
-        </div>
-      )}
+
+      <div className="flex flex-col lg:flex-row items-left lg:items-start justify-between px-8 h-full max-h-72 sm:max-h-96 overflow-y-scroll lg:overflow-y-hidden">
+        {renderCharacters}
+      </div>
     </motion.div>
   )
 }

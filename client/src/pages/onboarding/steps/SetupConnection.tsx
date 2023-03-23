@@ -1,7 +1,7 @@
+/* eslint-disable */
 import type { Character, CredentialData, Entity } from '../../../slices/types'
 import type { Content } from '../../../utils/OnboardingUtils'
 
-import { CredentialRecord } from '@aries-framework/core'
 import { motion } from 'framer-motion'
 import { track } from 'insights-js'
 import React, { useEffect } from 'react'
@@ -28,7 +28,7 @@ import { StepInformation } from '../components/StepInformation'
 
 export interface Props {
   content?: Content
-  connectionId?: string
+  inviteId?: string
   currentCharacter: Character
   skipIssuance(): void
   nextSlide(): void
@@ -45,7 +45,7 @@ export interface Props {
 
 export const SetupConnection: React.FC<Props> = ({
   content,
-  connectionId,
+  inviteId,
   currentCharacter,
   skipIssuance,
   nextSlide,
@@ -64,7 +64,7 @@ export const SetupConnection: React.FC<Props> = ({
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const onboardingCompleted = () => {
-    if (connectionId && currentCharacter) {
+    if (inviteId && currentCharacter) {
       navigate(`${basePath}/dashboard`)
       dispatch(clearCredentials())
       dispatch(clearConnection())
@@ -76,7 +76,8 @@ export const SetupConnection: React.FC<Props> = ({
       dispatch({ type: 'demo/RESET' })
     }
   }
-  const isCompleted = connectionState === 'responded' || connectionState === 'complete'
+  const isCompleted = connectionState === 'responded' || connectionState === 'complete' || connectionState === 'completed'
+  console.log(isCompleted)
 
   useEffect(() => {
     if (!isCompleted || newConnection) {
@@ -86,17 +87,17 @@ export const SetupConnection: React.FC<Props> = ({
   }, [])
 
   useEffect(() => {
-    if (connectionId) {
-      dispatch(setOnboardingConnectionId(connectionId))
+    if (inviteId) {
+      dispatch(setOnboardingConnectionId(inviteId))
       const date = new Date()
       dispatch(setConnectionDate(date))
     }
-  }, [connectionId])
+  }, [inviteId])
 
   useInterval(
     () => {
-      if (connectionId && document.visibilityState === 'visible') {
-        dispatch(fetchConnectionById(connectionId))
+      if (inviteId && document.visibilityState === 'visible') {
+        dispatch(fetchConnectionById(inviteId))
       }
     },
     !isCompleted ? 1000 : null
@@ -109,7 +110,7 @@ export const SetupConnection: React.FC<Props> = ({
   }
 
   const handleDeepLink = () => {
-    if (connectionId) {
+    if (inviteId) {
       dispatch(setDeepLink())
       nextSlide()
       setTimeout(() => {

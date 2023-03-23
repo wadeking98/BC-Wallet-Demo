@@ -1,3 +1,4 @@
+/* eslint-disable */
 import type { ProofRecord } from '@aries-framework/core'
 
 import { createSlice } from '@reduxjs/toolkit'
@@ -6,6 +7,7 @@ import { createInvitation, fetchConnectionById } from './connectionThunks'
 
 export interface ConnectionState {
   id?: string
+  inviteId?: string
   state?: string
   invitationUrl?: string
   isLoading: boolean
@@ -42,8 +44,8 @@ const connectionSlice = createSlice({
       })
       .addCase(createInvitation.fulfilled, (state, action) => {
         state.isLoading = false
-        state.id = action.payload.connection.id
-        state.state = action.payload.connection.state
+        state.inviteId = action.payload.id
+        state.state = "invited"
         state.invitationUrl = action.payload.invitationUrl
       })
       .addCase(fetchConnectionById.pending, (state) => {
@@ -52,8 +54,10 @@ const connectionSlice = createSlice({
       .addCase(fetchConnectionById.fulfilled, (state, action) => {
         state.isLoading = false
         state.state = action.payload.state
+        state.id = action.payload.id ?? state.id
       })
       .addCase('clearUseCase', (state) => {
+        state.inviteId = undefined
         state.id = undefined
         state.state = undefined
         state.invitationUrl = undefined

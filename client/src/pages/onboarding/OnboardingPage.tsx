@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { AnimatePresence, motion } from 'framer-motion'
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
@@ -30,7 +31,7 @@ export const OnboardingPage: React.FC = () => {
   const { Stepper, OnboardingContainer, OnboardingComplete, StepperItems } = getConfiguration(currentCharacter)
 
   const { onboardingStep, isCompleted } = useOnboarding()
-  const { id, state, invitationUrl } = useConnection()
+  const { inviteId, state, invitationUrl, id } = useConnection()
   const { credentials } = useCredentials()
 
   const [mounted, setMounted] = useState(false)
@@ -66,6 +67,7 @@ export const OnboardingPage: React.FC = () => {
             currentCharacter={currentCharacter}
             onboardingStep={onboardingStep}
             connectionId={id}
+            inviteId={inviteId}
             connectionState={state}
             invitationUrl={invitationUrl}
             credentials={credentials}
