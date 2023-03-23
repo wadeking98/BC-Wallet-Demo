@@ -140,6 +140,11 @@ const run = async () => {
     return res
   })
 
+  // respond to healthchecks for openshift
+  app.get('/', async (req, res) => {
+    return res
+  })
+
   // connection handlers
   app.post('/connections/createInvite', async (req, res) => {
     const inviteData = await createInvitation(agent, req.body?.imageUrl, req.body?.label)
@@ -171,7 +176,7 @@ const run = async () => {
     return res
   })
 
-  app.get('/proofs/:proofId', async (req, res) =>{
+  app.get('/proofs/:proofId', async (req, res) => {
     const proofId = req.params.proofId
     const proofRecord = await getProofStatus(agent, proofId)
     res.json(proofRecord)
