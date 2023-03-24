@@ -142,6 +142,7 @@ const run = async () => {
 
   // respond to healthchecks for openshift
   app.get('/', async (req, res) => {
+    res.send("ok")
     return res
   })
 
