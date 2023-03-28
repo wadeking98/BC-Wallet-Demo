@@ -142,29 +142,29 @@ const run = async () => {
 
   // respond to healthchecks for openshift
   app.get('/', async (req, res) => {
-    res.send("ok")
+    res.send('ok')
     return res
   })
 
   // connection handlers
   app.post('/connections/createInvite', async (req, res) => {
-    const inviteData = await createInvitation(agent, req.body?.imageUrl, req.body?.label)
-    res.json(inviteData)
+    const response = await axios.post('http://localhost:6002/connections/create-invitation', req.body, { params: { auto_accept: true } })
+    // const inviteData = await createInvitation(agent, req.body?.imageUrl, req.body?.label)
+    res.json(response.data)
     return res
   })
 
   app.get('/connections/getConnectionStatus/:connId', async (req, res) => {
-    const connectionData = await getConnectionStateByOobId(agent, req.params.connId)
-    res.json(connectionData)
+    const response = await axios.get(`http://localhost:6002/connections/${req.params.connId}`)
+    // const connectionData = await getConnectionStateByOobId(agent, req.params.connId)
+    res.json(response.data)
     return res
   })
 
   app.post('/credentials/offerCredential', async (req, res) => {
-    const connId = req.body.connectionId
-    const credDefId = req.body.credentialDefinitionId
-    const attributes = req.body.preview.attributes
-    const credentialData = await issueCredential(agent, connId, credDefId, attributes)
-    res.json(credentialData)
+    // const credentialData = await issueCredential(agent, connId, credDefId, attributes)
+    const response = await axios.post('http://localhost:6002/issue-credential/send', req.body)
+    res.json(response.data)
     return res
   })
 
