@@ -26,7 +26,7 @@ export interface Props {
 
 export const StepProofOOB: React.FC<Props> = ({ proof, proofUrl, step, requestedCredentials, entity }) => {
   const dispatch = useAppDispatch()
-  const proofReceived = proof?.state === 'presentation-received'
+  const proofReceived = (proof?.state as string) === 'presentation_received' || (proof?.state as string) === 'verified'
 
   const createProofRequest = () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -129,7 +129,7 @@ export const StepProofOOB: React.FC<Props> = ({ proof, proofUrl, step, requested
               <ProofAttributesCard
                 entity={entity}
                 requestedCredentials={requestedCredentials}
-                proof={proof}
+                proof={proof as ProofRecord}
                 proofReceived={proofReceived}
               />
             </div>

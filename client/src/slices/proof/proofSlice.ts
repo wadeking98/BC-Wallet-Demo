@@ -32,7 +32,7 @@ const proofSlice = createSlice({
       })
       .addCase(createProof.fulfilled, (state, action) => {
         state.isLoading = false
-        state.proof = action.payload
+        state.proof = { ...action.payload, id: action.payload?.presentation_exchange_id ?? '' }
       })
       .addCase(createProofOOB.pending, (state) => {
         state.isLoading = true
@@ -48,8 +48,8 @@ const proofSlice = createSlice({
       })
       .addCase(fetchProofById.fulfilled, (state, action) => {
         state.isLoading = false
-        if (action.payload.id) {
-          state.proof = action.payload
+        if (action.payload.presentation_exchange_id) {
+          state.proof = { ...action.payload, id: action.payload?.presentation_exchange_id }
         }
       })
       .addCase('clearUseCase', (state) => {

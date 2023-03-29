@@ -60,7 +60,7 @@ export const OnboardingContainer: React.FC<Props> = ({
   const connectionCompleted =
     connectionState === 'responded' || connectionState === 'complete' || connectionState === 'completed'
   const credentialsAccepted = Object.values(credentials).every(
-    (x) => x.state === 'credential-issued' || x.state === 'done'
+    (x) => (x.state as string) === 'credential_issued' || x.state === 'done'
   )
 
   const customScreenName: string | undefined = undefined

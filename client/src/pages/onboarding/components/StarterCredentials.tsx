@@ -11,7 +11,7 @@ import { prependApiUrl } from '../../../utils/Url'
 
 export interface Props {
   credentialData: CredentialData[]
-  credentials: CredentialRecord[]
+  credentials: any[]
 }
 
 export const StarterCredentials: React.FC<Props> = ({ credentialData, credentials }) => {
@@ -27,15 +27,10 @@ export const StarterCredentials: React.FC<Props> = ({ credentialData, credential
         <hr className="text-bcgov-lightgrey" />
       </div>
       {credentialData.map((item) => {
-        const state = credentials.find((x) => {
-          const y = JsonTransformer.fromJSON(x, CredentialRecord)
-          return (
-            y.metadata.get<CredReqMetadata>('_internal/indyCredential')?.credentialDefinitionId ===
-            item.credentialDefinitionId
-          )
-        })?.state
+        const state = credentials.find((x) => x.credential_definition_id === item.credentialDefinitionId)?.state
 
-        const completed = state === 'credential-issued' || state === 'done'
+        const completed =
+          (state as string) === 'credential_issued' || state === 'done' || (state as string) === 'credential_acked'
 
         return (
           <div key={item.id} className="flex-1 flex flex-row items-center justify-between my-2">

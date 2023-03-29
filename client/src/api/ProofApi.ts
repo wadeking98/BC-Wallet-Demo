@@ -55,7 +55,3 @@ export const getProofById = (proofId: string): Promise<AxiosResponse> => {
 export const deleteProofById = (proofId: string): Promise<AxiosResponse> => {
   return apiCall.delete(`/proofs/${proofId}`)
 }
-
-export const acceptProofById = (proofId: string): Promise<AxiosResponse> => {
-  return apiCall.post(`/proofs/${proofId}/accept-presentation`)
-}
