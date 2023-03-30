@@ -39,7 +39,6 @@ import { OnboardingBottomNav } from './components/OnboardingBottomNav'
 export interface Props {
   characters: Character[]
   currentCharacter?: Character
-  inviteId?: string
   connectionId?: string
   connectionState?: string
   invitationUrl?: string
@@ -51,7 +50,6 @@ export const OnboardingContainer: React.FC<Props> = ({
   characters,
   currentCharacter,
   onboardingStep,
-  inviteId,
   connectionId,
   connectionState,
   invitationUrl,
@@ -63,7 +61,7 @@ export const OnboardingContainer: React.FC<Props> = ({
   const connectionCompleted =
     connectionState === 'responded' || connectionState === 'complete' || connectionState === 'completed'
   const credentialsAccepted = Object.values(credentials).every(
-    (x) => x.state === 'credential-issued' || x.state === 'done'
+    (x) => (x.state as string) === 'credential_issued' || x.state === 'done'
   )
 
   const isBackDisabled =
@@ -151,7 +149,7 @@ export const OnboardingContainer: React.FC<Props> = ({
         <SetupConnection
           key={Progress.CONNECT_LSBC}
           content={OnboardingContent[progress]}
-          inviteId={inviteId}
+          connectionId={connectionId}
           skipIssuance={jumpOnboardingPage}
           nextSlide={nextOnboardingPage}
           invitationUrl={invitationUrl}
@@ -181,7 +179,7 @@ export const OnboardingContainer: React.FC<Props> = ({
         <SetupConnection
           key={Progress.CONNECT_PERSON}
           content={OnboardingContent[progress]}
-          inviteId={inviteId}
+          connectionId={connectionId}
           skipIssuance={jumpOnboardingPage}
           nextSlide={nextOnboardingPage}
           invitationUrl={invitationUrl}

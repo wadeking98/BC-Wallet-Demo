@@ -1,4 +1,3 @@
-import type { InitConfig } from '@aries-framework/core'
 import type { Express } from 'express'
 
 import {
@@ -8,8 +7,6 @@ import {
   AutoAcceptCredential,
   HttpOutboundTransport,
 } from '@aries-framework/core'
-import { agentDependencies, HttpInboundTransport } from '@aries-framework/node'
-import { startServer } from '@aries-framework/rest'
 import axios from 'axios'
 import { json, static as stx } from 'express'
 import { connect } from 'ngrok'
@@ -23,6 +20,7 @@ import { CredDefService } from './controllers/CredDefService'
 import { TestLogger } from './logger'
 import { AgentCleanup } from './utils/AgentCleanup'
 import { CANDY_DEV, SOVRIN_MAINNET, SOVRIN_STAGINGNET } from './utils/ledgers'
+import { tractionApiKeyUpdaterInit, tractionRequest } from './utils/tractionHelper'
 
 const logger = new TestLogger(process.env.NODE_ENV ? LogLevel.error : LogLevel.trace)
 
@@ -37,50 +35,7 @@ process.on('unhandledRejection', (error) => {
 })
 
 const run = async () => {
-  const endpoint = process.env.AGENT_ENDPOINT ?? (await connect(5001))
-  const agentConfig: InitConfig = {
-    label: 'BC Wallet',
-    walletConfig: {
-      id: 'BC Wallet',
-      key: process.env.AGENT_WALLET_KEY ?? 'BC Wallet',
-    },
-    indyLedgers: [
-      {
-        id: 'CandyDev',
-        genesisTransactions: CANDY_DEV,
-        isProduction: false,
-      },
-      {
-        id: 'MainNet',
-        genesisTransactions: SOVRIN_MAINNET,
-        isProduction: false,
-      },
-      {
-        id: 'StagingNet',
-        genesisTransactions: SOVRIN_STAGINGNET,
-        isProduction: false,
-      },
-    ],
-    logger: logger,
-    publicDidSeed: process.env.AGENT_PUBLIC_DID_SEED,
-    endpoints: [endpoint],
-    autoAcceptConnections: true,
-    autoAcceptCredentials: AutoAcceptCredential.ContentApproved,
-    useLegacyDidSovPrefix: true,
-    connectionImageUrl: 'https://i.imgur.com/g3abcCO.png',
-  }
-
-  const agent = new Agent(agentConfig, agentDependencies)
-
-  const httpInbound = new HttpInboundTransport({
-    port: 5001,
-  })
-
-  agent.registerInboundTransport(httpInbound)
-
-  agent.registerOutboundTransport(new HttpOutboundTransport())
-
-  await agent.initialize()
+  await tractionApiKeyUpdaterInit()
 
   const app: Express = createExpressServer({
     controllers: [__dirname + '/controllers/**/*.ts', __dirname + '/controllers/**/*.js'],
@@ -88,42 +43,16 @@ const run = async () => {
     routePrefix: '/demo',
   })
 
-  app.use(json())
-
-  httpInbound.app.get('/', async (req, res) => {
-    if (typeof req.query.c_i === 'string') {
-      try {
-        const invitation = await ConnectionInvitationMessage.fromUrl(req.url.replace('d_m=', 'c_i='))
-        res.send(invitation.toJSON())
-      } catch (error) {
-        res.status(500)
-        res.send({ detail: 'Unknown error occurred' })
-      }
-    }
-  })
-
-  httpInbound.app.get('/url/:proofId', async (req, res) => {
-    const apiCall = axios.create({ baseURL: 'http://localhost:5000' })
-    const proofData = await apiCall.get(`/proofs/${req.params.proofId}`)
-    const proofRequest = proofData.data.requestMessage
-    if (req.headers.accept === 'application/json') {
-      res.json(proofRequest)
-    } else {
-      res.redirect(`/?d_m=${encodeURIComponent(Buffer.from(JSON.stringify(proofRequest)).toString('base64'))}`)
-    }
-  })
-
-  app.use('/public', stx(__dirname + '/public'))
-
-  const credDefService = new CredDefService(agent)
+  const credDefService = new CredDefService()
   useContainer(Container)
   Container.set(CredDefService, credDefService)
 
-  const job = AgentCleanup(agent)
-  job.start()
+  app.use(json())
+
+  app.use('/public', stx(__dirname + '/public'))
 
   app.get('/server/last-reset', async (req, res) => {
-    res.send(job.lastDate())
+    res.send(new Date())
   })
 
   // Redirect QR code scans for installing bc wallet to the apple or google play store
@@ -142,45 +71,92 @@ const run = async () => {
 
   // respond to healthchecks for openshift
   app.get('/', async (req, res) => {
-    res.send("ok")
+    res.send('ok')
     return res
   })
 
   // connection handlers
   app.post('/connections/createInvite', async (req, res) => {
-    const inviteData = await createInvitation(agent, req.body?.imageUrl, req.body?.label)
-    res.json(inviteData)
+    const response = await tractionRequest.post(`/connections/create-invitation`, req.body, {
+      params: { auto_accept: true },
+    })
+    // const inviteData = await createInvitation(agent, req.body?.imageUrl, req.body?.label)
+    res.json(response.data)
     return res
   })
 
   app.get('/connections/getConnectionStatus/:connId', async (req, res) => {
-    const connectionData = await getConnectionStateByOobId(agent, req.params.connId)
-    res.json(connectionData)
+    const response = await tractionRequest.get(`/connections/${req.params.connId}`)
+    // const connectionData = await getConnectionStateByOobId(agent, req.params.connId)
+    res.json(response.data)
     return res
   })
 
   app.post('/credentials/offerCredential', async (req, res) => {
-    const connId = req.body.connectionId
-    const credDefId = req.body.credentialDefinitionId
-    const attributes = req.body.preview.attributes
-    const credentialData = await issueCredential(agent, connId, credDefId, attributes)
-    res.json(credentialData)
+    // const credentialData = await issueCredential(agent, connId, credDefId, attributes)
+    const response = await tractionRequest.post(`/issue-credential/send`, req.body)
+    res.json(response.data)
     return res
   })
 
+  const snakeCaseToRestriction = (key: string) => {
+    const map: { [key: string]: string | undefined } = {
+      schema_id: 'schemaId',
+      schema_name: 'schemaName',
+      schema_issuer_did: 'schemaIssuerDid',
+      schema_version: 'schemaVersion',
+      issuer_did: 'issuerDid',
+      cred_def_id: 'credentialDefinitionId',
+    }
+    return map[key] ?? key
+  }
+
   app.post('/proofs/requestProof', async (req, res) => {
     const proofObject = req.body.proofRequest
-    const connId = req.body.connectionId
-    const comment = req.body.comment
-    const proofRecord = await issueProof(agent, connId, comment, proofObject)
+    const predicateObject: Record<string, any> = {}
+    // make sure predicate value is an integer
+    Object.keys(proofObject.requested_predicates).forEach((group) => {
+      predicateObject.group = {
+        ...proofObject.requested_predicates[group],
+        restrictions: proofObject.requested_predicates[group].restrictions.map((restr: Record<string, string>) => {
+          const keys = Object.keys(restr)
+          if (keys.length > 0) {
+            let key = keys[0]
+            const val = restr[key]
+            key = snakeCaseToRestriction(key)
+            const retObject: { [key: string]: string } = {}
+            retObject[key] = val
+            return retObject
+          } else {
+            return restr
+          }
+        }),
+      }
+    })
+    proofObject.requestedPredicates = predicateObject
+    const proofRecord = (
+      await tractionRequest.post('/present-proof/send-request', {
+        connection_id: req.body.connectionId,
+        comment: req.body.comment,
+        proof_request: req.body.proofRequest,
+        auto_verify: true,
+      })
+    ).data
     res.json(proofRecord)
     return res
   })
 
   app.get('/proofs/:proofId', async (req, res) => {
-    const proofId = req.params.proofId
-    const proofRecord = await getProofStatus(agent, proofId)
+    const proofRecord = (await tractionRequest.get(`/present-proof/records/${req.params.proofId}`)).data
     res.json(proofRecord)
+    return res
+  })
+
+  app.post('/proofs/:proofId/accept-presentation', async (req, res) => {
+    const proofAcceptanceRecord = (
+      await tractionRequest.post(`/present-proof/records/${req.params.proofId}/verify-presentation`, undefined)
+    ).data
+    res.json(proofAcceptanceRecord)
     return res
   })
 

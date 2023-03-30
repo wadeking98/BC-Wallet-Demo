@@ -38,7 +38,6 @@ import { SetupStart } from './steps/SetupStart'
 export interface Props {
   characters: Character[]
   currentCharacter?: Character
-  inviteId?: string
   connectionId?: string
   connectionState?: string
   invitationUrl?: string
@@ -50,7 +49,6 @@ export const OnboardingContainer: React.FC<Props> = ({
   characters,
   currentCharacter,
   onboardingStep,
-  inviteId,
   connectionId,
   connectionState,
   invitationUrl,
@@ -62,7 +60,7 @@ export const OnboardingContainer: React.FC<Props> = ({
   const connectionCompleted =
     connectionState === 'responded' || connectionState === 'complete' || connectionState === 'completed'
   const credentialsAccepted = Object.values(credentials).every(
-    (x) => x.state === 'credential-issued' || x.state === 'done'
+    (x) => (x.state as string) === 'credential_issued' || x.state === 'done'
   )
 
   const customScreenName: string | undefined = undefined
@@ -130,7 +128,7 @@ export const OnboardingContainer: React.FC<Props> = ({
         <SetupConnection
           key={Progress.RECEIVE_IDENTITY}
           content={OnboardingContent[progress]}
-          inviteId={inviteId}
+          connectionId={connectionId}
           skipIssuance={jumpOnboardingPage}
           nextSlide={nextOnboardingPage}
           invitationUrl={invitationUrl}

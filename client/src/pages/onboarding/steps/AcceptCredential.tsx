@@ -74,7 +74,8 @@ export const AcceptCredential: React.FC<Props> = ({
   }
 
   const credentialsAccepted = Object.values(credentials).every(
-    (x) => x.state === 'credential-issued' || x.state === 'done'
+    (x) =>
+      (x.state as string) === 'credential_issued' || x.state === 'done' || (x.state as string) === 'credential_acked'
   )
 
   useEffect(() => {
@@ -87,7 +88,7 @@ export const AcceptCredential: React.FC<Props> = ({
             dispatch(issueCredential({ connectionId: connectionId, cred: item }))
           }
           track({
-            id: 'credential-issued',
+            id: 'credential_issued',
           })
         }
       })
@@ -135,7 +136,7 @@ export const AcceptCredential: React.FC<Props> = ({
 
   const sendNewCredentials = () => {
     credentials.forEach((cred) => {
-      if (cred.state !== 'credential-issued' && cred.state !== 'done') {
+      if ((cred.state as string) !== 'credential_issued' && cred.state !== 'done') {
         dispatch(deleteCredentialById(cred.id))
 
         const newCredential = getCharacterCreds().find((item) => {

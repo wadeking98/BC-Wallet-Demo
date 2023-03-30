@@ -5,10 +5,10 @@ import { apiCall } from './BaseUrl'
 
 export const issueCredential = async (connectionId: string, data: CredentialData): Promise<AxiosResponse> => {
   return apiCall.post(`/credentials/offerCredential`, {
-    connectionId: connectionId,
-    credentialDefinitionId: data.credentialDefinitionId,
-    preview: {
-      '@type': 'https://didcomm.org/issue-credential/1.0/credential-preview',
+    connection_id: connectionId,
+    cred_def_id: data.credentialDefinitionId,
+    credential_proposal: {
+      '@type': 'issue-credential/1.0/credential-preview',
       attributes: data.attributes,
     },
   })

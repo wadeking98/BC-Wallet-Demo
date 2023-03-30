@@ -27,8 +27,8 @@ import { StepInformation } from '../components/StepInformation'
 
 export interface Props {
   content?: Content
-  inviteId?: string
   currentCharacter: Character
+  connectionId?: string
   skipIssuance(): void
   nextSlide(): void
   invitationUrl?: string
@@ -44,8 +44,8 @@ export interface Props {
 
 export const SetupConnection: React.FC<Props> = ({
   content,
-  inviteId,
   currentCharacter,
+  connectionId,
   skipIssuance,
   nextSlide,
   title,
@@ -63,7 +63,7 @@ export const SetupConnection: React.FC<Props> = ({
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const onboardingCompleted = () => {
-    if (inviteId && currentCharacter) {
+    if (connectionId && currentCharacter) {
       navigate(`${basePath}/dashboard`)
       dispatch(clearCredentials())
       dispatch(clearConnection())
@@ -86,17 +86,17 @@ export const SetupConnection: React.FC<Props> = ({
   }, [])
 
   useEffect(() => {
-    if (inviteId) {
-      dispatch(setOnboardingConnectionId(inviteId))
+    if (connectionId) {
+      dispatch(setOnboardingConnectionId(connectionId))
       const date = new Date()
       dispatch(setConnectionDate(date))
     }
-  }, [inviteId])
+  }, [connectionId])
 
   useInterval(
     () => {
-      if (inviteId && document.visibilityState === 'visible') {
-        dispatch(fetchConnectionById(inviteId))
+      if (connectionId && document.visibilityState === 'visible') {
+        dispatch(fetchConnectionById(connectionId))
       }
     },
     !isCompleted ? 1000 : null
@@ -109,7 +109,7 @@ export const SetupConnection: React.FC<Props> = ({
   }
 
   const handleDeepLink = () => {
-    if (inviteId) {
+    if (connectionId) {
       dispatch(setDeepLink())
       nextSlide()
       setTimeout(() => {

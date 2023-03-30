@@ -1,17 +1,17 @@
 import type { CredentialExchangeRecord } from '@aries-framework/core'
 import type { CredDef } from 'indy-sdk'
 
-import { Agent } from '@aries-framework/core'
+import axios from 'axios'
 import { Inject, Service } from 'typedi'
+
+import { tractionRequest } from '../utils/tractionHelper'
 
 @Service()
 export class CredDefService {
   @Inject()
-  private agent: Agent
   private credentialDefinitions: CredDef[] = []
 
-  public constructor(agent: Agent) {
-    this.agent = agent
+  public constructor() {
     this.init()
   }
 
@@ -33,36 +33,26 @@ export class CredDefService {
   }
 
   public async getAllCredentialsByConnectionId(connectionId: string) {
-    const credentials = await this.agent.credentials.getAll()
-    const filtered = credentials.filter((cred: CredentialExchangeRecord) => cred.connectionId === connectionId)
+    const credentialsResp = await tractionRequest.get(`/issue-credential/records`, {
+      params: { connection_id: connectionId },
+    })
+    const credRecords = credentialsResp.data?.results as CredentialExchangeRecord[]
 
-    return filtered.map((c) => c.toJSON())
+    return credRecords
   }
 
   private async init() {
-    const cd1 = await this.createCredentialDefinition({
-      schemaId: `${this.agent?.publicDid?.did}:2:student_card:1.0`,
-      supportRevocation: false,
-      tag: 'student_card',
-    })
+    const cd1 = await this.createCredentialDefinition(`${process.env.TRACTION_DID}:2:student_card:1.0`)
     // "attributes": [
     //   "Name", "Street", "City", "Date of birth", "Nationality"
     // ]
 
-    const cd2 = await this.createCredentialDefinition({
-      schemaId: `${this.agent?.publicDid?.did}:2:Member Card:1.5.1`,
-      supportRevocation: false,
-      tag: 'Member Card',
-    })
+    const cd2 = await this.createCredentialDefinition(`${process.env.TRACTION_DID}:2:Member Card:1.5.1`)
     //"attrNames": [
     //   "Security code", "Card number", "Issuer", "Holder", "Valid until"
     // ],
 
-    const cd3 = await this.createCredentialDefinition({
-      schemaId: `${this.agent?.publicDid?.did}:2:Person:1.0`,
-      supportRevocation: false,
-      tag: 'Person',
-    })
+    const cd3 = await this.createCredentialDefinition(`${process.env.TRACTION_DID}:2:Person:1.0`)
 
     // const cd3 = await this.createCredentialDefinition({
     //   schemaId: 'q7ATwTYbQDgiigVijUAej:2:Airplane Ticket:1.0',
@@ -158,17 +148,16 @@ export class CredDefService {
     this.credentialDefinitions = [cd1, cd2, cd3]
   }
 
-  private async createCredentialDefinition(credentialDefinitionRequest: {
-    schemaId: string
-    supportRevocation: boolean
-    tag: string
-  }) {
-    const schema = await this.agent.ledger.getSchema(credentialDefinitionRequest.schemaId)
-
-    return await this.agent.ledger.registerCredentialDefinition({
-      schema,
-      supportRevocation: credentialDefinitionRequest.supportRevocation,
-      tag: credentialDefinitionRequest.tag,
-    })
+  private async createCredentialDefinition(schemaId: string) {
+    const credDefIds = (
+      await tractionRequest.get(`/credential-definitions/created`, { params: { schema_id: schemaId } })
+    ).data?.credential_definition_ids as string[] | undefined
+    if (!credDefIds || credDefIds.length <= 0) {
+      return
+    }
+    const credDefId = credDefIds[credDefIds.length - 1]
+    const credDef = (await tractionRequest.get(`/credential-definitions/${encodeURIComponent(credDefId)}`)).data
+      ?.credential_definition
+    return credDef
   }
 }

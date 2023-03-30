@@ -9,14 +9,7 @@ import { ActionCTA } from '../../../components/ActionCTA'
 import { useAppDispatch } from '../../../hooks/hooks'
 import { useInterval } from '../../../hooks/useInterval'
 import { useConnection } from '../../../slices/connection/connectionSelectors'
-import {
-  createProof,
-  deleteProofById,
-  fetchProofById,
-  acceptProofById,
-  createDeepProof,
-  acceptDeepProofById,
-} from '../../../slices/proof/proofThunks'
+import { createProof, deleteProofById, fetchProofById, createDeepProof } from '../../../slices/proof/proofThunks'
 import { FailedRequestModal } from '../../onboarding/components/FailedRequestModal'
 import { ProofAttributesCard } from '../components/ProofAttributesCard'
 import { StepInfo } from '../components/StepInfo'
@@ -31,7 +24,10 @@ export interface Props {
 
 export const StepProof: React.FC<Props> = ({ proof, step, connectionId, requestedCredentials, entity }) => {
   const dispatch = useAppDispatch()
-  const proofReceived = proof?.state === 'presentation-received' || proof?.state === 'done'
+  const proofReceived =
+    (proof?.state as string) === 'presentation_received' ||
+    (proof?.state as string) === 'verified' ||
+    proof?.state === 'done'
 
   const [isFailedRequestModalOpen, setIsFailedRequestModalOpen] = useState(false)
   const showFailedRequestModal = () => setIsFailedRequestModalOpen(true)
@@ -95,16 +91,6 @@ export const StepProof: React.FC<Props> = ({ proof, step, connectionId, requeste
       createProofRequest()
     }
   }, [])
-
-  useEffect(() => {
-    if (proofReceived) {
-      if (isDeepLink) {
-        dispatch(acceptDeepProofById(proof?.id))
-      } else {
-        dispatch(acceptProofById(proof?.id))
-      }
-    }
-  }, [proofReceived])
 
   useInterval(
     () => {

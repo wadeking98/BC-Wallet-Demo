@@ -32,7 +32,11 @@ const credentialSlice = createSlice({
   reducers: {
     clearCredentials: (state) => {
       state.credentials.map(
-        (x) => (x.state === 'credential-issued' || x.state === 'done') && state.issuedCredentials.push(x)
+        (x) =>
+          ((x.state as string) === 'credential_issued' ||
+            (x.state as string) === 'credential_acked' ||
+            x.state === 'done') &&
+          state.issuedCredentials.push(x)
       )
       state.credentials = []
     },
@@ -82,7 +86,11 @@ const credentialSlice = createSlice({
       })
       .addCase('clearUseCase', (state) => {
         state.credentials.map(
-          (x) => (x.state === 'credential-issued' || x.state === 'done') && state.issuedCredentials.push(x)
+          (x) =>
+            ((x.state as string) === 'credential_issued' ||
+              (x.state as string) === 'credential_acked' ||
+              x.state === 'done') &&
+            state.issuedCredentials.push(x)
         )
         state.credentials = []
         state.isLoading = false

@@ -78,9 +78,12 @@ export const Section: React.FC<Props> = ({
 
   const isConnectionCompleted =
     connection.state === 'responded' || connection.state === 'complete' || connection.state === 'completed'
-  const isProofCompleted = proof?.state === 'presentation-received' || proof?.state === 'done'
+  const isProofCompleted =
+    (proof?.state as string) === 'presentation_received' ||
+    (proof?.state as string) === 'verified' ||
+    proof?.state === 'done'
   const credentialsReceived = Object.values(credentials).every(
-    (x) => x.state === 'credential-issued' || x.state === 'done'
+    (x) => (x.state as string) === 'credential_issued' || x.state === 'done'
   )
 
   const [completed, setCompleted] = useState(false)
