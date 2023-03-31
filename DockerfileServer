@@ -37,6 +37,8 @@ WORKDIR /www/server
 RUN yarn install
 
 RUN chmod -R g+rwx /www
+RUN mkdir /.cache/yarn
+RUN mkdir /.yarn
 RUN chmod -R g+rwx /.cache/yarn
 RUN chmod -R g+rwx /usr/local
 RUN chmod -R g+rwx /.yarn
