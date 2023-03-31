@@ -1,25 +1,11 @@
 import type { Express } from 'express'
 
-import {
-  ConnectionInvitationMessage,
-  LogLevel,
-  Agent,
-  AutoAcceptCredential,
-  HttpOutboundTransport,
-} from '@aries-framework/core'
-import axios from 'axios'
+import { LogLevel } from '@aries-framework/core'
 import { json, static as stx } from 'express'
-import { connect } from 'ngrok'
 import { createExpressServer, useContainer } from 'routing-controllers'
 import { Container } from 'typedi'
-
-import { createInvitation, getConnectionStateByOobId } from './agentRoutes/ConnectionController'
-import { issueCredential } from './agentRoutes/CredentialController'
-import { issueProof, getProofStatus } from './agentRoutes/ProofController'
 import { CredDefService } from './controllers/CredDefService'
 import { TestLogger } from './logger'
-import { AgentCleanup } from './utils/AgentCleanup'
-import { CANDY_DEV, SOVRIN_MAINNET, SOVRIN_STAGINGNET } from './utils/ledgers'
 import { tractionApiKeyUpdaterInit, tractionRequest } from './utils/tractionHelper'
 
 const logger = new TestLogger(process.env.NODE_ENV ? LogLevel.error : LogLevel.trace)
