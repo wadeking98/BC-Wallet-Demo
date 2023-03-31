@@ -37,8 +37,11 @@ WORKDIR /www/server
 RUN yarn install
 
 RUN chmod -R g+rwx /www
+RUN chmod -R g+rwx /.cache/yarn
+RUN chmod -R g+rwx /usr/local
+RUN chmod -R g+rwx /.yarn
 
 
-EXPOSE 5000 5001
+EXPOSE 5000
 
 ENTRYPOINT [ "yarn", "dev"]
