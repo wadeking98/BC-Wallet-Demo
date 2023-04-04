@@ -54,7 +54,11 @@ const credentialSlice = createSlice({
         let revocationObjects: RevocationRecord[] = []
         if (action.payload.length) {
           revocationObjects = action.payload
-            .filter((item: any) => item.revoc_reg_id !== undefined && !state.revokableCredentials.includes(item))
+            .filter(
+              (item: any) =>
+                item.revoc_reg_id !== undefined &&
+                !state.revokableCredentials.map((rev) => rev.revocationRegId).includes(item.revoc_reg_id)
+            )
             .map((item: any) => {
               return {
                 revocationRegId: item.revoc_reg_id,

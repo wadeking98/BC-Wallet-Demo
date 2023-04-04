@@ -1,6 +1,4 @@
-import type { CredentialData, RequestedCredential, RevocationRecord, UseCase } from '../../../slices/types'
-import type { CredentialRecord } from '@aries-framework/core'
-import type { CredReqMetadata } from 'indy-sdk'
+import type { RevocationRecord } from '../../../slices/types'
 
 // import { CredentialRecord, JsonTransformer } from '@aries-framework/core'
 import { motion } from 'framer-motion'
@@ -16,8 +14,8 @@ export interface Props {
 }
 
 export const RevocationContainer: React.FC<Props> = ({ revocationRecord }) => {
-  const [isCompleted, setIsCompleted] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
+  const [completedRevocations, setCompletedRevocations] = useState<string[]>([])
+  const [loadingRevocations, setLoadingRevocations] = useState<string[]>([])
 
   const renderUseCases = revocationRecord.map((item) => {
     return (
@@ -25,17 +23,23 @@ export const RevocationContainer: React.FC<Props> = ({ revocationRecord }) => {
         key={item.revocationRegId}
         revocationRecord={item}
         callback={() => {
-          setIsLoading(true)
-          setIsCompleted(false)
+          const revocations = completedRevocations.filter((rev) => rev !== item.revocationRegId)
+          setCompletedRevocations(revocations)
+
+          const loadingList = loadingRevocations
+          loadingList.push(item.revocationRegId)
+          setLoadingRevocations(loadingList)
+
           revokeCredential(item).then((result) => {
             if (result.status === 200) {
-              setIsCompleted(true)
+              revocations.push(item.revocationRegId)
+              setCompletedRevocations(revocations)
             }
-            setIsLoading(false)
+            setLoadingRevocations(loadingRevocations.filter((rev) => rev !== item.revocationRegId))
           })
         }}
-        isCompleted={isCompleted}
-        isLoading={isLoading}
+        isCompleted={completedRevocations.includes(item.revocationRegId)}
+        isLoading={loadingRevocations.includes(item.revocationRegId)}
       />
     )
   })
