@@ -4,6 +4,7 @@ import { LogLevel } from '@aries-framework/core'
 import { json, static as stx } from 'express'
 import { createExpressServer, useContainer } from 'routing-controllers'
 import { Container } from 'typedi'
+
 import { CredDefService } from './controllers/CredDefService'
 import { TestLogger } from './logger'
 import { tractionApiKeyUpdaterInit, tractionRequest } from './utils/tractionHelper'
@@ -143,6 +144,12 @@ const run = async () => {
       await tractionRequest.post(`/present-proof/records/${req.params.proofId}/verify-presentation`, undefined)
     ).data
     res.json(proofAcceptanceRecord)
+    return res
+  })
+
+  app.post('/revoke', async (req, res) => {
+    const revocationResult = (await tractionRequest.post('/revocation/revoke', req.body)).data
+    res.json(revocationResult)
     return res
   })
 

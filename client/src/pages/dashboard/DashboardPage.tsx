@@ -23,6 +23,7 @@ import { NavBar } from '../landing/components/Navbar'
 import { DashboardCard } from './components/DashboardCard'
 import { DemoCompletedModal } from './components/DemoCompletedModal'
 import { ProfileCard } from './components/ProfileCard'
+import { RevocationContainer } from './components/RevocationContainer'
 import { UseCaseContainer } from './components/UseCaseContainer'
 
 export const DashboardPage: React.FC = () => {
@@ -30,7 +31,7 @@ export const DashboardPage: React.FC = () => {
 
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
-  const { issuedCredentials } = useCredentials()
+  const { issuedCredentials, revokableCredentials } = useCredentials()
   const { completedUseCaseSlugs, demoCompleted, completeCanceled } = usePreferences()
   const currentCharacter = useCurrentCharacter()
   const useCases = useAllUseCases()
@@ -97,6 +98,9 @@ export const DashboardPage: React.FC = () => {
                 completedUseCaseSlugs={completedUseCaseSlugs}
                 useCases={useCases}
               />
+              {process.env.NODE_ENV === 'development' && (
+                <RevocationContainer revocationRecord={revokableCredentials} />
+              )}
             </div>
             <div className="flex flex-1 flex-col p-2 mx-2 dark:text-white">
               <ProfileCard currentCharacter={currentCharacter} />

@@ -8,6 +8,12 @@ export interface Configuration {
   StepperItems: any[]
 }
 
+export interface RevocationRecord {
+  connectionId: string
+  revocationRegId: string
+  credRevocationId: string
+}
+
 export interface Connection {
   id: string
   state: string
