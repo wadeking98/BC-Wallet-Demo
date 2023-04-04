@@ -5,15 +5,17 @@ import React from 'react'
 import { FiCheck, FiLock } from 'react-icons/fi'
 
 import { buttonHover } from '../../../FramerAnimations'
+import { Loader } from '../../../components/Loader'
 
 export interface Props {
   text: string
   disabled: boolean
   isCompleted: boolean
+  loading?: boolean
   onClick?: MouseEventHandler<HTMLButtonElement>
 }
 
-export const StartButton: React.FC<Props> = ({ text, onClick, disabled, isCompleted }) => {
+export const StartButton: React.FC<Props> = ({ text, loading, onClick, disabled, isCompleted }) => {
   return (
     <div className="has-tooltip">
       <motion.button
@@ -21,8 +23,9 @@ export const StartButton: React.FC<Props> = ({ text, onClick, disabled, isComple
         className={`text-sm bg-bcgov-blue dark:bg-bcgov-white text-white dark:text-black w-24 h-8 py-1.5 px-4 rounded font-semibold shadow-sm ${
           disabled ? 'opacity-20 cursor-not-allowed' : 'opacity-100'
         }`}
+        style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
         onClick={onClick ?? undefined}
-        disabled={disabled}
+        disabled={disabled || loading}
         data-cy="select-use-case"
       >
         {disabled && (
@@ -33,16 +36,16 @@ export const StartButton: React.FC<Props> = ({ text, onClick, disabled, isComple
 
         {disabled ? (
           <p>
-            <FiLock className="m-auto" />
+            <FiLock />
           </p>
         ) : isCompleted ? (
-          <p>
-            <FiCheck className="m-auto" />
-          </p>
+          <FiCheck />
+        ) : loading ? (
+          <Loader />
         ) : (
           text
         )}
-      </motion.button>{' '}
+      </motion.button>
     </div>
   )
 }

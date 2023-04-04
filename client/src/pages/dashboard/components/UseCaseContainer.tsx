@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom'
 import { dashboardSub, dashboardTitle, rowContainer } from '../../../FramerAnimations'
 import { basePath } from '../../../utils/BasePath'
 
+import { RevocationItem } from './RevocationItem'
 import { UseCaseItem } from './UseCaseItem'
 
 export interface Props {

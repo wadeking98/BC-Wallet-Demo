@@ -1,3 +1,4 @@
+import type { RevocationRecord } from '../types'
 import type { CredentialRecord } from '@aries-framework/core'
 import type { SerializedError } from '@reduxjs/toolkit'
 
@@ -13,6 +14,7 @@ import {
 interface CredentialState {
   credentials: CredentialRecord[]
   issuedCredentials: CredentialRecord[]
+  revokableCredentials: RevocationRecord[]
   isLoading: boolean
   isIssueCredentialLoading: boolean
   error: SerializedError | undefined
@@ -21,6 +23,7 @@ interface CredentialState {
 const initialState: CredentialState = {
   credentials: [],
   issuedCredentials: [],
+  revokableCredentials: [],
   isLoading: true,
   isIssueCredentialLoading: true,
   error: undefined,
@@ -48,6 +51,19 @@ const credentialSlice = createSlice({
       })
       .addCase(fetchCredentialsByConId.fulfilled, (state, action) => {
         state.isLoading = false
+        let revocationObjects: RevocationRecord[] = []
+        if (action.payload.length) {
+          revocationObjects = action.payload
+            .filter((item: any) => item.revoc_reg_id !== undefined && !state.revokableCredentials.includes(item))
+            .map((item: any) => {
+              return {
+                revocationRegId: item.revoc_reg_id,
+                connectionId: item.connection_id,
+                credRevocationId: item.revocation_id,
+              }
+            })
+        }
+        state.revokableCredentials.push(...revocationObjects)
         state.credentials = action.payload
       })
       .addCase(issueCredential.rejected, (state, action) => {
