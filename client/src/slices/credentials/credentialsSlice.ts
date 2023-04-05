@@ -1,5 +1,4 @@
 import type { RevocationRecord } from '../types'
-import type { CredentialRecord } from '@aries-framework/core'
 import type { SerializedError } from '@reduxjs/toolkit'
 
 import { createSlice } from '@reduxjs/toolkit'
@@ -12,8 +11,8 @@ import {
 } from './credentialsThunks'
 
 interface CredentialState {
-  credentials: CredentialRecord[]
-  issuedCredentials: CredentialRecord[]
+  credentials: any[]
+  issuedCredentials: any[]
   revokableCredentials: RevocationRecord[]
   isLoading: boolean
   isIssueCredentialLoading: boolean

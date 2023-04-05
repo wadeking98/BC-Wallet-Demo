@@ -1,7 +1,5 @@
 import type { CredentialData } from '../../../slices/types'
-import type { CredReqMetadata } from 'indy-sdk'
 
-import { CredentialRecord, JsonTransformer } from '@aries-framework/core'
 import { motion } from 'framer-motion'
 import React from 'react'
 

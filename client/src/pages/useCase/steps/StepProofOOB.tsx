@@ -1,5 +1,4 @@
 import type { Entity, RequestedCredential, Step } from '../../../slices/types'
-import type { ProofRecord } from '@aries-framework/core'
 
 import { AnimatePresence, motion } from 'framer-motion'
 import React, { useEffect } from 'react'
@@ -17,7 +16,7 @@ import { StepInfo } from '../components/StepInfo'
 const QR = require('qrcode.react')
 
 export interface Props {
-  proof?: ProofRecord
+  proof?: any
   proofUrl?: string
   step: Step
   requestedCredentials: RequestedCredential[]
@@ -129,7 +128,7 @@ export const StepProofOOB: React.FC<Props> = ({ proof, proofUrl, step, requested
               <ProofAttributesCard
                 entity={entity}
                 requestedCredentials={requestedCredentials}
-                proof={proof as ProofRecord}
+                proof={proof as any}
                 proofReceived={proofReceived}
               />
             </div>

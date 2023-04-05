@@ -1,5 +1,3 @@
-import type { ProofRecord } from '@aries-framework/core'
-
 import { createSlice } from '@reduxjs/toolkit'
 
 import { createInvitation, fetchConnectionById } from './connectionThunks'

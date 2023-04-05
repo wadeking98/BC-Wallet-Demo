@@ -1,40 +1,19 @@
-FROM ubuntu:18.04 as base
+ARG build_image=node:fermium
+ARG runtime_image=caddy:alpine
+
+# build stage
+FROM ${build_image} as build-stage
+WORKDIR /app
+COPY . .
+RUN yarn install
+RUN yarn build
 
 
-RUN apt-get update -y 
-RUN apt-get install -y \
-    software-properties-common \
-    apt-transport-https \
-    curl \
-    # Only needed to build indy-sdk
-    build-essential 
+# production stage
+FROM ${runtime_image} as production-stage
+COPY --from=build-stage /app/client/build /srv
 
-# libindy
-RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys CE7709D068DB5E88
-RUN add-apt-repository "deb https://repo.sovrin.org/sdk/deb bionic stable"
-
-# nodejs
-RUN curl -sL https://deb.nodesource.com/setup_16.x | bash
-
-# install depdencies
-RUN apt-get update -y && apt-get install -y --allow-unauthenticated \
-    libindy \
-    libnullpay \
-    libvcx \
-    nodejs
-
-RUN chmod g+rwx /root
-
-COPY ./ /www
-WORKDIR /www
-RUN npm install
-
-WORKDIR /www/client
-RUN npm install
-
-RUN chmod -R g+rwx /root/.npm
-RUN mkdir /.npm
-RUN chmod -R g+rwx /.npm
-
-EXPOSE 3000
-ENTRYPOINT ["npm", "run", "start"]
+# Fix permissions issue with Caddy image
+# - Between version 2.6.2 and 2.6.3 there were some permissions changes on the official images that stopped them from working on OpenShift.
+# - This update resolves that permissions issue for OCP.
+RUN chown 1001:root /usr/bin/caddy

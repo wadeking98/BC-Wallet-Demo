@@ -1,5 +1,3 @@
-import type { ProofAttribute, ProofPredicateInfo } from '@aries-framework/core'
-
 export interface Configuration {
   DashboardHeader: React.FC<any>
   Stepper: React.FC<any>
@@ -22,8 +20,8 @@ export interface Connection {
 
 export interface ProofRequestData {
   connectionId: string
-  attributes?: ProofAttribute[]
-  predicates?: ProofPredicateInfo[]
+  attributes?: any[]
+  predicates?: any[]
   requestOptions?: RequestOptions
 }
 

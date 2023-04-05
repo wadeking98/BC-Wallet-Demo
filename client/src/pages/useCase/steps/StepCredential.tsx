@@ -1,8 +1,5 @@
 import type { Attribute, CredentialData, Step } from '../../../slices/types'
-import type { ProofRecord } from '@aries-framework/core'
-import type { CredReqMetadata } from 'indy-sdk'
 
-import { JsonTransformer, CredentialRecord } from '@aries-framework/core'
 import { AnimatePresence, motion } from 'framer-motion'
 import { track } from 'insights-js'
 import React, { useEffect, useState } from 'react'
@@ -26,8 +23,8 @@ export interface Props {
   step: Step
   connectionId: string
   issueCredentials: CredentialData[]
-  credentials: CredentialRecord[]
-  proof: ProofRecord | undefined
+  credentials: any[]
+  proof: any | undefined
 }
 
 export const StepCredential: React.FC<Props> = ({ step, connectionId, issueCredentials, credentials, proof }) => {
@@ -79,32 +76,27 @@ export const StepCredential: React.FC<Props> = ({ step, connectionId, issueCrede
   )
 
   const sendNewCredentials = () => {
-    credentials.forEach((cred) => {
-      if ((cred.state as string) !== 'credential_issued' && cred.state !== 'done') {
-        dispatch(deleteCredentialById(cred.id))
-
-        const newCredential = issuedCredData.find((item) => {
-          const credClass = JsonTransformer.fromJSON(cred, CredentialRecord)
-          return (
-            item.credentialDefinitionId ===
-            credClass.metadata.get<CredReqMetadata>('_internal/indyCredential')?.credentialDefinitionId
-          )
-        })
-        if (newCredential) dispatch(issueCredential({ connectionId: connectionId, cred: newCredential }))
-      }
-    })
-    closeFailedRequestModal()
+    // credentials.forEach((cred) => {
+    //   if ((cred.state as string) !== 'credential_issued' && cred.state !== 'done') {
+    //     dispatch(deleteCredentialById(cred.id))
+    //     const newCredential = issuedCredData.find((item) => {
+    //       const credClass = JsonTransformer.fromJSON(cred, CredentialRecord)
+    //       return (
+    //         item.credentialDefinitionId ===
+    //         credClass.metadata.get<CredReqMetadata>('_internal/indyCredential')?.credentialDefinitionId
+    //       )
+    //     })
+    //     if (newCredential) dispatch(issueCredential({ connectionId: connectionId, cred: newCredential }))
+    //   }
+    // })
+    // closeFailedRequestModal()
   }
 
   const renderCredentials = credentials
     .slice()
     .map((cred, idx) => {
       const data = issueCredentials.find((item) => {
-        const credClass = JsonTransformer.fromJSON(cred, CredentialRecord)
-        return (
-          item.credentialDefinitionId ===
-          credClass.metadata.get<CredReqMetadata>('_internal/indyCredential')?.credentialDefinitionId
-        )
+        return item.credentialDefinitionId === cred?.credentialDefinitionId
       })
       if (data) return <Credential key={cred.id} title={`Credential ${idx + 1}`} credential={cred} data={data} />
     })

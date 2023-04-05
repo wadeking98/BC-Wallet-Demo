@@ -1,5 +1,4 @@
 import type { Attribute, Entity, RequestedCredential } from '../../../slices/types'
-import type { ProofRecord } from '@aries-framework/core'
 
 import React, { useEffect, useState } from 'react'
 
@@ -11,7 +10,7 @@ import { prependApiUrl } from '../../../utils/Url'
 export interface Props {
   entity: Entity
   requestedCredentials: RequestedCredential[]
-  proof: ProofRecord
+  proof: any
   proofReceived: boolean
 }
 
