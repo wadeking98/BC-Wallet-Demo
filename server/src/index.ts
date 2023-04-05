@@ -1,21 +1,18 @@
+import "reflect-metadata";
 import type { Express } from 'express'
 
-import { LogLevel } from '@aries-framework/core'
 import { json, static as stx } from 'express'
 import { createExpressServer, useContainer } from 'routing-controllers'
 import { Container } from 'typedi'
 
 import { CredDefService } from './controllers/CredDefService'
-import { TestLogger } from './logger'
 import { tractionApiKeyUpdaterInit, tractionRequest } from './utils/tractionHelper'
-
-const logger = new TestLogger(process.env.NODE_ENV ? LogLevel.error : LogLevel.trace)
 
 process.on('unhandledRejection', (error) => {
   if (error instanceof Error) {
-    logger.fatal(`Unhandled promise rejection: ${error.message}`, { error })
+    console.error(`Unhandled promise rejection: ${error.message}`, { error })
   } else {
-    logger.fatal('Unhandled promise rejection due to non-error error', {
+    console.error('Unhandled promise rejection due to non-error error', {
       error,
     })
   }

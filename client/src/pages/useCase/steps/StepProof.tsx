@@ -1,5 +1,4 @@
 import type { Entity, RequestedCredential, Step } from '../../../slices/types'
-import type { ProofRecord } from '@aries-framework/core'
 
 import { motion } from 'framer-motion'
 import React, { useEffect, useState } from 'react'
@@ -15,7 +14,7 @@ import { ProofAttributesCard } from '../components/ProofAttributesCard'
 import { StepInfo } from '../components/StepInfo'
 
 export interface Props {
-  proof?: ProofRecord
+  proof?: any
   step: Step
   connectionId: string
   requestedCredentials: RequestedCredential[]

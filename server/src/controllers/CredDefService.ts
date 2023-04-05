@@ -1,6 +1,3 @@
-import type { CredentialExchangeRecord } from '@aries-framework/core'
-import type { CredDef } from 'indy-sdk'
-
 import axios from 'axios'
 import { Inject, Service } from 'typedi'
 
@@ -9,7 +6,7 @@ import { tractionRequest } from '../utils/tractionHelper'
 @Service()
 export class CredDefService {
   @Inject()
-  private credentialDefinitions: CredDef[] = []
+  private credentialDefinitions: any[] = []
 
   public constructor() {
     this.init()
@@ -36,7 +33,7 @@ export class CredDefService {
     const credentialsResp = await tractionRequest.get(`/issue-credential/records`, {
       params: { connection_id: connectionId },
     })
-    const credRecords = credentialsResp.data?.results as CredentialExchangeRecord[]
+    const credRecords = credentialsResp.data?.results as any[]
 
     return credRecords
   }

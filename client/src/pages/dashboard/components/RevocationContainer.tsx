@@ -1,6 +1,5 @@
 import type { RevocationRecord } from '../../../slices/types'
 
-// import { CredentialRecord, JsonTransformer } from '@aries-framework/core'
 import { motion } from 'framer-motion'
 import React, { useState } from 'react'
 

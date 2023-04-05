@@ -1,48 +1,13 @@
-FROM ubuntu:18.04 as base
+FROM node:fermium as base
 
-ENV DEBIAN_FRONTEND noninteractive
-
-RUN apt-get update -y && apt-get install -y \
-    software-properties-common \
-    apt-transport-https \
-    curl \
-    # Only needed to build indy-sdk
-    build-essential 
-
-# libindy
-RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys CE7709D068DB5E88
-RUN add-apt-repository "deb https://repo.sovrin.org/sdk/deb bionic stable"
-
-# nodejs
-RUN curl -sL https://deb.nodesource.com/setup_16.x | bash
-
-
-# install depdencies
-RUN apt-get update -y && apt-get install -y --allow-unauthenticated \
-    libindy \
-    libnullpay \
-    libvcx \
-    nodejs
-
-# AFJ specifc setup
-
-RUN chmod g+rwx /root
-
-COPY ./ /www
-WORKDIR /www
-RUN npm install -g yarn
+WORKDIR /app
+COPY . .
+RUN npm install -g typescript
+RUN npm install -g ts-node
 RUN yarn install
 
-WORKDIR /www/server
-RUN yarn install
-RUN chmod -R g+rwx /www
-RUN mkdir -p /.cache/yarn
-RUN mkdir /.yarn
-RUN chmod -R g+rwx /.cache/yarn
-RUN chmod -R g+rwx /usr/local
-RUN chmod -R g+rwx /.yarn
-
+WORKDIR /app/server
 
 EXPOSE 5000
 
-ENTRYPOINT [ "yarn", "dev"]
+ENTRYPOINT [ "ts-node", "src/index.ts"]

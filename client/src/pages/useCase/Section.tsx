@@ -1,6 +1,5 @@
 import type { ConnectionState } from '../../slices/connection/connectionSlice'
 import type { Section as ISection, StepperItem } from '../../slices/types'
-import type { CredentialRecord, ProofRecord } from '@aries-framework/core'
 
 import { AnimatePresence, motion } from 'framer-motion'
 import { track } from 'insights-js'
@@ -35,8 +34,8 @@ export interface Props {
   stepper: StepperItem[]
   stepCount: number
   sectionCount: number
-  credentials: CredentialRecord[]
-  proof?: ProofRecord
+  credentials: any[]
+  proof?: any
   proofUrl?: string
 }
 

@@ -1,11 +1,9 @@
-import type { ProofRecord } from '@aries-framework/core'
-
 import { createSlice } from '@reduxjs/toolkit'
 
 import { createProof, createProofOOB, fetchProofById } from './proofThunks'
 
 interface ProofState {
-  proof?: ProofRecord
+  proof?: any
   proofUrl?: string
   isLoading: boolean
 }

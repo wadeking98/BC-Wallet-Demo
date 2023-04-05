@@ -1,8 +1,6 @@
 import type { Character, CredentialData } from '../../../slices/types'
 import type { Content } from '../../../utils/OnboardingUtils'
-import type { CredReqMetadata } from 'indy-sdk'
 
-import { CredentialRecord, JsonTransformer } from '@aries-framework/core'
 import { AnimatePresence, motion } from 'framer-motion'
 import { track } from 'insights-js'
 import React, { useEffect, useState } from 'react'
@@ -32,7 +30,7 @@ import { StepInformation } from '../components/StepInformation'
 export interface Props {
   content?: Content
   connectionId: string
-  credentials: CredentialRecord[]
+  credentials: any[]
   currentCharacter: Character
   credSelection: number[]
   title: string
@@ -135,22 +133,20 @@ export const AcceptCredential: React.FC<Props> = ({
   }
 
   const sendNewCredentials = () => {
-    credentials.forEach((cred) => {
-      if ((cred.state as string) !== 'credential_issued' && cred.state !== 'done') {
-        dispatch(deleteCredentialById(cred.id))
-
-        const newCredential = getCharacterCreds().find((item) => {
-          const credClass = JsonTransformer.fromJSON(cred, CredentialRecord)
-          return (
-            item?.credentialDefinitionId ===
-            credClass.metadata.get<CredReqMetadata>('_internal/indyCredential')?.credentialDefinitionId
-          )
-        })
-
-        if (newCredential) dispatch(issueCredential({ connectionId: connectionId, cred: newCredential }))
-      }
-    })
-    closeFailedRequestModal()
+    // credentials.forEach((cred) => {
+    //   if ((cred.state as string) !== 'credential_issued' && cred.state !== 'done') {
+    //     dispatch(deleteCredentialById(cred.id))
+    //     const newCredential = getCharacterCreds().find((item) => {
+    //       const credClass = JsonTransformer.fromJSON(cred, any)
+    //       return (
+    //         item?.credentialDefinitionId ===
+    //         credClass.metadata.get<CredReqMetadata>('_internal/indyCredential')?.credentialDefinitionId
+    //       )
+    //     })
+    //     if (newCredential) dispatch(issueCredential({ connectionId: connectionId, cred: newCredential }))
+    //   }
+    // })
+    // closeFailedRequestModal()
   }
 
   return (

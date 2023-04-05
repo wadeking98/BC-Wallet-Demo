@@ -1,8 +1,5 @@
 import type { CredentialData, RequestedCredential, UseCase } from '../../../slices/types'
-import type { CredentialRecord } from '@aries-framework/core'
-import type { CredReqMetadata } from 'indy-sdk'
 
-// import { CredentialRecord, JsonTransformer } from '@aries-framework/core'
 import { motion } from 'framer-motion'
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -15,7 +12,7 @@ import { UseCaseItem } from './UseCaseItem'
 
 export interface Props {
   useCases: UseCase[]
-  issuedCredentials: CredentialRecord[]
+  issuedCredentials: any[]
   completedUseCaseSlugs: string[]
 }
 
