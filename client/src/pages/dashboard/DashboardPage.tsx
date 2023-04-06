@@ -98,9 +98,7 @@ export const DashboardPage: React.FC = () => {
                 completedUseCaseSlugs={completedUseCaseSlugs}
                 useCases={useCases}
               />
-              {process.env.NODE_ENV === 'development' && (
-                <RevocationContainer revocationRecord={revokableCredentials} />
-              )}
+              {revokableCredentials.length > 0 && <RevocationContainer revocationRecord={revokableCredentials} />}
             </div>
             <div className="flex flex-1 flex-col p-2 mx-2 dark:text-white">
               <ProfileCard currentCharacter={currentCharacter} />
