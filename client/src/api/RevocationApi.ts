@@ -4,7 +4,7 @@ import type { AxiosResponse } from 'axios'
 import { apiCall } from './BaseUrl'
 
 export const revokeCredential = (record: RevocationRecord) => {
-  return apiCall.post('/revoke', {
+  return apiCall.post('/demo/revoke', {
     comment: 'Credential Revoked',
     connection_id: record.connectionId,
     cred_rev_id: record.credRevocationId,

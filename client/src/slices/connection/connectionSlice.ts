@@ -49,7 +49,7 @@ const connectionSlice = createSlice({
       })
       .addCase(fetchConnectionById.fulfilled, (state, action) => {
         state.isLoading = false
-        state.state = action.payload.rfc23_state
+        state.state = action.payload.state
       })
       .addCase('clearUseCase', (state) => {
         state.id = undefined

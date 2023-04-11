@@ -1,3 +1,4 @@
+/* eslint-disable */
 import type { Character, CredentialData } from '../../../slices/types'
 import type { Content } from '../../../utils/OnboardingUtils'
 
@@ -133,20 +134,18 @@ export const AcceptCredential: React.FC<Props> = ({
   }
 
   const sendNewCredentials = () => {
-    // credentials.forEach((cred) => {
-    //   if ((cred.state as string) !== 'credential_issued' && cred.state !== 'done') {
-    //     dispatch(deleteCredentialById(cred.id))
-    //     const newCredential = getCharacterCreds().find((item) => {
-    //       const credClass = JsonTransformer.fromJSON(cred, any)
-    //       return (
-    //         item?.credentialDefinitionId ===
-    //         credClass.metadata.get<CredReqMetadata>('_internal/indyCredential')?.credentialDefinitionId
-    //       )
-    //     })
-    //     if (newCredential) dispatch(issueCredential({ connectionId: connectionId, cred: newCredential }))
-    //   }
-    // })
-    // closeFailedRequestModal()
+    credentials.forEach((cred) => {
+      if ((cred.state as string) !== 'credential_issued' && cred.state !== 'done') {
+        dispatch(deleteCredentialById(cred.credential_exchange_id))
+        const newCredential = getCharacterCreds().find((item) => {
+          return (
+            item?.credentialDefinitionId === cred.credential_offer.cred_def_id
+          )
+        })
+        if (newCredential) dispatch(issueCredential({ connectionId: connectionId, cred: newCredential }))
+      }
+    })
+    closeFailedRequestModal()
   }
 
   return (

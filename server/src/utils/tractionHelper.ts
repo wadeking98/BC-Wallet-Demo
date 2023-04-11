@@ -27,6 +27,12 @@ export const tractionRequest = {
       headers: { ...config?.headers, Authorization: `Bearer ${agentKey}` },
     })
   },
+  delete: (url: string, config?: AxiosRequestConfig<any>) => {
+    return axios.delete(`${process.env.TRACTION_URL}${url}`, {
+      ...config,
+      headers: { ...config?.headers, Authorization: `Bearer ${agentKey}` },
+    })
+  },
   post: (url: string, data: any, config?: AxiosRequestConfig<any>) => {
     return axios.post(`${process.env.TRACTION_URL}${url}`, data, {
       ...config,

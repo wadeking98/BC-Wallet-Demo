@@ -1,45 +1,37 @@
 import axios from 'axios'
-import { Body, Get, JsonController, Post } from 'routing-controllers'
-import { Inject, Service } from 'typedi'
-
-import { CredDefService } from './CredDefService'
+import { Body, JsonController, Post } from 'routing-controllers'
+import { Service } from 'typedi'
 
 export const apiCall = axios.create({ baseURL: 'http://localhost:5000' })
 
 @JsonController('/deeplink')
 @Service()
 export class DeeplinkController {
-  @Inject()
-  private service: CredDefService
 
-  public constructor(service: CredDefService) {
-    this.service = service
-  }
-
-  @Post('/offer-credential')
+  @Post('/offerCredential')
   public async offerCredential(@Body() params: any) {
     const state = await this.waitUntilConnected(params.connectionId)
-    if (state === 'complete' || state === 'responded' || state === 'completed') {
-      const resp = await apiCall.post('/credentials/offerCredential', params)
+    if (state === 'complete' || state === 'response' || state === 'active') {
+      const resp = await apiCall.post('/demo/credentials/offerCredential', params)
       return resp.data
     }
   }
 
-  @Post('/request-proof')
+  @Post('/requestProof')
   public async requestProof(@Body() params: any) {
     const state = await this.waitUntilConnected(params.connectionId)
-    if (state === 'complete' || state === 'responded' || state === 'completed') {
-      const resp = await apiCall.post('/proofs/request-proof', params)
+    if (state === 'complete' || state === 'response' || state === 'active') {
+      const resp = await apiCall.post('/demo/proofs/requestProof', params)
       return resp.data
     }
   }
 
   private async waitUntilConnected(connectionId: string): Promise<string> {
     let state = ''
-    for (let i = 0; i < 10 && state !== 'complete' && state !== 'responded'; i++) {
+    for (let i = 0; i < 10 && state !== 'complete' && state !== 'response'; i++) {
       await new Promise((r) => setTimeout(r, 1000))
-      if (state !== 'complete' && state !== 'responded') {
-        apiCall.get(`/connections/${connectionId}`).then((resp) => {
+      if (state !== 'complete' && state !== 'response') {
+        apiCall.get(`/demo/connections/${connectionId}`).then((resp) => {
           state = resp.data?.state
         })
       }

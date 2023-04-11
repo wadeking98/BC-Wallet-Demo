@@ -1,3 +1,4 @@
+/* eslint-disable*/
 import type { Attribute, CredentialData, Step } from '../../../slices/types'
 
 import { AnimatePresence, motion } from 'framer-motion'
@@ -76,20 +77,18 @@ export const StepCredential: React.FC<Props> = ({ step, connectionId, issueCrede
   )
 
   const sendNewCredentials = () => {
-    // credentials.forEach((cred) => {
-    //   if ((cred.state as string) !== 'credential_issued' && cred.state !== 'done') {
-    //     dispatch(deleteCredentialById(cred.id))
-    //     const newCredential = issuedCredData.find((item) => {
-    //       const credClass = JsonTransformer.fromJSON(cred, CredentialRecord)
-    //       return (
-    //         item.credentialDefinitionId ===
-    //         credClass.metadata.get<CredReqMetadata>('_internal/indyCredential')?.credentialDefinitionId
-    //       )
-    //     })
-    //     if (newCredential) dispatch(issueCredential({ connectionId: connectionId, cred: newCredential }))
-    //   }
-    // })
-    // closeFailedRequestModal()
+    credentials.forEach((cred) => {
+      if ((cred.state as string) !== 'credential_issued' && cred.state !== 'done') {
+        dispatch(deleteCredentialById(cred.credential_exchange_id))
+        const newCredential = issuedCredData.find((item) => {
+          return (
+            item.credentialDefinitionId === cred.credential_offer.cred_def_id
+          )
+        })
+        if (newCredential) dispatch(issueCredential({ connectionId: connectionId, cred: newCredential }))
+      }
+    })
+    closeFailedRequestModal()
   }
 
   const renderCredentials = credentials
