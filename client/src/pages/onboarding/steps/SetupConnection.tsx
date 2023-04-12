@@ -75,8 +75,7 @@ export const SetupConnection: React.FC<Props> = ({
       dispatch({ type: 'demo/RESET' })
     }
   }
-  const isCompleted =
-    connectionState === 'responded' || connectionState === 'complete' || connectionState === 'completed'
+  const isCompleted = connectionState === 'response' || connectionState === 'complete' || connectionState === 'active'
 
   useEffect(() => {
     if (!isCompleted || newConnection) {

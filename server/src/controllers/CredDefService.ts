@@ -38,6 +38,13 @@ export class CredDefService {
     return credRecords
   }
 
+  public async deleteCredentialByExchangeId(exchangeId: string) {
+    const credentialsResp = await tractionRequest.delete(`/issue-credential/records/${exchangeId}`)
+    const credRecords = credentialsResp.data?.results as any[]
+
+    return credRecords
+  }
+
   private async init() {
     const cd1 = await this.createCredentialDefinition(`${process.env.TRACTION_DID}:2:student_card:1.0`)
     // "attributes": [

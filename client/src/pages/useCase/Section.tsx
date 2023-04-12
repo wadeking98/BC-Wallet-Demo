@@ -76,7 +76,7 @@ export const Section: React.FC<Props> = ({
   const next = () => dispatch(nextStep())
 
   const isConnectionCompleted =
-    connection.state === 'responded' || connection.state === 'complete' || connection.state === 'completed'
+    connection.state === 'response' || connection.state === 'complete' || connection.state === 'active'
   const isProofCompleted =
     (proof?.state as string) === 'presentation_received' ||
     (proof?.state as string) === 'verified' ||

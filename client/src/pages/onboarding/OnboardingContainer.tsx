@@ -57,7 +57,7 @@ export const OnboardingContainer: React.FC<Props> = ({
   const dispatch = useAppDispatch()
 
   const connectionCompleted =
-    connectionState === 'responded' || connectionState === 'complete' || connectionState === 'completed'
+    connectionState === 'response' || connectionState === 'complete' || connectionState === 'active'
   const credentialsAccepted = Object.values(credentials).every(
     (x) => (x.state as string) === 'credential_issued' || x.state === 'done'
   )

@@ -1,7 +1,8 @@
-import { Get, InternalServerError, JsonController, NotFoundError, Param } from 'routing-controllers'
+import { Body, Delete, Get, InternalServerError, JsonController, NotFoundError, Param, Post } from 'routing-controllers'
 import { Inject, Service } from 'typedi'
 
 import { CredDefService } from './CredDefService'
+import { tractionRequest } from '../utils/tractionHelper'
 
 @JsonController('/credentials')
 @Service()
@@ -20,6 +21,25 @@ export class CredentialController {
     } catch (error) {
       if (error) {
         throw new NotFoundError(`credentials for connectionId "${connectionId}" not found.`)
+      }
+      throw new InternalServerError(`something went wrong: ${error}`)
+    }
+  }
+
+  @Post('/offerCredential')
+  public async offerCredential(@Body() params: any){
+    console.log("Offer Cred")
+    const response = await tractionRequest.post(`/issue-credential/send`, params)
+    return response.data
+  }
+
+  @Delete('/:cred_ex_id')
+  public async deleteCredentialByExchangeId(@Param('cred_ex_id') cred_ex_id: string){
+    try {
+      return this.service.deleteCredentialByExchangeId(cred_ex_id)
+    } catch (error) {
+      if (error) {
+        throw new NotFoundError(`credentials for connectionId "${cred_ex_id}" not found.`)
       }
       throw new InternalServerError(`something went wrong: ${error}`)
     }
