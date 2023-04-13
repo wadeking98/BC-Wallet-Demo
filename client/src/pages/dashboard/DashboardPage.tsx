@@ -32,7 +32,7 @@ export const DashboardPage: React.FC = () => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const { issuedCredentials, revokableCredentials } = useCredentials()
-  const { completedUseCaseSlugs, demoCompleted, completeCanceled } = usePreferences()
+  const { completedUseCaseSlugs, demoCompleted, completeCanceled, revocationEnabled } = usePreferences()
   const currentCharacter = useCurrentCharacter()
   const useCases = useAllUseCases()
   const { DashboardHeader, StepperItems } = getConfiguration(currentCharacter)
@@ -98,7 +98,9 @@ export const DashboardPage: React.FC = () => {
                 completedUseCaseSlugs={completedUseCaseSlugs}
                 useCases={useCases}
               />
-              {revokableCredentials.length > 0 && <RevocationContainer revocationRecord={revokableCredentials} />}
+              {revokableCredentials.length > 0 && revocationEnabled && (
+                <RevocationContainer revocationRecord={revokableCredentials} />
+              )}
             </div>
             <div className="flex flex-1 flex-col p-2 mx-2 dark:text-white">
               <ProfileCard currentCharacter={currentCharacter} />

@@ -8,7 +8,7 @@ import { confettiFade } from '../FramerAnimations'
 import { useAppDispatch } from '../hooks/hooks'
 import { fetchAllCharacters } from '../slices/characters/charactersThunks'
 import { usePreferences } from '../slices/preferences/preferencesSelectors'
-import { resetDashboard, setDarkMode } from '../slices/preferences/preferencesSlice'
+import { resetDashboard, setDarkMode, toggleRevocation } from '../slices/preferences/preferencesSlice'
 import { fetchWallets } from '../slices/wallets/walletsThunks'
 
 import { basePath } from './BasePath'
@@ -40,6 +40,14 @@ export const KBar: React.FC = ({ children }) => {
         setTimeout(() => {
           setConfettiPieces(0)
         }, 1300)
+      },
+    },
+    {
+      id: 'toggleRevocation',
+      name: 'Toggle revocation on/off',
+      keywords: 'Revocation revoke toggle',
+      perform: () => {
+        dispatch(toggleRevocation())
       },
     },
     {
