@@ -13,9 +13,10 @@ export const createProofRequest = (data: ProofRequestData): Promise<AxiosRespons
   }
 
   return apiCall.post(`/demo/proofs/requestProof`, {
-    connectionId: data.connectionId,
-    proofRequest: proofRequest,
+    connection_id: data.connectionId,
     comment: data.requestOptions?.comment,
+    proof_request: proofRequest,
+    auto_verify: true,
   })
 }
 
@@ -23,15 +24,16 @@ export const createDeepProofRequest = (data: ProofRequestData): Promise<AxiosRes
   const proofRequest = {
     requested_attributes: Object.assign({}, data.attributes),
     requested_predicates: Object.assign({}, data.predicates),
+    non_revoked: { to: Math.floor(new Date().valueOf() / 1000) },
     version: '1.0.0',
-    name: data.requestOptions?.name ?? 'Proof Request',
+    name: data.requestOptions?.name,
   }
 
-  return apiCall.post(`/demo/deeplink/request-proof`, {
-    connectionId: data.connectionId,
-    proofRequest: proofRequest,
+  return apiCall.post(`/demo/deeplink/requestProof`, {
+    connection_id: data.connectionId,
+    proof_request: proofRequest,
     comment: data.requestOptions?.comment ?? '',
-    autoAcceptProof: 'always',
+    auto_verify: true,
   })
 }
 

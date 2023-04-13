@@ -60,6 +60,7 @@ export const SetupConnection: React.FC<Props> = ({
 }) => {
   const deepLink = `bcwallet://aries_connection_invitation?${invitationUrl?.split('?')[1]}`
   const isMobile = useMediaQuery({ query: '(max-width: 768px)' })
+  const isTablet = useMediaQuery({ query: '(max-width: 1400px)' })
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const onboardingCompleted = () => {
@@ -116,15 +117,14 @@ export const SetupConnection: React.FC<Props> = ({
       }, 250)
     }
   }
-
   const renderCTA = !isCompleted ? (
     <motion.div variants={fade} key="openWallet">
       {currentCharacter.starterCredentials && (
         <>
           <p>
-            Scan the QR-code with your <a href={deepLink}>wallet {isMobile && 'or'} </a>
+            Scan the QR-code with your <a href={deepLink}>wallet {(isMobile || isTablet) && 'or'} </a>
           </p>
-          {isMobile && (
+          {(isMobile || isTablet) && (
             <a onClick={handleDeepLink} className="underline underline-offset-2 mt-2">
               open in wallet
               <FiExternalLink className="inline pb-1" />
@@ -144,7 +144,7 @@ export const SetupConnection: React.FC<Props> = ({
     </motion.div>
   )
 
-  return !backgroundImage || isMobile ? (
+  return !backgroundImage || isMobile || isTablet ? (
     <motion.div
       className="flex flex-col h-full  dark:text-white"
       variants={fadeX}
