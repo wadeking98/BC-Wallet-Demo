@@ -1,4 +1,3 @@
-/* eslint-disable */
 import type { Character, CredentialData } from '../../../slices/types'
 import type { Content } from '../../../utils/OnboardingUtils'
 
@@ -14,9 +13,7 @@ import { Modal } from '../../../components/Modal'
 import { useAppDispatch } from '../../../hooks/hooks'
 import { useInterval } from '../../../hooks/useInterval'
 import { useConnection } from '../../../slices/connection/connectionSelectors'
-import { clearConnection } from '../../../slices/connection/connectionSlice'
 import { useCredentials } from '../../../slices/credentials/credentialsSelectors'
-import { clearCredentials } from '../../../slices/credentials/credentialsSlice'
 import {
   deleteCredentialById,
   fetchCredentialsByConId,
@@ -138,9 +135,7 @@ export const AcceptCredential: React.FC<Props> = ({
       if ((cred.state as string) !== 'credential_issued' && cred.state !== 'done') {
         dispatch(deleteCredentialById(cred.credential_exchange_id))
         const newCredential = getCharacterCreds().find((item) => {
-          return (
-            item?.credentialDefinitionId === cred.credential_offer.cred_def_id
-          )
+          return item?.credentialDefinitionId === cred.credential_offer.cred_def_id
         })
         if (newCredential) dispatch(issueCredential({ connectionId: connectionId, cred: newCredential }))
       }

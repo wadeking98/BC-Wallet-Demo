@@ -1,8 +1,9 @@
 import { Body, Delete, Get, InternalServerError, JsonController, NotFoundError, Param, Post } from 'routing-controllers'
 import { Inject, Service } from 'typedi'
 
-import { CredDefService } from './CredDefService'
 import { tractionRequest } from '../utils/tractionHelper'
+
+import { CredDefService } from './CredDefService'
 
 @JsonController('/credentials')
 @Service()
@@ -27,14 +28,13 @@ export class CredentialController {
   }
 
   @Post('/offerCredential')
-  public async offerCredential(@Body() params: any){
-    console.log("Offer Cred")
+  public async offerCredential(@Body() params: any) {
     const response = await tractionRequest.post(`/issue-credential/send`, params)
     return response.data
   }
 
   @Delete('/:cred_ex_id')
-  public async deleteCredentialByExchangeId(@Param('cred_ex_id') cred_ex_id: string){
+  public async deleteCredentialByExchangeId(@Param('cred_ex_id') cred_ex_id: string) {
     try {
       return this.service.deleteCredentialByExchangeId(cred_ex_id)
     } catch (error) {

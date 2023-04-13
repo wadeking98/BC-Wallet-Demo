@@ -1,4 +1,3 @@
-/* eslint-disable*/
 import type { Attribute, CredentialData, Step } from '../../../slices/types'
 
 import { AnimatePresence, motion } from 'framer-motion'
@@ -81,9 +80,7 @@ export const StepCredential: React.FC<Props> = ({ step, connectionId, issueCrede
       if ((cred.state as string) !== 'credential_issued' && cred.state !== 'done') {
         dispatch(deleteCredentialById(cred.credential_exchange_id))
         const newCredential = issuedCredData.find((item) => {
-          return (
-            item.credentialDefinitionId === cred.credential_offer.cred_def_id
-          )
+          return item.credentialDefinitionId === cred.credential_offer.cred_def_id
         })
         if (newCredential) dispatch(issueCredential({ connectionId: connectionId, cred: newCredential }))
       }
