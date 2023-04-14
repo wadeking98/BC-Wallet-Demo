@@ -25,6 +25,7 @@ import { clearCredentials } from '../../../slices/credentials/credentialsSlice'
 import { completeOnboarding } from '../../../slices/onboarding/onboardingSlice'
 import { fetchAllUseCasesByCharId } from '../../../slices/useCases/useCasesThunks'
 import { basePath } from '../../../utils/BasePath'
+import { isConnected, isCredIssued } from '../../../utils/Helpers'
 import { prependApiUrl } from '../../../utils/Url'
 import {
   Progress,
@@ -57,11 +58,8 @@ export const OnboardingContainer: React.FC<Props> = ({
   const darkMode = useDarkMode()
   const dispatch = useAppDispatch()
 
-  const connectionCompleted =
-    connectionState === 'response' || connectionState === 'complete' || connectionState === 'active'
-  const credentialsAccepted = Object.values(credentials).every(
-    (x) => (x.state as string) === 'credential_issued' || x.state === 'done'
-  )
+  const connectionCompleted = isConnected(connectionState as string)
+  const credentialsAccepted = Object.values(credentials).every((x) => isCredIssued(x.state))
 
   const isBackDisabled =
     [Progress.PICK_CHARACTER, Progress.ACCEPT_LSBC, Progress.ACCEPT_PERSON].includes(onboardingStep) ||

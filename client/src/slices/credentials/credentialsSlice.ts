@@ -3,6 +3,8 @@ import type { SerializedError } from '@reduxjs/toolkit'
 
 import { createSlice } from '@reduxjs/toolkit'
 
+import { isCredIssued } from '../../utils/Helpers'
+
 import {
   fetchCredentialsByConId,
   fetchCredentialById,
@@ -33,13 +35,7 @@ const credentialSlice = createSlice({
   initialState,
   reducers: {
     clearCredentials: (state) => {
-      state.credentials.map(
-        (x) =>
-          ((x.state as string) === 'credential_issued' ||
-            (x.state as string) === 'credential_acked' ||
-            x.state === 'done') &&
-          state.issuedCredentials.push(x)
-      )
+      state.credentials.map((x) => isCredIssued(x.state) && state.issuedCredentials.push(x))
       state.credentials = []
     },
   },
@@ -104,13 +100,7 @@ const credentialSlice = createSlice({
         return state
       })
       .addCase('clearUseCase', (state) => {
-        state.credentials.map(
-          (x) =>
-            ((x.state as string) === 'credential_issued' ||
-              (x.state as string) === 'credential_acked' ||
-              x.state === 'done') &&
-            state.issuedCredentials.push(x)
-        )
+        state.credentials.map((x) => isCredIssued(x.state) && state.issuedCredentials.push(x))
         state.credentials = []
         state.isLoading = false
       })

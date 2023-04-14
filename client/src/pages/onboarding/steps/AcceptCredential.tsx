@@ -21,6 +21,7 @@ import {
   issueDeepCredential,
 } from '../../../slices/credentials/credentialsThunks'
 import { basePath } from '../../../utils/BasePath'
+import { isCredIssued } from '../../../utils/Helpers'
 import { FailedRequestModal } from '../components/FailedRequestModal'
 import { StarterCredentials } from '../components/StarterCredentials'
 import { StepInformation } from '../components/StepInformation'
@@ -69,10 +70,7 @@ export const AcceptCredential: React.FC<Props> = ({
     return creds
   }
 
-  const credentialsAccepted = Object.values(credentials).every(
-    (x) =>
-      (x.state as string) === 'credential_issued' || x.state === 'done' || (x.state as string) === 'credential_acked'
-  )
+  const credentialsAccepted = Object.values(credentials).every((x) => isCredIssued(x.state))
 
   useEffect(() => {
     if (credentials.length === 0) {
@@ -132,7 +130,7 @@ export const AcceptCredential: React.FC<Props> = ({
 
   const sendNewCredentials = () => {
     credentials.forEach((cred) => {
-      if ((cred.state as string) !== 'credential_issued' && cred.state !== 'done') {
+      if (!isCredIssued(cred.state)) {
         dispatch(deleteCredentialById(cred.credential_exchange_id))
         const newCredential = getCharacterCreds().find((item) => {
           return item?.credentialDefinitionId === cred.credential_offer.cred_def_id

@@ -5,6 +5,7 @@ import React from 'react'
 
 import { fadeX } from '../../../FramerAnimations'
 import { StateIndicator } from '../../../components/StateIndicator'
+import { isCredIssued } from '../../../utils/Helpers'
 import { prependApiUrl } from '../../../utils/Url'
 
 export interface Props {
@@ -14,7 +15,7 @@ export interface Props {
 }
 
 export const Credential: React.FC<Props> = ({ title, credential, data }) => {
-  const credentialIssued = (credential.state as string) === 'credential_issued' || credential.state === 'done'
+  const credentialIssued = isCredIssued(credential.state)
   return (
     <motion.div
       variants={fadeX}
