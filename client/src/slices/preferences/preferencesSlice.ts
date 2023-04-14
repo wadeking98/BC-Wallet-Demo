@@ -1,3 +1,4 @@
+/* eslint-disable */
 import type { PayloadAction } from '@reduxjs/toolkit'
 
 import { createSlice } from '@reduxjs/toolkit'
@@ -6,6 +7,7 @@ import { fetchLastServerReset } from './preferencesThunks'
 
 interface PreferencesState {
   darkMode: boolean
+  revocationEnabled: boolean
   completedUseCaseSlugs: string[]
   demoCompleted: boolean
   completeCanceled: boolean
@@ -15,6 +17,7 @@ interface PreferencesState {
 
 const initialState: PreferencesState = {
   darkMode: false,
+  revocationEnabled: false,
   completedUseCaseSlugs: [],
   demoCompleted: false,
   completeCanceled: false,
@@ -52,6 +55,10 @@ const preferencesSlice = createSlice({
     resetDashboard: (state) => {
       state.completedUseCaseSlugs = []
     },
+    toggleRevocation: (state) => {
+      state.revocationEnabled = !state.revocationEnabled
+      console.log(state.revocationEnabled)
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -65,7 +72,7 @@ const preferencesSlice = createSlice({
   },
 })
 
-export const { setDarkMode, useCaseCompleted, resetDashboard, setDemoCompleted, setConnectionDate } =
+export const { setDarkMode, useCaseCompleted, resetDashboard, setDemoCompleted, setConnectionDate, toggleRevocation } =
   preferencesSlice.actions
 
 export default preferencesSlice.reducer
