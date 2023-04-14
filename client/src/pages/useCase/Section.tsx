@@ -17,6 +17,7 @@ import { useCaseCompleted } from '../../slices/preferences/preferencesSlice'
 import { StepType } from '../../slices/types'
 import { nextStep, prevStep } from '../../slices/useCases/useCasesSlice'
 import { basePath } from '../../utils/BasePath'
+import { isConnected, isCredIssued } from '../../utils/Helpers'
 
 import { SideView } from './SideView'
 import { EndContainer } from './components/EndContainer'
@@ -75,15 +76,12 @@ export const Section: React.FC<Props> = ({
   const prev = () => dispatch(prevStep())
   const next = () => dispatch(nextStep())
 
-  const isConnectionCompleted =
-    connection.state === 'response' || connection.state === 'complete' || connection.state === 'active'
+  const isConnectionCompleted = isConnected(connection.state as string)
   const isProofCompleted =
     (proof?.state as string) === 'presentation_received' ||
     (proof?.state as string) === 'verified' ||
     proof?.state === 'done'
-  const credentialsReceived = Object.values(credentials).every(
-    (x) => (x.state as string) === 'credential_issued' || x.state === 'done'
-  )
+  const credentialsReceived = Object.values(credentials).every((x) => isCredIssued(x.state))
 
   const [completed, setCompleted] = useState(false)
   const { slug } = useParams()

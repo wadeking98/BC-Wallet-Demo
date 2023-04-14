@@ -5,6 +5,7 @@ import React from 'react'
 
 import { fadeX } from '../../../FramerAnimations'
 import { StateIndicator } from '../../../components/StateIndicator'
+import { isCredIssued } from '../../../utils/Helpers'
 import { prependApiUrl } from '../../../utils/Url'
 
 export interface Props {
@@ -27,8 +28,7 @@ export const StarterCredentials: React.FC<Props> = ({ credentialData, credential
       {credentialData.map((item) => {
         const state = credentials.find((x) => x.credential_definition_id === item.credentialDefinitionId)?.state
 
-        const completed =
-          (state as string) === 'credential_issued' || state === 'done' || (state as string) === 'credential_acked'
+        const completed = isCredIssued(state)
 
         return (
           <div key={item.id} className="flex-1 flex flex-row items-center justify-between my-2">

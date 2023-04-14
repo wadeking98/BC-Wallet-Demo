@@ -14,6 +14,7 @@ import {
   fetchCredentialsByConId,
   issueCredential,
 } from '../../../slices/credentials/credentialsThunks'
+import { isCredIssued } from '../../../utils/Helpers'
 import { getAttributesFromProof } from '../../../utils/ProofUtils'
 import { Credential } from '../../onboarding/components/Credential'
 import { FailedRequestModal } from '../../onboarding/components/FailedRequestModal'
@@ -34,9 +35,7 @@ export const StepCredential: React.FC<Props> = ({ step, connectionId, issueCrede
   const showFailedRequestModal = () => setIsFailedRequestModalOpen(true)
   const closeFailedRequestModal = () => setIsFailedRequestModalOpen(false)
 
-  const credentialsAccepted = Object.values(credentials).every(
-    (x) => (x.state as string) === 'credential_issued' || x.state === 'done'
-  )
+  const credentialsAccepted = Object.values(credentials).every((x) => isCredIssued(x.state))
   const [issuedCredData, setIssuedCredData] = useState<CredentialData[]>([])
 
   const issueCreds = () => {
@@ -77,7 +76,7 @@ export const StepCredential: React.FC<Props> = ({ step, connectionId, issueCrede
 
   const sendNewCredentials = () => {
     credentials.forEach((cred) => {
-      if ((cred.state as string) !== 'credential_issued' && cred.state !== 'done') {
+      if (!isCredIssued(cred.state)) {
         dispatch(deleteCredentialById(cred.credential_exchange_id))
         const newCredential = issuedCredData.find((item) => {
           return item.credentialDefinitionId === cred.credential_offer.cred_def_id

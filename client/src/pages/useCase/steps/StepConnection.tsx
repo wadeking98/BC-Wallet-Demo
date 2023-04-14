@@ -16,6 +16,7 @@ import { setDeepLink } from '../../../slices/connection/connectionSlice'
 import { createInvitation, fetchConnectionById } from '../../../slices/connection/connectionThunks'
 import { createDeepProof } from '../../../slices/proof/proofThunks'
 import { nextStep } from '../../../slices/useCases/useCasesSlice'
+import { isConnected } from '../../../utils/Helpers'
 import { prependApiUrl } from '../../../utils/Url'
 import { StepInfo } from '../components/StepInfo'
 
@@ -28,7 +29,7 @@ export interface Props {
 export const StepConnection: React.FC<Props> = ({ step, connection, entity }) => {
   const dispatch = useAppDispatch()
   const { id, state, invitationUrl } = connection
-  const isCompleted = state === 'response' || state === 'complete' || state === 'active'
+  const isCompleted = isConnected(state as string)
   const deepLink = `bcwallet://aries_connection_invitation?${invitationUrl?.split('?')[1]}`
   const isMobile = useMediaQuery({ query: '(max-width: 768px)' })
 

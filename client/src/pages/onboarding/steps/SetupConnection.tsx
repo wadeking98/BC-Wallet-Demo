@@ -22,6 +22,7 @@ import { completeOnboarding, setOnboardingConnectionId } from '../../../slices/o
 import { setConnectionDate } from '../../../slices/preferences/preferencesSlice'
 import { fetchAllUseCasesByCharId } from '../../../slices/useCases/useCasesThunks'
 import { basePath } from '../../../utils/BasePath'
+import { isConnected } from '../../../utils/Helpers'
 import { prependApiUrl } from '../../../utils/Url'
 import { StepInformation } from '../components/StepInformation'
 
@@ -76,7 +77,7 @@ export const SetupConnection: React.FC<Props> = ({
       dispatch({ type: 'demo/RESET' })
     }
   }
-  const isCompleted = connectionState === 'response' || connectionState === 'complete' || connectionState === 'active'
+  const isCompleted = isConnected(connectionState as string)
 
   useEffect(() => {
     if (!isCompleted || newConnection) {

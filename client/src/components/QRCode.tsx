@@ -2,6 +2,8 @@ import { track } from 'insights-js'
 import React, { useEffect } from 'react'
 import { useMediaQuery } from 'react-responsive'
 
+import { isConnected } from '../utils/Helpers'
+
 import { CheckMark } from './Checkmark'
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -14,7 +16,7 @@ export interface Props {
 }
 
 export const QRCode: React.FC<Props> = ({ invitationUrl, connectionState, overlay }) => {
-  const isCompleted = connectionState === 'response' || connectionState === 'complete' || connectionState === 'active'
+  const isCompleted = isConnected(connectionState as string)
 
   useEffect(() => {
     if (isCompleted) {
