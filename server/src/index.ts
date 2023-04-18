@@ -59,6 +59,12 @@ const run = async () => {
     return res
   })
 
+  // respond to ditp health checks
+  app.get('/server/ready', async (req, res) => {
+    res.json({ ready: true })
+    return res
+  })
+
   // respond to ready checks to the traction agent
   app.get('/agent/ready', async (req, res) => {
     const response = await tractionRequest.get(`/status/ready`)
