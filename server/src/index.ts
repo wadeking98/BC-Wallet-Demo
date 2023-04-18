@@ -59,6 +59,13 @@ const run = async () => {
     return res
   })
 
+  // respond to ready checks to the traction agent
+  app.get('/agent/ready', async (req, res) => {
+    const response = await tractionRequest.get(`/status/ready`)
+    res.send(response.data)
+    return response
+  })
+
   app.listen(5000)
 }
 
