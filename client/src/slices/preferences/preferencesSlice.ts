@@ -1,4 +1,3 @@
-/* eslint-disable */
 import type { PayloadAction } from '@reduxjs/toolkit'
 
 import { createSlice } from '@reduxjs/toolkit'
@@ -57,7 +56,6 @@ const preferencesSlice = createSlice({
     },
     toggleRevocation: (state) => {
       state.revocationEnabled = !state.revocationEnabled
-      console.log(state.revocationEnabled)
     },
   },
   extraReducers: (builder) => {
