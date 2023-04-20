@@ -51,12 +51,12 @@ export class CredDefService {
     //   "Name", "Street", "City", "Date of birth", "Nationality"
     // ]
 
-    const cd2 = await this.createCredentialDefinition(`${process.env.TRACTION_DID}:2:Member Card:1.5.1`)
+    const cd2 = await this.createCredentialDefinition(`${process.env.TRACTION_DID}:2:Member Card:1.5.2`)
     //"attrNames": [
     //   "Security code", "Card number", "Issuer", "Holder", "Valid until"
     // ],
 
-    const cd3 = await this.createCredentialDefinition(`${process.env.TRACTION_DID}:2:Person:1.0`)
+    const cd3 = await this.createCredentialDefinition(`${process.env.TRACTION_DID}:2:Person:1.1`)
 
     // const cd3 = await this.createCredentialDefinition({
     //   schemaId: 'q7ATwTYbQDgiigVijUAej:2:Airplane Ticket:1.0',
