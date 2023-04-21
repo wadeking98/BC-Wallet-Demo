@@ -1,6 +1,7 @@
 import type { RequestedCredential, UseCaseCard } from '../../../slices/types'
 
 import { motion } from 'framer-motion'
+import { startCase } from 'lodash'
 import React from 'react'
 
 import { rowFadeX } from '../../../FramerAnimations'
@@ -37,7 +38,7 @@ export const UseCaseItem: React.FC<Props> = ({ slug, card, isCompleted, required
               return (
                 <div key={item.id} className={`flex flex-row mb-2`}>
                   <img className="w-4 h-4 lg:w-6 lg:h-6 mx-2" src={prependApiUrl(item.icon)} alt="credential icon" />
-                  <p className="text-xs sxl:text-sm">{item.name}&nbsp;</p>
+                  <p className="text-xs sxl:text-sm">{startCase(item.name)}&nbsp;</p>
                 </div>
               )
             })}

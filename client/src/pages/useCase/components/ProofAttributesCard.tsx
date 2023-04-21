@@ -1,5 +1,6 @@
 import type { Attribute, Entity, RequestedCredential } from '../../../slices/types'
 
+import { startCase } from 'lodash'
 import React, { useEffect, useState } from 'react'
 
 import { CheckMark } from '../../../components/Checkmark'
@@ -39,7 +40,7 @@ export const ProofAttributesCard: React.FC<Props> = ({ entity, requestedCredenti
             <img className="h-8 m-auto" src={prependApiUrl(item.icon)} alt="icon" />
           </div>
           <div className="flex flex-1 flex-row justify-between px-4 dark:text-white m-auto">
-            <p className="font-semibold self-center">{item.name}</p>
+            <p className="font-semibold self-center">{startCase(item.name)}</p>
           </div>
         </div>
         <div className="flex flex-1 flex-col md:pl-16">

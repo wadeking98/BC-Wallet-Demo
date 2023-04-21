@@ -38,7 +38,7 @@ export const StepProofOOB: React.FC<Props> = ({ proof, proofUrl, step, requested
         proofs[item.name] = {
           restrictions: [
             {
-              schema_name: item.credentialDefinitionId?.split(':')[4],
+              schema_name: item.schemaId?.split(':')[2],
             },
           ],
           names: item.properties,
@@ -48,7 +48,7 @@ export const StepProofOOB: React.FC<Props> = ({ proof, proofUrl, step, requested
         predicates[item.name] = {
           restrictions: [
             {
-              schema_name: item.credentialDefinitionId?.split(':')[4],
+              schema_name: item.schemaId?.split(':')[2],
             },
           ],
           name: item.predicates?.name,

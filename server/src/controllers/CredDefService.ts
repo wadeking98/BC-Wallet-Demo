@@ -12,14 +12,20 @@ export class CredDefService {
     this.init()
   }
 
-  public getCredentialDefinitionIdByTag(tag: string) {
+  private getCredDefByTag(tag: string) {
     const def = this.credentialDefinitions.find((x) => x.tag === tag)
-
     if (!def) {
       throw new Error(`CredentialDefinition not found for ${tag}`)
     }
+    return def
+  }
 
-    return def.id
+  public getCredentialDefinitionIdByTag(tag: string) {
+    return this.getCredDefByTag(tag).id
+  }
+
+  public getSchemaIdByTag(tag: string) {
+    return this.getCredDefByTag(tag).schemaId
   }
 
   public async getAll() {
@@ -51,7 +57,7 @@ export class CredDefService {
     //   "Name", "Street", "City", "Date of birth", "Nationality"
     // ]
 
-    const cd2 = await this.createCredentialDefinition(`${process.env.TRACTION_DID}:2:Member Card:1.5.2`)
+    const cd2 = await this.createCredentialDefinition(`${process.env.TRACTION_DID}:2:Member Card:1.1`)
     //"attrNames": [
     //   "Security code", "Card number", "Issuer", "Holder", "Valid until"
     // ],
@@ -162,6 +168,7 @@ export class CredDefService {
     const credDefId = credDefIds[credDefIds.length - 1]
     const credDef = (await tractionRequest.get(`/credential-definitions/${encodeURIComponent(credDefId)}`)).data
       ?.credential_definition
+    credDef.schemaId = (await tractionRequest.get(`/schemas/${credDef.schemaId}`)).data?.schema?.id ?? credDef.schemaId
     return credDef
   }
 }
