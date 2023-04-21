@@ -45,7 +45,7 @@ export const StepProof: React.FC<Props> = ({ proof, step, connectionId, requeste
         proofs[item.name] = {
           restrictions: [
             {
-              schema_name: item.credentialDefinitionId?.split(':')[4],
+              schema_name: item.schemaId?.split(':')[2],
             },
           ],
           names: item.properties,
@@ -55,7 +55,7 @@ export const StepProof: React.FC<Props> = ({ proof, step, connectionId, requeste
         predicates[item.name] = {
           restrictions: [
             {
-              schema_name: item.credentialDefinitionId?.split(':')[4],
+              schema_name: item.schemaId?.split(':')[2],
             },
           ],
           name: item.predicates?.name,

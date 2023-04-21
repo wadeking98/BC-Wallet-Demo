@@ -38,10 +38,12 @@ export class UseCaseController {
         issueCredentials: section.issueCredentials?.map((x) => ({
           ...x,
           credentialDefinitionId: this.service.getCredentialDefinitionIdByTag(x.name),
+          schemaId: this.service.getSchemaIdByTag(x.name),
         })),
         requestedCredentials: section.requestedCredentials?.map((x) => ({
           ...x,
           credentialDefinitionId: this.service.getCredentialDefinitionIdByTag(x.name),
+          schemaId: this.service.getSchemaIdByTag(x.name),
         })),
       })
     })

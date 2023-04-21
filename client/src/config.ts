@@ -1,7 +1,7 @@
 export const revocationDescription: {
   [key: string]: { title: string; description: string; credentialName: string; credentialIcon: string } | undefined
 } = {
-  'Member Card': {
+  member_card: {
     credentialName: 'Member Card',
     credentialIcon: '/public/lawyer2/icon-lawyer2.svg',
     title: 'Revoke your LSBC Member Card',

@@ -1,5 +1,6 @@
 import type { RequestedCredential } from '../../../slices/types'
 
+import { startCase } from 'lodash'
 import React from 'react'
 
 import { prependApiUrl } from '../../../utils/Url'
@@ -16,7 +17,7 @@ export const ProofCard: React.FC<Props> = ({ requestedItems }) => {
           <img className="h-8 m-auto" src={prependApiUrl(item.icon)} alt="icon" />
         </div>
         <div className="flex-1 px-4 justify-self-start dark:text-white">
-          <p>{item.name}</p>
+          <p>{startCase(item.name)}</p>
         </div>
       </div>
     )

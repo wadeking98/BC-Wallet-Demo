@@ -1,6 +1,7 @@
 import type { CredentialData } from '../../../slices/types'
 
 import { motion } from 'framer-motion'
+import { startCase } from 'lodash'
 import React from 'react'
 
 import { fadeX } from '../../../FramerAnimations'
@@ -32,7 +33,7 @@ export const Credential: React.FC<Props> = ({ title, credential, data }) => {
           <img className="h-8 m-auto" src={prependApiUrl(data.icon)} alt="icon" />
         </div>
         <div className="flex-1 px-4 justify-self-start dark:text-white">
-          <p>{data.name}</p>
+          <p>{startCase(data.name)}</p>
         </div>
         <StateIndicator completed={credentialIssued} />
       </div>

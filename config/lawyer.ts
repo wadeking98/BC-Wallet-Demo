@@ -92,7 +92,7 @@ export const Lawyer: Character = {
     },
     [LawyerProgress.ACCEPT_LSBC]: {
       id: uuid(),
-      name: 'Member Card',
+      name: 'member_card',
       icon: '/public/lawyer2/icon-lawyer2.svg',
       attributes: [
         { name: 'Member Status', value: 'Active' },
@@ -164,7 +164,7 @@ export const LawyerUseCase: UseCase = {
       requestedCredentials: [
         {
           id: uuid(),
-          name: 'Member Card',
+          name: 'member_card',
           icon: '/public/lawyer2/icon-lawyer2.svg',
           properties: ['Given Name', 'Surname', 'PPID'],
         },
