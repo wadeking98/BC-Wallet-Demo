@@ -14,13 +14,8 @@ Edit the .env files to match your project needs
   
 
 ### Option 1 - Native
-These steps assume you have nvm, yarn and indy-sdk installed before running.
-Instructions for installing indy-sdk can be found here: https://github.com/hyperledger/indy-sdk#installing-the-sdk
-
+Please make sure you have a recent version of node, npm, and yarn installed
 These steps are executed from the root folder of the project:
-> nvm install v16.8.0  
-  
-> nvm use  
   
 > yarn install  
   
@@ -40,10 +35,10 @@ Build the server:
 > docker build -t bc-wallet-demo-server . -f DockerfileServer  
   
 Start the server:
-> docker run --name bc-wallet-demo-server -p5000:5000 -p5001:5001 --env-file server/.env bc-wallet-demo-server  
+> docker run --name bc-wallet-demo-server -p5000:5000 --rm --env-file server/.env bc-wallet-demo-server  
   
 Start the client:
-> docker run --name bc-wallet-demo-client -p3000:3000 --env-file client/.env bc-wallet-demo-client
+> docker run --name bc-wallet-demo-client -p3000:3000 -v \`pwd\`/Caddyfile:/etc/caddy/Caddyfile --rm --env-file client/.env bc-wallet-demo-client
 
 The application will now be running at http://localhost:3000
 
@@ -53,7 +48,7 @@ The application will now be running at http://localhost:3000
 
 Please see the [Contributions Guide](CONTRIBUTING.md) for the repo.
 
-Before contributing please run `npm run lint` and fix any linter warnings in your code contribution.
+Before contributing please run `yarn lint --fix` and fix any linter warnings in your code contribution.
 
 You may also create an issue if you would like to suggest additional resources to include in this repository.
 
