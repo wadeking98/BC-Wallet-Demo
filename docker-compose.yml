@@ -1,0 +1,8 @@
+version: "3.9"
+services:
+  frontend:
+    image: bc-wallet-demo-web
+    build: ./client
+  backend:
+    image: bc-wallet-demo-server
+    build: ./server
