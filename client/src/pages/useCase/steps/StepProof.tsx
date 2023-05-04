@@ -100,6 +100,13 @@ export const StepProof: React.FC<Props> = ({ proof, step, connectionId, requeste
     !proofReceived ? 1000 : null
   )
 
+  // remove proof record after we're done with it
+  useEffect(() => {
+    if (proofReceived) {
+      dispatch(deleteProofById(proof?.id))
+    }
+  }, [proofReceived])
+
   const sendNewRequest = () => {
     if (!proofReceived && proof) {
       dispatch(deleteProofById(proof?.id))
