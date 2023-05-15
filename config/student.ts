@@ -59,7 +59,7 @@ export const Student: Character = {
     },
   },
   onboardingEntity: {
-    name: 'BestBC College',
+    name: 'BestBC College (Demo)',
     icon: '#',
     imageUrl: '/public/student/connection/best-bc-logo.png',
     imageFromBackend: true,
@@ -104,7 +104,7 @@ export const OnlineStore: UseCase = {
     {
       id: uuid(),
       entity: {
-        name: 'Cool Clothes Online',
+        name: 'Cool Clothes Online (Demo)',
         icon: `${URL}/logo-university.png`,
         imageUrl: 'https://i.imgur.com/KPrshWf.png',
       },
@@ -208,7 +208,7 @@ export const StudyRoom: UseCase = {
     {
       id: uuid(),
       entity: {
-        name: 'BestBC College',
+        name: 'BestBC College (Demo)',
         icon: `${URLschool}/logo-university.png`,
         imageUrl: '/public/student/connection/best-bc-logo.png',
         imageFromBackend: true,
