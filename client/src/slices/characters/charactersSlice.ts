@@ -1,4 +1,4 @@
-import type { Character } from '../types'
+import type { Character, CustomCharacter } from '../types'
 import type { PayloadAction } from '@reduxjs/toolkit'
 
 import { createSlice } from '@reduxjs/toolkit'
@@ -6,8 +6,8 @@ import { createSlice } from '@reduxjs/toolkit'
 import { fetchAllCharacters, fetchCharacterById } from './charactersThunks'
 
 interface CharactersState {
-  characters: Character[]
-  currentCharacter?: Character
+  characters: CustomCharacter[]
+  currentCharacter?: CustomCharacter
   isLoading: boolean
 }
 
@@ -21,7 +21,7 @@ const characterSlice = createSlice({
   name: 'character',
   initialState,
   reducers: {
-    setCharacter: (state, action: PayloadAction<Character>) => {
+    setCharacter: (state, action: PayloadAction<CustomCharacter>) => {
       state.currentCharacter = action.payload
     },
     removeCharacter: (state) => {

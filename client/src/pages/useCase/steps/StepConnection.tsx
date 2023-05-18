@@ -23,10 +23,9 @@ import { StepInfo } from '../components/StepInfo'
 export interface Props {
   step: Step
   connection: ConnectionState
-  entity: Entity
 }
 
-export const StepConnection: React.FC<Props> = ({ step, connection, entity }) => {
+export const StepConnection: React.FC<Props> = ({ step, connection }) => {
   const dispatch = useAppDispatch()
   const { id, state, invitationUrl } = connection
   const isCompleted = isConnected(state as string)
@@ -34,7 +33,7 @@ export const StepConnection: React.FC<Props> = ({ step, connection, entity }) =>
   const isMobile = useMediaQuery({ query: '(max-width: 768px)' })
 
   useEffect(() => {
-    if (!isCompleted) dispatch(createInvitation(entity))
+    if (!isCompleted) dispatch(createInvitation('TEST_ENTITY'))
   }, [])
 
   useInterval(

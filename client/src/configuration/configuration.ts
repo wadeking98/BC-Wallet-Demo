@@ -1,8 +1,5 @@
-import type { Character, Configuration } from '../slices/types'
+import type { Character, Configuration, CustomCharacter } from '../slices/types'
 
-import { OnboardingContainer as OnboardingContainerJoyce } from '../customComponents/joyce/onboarding/OnboardingContainer'
-import { Stepper as StepperJoyce } from '../customComponents/joyce/onboarding/components/Stepper'
-import { StepperItems as StepperItemsJoyce } from '../customComponents/joyce/onboardingUtils/OnboardingUtils'
 import { OnboardingContainer } from '../pages/onboarding/OnboardingContainer'
 import { Stepper } from '../pages/onboarding/components/Stepper'
 import {
@@ -21,15 +18,15 @@ const defaultConfigurations: Configuration = {
 const configurations: Record<string, Configuration> = {
   lawyer: {
     ...defaultConfigurations,
-    DashboardHeader: StepperJoyce,
-    Stepper: StepperJoyce,
-    OnboardingContainer: OnboardingContainerJoyce,
-    OnboardingComplete: OnboardingCompleteJoyce,
-    StepperItems: StepperItemsJoyce,
+    DashboardHeader: () => null,
+    Stepper: Stepper,
+    OnboardingContainer: OnboardingContainer,
+    OnboardingComplete: OnboardingComplete,
+    StepperItems: StepperItems,
   },
 }
 
-export const getConfiguration = (currentCharacter?: Character): Configuration => {
+export const getConfiguration = (currentCharacter?: CustomCharacter): Configuration => {
   if (currentCharacter) {
     const config = configurations[currentCharacter.type.toLowerCase()]
     return config ?? defaultConfigurations

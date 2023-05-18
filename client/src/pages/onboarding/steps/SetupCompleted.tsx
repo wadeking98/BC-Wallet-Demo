@@ -6,17 +6,16 @@ import React from 'react'
 import { fadeX } from '../../../FramerAnimations'
 
 export interface Props {
-  content: Content
+  title: string
+  text: string
   characterName: string
   credName: string
 }
 
-export const SetupCompleted: React.FC<Props> = ({ content, characterName, credName }) => {
-  const lastIndex = content.title.lastIndexOf(' ')
-  const lastWord = (
-    <p className="inline text-bcgov-blue dark:text-bcgov-gold">{content.title.substring(lastIndex + 1)}</p>
-  )
-  const newTitle = content.title.substring(0, lastIndex)
+export const SetupCompleted: React.FC<Props> = ({ title, text, characterName, credName }) => {
+  const lastIndex = title.lastIndexOf(' ')
+  const lastWord = <p className="inline text-bcgov-blue dark:text-bcgov-gold">{title.substring(lastIndex + 1)}</p>
+  const newTitle = title.substring(0, lastIndex)
 
   return (
     <motion.div className="h-full" variants={fadeX} initial="hidden" animate="show" exit="exit">

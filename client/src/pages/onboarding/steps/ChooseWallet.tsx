@@ -1,5 +1,4 @@
 import type { Wallet } from '../../../slices/types'
-import type { Content } from '../../../utils/OnboardingUtils'
 
 import { AnimatePresence, motion } from 'framer-motion'
 import React, { useState } from 'react'
@@ -12,11 +11,12 @@ import { WalletItem } from '../components/WalletItem'
 import { WalletModal } from '../components/WalletModal'
 
 export interface Props {
-  content: Content
+  title: string
+  text: string
   addOnboardingProgress(): void
 }
 
-export const ChooseWallet: React.FC<Props> = ({ content, addOnboardingProgress }) => {
+export const ChooseWallet: React.FC<Props> = ({ title, text, addOnboardingProgress }) => {
   const { wallets } = useWallets()
 
   const [isChooseWalletModalOpen, setIsChooseWalletModalOpen] = useState(false)
@@ -54,7 +54,7 @@ export const ChooseWallet: React.FC<Props> = ({ content, addOnboardingProgress }
 
   return (
     <motion.div variants={fadeX} initial="hidden" animate="show" exit="exit">
-      <StepInformation title={content.title} text={content.text} />
+      <StepInformation title={title} text={text} />
       <motion.div
         className="flex flex-col md:px-4 h-full max-h-96 overflow-x-hidden"
         variants={rowContainer}

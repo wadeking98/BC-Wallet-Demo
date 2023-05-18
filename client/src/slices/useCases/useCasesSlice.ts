@@ -2,7 +2,7 @@ import type { UseCase } from '../types'
 
 import { createSlice } from '@reduxjs/toolkit'
 
-import { fetchUseCaseBySlug, fetchAllUseCasesByCharId } from './useCasesThunks'
+import { fetchUseCaseBySlug, fetchAllUseCasesByCharType } from './useCasesThunks'
 
 interface UseCaseState {
   useCases: UseCase[]
@@ -43,10 +43,10 @@ const useCaseSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchAllUseCasesByCharId.pending, (state) => {
+      .addCase(fetchAllUseCasesByCharType.pending, (state) => {
         state.isLoading = true
       })
-      .addCase(fetchAllUseCasesByCharId.fulfilled, (state, action) => {
+      .addCase(fetchAllUseCasesByCharType.fulfilled, (state, action) => {
         state.isLoading = false
         state.useCases = action.payload
       })

@@ -1,6 +1,6 @@
 import type { CharWithUseCases } from '../types'
 
-import { Student, OnlineStore, StudyRoom } from '../../../../config/student'
+import { Student, OnlineStore, StudyRoom } from '../../../config/student'
 
 export const StudentUseCases: CharWithUseCases = {
   characterId: Student.id,

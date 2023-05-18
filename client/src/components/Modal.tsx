@@ -8,11 +8,13 @@ import { SmallButtonText } from './SmallButtonText'
 export interface Props {
   onOk(): void
   onCancel?(): void
+  okDisabled?: boolean
+  okText?: string
   title: string
   description: string
 }
 
-export const Modal: React.FC<Props> = ({ onOk, onCancel, title, description }) => {
+export const Modal: React.FC<Props> = ({ onOk, onCancel, title, description, okDisabled, okText, children }) => {
   return (
     <AnimatePresence>
       <motion.div
@@ -45,8 +47,9 @@ export const Modal: React.FC<Props> = ({ onOk, onCancel, title, description }) =
                 </div>
               </div>
             </div>
+            <div className="m-8">{children}</div>
             <div className="p-4 pb-4 sm:px-6 flex flex-row-reverse">
-              <SmallButton onClick={onOk} text={'OK'} disabled={false} />
+              <SmallButton onClick={onOk} text={okText ?? 'OK'} disabled={okDisabled} />
               {onCancel && <SmallButtonText onClick={onCancel} text={'CANCEL'} disabled={false} />}
             </div>
           </motion.div>

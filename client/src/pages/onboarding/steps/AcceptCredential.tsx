@@ -1,4 +1,5 @@
-import type { Character, CredentialData } from '../../../slices/types'
+/* eslint-disable */
+import type { Character, Credential, CredentialData, CustomCharacter } from '../../../slices/types'
 import type { Content } from '../../../utils/OnboardingUtils'
 
 import { AnimatePresence, motion } from 'framer-motion'
@@ -27,21 +28,17 @@ import { StarterCredentials } from '../components/StarterCredentials'
 import { StepInformation } from '../components/StepInformation'
 
 export interface Props {
-  content?: Content
   connectionId: string
-  credentials: any[]
-  currentCharacter: Character
-  credSelection: number[]
+  credentials: Credential[]
+  currentCharacter?: CustomCharacter
   title: string
   text: string
 }
 
 export const AcceptCredential: React.FC<Props> = ({
-  content,
   connectionId,
   credentials,
   currentCharacter,
-  credSelection,
   title,
   text,
 }) => {
@@ -60,17 +57,19 @@ export const AcceptCredential: React.FC<Props> = ({
   const showFailedRequestModal = () => setIsFailedRequestModalOpen(true)
   const closeFailedRequestModal = () => setIsFailedRequestModalOpen(false)
 
+  const fetchCredData = (cred: Credential) => {
+    //TODO
+  }
+
   const getCharacterCreds = (): CredentialData[] => {
     const creds: CredentialData[] = []
-    credSelection.forEach((item) => {
-      if (currentCharacter.starterCredentials[item]) {
-        creds.push(currentCharacter.starterCredentials[item])
-      }
+    credentials.forEach((item) => {
+      // creds.push(fetchCredData(item.name))
     })
     return creds
   }
 
-  const credentialsAccepted = Object.values(credentials).every((x) => isCredIssued(x.state))
+  const credentialsAccepted = false //Object.values(credentials).every((x) => isCredIssued(x.state))
 
   useEffect(() => {
     if (credentials.length === 0) {
@@ -88,7 +87,7 @@ export const AcceptCredential: React.FC<Props> = ({
       })
       setCredentialsIssued(true)
     }
-  }, [currentCharacter.starterCredentials, connectionId])
+  }, [currentCharacter, connectionId])
 
   const handleCredentialTimeout = () => {
     if (!isIssueCredentialLoading || !error) return
@@ -129,21 +128,21 @@ export const AcceptCredential: React.FC<Props> = ({
   }
 
   const sendNewCredentials = () => {
-    credentials.forEach((cred) => {
-      if (!isCredIssued(cred.state)) {
-        dispatch(deleteCredentialById(cred.credential_exchange_id))
-        const newCredential = getCharacterCreds().find((item) => {
-          return item?.credentialDefinitionId === cred.credential_offer.cred_def_id
-        })
-        if (newCredential) dispatch(issueCredential({ connectionId: connectionId, cred: newCredential }))
-      }
-    })
+    // credentials.forEach((cred) => {
+    //   if (!isCredIssued(cred.state)) {
+    //     dispatch(deleteCredentialById(cred.credential_exchange_id))
+    //     const newCredential = getCharacterCreds().find((item) => {
+    //       return item?.credentialDefinitionId === cred.credential_offer.cred_def_id
+    //     })
+    //     if (newCredential) dispatch(issueCredential({ connectionId: connectionId, cred: newCredential }))
+    //   }
+    // })
     closeFailedRequestModal()
   }
 
   return (
     <motion.div className="flex flex-col h-full" variants={fadeX} initial="hidden" animate="show" exit="exit">
-      <StepInformation title={title ?? content?.title} text={text ?? content?.text} />
+      <StepInformation title={title} text={text} />
       <div className="flex flex-row m-auto content-center">
         {getCharacterCreds().length === credentials.length ? (
           <AnimatePresence exitBeforeEnter>

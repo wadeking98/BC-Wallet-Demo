@@ -27,6 +27,66 @@ export interface Character {
   additionalEntity?: Entity
 }
 
+export interface Credential {
+  name: string
+  icon: string
+  attributes: {
+    name: string
+    value: string
+  }[]
+}
+
+export interface OnboardingStep {
+  screenId: string
+  title: string
+  text: string
+  image?: string
+  issuer_name?: string
+  credentials?: Credential[]
+}
+
+export interface UseCaseScreen {
+  screenId: string
+  title: string
+  text: string
+  image?: string
+  requestOptions?: {
+    title: string
+    text: string
+    requestedCredentials: {
+      name: string
+      predicates?: {
+        name: string
+        type: string
+        value: string
+      }[]
+      properties?: string[]
+    }[]
+  }
+}
+
+export interface CustomUseCase {
+  id: string
+  name: string
+  screens: UseCaseScreen[]
+}
+
+export interface ProgressBarStep {
+  name: string
+  onboardingStep: string
+  iconLight: string
+  iconDark: string
+}
+
+export interface CustomCharacter {
+  name: string
+  type: string
+  image: string
+  progressBar: ProgressBarStep[]
+  onboarding: OnboardingStep[]
+  useCases: CustomUseCase[]
+}
+
 export interface UseCase {
   slug: string
   card: UseCaseCard

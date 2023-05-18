@@ -195,7 +195,7 @@ export const Section: React.FC<Props> = ({
               <AnimatePresence initial={false} exitBeforeEnter onExitComplete={() => null}>
                 {step.type === StepType.INFO && <StepInformation key={step.id} step={step} />}
                 {step.type === StepType.CONNECTION && (
-                  <StepConnection key={step.id} step={step} connection={connection} entity={section.entity} />
+                  <StepConnection key={step.id} step={step} connection={connection} />
                 )}
                 {step.type === StepType.CREDENTIAL && connection.id && section.issueCredentials && (
                   <StepCredential

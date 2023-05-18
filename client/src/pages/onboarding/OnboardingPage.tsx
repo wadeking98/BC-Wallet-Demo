@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { AnimatePresence, motion } from 'framer-motion'
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
@@ -15,9 +16,11 @@ import { useCredentials } from '../../slices/credentials/credentialsSelectors'
 import { clearCredentials } from '../../slices/credentials/credentialsSlice'
 import { useOnboarding } from '../../slices/onboarding/onboardingSelectors'
 import { completeOnboarding } from '../../slices/onboarding/onboardingSlice'
-import { fetchAllUseCasesByCharId } from '../../slices/useCases/useCasesThunks'
+import { fetchAllUseCasesByCharType } from '../../slices/useCases/useCasesThunks'
 import { fetchWallets } from '../../slices/wallets/walletsThunks'
 import { basePath } from '../../utils/BasePath'
+import { CustomUpload } from '../../components/CustomUpload'
+import { usePreferences } from '../../slices/preferences/preferencesSelectors'
 
 export const OnboardingPage: React.FC = () => {
   useTitle('Get Started | BC Wallet Self-Sovereign Identity Demo')
@@ -31,7 +34,8 @@ export const OnboardingPage: React.FC = () => {
 
   const { onboardingStep, isCompleted } = useOnboarding()
   const { state, invitationUrl, id } = useConnection()
-  const { credentials } = useCredentials()
+  const { issuedCredentials } = useCredentials()
+  const { characterUploadEnabled } = usePreferences()
 
   const [mounted, setMounted] = useState(false)
 
@@ -40,7 +44,7 @@ export const OnboardingPage: React.FC = () => {
       dispatch(completeOnboarding())
       dispatch(clearCredentials())
       dispatch(clearConnection())
-      dispatch(fetchAllUseCasesByCharId(currentCharacter.id))
+      dispatch(fetchAllUseCasesByCharType(currentCharacter.type))
       navigate(`${basePath}/dashboard`)
     } else {
       dispatch({ type: 'demo/RESET' })
@@ -50,28 +54,33 @@ export const OnboardingPage: React.FC = () => {
     }
   }, [dispatch])
 
+  useEffect(()=>{ console.log(onboardingStep)}, [onboardingStep])
+
   return (
-    <motion.div
-      variants={page}
-      initial="hidden"
-      animate="show"
-      exit="exit"
-      className="container flex flex-col items-center p-4"
-    >
-      <Stepper steps={StepperItems} onboardingStep={onboardingStep} />
-      <AnimatePresence exitBeforeEnter>
-        {mounted && (
-          <OnboardingContainer
-            characters={characters}
-            currentCharacter={currentCharacter}
-            onboardingStep={onboardingStep}
-            connectionId={id}
-            connectionState={state}
-            invitationUrl={invitationUrl}
-            credentials={credentials}
-          />
-        )}
-      </AnimatePresence>
-    </motion.div>
+    <>
+      {characterUploadEnabled && <CustomUpload/>}
+      <motion.div
+        variants={page}
+        initial="hidden"
+        animate="show"
+        exit="exit"
+        className="container flex flex-col items-center p-4"
+      >
+        <Stepper steps={StepperItems} onboardingStep={onboardingStep} />
+        <AnimatePresence exitBeforeEnter>
+          {mounted && (
+            <OnboardingContainer
+              characters={characters}
+              currentCharacter={currentCharacter}
+              onboardingStep={onboardingStep}
+              connectionId={id}
+              connectionState={state}
+              invitationUrl={invitationUrl}
+              credentials={issuedCredentials}
+            />
+          )}
+        </AnimatePresence>
+      </motion.div>
+    </>
   )
 }

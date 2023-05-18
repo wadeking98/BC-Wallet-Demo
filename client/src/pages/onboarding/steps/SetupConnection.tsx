@@ -1,4 +1,4 @@
-import type { Character, CredentialData, Entity } from '../../../slices/types'
+import type { Character, CredentialData, CustomCharacter, Entity } from '../../../slices/types'
 import type { Content } from '../../../utils/OnboardingUtils'
 
 import { motion } from 'framer-motion'
@@ -20,15 +20,14 @@ import { clearCredentials } from '../../../slices/credentials/credentialsSlice'
 import { useOnboarding } from '../../../slices/onboarding/onboardingSelectors'
 import { completeOnboarding, setOnboardingConnectionId } from '../../../slices/onboarding/onboardingSlice'
 import { setConnectionDate } from '../../../slices/preferences/preferencesSlice'
-import { fetchAllUseCasesByCharId } from '../../../slices/useCases/useCasesThunks'
+import { fetchAllUseCasesByCharType } from '../../../slices/useCases/useCasesThunks'
 import { basePath } from '../../../utils/BasePath'
 import { isConnected } from '../../../utils/Helpers'
 import { prependApiUrl } from '../../../utils/Url'
 import { StepInformation } from '../components/StepInformation'
 
 export interface Props {
-  content?: Content
-  currentCharacter: Character
+  currentCharacter: CustomCharacter
   connectionId?: string
   skipIssuance(): void
   nextSlide(): void
@@ -36,7 +35,7 @@ export interface Props {
   connectionState?: string
   newConnection?: boolean
   disableSkipConnection?: boolean
-  customIssuer?: Entity
+  issuerName: string
   title: string
   text: string
   backgroundImage?: string
@@ -44,7 +43,6 @@ export interface Props {
 }
 
 export const SetupConnection: React.FC<Props> = ({
-  content,
   currentCharacter,
   connectionId,
   skipIssuance,
@@ -54,7 +52,7 @@ export const SetupConnection: React.FC<Props> = ({
   invitationUrl,
   connectionState,
   newConnection,
-  customIssuer,
+  issuerName,
   disableSkipConnection,
   backgroundImage,
   onboardingText,
@@ -70,7 +68,7 @@ export const SetupConnection: React.FC<Props> = ({
       dispatch(clearCredentials())
       dispatch(clearConnection())
       dispatch(completeOnboarding())
-      dispatch(fetchAllUseCasesByCharId(currentCharacter.id))
+      dispatch(fetchAllUseCasesByCharType(currentCharacter.type))
     } else {
       // something went wrong so reset
       navigate(`${basePath}/`)
@@ -81,7 +79,7 @@ export const SetupConnection: React.FC<Props> = ({
 
   useEffect(() => {
     if (!isCompleted || newConnection) {
-      dispatch(createInvitation(customIssuer ?? currentCharacter?.onboardingEntity))
+      dispatch(createInvitation(issuerName))
       dispatch(clearCredentials())
     }
   }, [])
@@ -120,19 +118,17 @@ export const SetupConnection: React.FC<Props> = ({
   }
   const renderCTA = !isCompleted ? (
     <motion.div variants={fade} key="openWallet">
-      {currentCharacter.starterCredentials && (
-        <>
-          <p>
-            Scan the QR-code with your <a href={deepLink}>wallet {(isMobile || isTablet) && 'or'} </a>
-          </p>
-          {(isMobile || isTablet) && (
-            <a onClick={handleDeepLink} className="underline underline-offset-2 mt-2">
-              open in wallet
-              <FiExternalLink className="inline pb-1" />
-            </a>
-          )}
-        </>
-      )}
+      <>
+        <p>
+          Scan the QR-code with your <a href={deepLink}>wallet {(isMobile || isTablet) && 'or'} </a>
+        </p>
+        {(isMobile || isTablet) && (
+          <a onClick={handleDeepLink} className="underline underline-offset-2 mt-2">
+            open in wallet
+            <FiExternalLink className="inline pb-1" />
+          </a>
+        )}
+      </>
       {!disableSkipConnection && (
         <div className="my-5">
           <Button text="I Already Have my Credential" onClick={skipIssuance}></Button>
@@ -153,12 +149,10 @@ export const SetupConnection: React.FC<Props> = ({
       animate="show"
       exit="exit"
     >
-      <StepInformation title={title ?? content?.title} text={text ?? content?.text} />
-      {currentCharacter.starterCredentials && (
-        <div className="max-w-xs flex flex-col self-center items-center bg-white rounded-lg p-4  dark:text-black">
-          {renderQRCode(true)}
-        </div>
-      )}
+      <StepInformation title={title} text={text} />
+      <div className="max-w-xs flex flex-col self-center items-center bg-white rounded-lg p-4  dark:text-black">
+        {renderQRCode(true)}
+      </div>
       <div className="flex flex-col mt-4 text-center text-sm md:text-base font-semibold">{renderCTA}</div>
     </motion.div>
   ) : (
@@ -169,7 +163,7 @@ export const SetupConnection: React.FC<Props> = ({
       animate="show"
       exit="exit"
     >
-      <StepInformation title={title ?? content?.title} text={text ?? content?.text} />
+      <StepInformation title={title} text={text} />
       <div
         className="bg-contain position-relative bg-center bg-no-repeat h-full flex justify-center"
         style={{ backgroundImage: `url(${prependApiUrl(backgroundImage as string)})` }}

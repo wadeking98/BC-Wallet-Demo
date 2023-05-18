@@ -1,4 +1,4 @@
-import type { Character } from '../../../slices/types'
+import type { Character, CustomCharacter } from '../../../slices/types'
 
 import { motion } from 'framer-motion'
 import React, { useState } from 'react'
@@ -11,7 +11,7 @@ import { basePath } from '../../../utils/BasePath'
 import { prependApiUrl } from '../../../utils/Url'
 
 export interface Props {
-  currentCharacter: Character
+  currentCharacter: CustomCharacter
 }
 
 export const ProfileCard: React.FC<Props> = ({ currentCharacter }) => {
@@ -36,12 +36,14 @@ export const ProfileCard: React.FC<Props> = ({ currentCharacter }) => {
         <motion.img
           whileHover={{ scale: 1.05 }}
           className="m-auto h-32 w-32 md:h-36 md:w-36 p-4 rounded-full bg-bcgov-white dark:bg-bcgov-black ring-2 ring-white mb-4 shadow"
-          src={prependApiUrl(currentCharacter.starterCredentials[0]?.icon ?? currentCharacter.image)}
+          src={prependApiUrl(currentCharacter.image)}
           alt={currentCharacter.name}
         />
 
         <h1 className="font-bold text-lg flex flex-1 justify-center mb-4">{currentCharacter.name}</h1>
-        <p className="text-sm xl:text-base">{currentCharacter.backstory}</p>
+        <p className="text-sm xl:text-base">
+          {currentCharacter?.onboarding.find((screen) => screen.screenId === 'PICK_CHARACTER')?.text}
+        </p>
         <div className="flex flex-1 items-end justify-end mt-2">
           <SmallButtonText text="LEAVE" onClick={() => setIsChangeModalOpen(true)} disabled={false} />
         </div>

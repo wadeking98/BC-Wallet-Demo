@@ -32,7 +32,7 @@ export const UseCasePage: React.FC = () => {
   const currentCharacter = useCurrentCharacter()
   const { section } = useSection()
   const connection = useConnection()
-  const { credentials } = useCredentials()
+  const { issuedCredentials } = useCredentials()
   const { proof, proofUrl } = useProof()
   const { DashboardHeader, StepperItems } = getConfiguration(currentCharacter)
 
@@ -108,7 +108,7 @@ export const UseCasePage: React.FC = () => {
                 stepper={currentUseCase.stepper}
                 sectionCount={sectionCount}
                 stepCount={stepCount}
-                credentials={credentials}
+                credentials={issuedCredentials}
                 proof={proof}
                 proofUrl={proofUrl}
               />

@@ -2,7 +2,7 @@ export interface Configuration {
   DashboardHeader: React.FC<any>
   Stepper: React.FC<any>
   OnboardingContainer: React.FC<any>
-  OnboardingComplete: (onboardingStep: number) => boolean
+  OnboardingComplete: (onboardingStep: string) => boolean
   StepperItems: any[]
 }
 
@@ -52,6 +52,66 @@ export interface Character {
   starterCredentials: Record<number, CredentialData>
   onboardingEntity?: Entity
   additionalEntity?: Entity
+}
+
+export interface Credential {
+  name: string
+  icon: string
+  attributes: {
+    name: string
+    value: string
+  }[]
+}
+
+export interface OnboardingStep {
+  screenId: string
+  title: string
+  text: string
+  issuer_name?: string
+  image?: string
+  credentials?: Credential[]
+}
+
+export interface UseCaseScreen {
+  screenId: string
+  title: string
+  text: string
+  image?: string
+  requestOptions?: {
+    title: string
+    text: string
+    requestedCredentials: {
+      name: string
+      predicates?: {
+        name: string
+        type: string
+        value: string
+      }[]
+      properties?: string[]
+    }[]
+  }
+}
+
+export interface CustomUseCase {
+  id: string
+  name: string
+  screens: UseCaseScreen[]
+}
+
+export interface ProgressBarStep {
+  name: string
+  onboardingStep: string
+  iconLight: string
+  iconDark: string
+}
+
+export interface CustomCharacter {
+  name: string
+  type: string
+  image: string
+  progressBar: ProgressBarStep[]
+  onboarding: OnboardingStep[]
+  useCases: CustomUseCase[]
 }
 
 export interface UseCase {

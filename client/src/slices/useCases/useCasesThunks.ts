@@ -2,8 +2,8 @@ import { createAsyncThunk } from '@reduxjs/toolkit'
 
 import * as Api from '../../api/UseCaseApi'
 
-export const fetchAllUseCasesByCharId = createAsyncThunk('useCases/fetchAllByCharId', async (characterId: string) => {
-  const response = await Api.getUseCasesByCharId(characterId)
+export const fetchAllUseCasesByCharType = createAsyncThunk('useCases/fetchAllByCharId', async (type: string) => {
+  const response = await Api.getUseCasesByCharType(type)
   return response.data
 })
 

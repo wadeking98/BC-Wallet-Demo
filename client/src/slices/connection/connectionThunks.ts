@@ -10,10 +10,7 @@ export const fetchConnectionById = createAsyncThunk('connection/fetchById', asyn
   return response.data
 })
 
-export const createInvitation = createAsyncThunk('connection/createInvitation', async (entity?: Entity) => {
-  const response = await Api.createInvitation(
-    entity?.name,
-    entity?.imageFromBackend ? prependApiUrl(entity?.imageUrl ?? '') : entity?.imageUrl
-  )
+export const createInvitation = createAsyncThunk('connection/createInvitation', async (issuer?: string) => {
+  const response = await Api.createInvitation(issuer, '')
   return response.data
 })
