@@ -1,4 +1,5 @@
-import type { CredentialData } from '../../../slices/types'
+/* eslint-disable */
+import type { Credential, CredentialData } from '../../../slices/types'
 
 import { motion } from 'framer-motion'
 import { startCase } from 'lodash'
@@ -8,13 +9,15 @@ import { fadeX } from '../../../FramerAnimations'
 import { StateIndicator } from '../../../components/StateIndicator'
 import { isCredIssued } from '../../../utils/Helpers'
 import { prependApiUrl } from '../../../utils/Url'
+import { useCredentials } from '../../../slices/credentials/credentialsSelectors'
 
 export interface Props {
-  credentialData: CredentialData[]
-  credentials: any[]
+  credentials: Credential[]
 }
 
-export const StarterCredentials: React.FC<Props> = ({ credentialData, credentials }) => {
+export const StarterCredentials: React.FC<Props> = ({ credentials }) => {
+  const {issuedCredentials } = useCredentials()
+
   return (
     <motion.div
       variants={fadeX}
@@ -26,13 +29,11 @@ export const StarterCredentials: React.FC<Props> = ({ credentialData, credential
         <h1 className="font-semibold dark:text-white">Starter credentials</h1>
         <hr className="text-bcgov-lightgrey" />
       </div>
-      {credentialData.map((item) => {
-        const state = credentials.find((x) => x.credential_definition_id === item.credentialDefinitionId)?.state
-
-        const completed = isCredIssued(state)
+      {credentials.map((item) => {
+        const completed = issuedCredentials.includes(item.name)
 
         return (
-          <div key={item.id} className="flex-1 flex flex-row items-center justify-between my-2">
+          <div key={item.name} className="flex-1 flex flex-row items-center justify-between my-2">
             <div className="bg-bcgov-lightgrey rounded-lg p-2 w-12">
               <img className="h-8 m-auto" src={prependApiUrl(item.icon)} alt="icon" />
             </div>

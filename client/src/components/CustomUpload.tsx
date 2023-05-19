@@ -13,7 +13,6 @@ export const CustomUpload: React.FC = () => {
 
     const onChangeHandler = (event: any) => {
         setUploadFile(event.target.files[0])
-        console.log(event)
     }
 
     const onSubmitHandler = () => {

@@ -58,16 +58,17 @@ export const studentCustom: CustomCharacter = {
       title: 'Connect with BestBC College',
       text: 'Imagine, as Alice, you are logged into the BestBC College website (see below). They want to offer you a Digital Student Card. Use your BC Wallet to scan the QR code from the website.',
       image: '/public/student/onboarding-connect-light.svg',
+      issuer_name: 'BestBC College',
     },
     {
       screenId: 'ACCEPT_CREDENTIAL',
       title: 'Accept your student card',
       text: "Your wallet now has a secure and private connection with BestBC College. You should have received an offer in BC Wallet for a Student Card.\nReview what they are sending, and choose 'Accept offer'.",
-      image: '../assets/light/onboarding-credential-light.svg',
-      issuer_name: 'BestBC College',
+      image: '/public/common/onboarding-credential-light.svg',
       credentials: [
         {
           name: 'student_card',
+          version: '1.0',
           icon: '/public/student/icon-student.svg',
           attributes: [
             {
@@ -90,7 +91,7 @@ export const studentCustom: CustomCharacter = {
       screenId: 'SETUP_COMPLETED',
       title: "You're all set!",
       text: 'Congratulations, you’ve just received your first digital credentials. They are safely stored in your wallet and ready to be used. So, what are you waiting for? Let’s go!',
-      image: '../assets/light/onboarding-completed-light.svg',
+      image: '/public/common/onboarding-completed-light.svg',
     },
   ],
   useCases: [

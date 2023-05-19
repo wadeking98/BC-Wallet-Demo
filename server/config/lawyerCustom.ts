@@ -74,6 +74,7 @@ export const lawyerCustom: CustomCharacter = {
       credentials: [
         {
           name: 'member_card',
+          version: '1.1',
           icon: '/public/lawyer2/icon-lawyer2.svg',
           attributes: [
             {
@@ -105,16 +106,17 @@ export const lawyerCustom: CustomCharacter = {
       title: 'Get Person credential',
       text: 'Joyce gets her Person credential from the BC Services Card app. She starts the process within BC Wallet. For this demo you will scan this QR code to receive the credential offer.',
       image: '/public/lawyer2/onboarding/personCredPhone.svg',
+      issuer_name: 'Service BC (Demo)',
     },
     {
       screenId: 'ACCEPT_PERSON',
       title: 'Accept your Person credential',
       text: 'Check your phone. You’ve received a credential offer from Service BC in your BC Wallet. You can use this credential to prove who you are online.',
       image: '/public/lawyer2/onboarding/personCredPhone.svg',
-      issuer_name: 'Service BC (Demo)',
       credentials: [
         {
           name: 'Person',
+          version:'1.1',
           icon: '/public/lawyer2/icon-lawyer2.svg',
           attributes: [
             {

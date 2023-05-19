@@ -26,6 +26,7 @@ import { isCredIssued } from '../../../utils/Helpers'
 import { FailedRequestModal } from '../components/FailedRequestModal'
 import { StarterCredentials } from '../components/StarterCredentials'
 import { StepInformation } from '../components/StepInformation'
+import { getOrCreateCredDefId } from '../../../api/CredentialApi'
 
 export interface Props {
   connectionId: string
@@ -50,35 +51,25 @@ export const AcceptCredential: React.FC<Props> = ({
   const [credentialsIssued, setCredentialsIssued] = useState(false)
   const [errorMsg, setErrorMsg] = useState('')
 
-  const { isIssueCredentialLoading, error } = useCredentials()
+  const { isIssueCredentialLoading, error, issuedCredentials } = useCredentials()
 
   const { isDeepLink } = useConnection()
 
   const showFailedRequestModal = () => setIsFailedRequestModalOpen(true)
   const closeFailedRequestModal = () => setIsFailedRequestModalOpen(false)
 
-  const fetchCredData = (cred: Credential) => {
-    //TODO
-  }
 
-  const getCharacterCreds = (): CredentialData[] => {
-    const creds: CredentialData[] = []
-    credentials.forEach((item) => {
-      // creds.push(fetchCredData(item.name))
-    })
-    return creds
-  }
-
-  const credentialsAccepted = false //Object.values(credentials).every((x) => isCredIssued(x.state))
+  const credentialsAccepted = credentials.every(cred => issuedCredentials.includes(cred.name))
 
   useEffect(() => {
-    if (credentials.length === 0) {
-      getCharacterCreds().forEach((item) => {
+    if (credentials.length > 0) {
+      credentials.forEach(async (item) => {
+        const credDefId = (await getOrCreateCredDefId(item)).data
         if (item !== undefined) {
           if (isDeepLink) {
-            dispatch(issueDeepCredential({ connectionId: connectionId, cred: item }))
+            dispatch(issueDeepCredential({ connectionId: connectionId, cred: item, credDefId }))
           } else {
-            dispatch(issueCredential({ connectionId: connectionId, cred: item }))
+            dispatch(issueCredential({ connectionId: connectionId, cred: item, credDefId }))
           }
           track({
             id: 'credential_issued',
@@ -144,10 +135,10 @@ export const AcceptCredential: React.FC<Props> = ({
     <motion.div className="flex flex-col h-full" variants={fadeX} initial="hidden" animate="show" exit="exit">
       <StepInformation title={title} text={text} />
       <div className="flex flex-row m-auto content-center">
-        {getCharacterCreds().length === credentials.length ? (
+        {credentials.length ? (
           <AnimatePresence exitBeforeEnter>
             <motion.div className={`flex flex-1 flex-col m-auto`} variants={fade} animate="show" exit="exit">
-              <StarterCredentials credentialData={getCharacterCreds()} credentials={credentials} />
+              <StarterCredentials credentials={credentials} />
             </motion.div>
           </AnimatePresence>
         ) : (

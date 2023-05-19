@@ -56,7 +56,7 @@ export const StepCredential: React.FC<Props> = ({ step, connectionId, issueCrede
 
     // issue credentials
     credentialData.forEach((item) => {
-      dispatch(issueCredential({ connectionId: connectionId, cred: item }))
+      // dispatch(issueCredential({ connectionId: connectionId, cred: item }))
       track({
         id: 'credential_issued',
       })
@@ -81,7 +81,7 @@ export const StepCredential: React.FC<Props> = ({ step, connectionId, issueCrede
         const newCredential = issuedCredData.find((item) => {
           return item.credentialDefinitionId === cred.credential_offer.cred_def_id
         })
-        if (newCredential) dispatch(issueCredential({ connectionId: connectionId, cred: newCredential }))
+        // if (newCredential) dispatch(issueCredential({ connectionId: connectionId, cred: newCredential }))
       }
     })
     closeFailedRequestModal()

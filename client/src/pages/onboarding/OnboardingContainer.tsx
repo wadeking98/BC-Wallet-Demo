@@ -1,5 +1,5 @@
 /* eslint-disable */
-import type { Character, CustomCharacter } from '../../slices/types'
+import type { Character, Credential, CustomCharacter } from '../../slices/types'
 
 import { AnimatePresence, motion } from 'framer-motion'
 import { Item } from 'framer-motion/types/components/Reorder/Item'
@@ -34,6 +34,7 @@ import { PickCharacter } from './steps/PickCharacter'
 import { SetupCompleted } from './steps/SetupCompleted'
 import { SetupConnection } from './steps/SetupConnection'
 import { SetupStart } from './steps/SetupStart'
+import { useCredentials } from '../../slices/credentials/credentialsSelectors'
 
 export interface Props {
   characters: CustomCharacter[]
@@ -42,7 +43,6 @@ export interface Props {
   connectionState?: string
   invitationUrl?: string
   onboardingStep: string
-  credentials: any[]
 }
 
 export const OnboardingContainer: React.FC<Props> = ({
@@ -52,19 +52,20 @@ export const OnboardingContainer: React.FC<Props> = ({
   connectionId,
   connectionState,
   invitationUrl,
-  credentials,
 }) => {
   const darkMode = useDarkMode()
   const dispatch = useAppDispatch()
+  const {issuedCredentials } = useCredentials()
 
   const connectionCompleted = isConnected(connectionState as string)
-  const credentialsAccepted = Object.values(credentials).every((x) => isCredIssued(x.state))
+  const credentials = currentCharacter?.onboarding.find(step => step.screenId === onboardingStep)?.credentials
+  const credentialsAccepted = credentials?.every(cred => issuedCredentials.includes(cred.name))
 
   const isBackDisabled = ['PICK_CHARACTER', 'ACCEPT_CREDENTIAL'].includes(onboardingStep)
   const isForwardDisabled =
     (onboardingStep.startsWith('CONNECT') && !connectionCompleted) ||
     (onboardingStep === 'ACCEPT_CREDENTIAL' && !credentialsAccepted) ||
-    (onboardingStep === 'ACCEPT_CREDENTIAL' && credentials.length === 0) ||
+    (onboardingStep === 'ACCEPT_CREDENTIAL' && credentials?.length === 0) ||
     (onboardingStep === 'PICK_CHARACTER' && !currentCharacter)
 
   const jumpOnboardingPage = () => {

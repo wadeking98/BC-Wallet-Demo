@@ -58,7 +58,6 @@ export const addOnboardingProgress = (
   const inc = step ?? 1
   const steps = currentCharacter?.onboarding.map((screen) => screen.screenId)
   const currentIndex = steps?.indexOf(onboardingStep)
-  console.log(currentIndex !== undefined && steps && currentIndex >= 0 && currentIndex < steps.length - 1)
   if (currentIndex !== undefined && steps && currentIndex >= 0 && currentIndex < steps.length - 1) {
     dispatch(setOnboardingStep(steps[currentIndex + inc]))
   }

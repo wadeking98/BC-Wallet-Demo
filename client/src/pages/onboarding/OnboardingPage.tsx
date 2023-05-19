@@ -54,7 +54,6 @@ export const OnboardingPage: React.FC = () => {
     }
   }, [dispatch])
 
-  useEffect(()=>{ console.log(onboardingStep)}, [onboardingStep])
 
   return (
     <>
@@ -76,7 +75,6 @@ export const OnboardingPage: React.FC = () => {
               connectionId={id}
               connectionState={state}
               invitationUrl={invitationUrl}
-              credentials={issuedCredentials}
             />
           )}
         </AnimatePresence>

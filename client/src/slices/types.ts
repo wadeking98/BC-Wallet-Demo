@@ -57,6 +57,7 @@ export interface Character {
 export interface Credential {
   name: string
   icon: string
+  version: string
   attributes: {
     name: string
     value: string

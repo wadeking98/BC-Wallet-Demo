@@ -22,7 +22,6 @@ const onboardingSlice = createSlice({
     },
     setOnboardingStep(state, action) {
       state.onboardingStep = action.payload
-      console.log(state.onboardingStep)
     },
     setOnboardingConnectionId(state, action) {
       state.connectionId = action.payload
