@@ -108,6 +108,13 @@ export interface ProgressBarStep {
   iconDark: string
 }
 
+export interface RevocationInfoItem {
+  credentialName: string,
+  credentialIcon: string,
+  title: string,
+  description: string,
+}
+
 export interface CustomCharacter {
   name: string
   type: string
@@ -115,6 +122,7 @@ export interface CustomCharacter {
   progressBar: ProgressBarStep[]
   onboarding: OnboardingStep[]
   useCases: CustomUseCase[]
+  revocationInfo?: RevocationInfoItem[]
 }
 
 export interface UseCase {

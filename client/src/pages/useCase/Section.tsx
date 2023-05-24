@@ -1,6 +1,6 @@
 /* eslint-disable */
 import type { ConnectionState } from '../../slices/connection/connectionSlice'
-import type { Section as ISection, StepperItem, UseCaseScreen } from '../../slices/types'
+import type { UseCaseScreen } from '../../slices/types'
 
 import { AnimatePresence, motion } from 'framer-motion'
 import { track } from 'insights-js'
@@ -174,16 +174,13 @@ export const Section: React.FC<Props> = ({
       return (
         <>
           <div className="flex flex-col lg:flex-row w-full h-full">
-            {/* <SideView
+            <SideView
               key={'sideView'}
-              section={section}
-              entity={section.entity}
-              stepper={stepper}
-              sectionCount={sectionCount}
-              colors={section.colors}
-              stepCount={stepCount}
+              steps={section}
+              currentStep={step.screenId}
+              entity={verifier}
               showLeaveModal={showLeaveModal}
-            /> */}
+            />
             <motion.div
               key={'mainContentDiv'}
               variants={fadeExit}

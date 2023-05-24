@@ -65,7 +65,7 @@ export const OnboardingPage: React.FC = () => {
         exit="exit"
         className="container flex flex-col items-center p-4"
       >
-        <Stepper steps={StepperItems} onboardingStep={onboardingStep} />
+        <Stepper currentCharacter={currentCharacter} onboardingStep={onboardingStep} />
         <AnimatePresence exitBeforeEnter>
           {mounted && (
             <OnboardingContainer

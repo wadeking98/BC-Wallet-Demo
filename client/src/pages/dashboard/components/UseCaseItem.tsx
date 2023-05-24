@@ -1,5 +1,5 @@
 /* eslint-disable */
-import type { CustomCharacter, RequestedCredential, UseCaseCard } from '../../../slices/types'
+import type { CustomCharacter } from '../../../slices/types'
 
 import { motion } from 'framer-motion'
 import { startCase } from 'lodash'
@@ -20,6 +20,20 @@ export interface Props {
   start(slug: string): void
 }
 
+const getCredIcon = (currChar: CustomCharacter, credName: string) => {
+  let icon = ""
+  currChar.onboarding.forEach(screen => {
+    if(screen.credentials){
+      screen.credentials.forEach(cred => {
+        if(cred.name === credName){
+          icon = cred.icon
+        }
+      })
+    }
+  })
+  return icon 
+}
+
 export const UseCaseItem: React.FC<Props> = ({ slug, title, isCompleted, requiredCredentials, isLocked, start, currentCharacter }) => {
   return (
     <motion.div variants={rowFadeX} key={slug}>
@@ -28,15 +42,15 @@ export const UseCaseItem: React.FC<Props> = ({ slug, title, isCompleted, require
       >
         <h1 className="flex-none font-bold text-lg mb-2 h-6">{title}</h1>
         <div className="flex h-32 mt-2">
-          
-            <div className="h-full w-1/2 mr-2 m-auto xl:w-1/5" />
-          
+
+          <div className="h-full w-1/2 mr-2 m-auto xl:w-1/5" />
+
           <div className="w-2/3 xl:w-1/3 flex flex-col">
             <h2 className="text-sm xl:text-base font-semibold mb-2">You'll be asked to share</h2>
             {requiredCredentials.map((item) => {
               return (
                 <div key={item} className={`flex flex-row mb-2`}>
-                  <img className="w-4 h-4 lg:w-6 lg:h-6 mx-2" src={prependApiUrl(currentCharacter.image)} alt="credential icon" />
+                  <img className="w-4 h-4 lg:w-6 lg:h-6 mx-2" src={prependApiUrl(getCredIcon(currentCharacter, item))} alt="credential icon" />
                   <p className="text-xs sxl:text-sm">{startCase(item)}&nbsp;</p>
                 </div>
               )

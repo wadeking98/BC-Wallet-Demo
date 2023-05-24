@@ -99,8 +99,8 @@ export const DashboardPage: React.FC = () => {
                 completedUseCaseSlugs={completedUseCaseSlugs}
                 currentCharacter={currentCharacter}
               />
-              {revokableCredentials.length > 0 && revocationEnabled && (
-                <RevocationContainer revocationRecord={revokableCredentials} />
+              {revokableCredentials.length > 0 && revocationEnabled && currentCharacter.revocationInfo && (
+                <RevocationContainer revocationInfo={currentCharacter.revocationInfo} revocationRecord={revokableCredentials} />
               )}
             </div>
             <div className="flex flex-1 flex-col p-2 mx-2 dark:text-white">

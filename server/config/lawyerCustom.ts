@@ -3,36 +3,52 @@ export const lawyerCustom: CustomCharacter = {
   name: 'Joyce',
   type: 'Lawyer',
   image: '/public/lawyer2/lawyer2.svg',
+  revocationInfo: [
+    {
+      credentialName: 'Person',
+      credentialIcon: '/public/lawyer2/icon-lawyer2.svg',
+      title: 'Revoke your Person Credential',
+      description:
+        'Revoking your credentials does not mean that is it unusable. Services may accept revoked credentials especially for information that is unchanging, such as your birthday.',
+    },
+    {
+      credentialName: 'Member Card',
+    credentialIcon: '/public/lawyer2/icon-lawyer2.svg',
+    title: 'Revoke your LSBC Member Card',
+    description:
+      'The Law Society of BC allows you to revoke your own Member Card if:\n• there is a problem with your credential.\n• your device was lost or stolen and you want to secure your personal information.',
+    }
+  ],
   progressBar: [
     {
       name: 'person',
       onboardingStep: 'PICK_CHARACTER',
-      iconLight: './icon-person-light.svg',
-      iconDark: './icon-person-dark.svg',
+      iconLight: '/public/common/icon-person-light.svg',
+      iconDark: '/public/common/icon-person-dark.svg',
     },
     {
       name: 'moon',
       onboardingStep: 'SETUP_START',
-      iconLight: './moonLight.svg',
-      iconDark: './svgmoonDark',
+      iconLight: '/public/common/icon-moon-light.svg',
+      iconDark: '/public/common/icon-moon-dark.svg',
     },
     {
       name: 'wallet',
       onboardingStep: 'CONNECT_LSBC',
-      iconLight: './walletLight.svg',
-      iconDark: './walletDark.svg',
+      iconLight: '/public/common/icon-wallet-light.svg',
+      iconDark: '/public/common/icon-wallet-dark.svg',
     },
     {
       name: 'notification',
-      onboardingStep: 'SETUP_COMPLETED',
-      iconLight: './notificationLight.svg',
-      iconDark: './notificationDark.svg',
+      onboardingStep: 'ACCEPT_PERSON',
+      iconLight: '/public/common/icon-notification-light.svg',
+      iconDark: '/public/common/icon-notification-dark.svg',
     },
     {
       name: 'balloon',
-      onboardingStep: 'DEMO_END',
-      iconLight: './balloonLight.svg',
-      iconDark: './balloonDark.svg',
+      onboardingStep: 'SETUP_COMPLETED',
+      iconLight: '/public/common/icon-balloon-light.svg',
+      iconDark: '/public/common/icon-balloon-dark.svg',
     },
   ],
   onboarding: [
@@ -64,18 +80,18 @@ export const lawyerCustom: CustomCharacter = {
       title: 'Get your lawyer credential',
       text: 'Joyce is now ready to be issued her Law Society of British Columbia Member Card. She has logged into her member portal and is ready to accept a digital version of that card. Open the BC Wallet app on your phone, hit the scan button and accept.',
       image: '/public/lawyer2/onboarding/lawyerCredPhone.svg',
+      issuer_name: 'Law Society of BC (Demo)',
     },
     {
       screenId: 'ACCEPT_LSBC',
       title: 'Accept your lawyer credential',
       text: 'Check your phone. You’ve received a credential offer from the Law Society of British Columbia in your BC Wallet. You can use this credential to prove you’re a lawyer online.',
       image: '/public/lawyer2/onboarding/lawyerCredPhone.svg',
-      issuer_name: 'Law Society of BC (Demo)',
       credentials: [
         {
           name: 'Member Card',
           version: '1.2',
-          icon: '/public/lawyer2/icon-lawyer2.svg',
+          icon: '/public/lawyer2/connection/lsbc-logo.png',
           attributes: [
             {
               name: 'Member Status',
@@ -117,7 +133,7 @@ export const lawyerCustom: CustomCharacter = {
         {
           name: 'Person',
           version: '1.1',
-          icon: '/public/lawyer2/icon-lawyer2.svg',
+          icon: '/public/lawyer2/connection/bc-logo.png',
           attributes: [
             {
               name: 'postal_code',
@@ -186,7 +202,7 @@ export const lawyerCustom: CustomCharacter = {
           title: 'Start proving you’re a lawyer',
           text: 'As Joyce you’re now ready to prove you’re a practising lawyer in B.C. and your name to Court Services Branch and gain entry to Access to Court Materials online. Scan the QR code.',
           image: '/public/lawyer2/useCases/courtServices/courtServicesOverlay.png',
-          verifier: { name: 'Court Services Branch (DEMO)' },
+          verifier: { name: 'Court Services Branch (DEMO)', icon: '/public/lawyer2/connection/lsbc-logo.png' },
         },
         {
           screenId: 'PROOF',
@@ -197,10 +213,12 @@ export const lawyerCustom: CustomCharacter = {
             text: 'Court Services Branch (DEMO) would like some of your personal information.',
             requestedCredentials: [
               {
+                icon: '/public/lawyer2/connection/lsbc-logo.png',
                 name: 'Member Card',
                 properties: ['Given Name', 'Surname', 'PPID'],
               },
               {
+                icon: '/public/lawyer2/connection/bc-logo.png',
                 name: 'Person',
                 properties: ['given_names', 'family_name'],
               },

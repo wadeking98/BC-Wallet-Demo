@@ -97,7 +97,7 @@ export const OnboardingContainer: React.FC<Props> = ({
     return { title: '', text: '' }
   }
   useEffect(() => {
-    if (onboardingStep === 'RECEIVE_IDENTITY' && connectionCompleted) {
+    if (onboardingStep.startsWith('CONNECT') && connectionCompleted) {
       nextOnboardingPage()
     }
   }, [connectionState])

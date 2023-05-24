@@ -3,36 +3,45 @@ export const studentCustom: CustomCharacter = {
   name: 'Alice',
   type: 'Student',
   image: '/public/student/student.svg',
+  revocationInfo: [
+    {
+      credentialName: 'Student Card',
+      credentialIcon: '/public/student/icon-student.svg',
+      title: 'Revoke your Student Card',
+      description:
+        'Best BC College allows you to revoke your Student Card if:\n• there is a problem with your credential.\n• your device was lost or stolen and you want to secure your personal information.',
+    }
+  ],
   progressBar: [
     {
       name: 'person',
       onboardingStep: 'PICK_CHARACTER',
-      iconLight: './icon-person-light.svg',
-      iconDark: './icon-person-dark.svg',
+      iconLight: '/public/common/icon-person-light.svg',
+      iconDark: '/public/common/icon-person-dark.svg',
     },
     {
       name: 'moon',
       onboardingStep: 'SETUP_START',
-      iconLight: './moonLight.svg',
-      iconDark: './svgmoonDark',
+      iconLight: '/public/common/icon-moon-light.svg',
+      iconDark: '/public/common/icon-moon-dark.svg',
     },
     {
       name: 'wallet',
       onboardingStep: 'CHOOSE_WALLET',
-      iconLight: './walletLight.svg',
-      iconDark: './walletDark.svg',
+      iconLight: '/public/common/icon-wallet-light.svg',
+      iconDark: '/public/common/icon-wallet-dark.svg',
     },
     {
       name: 'notification',
       onboardingStep: 'ACCEPT_CREDENTIAL',
-      iconLight: './notificationLight.svg',
-      iconDark: './notificationDark.svg',
+      iconLight: '/public/common/icon-notification-light.svg',
+      iconDark: '/public/common/icon-notification-dark.svg',
     },
     {
       name: 'balloon',
       onboardingStep: 'SETUP_COMPLETED',
-      iconLight: './balloonLight.svg',
-      iconDark: './balloonDark.svg',
+      iconLight: '/public/common/icon-balloon-light.svg',
+      iconDark: '/public/common/icon-balloon-dark.svg',
     },
   ],
   onboarding: [
@@ -103,14 +112,14 @@ export const studentCustom: CustomCharacter = {
           screenId: 'START',
           title: 'Getting a student discount',
           text: "Alice (that's you in this demo!) can get a student discount on her online purchase. In this example, you will just tell Cool Clothes Online you're a student.",
-          image: '/public/student/useCases/card-school.svg',
+          image: '/public/student/useCases/store/card-school.svg',
         },
         {
           screenId: 'CONNECTION',
           title: "Start proving you're a student",
           text: "Imagine, as Alice, you are in the checkout process for Cool Clothes Online. They're offering you a 15% discount on your purchase if you can prove you're a student. First, scan the QR code.",
-          image: '/public/student/useCases/cool-clothes-no-overlay.png',
-          verifier: { name: 'Cool Clothes Online' },
+          image: '/public/student/useCases/store/cool-clothes-no-overlay.png',
+          verifier: { name: 'Cool Clothes Online', icon: '/public/student/useCases/store/logo-university.png' },
         },
         {
           screenId: 'PROOF',
@@ -121,6 +130,7 @@ export const studentCustom: CustomCharacter = {
             text: 'Cool Clothes Online would like some of your personal information.',
             requestedCredentials: [
               {
+                icon: '/public/student/useCases/school/icon-university-card.png',
                 name: 'student_card',
                 predicates: {
                   name: 'expiry_date',
@@ -135,7 +145,7 @@ export const studentCustom: CustomCharacter = {
           screenId: 'STEP_END',
           title: "You're done!",
           text: "You proved that you're a student, and Cool Clothes Online gave you the discount. It only took a few seconds, you revealed minimal information, and Cool Clothes Online could easily and automatically trust what you sent.",
-          image: '/public/student/onboarding/student-accepted.svg',
+          image: '/public/student/student-accepted.svg',
         },
       ],
     },
@@ -147,14 +157,14 @@ export const studentCustom: CustomCharacter = {
           screenId: 'START',
           title: 'Book a study room',
           text: "Alice has lots of work to do, and needs a study room for some peace and quiet. In this example, we'll present some info from our Student Card, but just what's needed to book the room.",
-          image: '/public/student/useCases/card-school.svg',
+          image: '/public/student/useCases/school/card-school.svg',
         },
         {
           screenId: 'CONNECTION',
           title: 'Start booking the room',
           text: "Imagine you're on the room booking page for BestBC College, abd you've chosen a data and time. Now they just need to confirm a few details. Scan the QR code to continue.",
-          image: '/public/student/useCases/best-bc-college-no-overlay.png',
-          verifier: { name: 'BestBC College' },
+          image: '/public/student/useCases/school/best-bc-college-no-overlay.png',
+          verifier: { name: 'BestBC College', icon: '/public/student/useCases/school/logo-university.png' },
         },
         {
           screenId: 'PROOF',
@@ -165,6 +175,7 @@ export const studentCustom: CustomCharacter = {
             text: 'BestBC College would like some of your personal information.',
             requestedCredentials: [
               {
+                icon: '/public/student/useCases/school/icon-university-card.png',
                 name: 'student_card',
                 properties: ['student_first_name'],
               },
@@ -175,7 +186,7 @@ export const studentCustom: CustomCharacter = {
           screenId: 'STEP_END',
           title: "You're done!",
           text: "The room is booked. Just by proving your first name, Best BC College could trust you are a current student, and could let others know there's a booking without revealing too much about you.",
-          image: '/public/student/onboarding/student-accepted.svg',
+          image: '/public/student/student-accepted.svg',
         },
       ],
     },
