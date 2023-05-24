@@ -73,8 +73,8 @@ export const lawyerCustom: CustomCharacter = {
       issuer_name: 'Law Society of BC (Demo)',
       credentials: [
         {
-          name: 'member_card',
-          version: '1.1',
+          name: 'Member Card',
+          version: '1.2',
           icon: '/public/lawyer2/icon-lawyer2.svg',
           attributes: [
             {
@@ -116,7 +116,7 @@ export const lawyerCustom: CustomCharacter = {
       credentials: [
         {
           name: 'Person',
-          version:'1.1',
+          version: '1.1',
           icon: '/public/lawyer2/icon-lawyer2.svg',
           attributes: [
             {
@@ -186,6 +186,7 @@ export const lawyerCustom: CustomCharacter = {
           title: 'Start proving you’re a lawyer',
           text: 'As Joyce you’re now ready to prove you’re a practising lawyer in B.C. and your name to Court Services Branch and gain entry to Access to Court Materials online. Scan the QR code.',
           image: '/public/lawyer2/useCases/courtServices/courtServicesOverlay.png',
+          verifier: { name: 'Court Services Branch (DEMO)' },
         },
         {
           screenId: 'PROOF',
@@ -196,7 +197,7 @@ export const lawyerCustom: CustomCharacter = {
             text: 'Court Services Branch (DEMO) would like some of your personal information.',
             requestedCredentials: [
               {
-                name: 'member_card',
+                name: 'Member Card',
                 properties: ['Given Name', 'Surname', 'PPID'],
               },
               {

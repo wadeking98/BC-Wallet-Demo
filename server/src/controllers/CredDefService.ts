@@ -57,7 +57,7 @@ export class CredDefService {
     //   "Name", "Street", "City", "Date of birth", "Nationality"
     // ]
 
-    const cd2 = await this.createCredentialDefinition(`${process.env.TRACTION_DID}:2:Member Card:1.1`)
+    const cd2 = await this.createCredentialDefinition(`${process.env.TRACTION_DID}:2:Member Card:1.2`)
     //"attrNames": [
     //   "Security code", "Card number", "Issuer", "Holder", "Valid until"
     // ],

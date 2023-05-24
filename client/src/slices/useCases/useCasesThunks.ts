@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { createAsyncThunk } from '@reduxjs/toolkit'
 
 import * as Api from '../../api/UseCaseApi'
@@ -9,5 +10,6 @@ export const fetchAllUseCasesByCharType = createAsyncThunk('useCases/fetchAllByC
 
 export const fetchUseCaseBySlug = createAsyncThunk('useCases/fetchBySlug', async (slug: string) => {
   const response = await Api.getUseCaseBySlug(slug)
+  console.log(response)
   return response.data
 })

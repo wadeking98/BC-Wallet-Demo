@@ -34,6 +34,7 @@ export interface Props {
   currentCharacter?: CustomCharacter
   title: string
   text: string
+  onCredentialAccepted?: ()=>void
 }
 
 export const AcceptCredential: React.FC<Props> = ({
@@ -42,6 +43,7 @@ export const AcceptCredential: React.FC<Props> = ({
   currentCharacter,
   title,
   text,
+  onCredentialAccepted
 }) => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
@@ -79,6 +81,12 @@ export const AcceptCredential: React.FC<Props> = ({
       setCredentialsIssued(true)
     }
   }, [currentCharacter, connectionId])
+
+  useEffect(()=>{
+    if(credentialsAccepted && onCredentialAccepted){
+      onCredentialAccepted()
+    }
+  }, [credentialsAccepted])
 
   const handleCredentialTimeout = () => {
     if (!isIssueCredentialLoading || !error) return

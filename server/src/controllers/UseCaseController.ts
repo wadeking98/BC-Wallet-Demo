@@ -23,12 +23,12 @@ export class UseCaseController {
    */
   @Get('/:useCaseSlug')
   public async getUseCaseBySlug(@Param('useCaseSlug') useCaseSlug: string) {
-    const useCase = useCases.find((x) => x.find((y) => y.id === useCaseSlug))
+    const useCase = useCases.flat().find((x) => x.id === useCaseSlug)
 
     if (!useCase) {
       throw new NotFoundError(`use case with slug "${useCaseSlug}" not found.`)
     }
-
+    console.log(useCase)
     return useCase
   }
 

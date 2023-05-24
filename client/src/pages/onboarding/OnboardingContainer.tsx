@@ -35,6 +35,7 @@ import { SetupCompleted } from './steps/SetupCompleted'
 import { SetupConnection } from './steps/SetupConnection'
 import { SetupStart } from './steps/SetupStart'
 import { useCredentials } from '../../slices/credentials/credentialsSelectors'
+import { BasicSlide } from './steps/BasicSlide'
 
 export interface Props {
   characters: CustomCharacter[]
@@ -55,7 +56,7 @@ export const OnboardingContainer: React.FC<Props> = ({
 }) => {
   const darkMode = useDarkMode()
   const dispatch = useAppDispatch()
-  const {issuedCredentials } = useCredentials()
+  const { issuedCredentials } = useCredentials()
 
   const connectionCompleted = isConnected(connectionState as string)
   const credentials = currentCharacter?.onboarding.find(step => step.screenId === onboardingStep)?.credentials
@@ -73,6 +74,7 @@ export const OnboardingContainer: React.FC<Props> = ({
   }
 
   const nextOnboardingPage = () => {
+    console.log(onboardingStep)
     addOnboardingProgress(dispatch, onboardingStep, currentCharacter)
   }
 
@@ -128,11 +130,9 @@ export const OnboardingContainer: React.FC<Props> = ({
           newConnection
           disableSkipConnection={false}
           connectionState={connectionState}
-          currentCharacter={currentCharacter as CustomCharacter}
           title={title}
           text={text}
           backgroundImage={currentCharacter?.image}
-          onboardingText={currentCharacter?.onboarding.find((screen) => screen.screenId === 'PICK_CHARACTER')?.text}
         />
       )
     } else if (progress.startsWith('ACCEPT') && credentials && connectionId) {
@@ -157,6 +157,9 @@ export const OnboardingContainer: React.FC<Props> = ({
         />
       )
     } else {
+      return (
+        <BasicSlide title={title} text={text} />
+      )
     }
   }
 

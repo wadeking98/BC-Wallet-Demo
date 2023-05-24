@@ -1,6 +1,4 @@
-import type { Character, CredentialData, CustomCharacter, Entity } from '../../../slices/types'
-import type { Content } from '../../../utils/OnboardingUtils'
-
+/* eslint-disable */
 import { motion } from 'framer-motion'
 import { track } from 'insights-js'
 import React, { useEffect } from 'react'
@@ -23,11 +21,11 @@ import { setConnectionDate } from '../../../slices/preferences/preferencesSlice'
 import { fetchAllUseCasesByCharType } from '../../../slices/useCases/useCasesThunks'
 import { basePath } from '../../../utils/BasePath'
 import { isConnected } from '../../../utils/Helpers'
+import { Content, addOnboardingProgress } from '../../../utils/OnboardingUtils'
 import { prependApiUrl } from '../../../utils/Url'
 import { StepInformation } from '../components/StepInformation'
 
 export interface Props {
-  currentCharacter: CustomCharacter
   connectionId?: string
   skipIssuance(): void
   nextSlide(): void
@@ -39,11 +37,10 @@ export interface Props {
   title: string
   text: string
   backgroundImage?: string
-  onboardingText?: string
+  onConnectionComplete?: () => void
 }
 
 export const SetupConnection: React.FC<Props> = ({
-  currentCharacter,
   connectionId,
   skipIssuance,
   nextSlide,
@@ -55,34 +52,29 @@ export const SetupConnection: React.FC<Props> = ({
   issuerName,
   disableSkipConnection,
   backgroundImage,
-  onboardingText,
+  onConnectionComplete,
 }) => {
   const deepLink = `bcwallet://aries_connection_invitation?${invitationUrl?.split('?')[1]}`
   const isMobile = useMediaQuery({ query: '(max-width: 768px)' })
   const isTablet = useMediaQuery({ query: '(max-width: 1400px)' })
   const dispatch = useAppDispatch()
-  const navigate = useNavigate()
-  const onboardingCompleted = () => {
-    if (connectionId && currentCharacter) {
-      navigate(`${basePath}/dashboard`)
-      dispatch(clearCredentials())
-      dispatch(clearConnection())
-      dispatch(completeOnboarding())
-      dispatch(fetchAllUseCasesByCharType(currentCharacter.type))
-    } else {
-      // something went wrong so reset
-      navigate(`${basePath}/`)
-      dispatch({ type: 'demo/RESET' })
-    }
-  }
+
   const isCompleted = isConnected(connectionState as string)
 
   useEffect(() => {
     if (!isCompleted || newConnection) {
+      dispatch(clearConnection())
       dispatch(createInvitation(issuerName))
       dispatch(clearCredentials())
     }
   }, [])
+
+  useEffect(() => {
+    if (isCompleted && onConnectionComplete) {
+      console.log("CONNECTION_COMPLETED")
+      onConnectionComplete()
+    }
+  }, [isCompleted])
 
   useEffect(() => {
     if (connectionId) {
@@ -169,7 +161,6 @@ export const SetupConnection: React.FC<Props> = ({
         style={{ backgroundImage: `url(${prependApiUrl(backgroundImage as string)})` }}
       >
         <div className="max-w-xs flex flex-col self-center items-center bg-white rounded-lg p-4  dark:text-black">
-          {onboardingText && <p className="text-center font-semibold mb-2">{onboardingText}</p>}
           <p className="text-center mb-2">Scan the QR Code below with your digital wallet.</p>
           <div>{renderQRCode(true)}</div>
           <div className="mt-5">

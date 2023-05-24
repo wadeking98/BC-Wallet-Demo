@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { AnimatePresence, motion } from 'framer-motion'
 import { track } from 'insights-js'
 import React, { useEffect } from 'react'
@@ -96,7 +97,7 @@ export const DashboardPage: React.FC = () => {
               <UseCaseContainer
                 issuedCredentials={issuedCredentials}
                 completedUseCaseSlugs={completedUseCaseSlugs}
-                useCases={useCases}
+                currentCharacter={currentCharacter}
               />
               {revokableCredentials.length > 0 && revocationEnabled && (
                 <RevocationContainer revocationRecord={revokableCredentials} />

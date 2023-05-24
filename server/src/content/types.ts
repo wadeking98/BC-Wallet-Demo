@@ -46,24 +46,26 @@ export interface OnboardingStep {
   credentials?: Credential[]
 }
 
+export interface CredentialRequest {
+  name: string
+  icon?: string
+  predicates?: { name: string; value?: string | number | (() => string | number); type: string }
+  properties?: string[]
+}
+
+export interface CustomRequestOptions {
+  title: string
+  text: string
+  requestedCredentials: CredentialRequest[]
+}
+
 export interface UseCaseScreen {
   screenId: string
   title: string
   text: string
   image?: string
-  requestOptions?: {
-    title: string
-    text: string
-    requestedCredentials: {
-      name: string
-      predicates?: {
-        name: string
-        type: string
-        value: string
-      }[]
-      properties?: string[]
-    }[]
-  }
+  verifier?: { name: string; icon?: string }
+  requestOptions?: CustomRequestOptions
 }
 
 export interface CustomUseCase {

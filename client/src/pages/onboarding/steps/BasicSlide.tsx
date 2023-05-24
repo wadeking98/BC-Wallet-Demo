@@ -8,14 +8,15 @@ import { fadeX } from '../../../FramerAnimations'
 import { StepInformation } from '../components/StepInformation'
 
 export interface Props {
-  content: Content
+  title: string
+  text: string
   textWithImage?: TextWithImage[]
 }
 
-export const BasicSlide: React.FC<Props> = ({ content, textWithImage }) => {
+export const BasicSlide: React.FC<Props> = ({ title, text, textWithImage }) => {
   return (
     <motion.div className="h-full" variants={fadeX} initial="hidden" animate="show" exit="exit">
-      <StepInformation title={content.title} text={content.text} textWithImage={textWithImage} />
+      <StepInformation title={title} text={text} textWithImage={textWithImage} />
     </motion.div>
   )
 }

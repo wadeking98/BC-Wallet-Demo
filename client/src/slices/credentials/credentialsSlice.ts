@@ -49,9 +49,12 @@ const credentialSlice = createSlice({
         let revocationObjects: RevocationRecord[] = []
         if (action.payload.length) {
           action.payload.forEach((cred: any) => {
-            if(isCredIssued(cred.state)){
+            if (isCredIssued(cred.state)) {
               const credDefParts = cred.credential_definition_id.split(":")
-              state.issuedCredentials.push(credDefParts[credDefParts.length - 1 ])
+              const credName = credDefParts[credDefParts.length - 1]
+              if (!state.issuedCredentials.includes(credName)) {
+                state.issuedCredentials.push(credDefParts[credDefParts.length - 1])
+              }
             }
           });
           revocationObjects = action.payload

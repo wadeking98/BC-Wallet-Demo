@@ -1,5 +1,5 @@
 import type { ConnectionState } from '../../../slices/connection/connectionSlice'
-import type { Entity, RequestedCredential, Step } from '../../../slices/types'
+import type { Entity, RequestedCredential, Step, UseCaseScreen } from '../../../slices/types'
 
 import { motion } from 'framer-motion'
 import React, { useEffect } from 'react'
@@ -21,7 +21,7 @@ import { prependApiUrl } from '../../../utils/Url'
 import { StepInfo } from '../components/StepInfo'
 
 export interface Props {
-  step: Step
+  step: UseCaseScreen
   connection: ConnectionState
 }
 
@@ -33,7 +33,7 @@ export const StepConnection: React.FC<Props> = ({ step, connection }) => {
   const isMobile = useMediaQuery({ query: '(max-width: 768px)' })
 
   useEffect(() => {
-    if (!isCompleted) dispatch(createInvitation('TEST_ENTITY'))
+    if (!isCompleted) dispatch(createInvitation(step.verifier?.name ?? 'Unknown'))
   }, [])
 
   useInterval(
@@ -78,7 +78,7 @@ export const StepConnection: React.FC<Props> = ({ step, connection }) => {
 
   return (
     <motion.div variants={fadeX} initial="hidden" animate="show" exit="exit" className="flex flex-col h-full">
-      <StepInfo title={step.title} description={step.description} />
+      <StepInfo title={step.title} description={step.text} />
       {step.image && !isMobile ? (
         <div
           className="bg-contain bg-center bg-no-repeat h-full flex justify-end"
@@ -86,9 +86,9 @@ export const StepConnection: React.FC<Props> = ({ step, connection }) => {
           style={{ backgroundImage: `url(${prependApiUrl(step.image)})` }}
         >
           <div className="max-w-xs flex flex-col self-center items-center bg-white rounded-lg p-4 mr-8 shadow-lg dark:text-black">
-            {step?.overlay?.header && <p className="w-3/4 text-center font-semibold mb-2">{step.overlay.header}</p>}
+            {/* {step?.overlay?.header && <p className="w-3/4 text-center font-semibold mb-2">{step.overlay.header}</p>} */}
             {renderQRCode(true)}
-            {step?.overlay?.footer && <p className="w-3/4 text-center mt-2">{step.overlay.footer}</p>}
+            {/* {step?.overlay?.footer && <p className="w-3/4 text-center mt-2">{step.overlay.footer}</p>} */}
           </div>
         </div>
       ) : (

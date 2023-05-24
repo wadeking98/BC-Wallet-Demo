@@ -1,12 +1,12 @@
-import type { UseCase } from '../types'
+import type { CustomUseCase, UseCase } from '../types'
 
 import { createSlice } from '@reduxjs/toolkit'
 
 import { fetchUseCaseBySlug, fetchAllUseCasesByCharType } from './useCasesThunks'
 
 interface UseCaseState {
-  useCases: UseCase[]
-  currentUseCase?: UseCase
+  useCases: CustomUseCase[]
+  currentUseCase?: CustomUseCase
   sectionCount: number
   stepCount: number
   isLoading: boolean

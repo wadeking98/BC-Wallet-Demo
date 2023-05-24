@@ -37,7 +37,7 @@ export const UseCasePage: React.FC = () => {
   const { DashboardHeader, StepperItems } = getConfiguration(currentCharacter)
 
   const navigate = useNavigate()
-  useTitle(`${currentUseCase?.card.title ?? 'Use case'} | BC Wallet Self-Sovereign Identity Demo`)
+  useTitle(`${currentUseCase?.name ?? 'Use case'} | BC Wallet Self-Sovereign Identity Demo`)
 
   useEffect(() => {
     if (currentCharacter && slug) {
@@ -48,9 +48,9 @@ export const UseCasePage: React.FC = () => {
 
   useEffect(() => {
     if (currentUseCase) {
-      const steps = currentUseCase.sections[sectionCount].steps
+      const steps = currentUseCase.screens
       // check if the next section contains a connection step, if not: keep the current connection in state to use for next section
-      const newConnection = currentUseCase.sections[sectionCount + 1]?.steps.some((e) => e.type === StepType.CONNECTION)
+      const newConnection = currentUseCase.screens[sectionCount + 1]?.screenId.startsWith('CONNECTION')
 
       if (steps.length === stepCount) {
         dispatch(nextSection())
@@ -62,8 +62,8 @@ export const UseCasePage: React.FC = () => {
   }, [currentUseCase, stepCount, sectionCount])
 
   useEffect(() => {
-    if (currentUseCase?.slug) {
-      dispatch(setSection(currentUseCase.sections[sectionCount]))
+    if (currentUseCase?.id) {
+      dispatch(setSection(currentUseCase.screens[sectionCount]))
     }
   }, [currentUseCase, sectionCount])
 
@@ -84,7 +84,7 @@ export const UseCasePage: React.FC = () => {
       <DashboardHeader
         steps={StepperItems}
         onboardingDone
-        demoDone={currentUseCase?.sections[sectionCount].steps.length === stepCount + 1}
+        demoDone={currentUseCase?.screens.length === stepCount + 1}
       />
       {isLoading ? (
         <div className="m-auto">
@@ -94,7 +94,7 @@ export const UseCasePage: React.FC = () => {
         <AnimatePresence exitBeforeEnter>
           {currentCharacter && section && currentUseCase ? (
             <motion.div
-              key={'sectionDiv' + section.id}
+              key={'sectionDiv' + section.screenId}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ when: 'afterChildren' }}
@@ -102,10 +102,9 @@ export const UseCasePage: React.FC = () => {
               className="h-full pb-16"
             >
               <Section
-                key={section.id}
-                section={section}
+                key={section.screenId}
+                section={currentUseCase.screens}
                 connection={connection}
-                stepper={currentUseCase.stepper}
                 sectionCount={sectionCount}
                 stepCount={stepCount}
                 credentials={issuedCredentials}

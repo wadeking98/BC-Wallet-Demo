@@ -52,7 +52,7 @@ export class CharacterController {
     const arr: CustomCharacter[] = []
     characters.forEach((char) => {
       arr.push({
-        ...char
+        ...char,
       })
     })
     return arr

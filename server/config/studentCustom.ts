@@ -49,7 +49,7 @@ export const studentCustom: CustomCharacter = {
     },
     {
       screenId: 'CHOOSE_WALLET',
-      title: "Install BC Wallet",
+      title: 'Install BC Wallet',
       text: 'First, install the BC Wallet app onto your smartphone. Select the button below for instructions and the next step.',
       image: '/public/common/app-store-screenshots.png',
     },
@@ -110,6 +110,7 @@ export const studentCustom: CustomCharacter = {
           title: "Start proving you're a student",
           text: "Imagine, as Alice, you are in the checkout process for Cool Clothes Online. They're offering you a 15% discount on your purchase if you can prove you're a student. First, scan the QR code.",
           image: '/public/student/useCases/cool-clothes-no-overlay.png',
+          verifier: { name: 'Cool Clothes Online' },
         },
         {
           screenId: 'PROOF',
@@ -121,13 +122,11 @@ export const studentCustom: CustomCharacter = {
             requestedCredentials: [
               {
                 name: 'student_card',
-                predicates: [
-                  {
-                    name: 'expiry_date',
-                    type: '>=',
-                    value: '20230517',
-                  },
-                ],
+                predicates: {
+                  name: 'expiry_date',
+                  type: '>=',
+                  value: 20230517,
+                },
               },
             ],
           },
@@ -155,6 +154,7 @@ export const studentCustom: CustomCharacter = {
           title: 'Start booking the room',
           text: "Imagine you're on the room booking page for BestBC College, abd you've chosen a data and time. Now they just need to confirm a few details. Scan the QR code to continue.",
           image: '/public/student/useCases/best-bc-college-no-overlay.png',
+          verifier: { name: 'BestBC College' },
         },
         {
           screenId: 'PROOF',
