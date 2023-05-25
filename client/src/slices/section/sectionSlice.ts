@@ -1,4 +1,4 @@
-import type { Section, UseCaseScreen } from '../types'
+import type { UseCaseScreen } from '../types'
 import type { PayloadAction } from '@reduxjs/toolkit'
 
 import { createSlice } from '@reduxjs/toolkit'

@@ -1,5 +1,5 @@
 /* eslint-disable */
-import type { CredentialRequest, Entity, RequestedCredential, Step, UseCaseScreen } from '../../../slices/types'
+import type { CredentialRequest, UseCaseScreen } from '../../../slices/types'
 
 import { motion } from 'framer-motion'
 import React, { useEffect, useState } from 'react'
@@ -42,7 +42,6 @@ export const StepProof: React.FC<Props> = ({ proof, step, connectionId, requeste
     const predicates: any = []
 
     requestedCredentials?.forEach((item) => {
-      console.log(item.name)
       if (item.properties) {
         proofs[item.name] = {
           restrictions: [

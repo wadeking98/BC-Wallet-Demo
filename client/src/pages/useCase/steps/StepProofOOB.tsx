@@ -1,4 +1,4 @@
-import type { CredentialRequest, Entity, RequestedCredential, Step, UseCaseScreen } from '../../../slices/types'
+import type { CredentialRequest, UseCaseScreen } from '../../../slices/types'
 
 import { AnimatePresence, motion } from 'framer-motion'
 import React, { useEffect } from 'react'

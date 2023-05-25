@@ -18,7 +18,6 @@ import { clearCredentials } from '../../../slices/credentials/credentialsSlice'
 import { useOnboarding } from '../../../slices/onboarding/onboardingSelectors'
 import { completeOnboarding, setOnboardingConnectionId } from '../../../slices/onboarding/onboardingSlice'
 import { setConnectionDate } from '../../../slices/preferences/preferencesSlice'
-import { fetchAllUseCasesByCharType } from '../../../slices/useCases/useCasesThunks'
 import { basePath } from '../../../utils/BasePath'
 import { isConnected } from '../../../utils/Helpers'
 import { Content, addOnboardingProgress } from '../../../utils/OnboardingUtils'
@@ -71,7 +70,6 @@ export const SetupConnection: React.FC<Props> = ({
 
   useEffect(() => {
     if (isCompleted && onConnectionComplete) {
-      console.log("CONNECTION_COMPLETED")
       onConnectionComplete()
     }
   }, [isCompleted])

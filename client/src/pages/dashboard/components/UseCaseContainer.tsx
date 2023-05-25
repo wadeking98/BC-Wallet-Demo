@@ -1,5 +1,5 @@
 /* eslint-disable */
-import type { CredentialData, CustomCharacter, CustomUseCase, RequestOptions, RequestedCredential, UseCase } from '../../../slices/types'
+import type { CustomCharacter } from '../../../slices/types'
 
 import { motion } from 'framer-motion'
 import React from 'react'

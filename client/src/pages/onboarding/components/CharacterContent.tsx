@@ -1,4 +1,4 @@
-import type { Character, CustomCharacter } from '../../../slices/types'
+import type { CustomCharacter } from '../../../slices/types'
 
 import { AnimatePresence, motion } from 'framer-motion'
 import React from 'react'

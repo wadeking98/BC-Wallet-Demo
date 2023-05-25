@@ -1,5 +1,3 @@
-import type { Section, UseCase } from './../content/types'
-
 import { Get, JsonController, NotFoundError, Param } from 'routing-controllers'
 import { Inject, Service } from 'typedi'
 
@@ -28,7 +26,6 @@ export class UseCaseController {
     if (!useCase) {
       throw new NotFoundError(`use case with slug "${useCaseSlug}" not found.`)
     }
-    console.log(useCase)
     return useCase
   }
 

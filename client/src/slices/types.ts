@@ -1,11 +1,3 @@
-export interface Configuration {
-  DashboardHeader: React.FC<any>
-  Stepper: React.FC<any>
-  OnboardingContainer: React.FC<any>
-  OnboardingComplete: (onboardingStep: string) => boolean
-  StepperItems: any[]
-}
-
 export interface RevocationRecord {
   connectionId: string
   revocationRegId: string
@@ -28,30 +20,6 @@ export interface ProofRequestData {
 export interface TextWithImage {
   text?: string
   image?: string
-}
-
-export interface CharacterContent {
-  title: string
-  text: string
-  textWithImage?: TextWithImage[]
-  image?: string
-  isBackDisabled?: boolean
-}
-
-export interface Character {
-  id: string
-  image: string
-  name: string
-  type: string
-  backstory: string
-  skipWalletPrompt?: boolean
-  content: { [key: number]: CharacterContent }
-  backgroundImage?: string
-  onboardingText?: string
-  disableSkipConnection?: boolean
-  starterCredentials: Record<number, CredentialData>
-  onboardingEntity?: Entity
-  additionalEntity?: Entity
 }
 
 export interface Credential {
@@ -109,52 +77,27 @@ export interface ProgressBarStep {
 }
 
 export interface RevocationInfoItem {
-  credentialName: string,
-  credentialIcon: string,
-  title: string,
-  description: string,
+  credentialName: string
+  credentialIcon: string
+  title: string
+  description: string
 }
 
 export interface CustomCharacter {
   name: string
   type: string
   image: string
+  desctription?: string
   progressBar: ProgressBarStep[]
   onboarding: OnboardingStep[]
   useCases: CustomUseCase[]
   revocationInfo?: RevocationInfoItem[]
 }
 
-export interface UseCase {
-  slug: string
-  card: UseCaseCard
-  stepper: StepperItem[]
-  sections: Section[]
-}
-
 export interface UseCaseCard {
   title: string
   image: string
   description: string
-}
-
-export interface Section {
-  id: string
-  entity: Entity
-  colors: Colors
-  requestedCredentials?: RequestedCredential[]
-  issueCredentials?: CredentialData[]
-  steps: Step[]
-}
-
-export interface RequestedCredential {
-  id: string
-  name: string
-  icon: string
-  properties?: string[]
-  predicates?: { name: string; value?: string | number | (() => string | number); type: string }
-  credentialDefinitionId?: string
-  schemaId?: string
 }
 
 export interface CredentialData {
@@ -179,20 +122,6 @@ export interface StepperItem {
   section: number
 }
 
-export interface Step {
-  id: string
-  type: StepType
-  title: string
-  description?: string
-  image?: string
-  buttonText?: string
-  requestOptions?: RequestOptions
-  useProof?: boolean
-  endStepper?: EndStepperItem[]
-  overlay?: Overlay
-  overlayImage?: boolean
-}
-
 export interface Overlay {
   header?: string
   subheader?: string
@@ -206,37 +135,14 @@ export interface EndStepperItem {
   image: string
 }
 
-export interface Entity {
-  name: string
-  icon: string
-  imageUrl?: string
-  imageFromBackend?: boolean
-}
-
 export interface Colors {
   primary: string
   secondary: string
 }
 
-export enum StepType {
-  START,
-  INFO,
-  CONNECTION,
-  PROOF,
-  PROOF_OOB,
-  CREDENTIAL,
-  STEP_END,
-  END,
-}
-
 export interface RequestOptions {
   name?: string
   comment?: string
-}
-
-export interface CharWithUseCases {
-  characterId: string
-  useCases: UseCase[]
 }
 
 export interface Wallet {

@@ -1,5 +1,5 @@
 /* eslint-disable */
-import type { Character, Credential, CredentialData, CustomCharacter } from '../../../slices/types'
+import type { Credential, CredentialData, CustomCharacter } from '../../../slices/types'
 import type { Content } from '../../../utils/OnboardingUtils'
 
 import { AnimatePresence, motion } from 'framer-motion'

@@ -1,4 +1,4 @@
-import type { Attribute, CredentialRequest, Entity, RequestedCredential } from '../../../slices/types'
+import type { Attribute, CredentialRequest } from '../../../slices/types'
 
 import { startCase } from 'lodash'
 import React, { useEffect, useState } from 'react'

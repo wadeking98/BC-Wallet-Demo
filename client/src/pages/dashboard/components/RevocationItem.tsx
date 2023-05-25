@@ -1,4 +1,4 @@
-import type { RequestedCredential, RevocationRecord, UseCaseCard } from '../../../slices/types'
+import type { RevocationRecord } from '../../../slices/types'
 
 import { motion } from 'framer-motion'
 import React from 'react'

@@ -1,4 +1,4 @@
-import type { CredentialRequest, RequestedCredential } from '../../../slices/types'
+import type { CredentialRequest } from '../../../slices/types'
 
 import { startCase } from 'lodash'
 import React from 'react'

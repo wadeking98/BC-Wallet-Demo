@@ -1,5 +1,5 @@
 /* eslint-disable */
-import type { Character, Credential, CustomCharacter } from '../../slices/types'
+import type { Credential, CustomCharacter } from '../../slices/types'
 
 import { AnimatePresence, motion } from 'framer-motion'
 import { Item } from 'framer-motion/types/components/Reorder/Item'
@@ -16,7 +16,6 @@ import { useDarkMode } from '../../hooks/useDarkMode'
 import { clearConnection } from '../../slices/connection/connectionSlice'
 import { clearCredentials } from '../../slices/credentials/credentialsSlice'
 import { completeOnboarding } from '../../slices/onboarding/onboardingSlice'
-import { fetchAllUseCasesByCharType } from '../../slices/useCases/useCasesThunks'
 import { basePath } from '../../utils/BasePath'
 import { isConnected, isCredIssued } from '../../utils/Helpers'
 import {
@@ -74,7 +73,6 @@ export const OnboardingContainer: React.FC<Props> = ({
   }
 
   const nextOnboardingPage = () => {
-    console.log(onboardingStep)
     addOnboardingProgress(dispatch, onboardingStep, currentCharacter)
   }
 
@@ -153,7 +151,6 @@ export const OnboardingContainer: React.FC<Props> = ({
           title={title}
           text={text}
           characterName={currentCharacter?.name ?? 'Unknown'}
-          credName={text}
         />
       )
     } else {
@@ -190,7 +187,6 @@ export const OnboardingContainer: React.FC<Props> = ({
       dispatch(clearCredentials())
       dispatch(clearConnection())
       dispatch(completeOnboarding())
-      dispatch(fetchAllUseCasesByCharType(currentCharacter.type))
     } else {
       // something went wrong so reset
       navigate(`${basePath}/`)

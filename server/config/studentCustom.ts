@@ -9,8 +9,8 @@ export const studentCustom: CustomCharacter = {
       credentialIcon: '/public/student/icon-student.svg',
       title: 'Revoke your Student Card',
       description:
-        'Best BC College allows you to revoke your Student Card if:\n• there is a problem with your credential.\n• your device was lost or stolen and you want to secure your personal information.',
-    }
+        'Best BC College allows you to revoke your Student Card "if":\n• there is a problem with your credential.\n• your device was lost or stolen and you want to secure your personal information.',
+    },
   ],
   progressBar: [
     {

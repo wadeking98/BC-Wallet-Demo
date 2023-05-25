@@ -1,20 +1,12 @@
-import type { CustomUseCase, UseCase } from '../types'
-
 import { createSlice } from '@reduxjs/toolkit'
 
-import { fetchUseCaseBySlug, fetchAllUseCasesByCharType } from './useCasesThunks'
-
 interface UseCaseState {
-  useCases: CustomUseCase[]
-  currentUseCase?: CustomUseCase
   sectionCount: number
   stepCount: number
   isLoading: boolean
 }
 
 const initialState: UseCaseState = {
-  useCases: [],
-  currentUseCase: undefined,
   sectionCount: 0,
   stepCount: 0,
   isLoading: false,
@@ -37,34 +29,9 @@ const useCaseSlice = createSlice({
     prevStep: (state) => {
       state.stepCount--
     },
-    clearUseCase: (state) => {
-      state.currentUseCase = undefined
-    },
-  },
-  extraReducers: (builder) => {
-    builder
-      .addCase(fetchAllUseCasesByCharType.pending, (state) => {
-        state.isLoading = true
-      })
-      .addCase(fetchAllUseCasesByCharType.fulfilled, (state, action) => {
-        state.isLoading = false
-        state.useCases = action.payload
-      })
-      .addCase(fetchUseCaseBySlug.pending, (state) => {
-        state.isLoading = true
-      })
-      .addCase(fetchUseCaseBySlug.fulfilled, (state, action) => {
-        state.isLoading = false
-        state.currentUseCase = action.payload
-      })
-      .addCase('clearUseCase', (state) => {
-        state.currentUseCase = undefined
-        state.sectionCount = 0
-        state.stepCount = 0
-      })
   },
 })
 
-export const { nextSection, resetStep, nextStep, prevStep, clearUseCase } = useCaseSlice.actions
+export const { nextSection, resetStep, nextStep, prevStep } = useCaseSlice.actions
 
 export default useCaseSlice.reducer

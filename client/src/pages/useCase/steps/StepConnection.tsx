@@ -1,5 +1,5 @@
 import type { ConnectionState } from '../../../slices/connection/connectionSlice'
-import type { Entity, RequestedCredential, Step, UseCaseScreen } from '../../../slices/types'
+import type { UseCaseScreen } from '../../../slices/types'
 
 import { motion } from 'framer-motion'
 import React, { useEffect } from 'react'

@@ -1,4 +1,4 @@
-import type { CredentialData, CredentialRequest, Entity, RequestedCredential } from '../../../slices/types'
+import type { CredentialRequest } from '../../../slices/types'
 
 import { motion } from 'framer-motion'
 import React from 'react'

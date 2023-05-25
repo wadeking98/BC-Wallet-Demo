@@ -46,6 +46,7 @@ export class CredentialController {
         })
       ).data
       schema_id = resp.sent.schema_id
+      await new Promise((r) => setTimeout(r, 5000))
     } else {
       schema_id = schemas.schema_ids[0]
     }
@@ -54,7 +55,7 @@ export class CredentialController {
     let cred_def_id = ''
     if (credDefs.credential_definition_ids.length <= 0) {
       const resp = (
-        await tractionRequest.post(`/credential-defenitions`, {
+        await tractionRequest.post(`/credential-definitions`, {
           revocation_registry_size: 25,
           schema_id,
           support_revocation: true,

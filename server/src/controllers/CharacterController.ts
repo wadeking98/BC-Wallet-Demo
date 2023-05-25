@@ -1,4 +1,4 @@
-import type { Character, CustomCharacter, StarterCredential } from '../content/types'
+import type { CustomCharacter } from '../content/types'
 
 import { Get, JsonController, NotFoundError, Param } from 'routing-controllers'
 import { Inject, Service } from 'typedi'
@@ -15,19 +15,6 @@ export class CharacterController {
 
   public constructor(service: CredDefService) {
     this.service = service
-  }
-
-  private getCreds = (initCreds: Record<number, StarterCredential>) => {
-    const lol: Record<number, StarterCredential> = {}
-    Object.entries(initCreds).forEach((entry) => {
-      const [key, x] = entry
-      const index = parseInt(key)
-      lol[index] = {
-        ...x,
-        credentialDefinitionId: this.service.getCredentialDefinitionIdByTag(x.name),
-      }
-    })
-    return lol
   }
 
   /**
