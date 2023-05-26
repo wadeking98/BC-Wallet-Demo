@@ -1,4 +1,4 @@
-import type { Character } from '../../../slices/types'
+import type { CustomCharacter } from '../../../slices/types'
 
 import { AnimatePresence, motion } from 'framer-motion'
 import React from 'react'
@@ -7,7 +7,7 @@ import { characterFade, fadeExit } from '../../../FramerAnimations'
 import { prependApiUrl } from '../../../utils/Url'
 
 export interface Props {
-  character?: Character
+  character?: CustomCharacter
 }
 
 export const CharacterContent: React.FC<Props> = ({ character }) => {
@@ -16,7 +16,7 @@ export const CharacterContent: React.FC<Props> = ({ character }) => {
       {character ? (
         <AnimatePresence exitBeforeEnter>
           <motion.div
-            key={character.id}
+            key={character.type}
             variants={characterFade}
             initial="hidden"
             animate="show"

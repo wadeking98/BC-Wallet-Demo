@@ -1,22 +1,18 @@
-import type { Content } from '../../../utils/OnboardingUtils'
-
 import { motion } from 'framer-motion'
 import React from 'react'
 
 import { fadeX } from '../../../FramerAnimations'
 
 export interface Props {
-  content: Content
+  title: string
+  text: string
   characterName: string
-  credName: string
 }
 
-export const SetupCompleted: React.FC<Props> = ({ content, characterName, credName }) => {
-  const lastIndex = content.title.lastIndexOf(' ')
-  const lastWord = (
-    <p className="inline text-bcgov-blue dark:text-bcgov-gold">{content.title.substring(lastIndex + 1)}</p>
-  )
-  const newTitle = content.title.substring(0, lastIndex)
+export const SetupCompleted: React.FC<Props> = ({ title, text, characterName }) => {
+  const lastIndex = title.lastIndexOf(' ')
+  const lastWord = <p className="inline text-bcgov-blue dark:text-bcgov-gold">{title.substring(lastIndex + 1)}</p>
+  const newTitle = title.substring(0, lastIndex)
 
   return (
     <motion.div className="h-full" variants={fadeX} initial="hidden" animate="show" exit="exit">
@@ -29,7 +25,7 @@ export const SetupCompleted: React.FC<Props> = ({ content, characterName, credNa
         </div>
         <div className="pt-4 flex-1 mb-6">
           <div className="dark:text-white">
-            <p>Your (pretend) {credName} is in your BC Wallet!</p>
+            <p>{text}</p>
             <div className="bg-bcgov-white dark:bg-bcgov-black py-4 px-8">
               <ul className="list-disc">
                 <li>You control when you use your credentials</li>
@@ -39,11 +35,7 @@ export const SetupCompleted: React.FC<Props> = ({ content, characterName, credNa
                 <li>Anyone who receives information from your credentials can trust its legitimacy</li>
               </ul>
             </div>
-            {characterName === 'Joyce' ? (
-              <p>Next, we’ll explore how Joyce can use her new credentials to access court materials online.</p>
-            ) : (
-              <p>We're done with this step. Next, we'll explore ways you can use your {credName}.</p>
-            )}
+            <p>We're done with this step. Next, we'll explore ways you can use your credentials.</p>
           </div>
         </div>
       </div>

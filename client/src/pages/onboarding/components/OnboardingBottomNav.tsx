@@ -7,7 +7,7 @@ import { Button } from '../../../components/Button'
 import { Progress } from '../../../utils/OnboardingUtils'
 
 export interface Props {
-  onboardingStep: number
+  onboardingStep: string
   addOnboardingStep(): void
   removeOnboardingStep(): void
   forwardDisabled: boolean
@@ -24,12 +24,12 @@ export const OnboardingBottomNav: React.FC<Props> = ({
   onboardingCompleted,
 }) => {
   const [label, setLabel] = useState('NEXT')
-  const isCompleted = onboardingStep === Progress.SETUP_COMPLETED
+  const isCompleted = onboardingStep === 'SETUP_COMPLETED'
 
   useEffect(() => {
     if (isCompleted) {
       setLabel('FINISH')
-    } else if (onboardingStep === Progress.CHOOSE_WALLET) {
+    } else if (onboardingStep === 'CHOOSE_WALLET') {
       setLabel('SKIP')
     } else {
       setLabel('NEXT')

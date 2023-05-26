@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { AnimatePresence, motion } from 'framer-motion'
 
 import { dropIn, standardFade } from '../FramerAnimations'
@@ -8,11 +9,15 @@ import { SmallButtonText } from './SmallButtonText'
 export interface Props {
   onOk(): void
   onCancel?(): void
+  okDisabled?: boolean
+  okText?: string
   title: string
   description: string
+  loading?: boolean
+  loadingText?: string
 }
 
-export const Modal: React.FC<Props> = ({ onOk, onCancel, title, description }) => {
+export const Modal: React.FC<Props> = ({ onOk, onCancel, title, description, okDisabled, okText, children, loading, loadingText }) => {
   return (
     <AnimatePresence>
       <motion.div
@@ -41,12 +46,16 @@ export const Modal: React.FC<Props> = ({ onOk, onCancel, title, description }) =
                   <h2 className="text-xl font-medium">{title}</h2>
                   <div className="mt-2">
                     <p className="text-sm">{description}</p>
+                    {loading && loadingText && (
+                      <p className="text-sm">{loadingText}</p>
+                    )}
                   </div>
                 </div>
               </div>
             </div>
+            <div className="m-8">{children}</div>
             <div className="p-4 pb-4 sm:px-6 flex flex-row-reverse">
-              <SmallButton onClick={onOk} text={'OK'} disabled={false} />
+              <SmallButton onClick={onOk} text={okText ?? 'OK'} disabled={okDisabled || loading} loading={loading} />
               {onCancel && <SmallButtonText onClick={onCancel} text={'CANCEL'} disabled={false} />}
             </div>
           </motion.div>

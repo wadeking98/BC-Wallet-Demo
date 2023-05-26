@@ -1,13 +1,14 @@
+/* eslint-disable */
 import { createSlice } from '@reduxjs/toolkit'
 
 interface OnboardingState {
-  onboardingStep: number
+  onboardingStep: string
   connectionId?: string
   isCompleted: boolean
 }
 
 const initialState: OnboardingState = {
-  onboardingStep: 0,
+  onboardingStep: 'PICK_CHARACTER',
   connectionId: undefined,
   isCompleted: false,
 }
@@ -16,13 +17,6 @@ const onboardingSlice = createSlice({
   name: 'onboarding',
   initialState,
   reducers: {
-    nextOnboardingStep(state, action?) {
-      const inc = action?.payload ?? 1
-      state.onboardingStep += inc
-    },
-    prevOnboardingStep(state) {
-      state.onboardingStep--
-    },
     completeOnboarding(state) {
       state.isCompleted = true
     },
@@ -34,19 +28,13 @@ const onboardingSlice = createSlice({
     },
     resetOnboarding(state) {
       state.connectionId = undefined
-      state.onboardingStep = 0
+      state.onboardingStep = 'PICK_CHARACTER'
       state.isCompleted = false
     },
   },
 })
 
-export const {
-  nextOnboardingStep,
-  prevOnboardingStep,
-  completeOnboarding,
-  setOnboardingStep,
-  setOnboardingConnectionId,
-  resetOnboarding,
-} = onboardingSlice.actions
+export const { completeOnboarding, setOnboardingStep, setOnboardingConnectionId, resetOnboarding } =
+  onboardingSlice.actions
 
 export default onboardingSlice.reducer

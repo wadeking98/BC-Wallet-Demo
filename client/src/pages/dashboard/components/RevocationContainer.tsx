@@ -1,31 +1,33 @@
-import type { RevocationRecord } from '../../../slices/types'
+/* eslint-disable */
+import type { CustomCharacter, RevocationInfoItem, RevocationRecord } from '../../../slices/types'
 
 import { motion } from 'framer-motion'
 import React, { useState } from 'react'
 
 import { dashboardTitle, rowContainer } from '../../../FramerAnimations'
 import { revokeCredential } from '../../../api/RevocationApi'
-import { revocationDescription } from '../../../config'
 
 import { RevocationItem } from './RevocationItem'
+import { startCase } from 'lodash'
 
 export interface Props {
   revocationRecord: RevocationRecord[]
+  revocationInfo: RevocationInfoItem[]
 }
 
-export const RevocationContainer: React.FC<Props> = ({ revocationRecord }) => {
+export const RevocationContainer: React.FC<Props> = ({ revocationRecord, revocationInfo }) => {
   const [completedRevocations, setCompletedRevocations] = useState<string[]>([])
   const [loadingRevocations, setLoadingRevocations] = useState<string[]>([])
   const [menuExpanded, setMenuExpanded] = useState<boolean>(false)
-
   const renderUseCases = revocationRecord.map((item) => {
     const revocationKey = item.revocationRegId.split(':')[6]
+    const revocationDescription = revocationInfo.find(infoItem => startCase(infoItem.credentialName) === startCase(revocationKey))
     return (
       <RevocationItem
-        title={revocationDescription[revocationKey]?.title}
-        description={revocationDescription[revocationKey]?.description}
-        credentialName={revocationDescription[revocationKey]?.credentialName}
-        credentialIcon={revocationDescription[revocationKey]?.credentialIcon}
+        title={revocationDescription?.title}
+        description={revocationDescription?.description}
+        credentialName={revocationDescription?.credentialName}
+        credentialIcon={revocationDescription?.credentialIcon}
         key={item.revocationRegId}
         revocationRecord={item}
         callback={() => {
@@ -55,9 +57,9 @@ export const RevocationContainer: React.FC<Props> = ({ revocationRecord }) => {
       <motion.h1 variants={dashboardTitle} className="text-3xl md:text-4xl font-bold mb-2">
         Revoking your credentials
       </motion.h1>
-      <motion.text className="text-bcgov-blue dark:text-white font-bold">
+      <p className="text-bcgov-blue dark:text-white font-bold">
         Ensure the safety of your personal information if your device is lost or stolen.
-      </motion.text>
+      </p>
       {menuExpanded && (
         <motion.div variants={rowContainer} className="flex flex-col w-auto overflow-x-hidden md:overflow-x-visible">
           {renderUseCases}

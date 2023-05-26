@@ -1,11 +1,11 @@
+/* eslint-disable */
 import { AnimatePresence, motion } from 'framer-motion'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import { page } from '../../FramerAnimations'
 import { Loader } from '../../components/Loader'
 import { Modal } from '../../components/Modal'
-import { getConfiguration } from '../../configuration/configuration'
 import { useAppDispatch } from '../../hooks/hooks'
 import { useTitle } from '../../hooks/useTitle'
 import { useCurrentCharacter } from '../../slices/characters/charactersSelectors'
@@ -17,10 +17,9 @@ import { useProof } from '../../slices/proof/proofSelectors'
 import { clearProof } from '../../slices/proof/proofSlice'
 import { useSection } from '../../slices/section/sectionSelectors'
 import { setSection } from '../../slices/section/sectionSlice'
-import { StepType } from '../../slices/types'
+import { CustomUseCase } from '../../slices/types'
 import { useUseCaseState } from '../../slices/useCases/useCasesSelectors'
 import { nextSection } from '../../slices/useCases/useCasesSlice'
-import { fetchUseCaseBySlug } from '../../slices/useCases/useCasesThunks'
 import { basePath } from '../../utils/BasePath'
 
 import { Section } from './Section'
@@ -28,29 +27,28 @@ import { Section } from './Section'
 export const UseCasePage: React.FC = () => {
   const dispatch = useAppDispatch()
   const { slug } = useParams()
-  const { currentUseCase, stepCount, sectionCount, isLoading } = useUseCaseState()
+  const { stepCount, sectionCount, isLoading } = useUseCaseState()
   const currentCharacter = useCurrentCharacter()
   const { section } = useSection()
   const connection = useConnection()
-  const { credentials } = useCredentials()
+  const { issuedCredentials } = useCredentials()
   const { proof, proofUrl } = useProof()
-  const { DashboardHeader, StepperItems } = getConfiguration(currentCharacter)
+  const [currentUseCase, setCurrentUseCase] = useState<CustomUseCase>()
 
   const navigate = useNavigate()
-  useTitle(`${currentUseCase?.card.title ?? 'Use case'} | BC Wallet Self-Sovereign Identity Demo`)
+  useTitle(`${currentUseCase?.name ?? 'Use case'} | BC Wallet Self-Sovereign Identity Demo`)
 
   useEffect(() => {
     if (currentCharacter && slug) {
-      dispatch({ type: 'clearUseCase' })
-      dispatch(fetchUseCaseBySlug(slug))
+      setCurrentUseCase(currentCharacter.useCases.find((item) => item.id === slug))
     }
   }, [])
 
   useEffect(() => {
     if (currentUseCase) {
-      const steps = currentUseCase.sections[sectionCount].steps
+      const steps = currentUseCase.screens
       // check if the next section contains a connection step, if not: keep the current connection in state to use for next section
-      const newConnection = currentUseCase.sections[sectionCount + 1]?.steps.some((e) => e.type === StepType.CONNECTION)
+      const newConnection = currentUseCase.screens[sectionCount + 1]?.screenId.startsWith('CONNECTION')
 
       if (steps.length === stepCount) {
         dispatch(nextSection())
@@ -62,8 +60,8 @@ export const UseCasePage: React.FC = () => {
   }, [currentUseCase, stepCount, sectionCount])
 
   useEffect(() => {
-    if (currentUseCase?.slug) {
-      dispatch(setSection(currentUseCase.sections[sectionCount]))
+    if (currentUseCase?.id) {
+      dispatch(setSection(currentUseCase.screens[sectionCount]))
     }
   }, [currentUseCase, sectionCount])
 
@@ -81,11 +79,6 @@ export const UseCasePage: React.FC = () => {
       exit="exit"
       className="container flex flex-col h-auto lg:h-screen p-4 lg:p-6 xl:p-8 dark:text-white"
     >
-      <DashboardHeader
-        steps={StepperItems}
-        onboardingDone
-        demoDone={currentUseCase?.sections[sectionCount].steps.length === stepCount + 1}
-      />
       {isLoading ? (
         <div className="m-auto">
           <Loader />
@@ -94,7 +87,7 @@ export const UseCasePage: React.FC = () => {
         <AnimatePresence exitBeforeEnter>
           {currentCharacter && section && currentUseCase ? (
             <motion.div
-              key={'sectionDiv' + section.id}
+              key={'sectionDiv' + section.screenId}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ when: 'afterChildren' }}
@@ -102,13 +95,12 @@ export const UseCasePage: React.FC = () => {
               className="h-full pb-16"
             >
               <Section
-                key={section.id}
-                section={section}
+                key={section.screenId}
+                section={currentUseCase.screens}
                 connection={connection}
-                stepper={currentUseCase.stepper}
                 sectionCount={sectionCount}
                 stepCount={stepCount}
-                credentials={credentials}
+                credentials={issuedCredentials}
                 proof={proof}
                 proofUrl={proofUrl}
               />

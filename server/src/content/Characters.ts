@@ -1,8 +1,8 @@
-import type { Character } from './types'
+import type { CustomCharacter } from './types'
 
-import { Lawyer } from '../../../config/lawyer'
-import { Student } from '../../../config/student'
+import { lawyerCustom } from '../../config/lawyerCustom'
+import { studentCustom } from '../../config/studentCustom'
 
-const characters: Character[] = [Student, Lawyer]
+const characters: CustomCharacter[] = [studentCustom, lawyerCustom]
 
 export default characters

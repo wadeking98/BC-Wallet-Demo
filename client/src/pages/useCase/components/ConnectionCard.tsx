@@ -3,7 +3,7 @@ import React from 'react'
 import { prependApiUrl } from '../../../utils/Url'
 
 export interface Props {
-  icon: string
+  icon?: string
   entity: string
 }
 
@@ -15,9 +15,11 @@ export const ConnectionCard: React.FC<Props> = ({ icon, entity }) => {
         <hr className="text-bcgov-lightgrey" />
       </div>
       <div className="flex-1 flex flex-row items-center justify-between pt-4">
-        <div className="bg-bcgov-lightgrey dark:bg-bcgov-black rounded-lg p-2 w-12">
-          <img className="h-8 m-auto" src={prependApiUrl(icon)} alt="icon" />
-        </div>
+        {icon && (
+          <div className="bg-bcgov-lightgrey dark:bg-bcgov-black rounded-lg p-2 w-12">
+            <img className="h-8 m-auto" src={prependApiUrl(icon)} alt="icon" />
+          </div>
+        )}
         <div className="flex-1 px-4 justify-self-start dark:text-white">
           <p>{entity}</p>
         </div>

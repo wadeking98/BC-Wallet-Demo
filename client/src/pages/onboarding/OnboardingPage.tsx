@@ -1,9 +1,9 @@
+/* eslint-disable */
 import { AnimatePresence, motion } from 'framer-motion'
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import { page } from '../../FramerAnimations'
-import { getConfiguration } from '../../configuration/configuration'
 import { useAppDispatch } from '../../hooks/hooks'
 import { useTitle } from '../../hooks/useTitle'
 import { useCharacters } from '../../slices/characters/charactersSelectors'
@@ -15,9 +15,13 @@ import { useCredentials } from '../../slices/credentials/credentialsSelectors'
 import { clearCredentials } from '../../slices/credentials/credentialsSlice'
 import { useOnboarding } from '../../slices/onboarding/onboardingSelectors'
 import { completeOnboarding } from '../../slices/onboarding/onboardingSlice'
-import { fetchAllUseCasesByCharId } from '../../slices/useCases/useCasesThunks'
 import { fetchWallets } from '../../slices/wallets/walletsThunks'
 import { basePath } from '../../utils/BasePath'
+import { CustomUpload } from '../../components/CustomUpload'
+import { usePreferences } from '../../slices/preferences/preferencesSelectors'
+import { OnboardingComplete } from '../../utils/OnboardingUtils'
+import { Stepper } from './components/Stepper'
+import { OnboardingContainer } from './OnboardingContainer'
 
 export const OnboardingPage: React.FC = () => {
   useTitle('Get Started | BC Wallet Self-Sovereign Identity Demo')
@@ -26,21 +30,24 @@ export const OnboardingPage: React.FC = () => {
 
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
-  const { characters, currentCharacter } = useCharacters()
-  const { Stepper, OnboardingContainer, OnboardingComplete, StepperItems } = getConfiguration(currentCharacter)
+  const { characters, currentCharacter, uploadedCharacter } = useCharacters()
 
   const { onboardingStep, isCompleted } = useOnboarding()
   const { state, invitationUrl, id } = useConnection()
-  const { credentials } = useCredentials()
+  const { characterUploadEnabled } = usePreferences()
 
   const [mounted, setMounted] = useState(false)
+
+  const allCharacters = [...characters]
+  if(uploadedCharacter){
+    allCharacters.push(uploadedCharacter)
+  }
 
   useEffect(() => {
     if ((OnboardingComplete(onboardingStep) || isCompleted) && currentCharacter) {
       dispatch(completeOnboarding())
       dispatch(clearCredentials())
       dispatch(clearConnection())
-      dispatch(fetchAllUseCasesByCharId(currentCharacter.id))
       navigate(`${basePath}/dashboard`)
     } else {
       dispatch({ type: 'demo/RESET' })
@@ -50,28 +57,31 @@ export const OnboardingPage: React.FC = () => {
     }
   }, [dispatch])
 
+
   return (
-    <motion.div
-      variants={page}
-      initial="hidden"
-      animate="show"
-      exit="exit"
-      className="container flex flex-col items-center p-4"
-    >
-      <Stepper steps={StepperItems} onboardingStep={onboardingStep} />
-      <AnimatePresence exitBeforeEnter>
-        {mounted && (
-          <OnboardingContainer
-            characters={characters}
-            currentCharacter={currentCharacter}
-            onboardingStep={onboardingStep}
-            connectionId={id}
-            connectionState={state}
-            invitationUrl={invitationUrl}
-            credentials={credentials}
-          />
-        )}
-      </AnimatePresence>
-    </motion.div>
+    <>
+      {characterUploadEnabled && <CustomUpload/>}
+      <motion.div
+        variants={page}
+        initial="hidden"
+        animate="show"
+        exit="exit"
+        className="container flex flex-col items-center p-4"
+      >
+        <Stepper currentCharacter={currentCharacter} onboardingStep={onboardingStep} />
+        <AnimatePresence exitBeforeEnter>
+          {mounted && (
+            <OnboardingContainer
+              characters={allCharacters}
+              currentCharacter={currentCharacter}
+              onboardingStep={onboardingStep}
+              connectionId={id}
+              connectionState={state}
+              invitationUrl={invitationUrl}
+            />
+          )}
+        </AnimatePresence>
+      </motion.div>
+    </>
   )
 }

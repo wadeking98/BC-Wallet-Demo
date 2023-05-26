@@ -7,6 +7,7 @@ import { fetchLastServerReset } from './preferencesThunks'
 interface PreferencesState {
   darkMode: boolean
   revocationEnabled: boolean
+  characterUploadEnabled: boolean
   completedUseCaseSlugs: string[]
   demoCompleted: boolean
   completeCanceled: boolean
@@ -17,6 +18,7 @@ interface PreferencesState {
 const initialState: PreferencesState = {
   darkMode: false,
   revocationEnabled: false,
+  characterUploadEnabled: false,
   completedUseCaseSlugs: [],
   demoCompleted: false,
   completeCanceled: false,
@@ -57,6 +59,9 @@ const preferencesSlice = createSlice({
     toggleRevocation: (state) => {
       state.revocationEnabled = !state.revocationEnabled
     },
+    toggleCharacterUpload: (state) => {
+      state.characterUploadEnabled = !state.characterUploadEnabled
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -70,7 +75,14 @@ const preferencesSlice = createSlice({
   },
 })
 
-export const { setDarkMode, useCaseCompleted, resetDashboard, setDemoCompleted, setConnectionDate, toggleRevocation } =
-  preferencesSlice.actions
+export const {
+  setDarkMode,
+  useCaseCompleted,
+  resetDashboard,
+  setDemoCompleted,
+  setConnectionDate,
+  toggleRevocation,
+  toggleCharacterUpload,
+} = preferencesSlice.actions
 
 export default preferencesSlice.reducer

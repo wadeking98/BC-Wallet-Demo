@@ -1,4 +1,5 @@
-import type { Character, CredentialData } from '../../../slices/types'
+/* eslint-disable */
+import type { Credential, CredentialData, CustomCharacter } from '../../../slices/types'
 import type { Content } from '../../../utils/OnboardingUtils'
 
 import { AnimatePresence, motion } from 'framer-motion'
@@ -25,25 +26,24 @@ import { isCredIssued } from '../../../utils/Helpers'
 import { FailedRequestModal } from '../components/FailedRequestModal'
 import { StarterCredentials } from '../components/StarterCredentials'
 import { StepInformation } from '../components/StepInformation'
+import { getOrCreateCredDefId } from '../../../api/CredentialApi'
 
 export interface Props {
-  content?: Content
   connectionId: string
-  credentials: any[]
-  currentCharacter: Character
-  credSelection: number[]
+  credentials: Credential[]
+  currentCharacter?: CustomCharacter
   title: string
   text: string
+  onCredentialAccepted?: ()=>void
 }
 
 export const AcceptCredential: React.FC<Props> = ({
-  content,
   connectionId,
   credentials,
   currentCharacter,
-  credSelection,
   title,
   text,
+  onCredentialAccepted
 }) => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
@@ -53,33 +53,25 @@ export const AcceptCredential: React.FC<Props> = ({
   const [credentialsIssued, setCredentialsIssued] = useState(false)
   const [errorMsg, setErrorMsg] = useState('')
 
-  const { isIssueCredentialLoading, error } = useCredentials()
+  const { isIssueCredentialLoading, error, issuedCredentials } = useCredentials()
 
   const { isDeepLink } = useConnection()
 
   const showFailedRequestModal = () => setIsFailedRequestModalOpen(true)
   const closeFailedRequestModal = () => setIsFailedRequestModalOpen(false)
 
-  const getCharacterCreds = (): CredentialData[] => {
-    const creds: CredentialData[] = []
-    credSelection.forEach((item) => {
-      if (currentCharacter.starterCredentials[item]) {
-        creds.push(currentCharacter.starterCredentials[item])
-      }
-    })
-    return creds
-  }
 
-  const credentialsAccepted = Object.values(credentials).every((x) => isCredIssued(x.state))
+  const credentialsAccepted = credentials.every(cred => issuedCredentials.includes(cred.name))
 
   useEffect(() => {
-    if (credentials.length === 0) {
-      getCharacterCreds().forEach((item) => {
+    if (credentials.length > 0) {
+      credentials.forEach(async (item) => {
+        const credDefId = (await getOrCreateCredDefId(item)).data
         if (item !== undefined) {
           if (isDeepLink) {
-            dispatch(issueDeepCredential({ connectionId: connectionId, cred: item }))
+            dispatch(issueDeepCredential({ connectionId: connectionId, cred: item, credDefId }))
           } else {
-            dispatch(issueCredential({ connectionId: connectionId, cred: item }))
+            dispatch(issueCredential({ connectionId: connectionId, cred: item, credDefId }))
           }
           track({
             id: 'credential_issued',
@@ -88,7 +80,13 @@ export const AcceptCredential: React.FC<Props> = ({
       })
       setCredentialsIssued(true)
     }
-  }, [currentCharacter.starterCredentials, connectionId])
+  }, [currentCharacter, connectionId])
+
+  useEffect(()=>{
+    if(credentialsAccepted && onCredentialAccepted){
+      onCredentialAccepted()
+    }
+  }, [credentialsAccepted])
 
   const handleCredentialTimeout = () => {
     if (!isIssueCredentialLoading || !error) return
@@ -129,26 +127,26 @@ export const AcceptCredential: React.FC<Props> = ({
   }
 
   const sendNewCredentials = () => {
-    credentials.forEach((cred) => {
-      if (!isCredIssued(cred.state)) {
-        dispatch(deleteCredentialById(cred.credential_exchange_id))
-        const newCredential = getCharacterCreds().find((item) => {
-          return item?.credentialDefinitionId === cred.credential_offer.cred_def_id
-        })
-        if (newCredential) dispatch(issueCredential({ connectionId: connectionId, cred: newCredential }))
-      }
-    })
+    // credentials.forEach((cred) => {
+    //   if (!isCredIssued(cred.state)) {
+    //     dispatch(deleteCredentialById(cred.credential_exchange_id))
+    //     const newCredential = getCharacterCreds().find((item) => {
+    //       return item?.credentialDefinitionId === cred.credential_offer.cred_def_id
+    //     })
+    //     if (newCredential) dispatch(issueCredential({ connectionId: connectionId, cred: newCredential }))
+    //   }
+    // })
     closeFailedRequestModal()
   }
 
   return (
     <motion.div className="flex flex-col h-full" variants={fadeX} initial="hidden" animate="show" exit="exit">
-      <StepInformation title={title ?? content?.title} text={text ?? content?.text} />
+      <StepInformation title={title} text={text} />
       <div className="flex flex-row m-auto content-center">
-        {getCharacterCreds().length === credentials.length ? (
+        {credentials.length ? (
           <AnimatePresence exitBeforeEnter>
             <motion.div className={`flex flex-1 flex-col m-auto`} variants={fade} animate="show" exit="exit">
-              <StarterCredentials credentialData={getCharacterCreds()} credentials={credentials} />
+              <StarterCredentials credentials={credentials} />
             </motion.div>
           </AnimatePresence>
         ) : (

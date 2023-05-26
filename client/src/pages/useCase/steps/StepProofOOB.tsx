@@ -1,4 +1,4 @@
-import type { Entity, RequestedCredential, Step } from '../../../slices/types'
+import type { CredentialRequest, UseCaseScreen } from '../../../slices/types'
 
 import { AnimatePresence, motion } from 'framer-motion'
 import React, { useEffect } from 'react'
@@ -18,12 +18,12 @@ const QR = require('qrcode.react')
 export interface Props {
   proof?: any
   proofUrl?: string
-  step: Step
-  requestedCredentials: RequestedCredential[]
-  entity: Entity
+  step: UseCaseScreen
+  requestedCredentials: CredentialRequest[]
+  entityName: string
 }
 
-export const StepProofOOB: React.FC<Props> = ({ proof, proofUrl, step, requestedCredentials, entity }) => {
+export const StepProofOOB: React.FC<Props> = ({ proof, proofUrl, step, requestedCredentials, entityName }) => {
   const dispatch = useAppDispatch()
   const proofReceived = (proof?.state as string) === 'presentation_received' || (proof?.state as string) === 'verified'
 
@@ -38,7 +38,7 @@ export const StepProofOOB: React.FC<Props> = ({ proof, proofUrl, step, requested
         proofs[item.name] = {
           restrictions: [
             {
-              schema_name: item.schemaId?.split(':')[2],
+              schema_name: item.name,
             },
           ],
           names: item.properties,
@@ -48,7 +48,7 @@ export const StepProofOOB: React.FC<Props> = ({ proof, proofUrl, step, requested
         predicates[item.name] = {
           restrictions: [
             {
-              schema_name: item.schemaId?.split(':')[2],
+              schema_name: item.name,
             },
           ],
           name: item.predicates?.name,
@@ -63,7 +63,7 @@ export const StepProofOOB: React.FC<Props> = ({ proof, proofUrl, step, requested
         connectionId: '',
         attributes: proofs,
         predicates: predicates,
-        requestOptions: step.requestOptions,
+        requestOptions: { name: step.requestOptions?.title, comment: step.requestOptions?.text },
       })
     )
   }
@@ -105,7 +105,7 @@ export const StepProofOOB: React.FC<Props> = ({ proof, proofUrl, step, requested
 
   return (
     <motion.div variants={fadeX} initial="hidden" animate="show" exit="exit" className="flex flex-col h-full">
-      <StepInfo title={step.title} description={step.description} />
+      <StepInfo title={step.title} description={step.text} />
       <AnimatePresence initial={false} exitBeforeEnter onExitComplete={() => null}>
         {!proofReceived ? (
           <motion.div
@@ -126,7 +126,7 @@ export const StepProofOOB: React.FC<Props> = ({ proof, proofUrl, step, requested
           <motion.div variants={fadeExit} key="renderProofAttributes" className="flex flex-row m-auto w-full">
             <div className="w-full lg:w-2/3 m-auto">
               <ProofAttributesCard
-                entity={entity}
+                entityName={entityName}
                 requestedCredentials={requestedCredentials}
                 proof={proof as any}
                 proofReceived={proofReceived}

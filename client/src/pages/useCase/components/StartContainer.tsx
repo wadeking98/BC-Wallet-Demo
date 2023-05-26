@@ -1,4 +1,4 @@
-import type { CredentialData, Entity, RequestedCredential, Step } from '../../../slices/types'
+import type { CredentialRequest, UseCaseScreen } from '../../../slices/types'
 
 import { motion } from 'framer-motion'
 import React from 'react'
@@ -16,13 +16,12 @@ import { prependApiUrl } from '../../../utils/Url'
 import { StarterInfo } from './StarterInfo'
 
 export interface Props {
-  step: Step
-  entity: Entity
-  requestedCredentials?: RequestedCredential[]
-  issueCredentials?: CredentialData[]
+  step: UseCaseScreen
+  entity: { name: string; icon?: string }
+  requestedCredentials?: CredentialRequest[]
 }
 
-export const StartContainer: React.FC<Props> = ({ entity, requestedCredentials, issueCredentials, step }) => {
+export const StartContainer: React.FC<Props> = ({ entity, requestedCredentials, step }) => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const isMobile = useMediaQuery({ query: '(max-width: 976px)' })
@@ -48,10 +47,9 @@ export const StartContainer: React.FC<Props> = ({ entity, requestedCredentials, 
       <div className="flex flex-col p-6 md:p-12 md:pb-6 xl:p-16 xl:pb-8 w-full lg:w-2/3 ">
         <StarterInfo
           title={step.title}
-          description={step.description ?? ''}
+          description={step.text ?? ''}
           entity={entity}
           requestedCredentials={requestedCredentials}
-          issueCredentials={issueCredentials}
         />
 
         <div className="flex justify-between content-center bg-bcgovgrey dark:bg-bcgov-darkgrey ">

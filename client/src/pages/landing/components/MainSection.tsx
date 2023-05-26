@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { motion } from 'framer-motion'
 import React from 'react'
 import { FiExternalLink, FiArrowRight } from 'react-icons/fi'
@@ -8,15 +9,20 @@ import { buttonHover, fade, fadeDelay, landingTitle } from '../../../FramerAnima
 import landingScreen from '../../../assets/light/landing-screen.svg'
 import { useDarkMode } from '../../../hooks/useDarkMode'
 import { basePath } from '../../../utils/BasePath'
+import { addOnboardingProgress } from '../../../utils/OnboardingUtils'
+import { useAppDispatch } from '../../../hooks/hooks'
+import { setOnboardingStep } from '../../../slices/onboarding/onboardingSlice'
 
 export const MainSection: React.FC = () => {
   const isMobile = useMediaQuery({ query: '(max-width: 768px)' })
   const darkMode = useDarkMode()
+  const dispatch = useAppDispatch()
   const { slug } = useParams()
 
   const navigate = useNavigate()
 
   const handleStart = () => {
+    dispatch(setOnboardingStep("PICK_CHARACTER"))
     if (slug) {
       navigate(`${basePath}/demo/${slug}`)
     } else {

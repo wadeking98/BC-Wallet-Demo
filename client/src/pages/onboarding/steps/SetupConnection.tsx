@@ -1,6 +1,4 @@
-import type { Character, CredentialData, Entity } from '../../../slices/types'
-import type { Content } from '../../../utils/OnboardingUtils'
-
+/* eslint-disable */
 import { motion } from 'framer-motion'
 import { track } from 'insights-js'
 import React, { useEffect } from 'react'
@@ -20,15 +18,13 @@ import { clearCredentials } from '../../../slices/credentials/credentialsSlice'
 import { useOnboarding } from '../../../slices/onboarding/onboardingSelectors'
 import { completeOnboarding, setOnboardingConnectionId } from '../../../slices/onboarding/onboardingSlice'
 import { setConnectionDate } from '../../../slices/preferences/preferencesSlice'
-import { fetchAllUseCasesByCharId } from '../../../slices/useCases/useCasesThunks'
 import { basePath } from '../../../utils/BasePath'
 import { isConnected } from '../../../utils/Helpers'
+import { Content, addOnboardingProgress } from '../../../utils/OnboardingUtils'
 import { prependApiUrl } from '../../../utils/Url'
 import { StepInformation } from '../components/StepInformation'
 
 export interface Props {
-  content?: Content
-  currentCharacter: Character
   connectionId?: string
   skipIssuance(): void
   nextSlide(): void
@@ -36,16 +32,14 @@ export interface Props {
   connectionState?: string
   newConnection?: boolean
   disableSkipConnection?: boolean
-  customIssuer?: Entity
+  issuerName: string
   title: string
   text: string
   backgroundImage?: string
-  onboardingText?: string
+  onConnectionComplete?: () => void
 }
 
 export const SetupConnection: React.FC<Props> = ({
-  content,
-  currentCharacter,
   connectionId,
   skipIssuance,
   nextSlide,
@@ -54,37 +48,31 @@ export const SetupConnection: React.FC<Props> = ({
   invitationUrl,
   connectionState,
   newConnection,
-  customIssuer,
+  issuerName,
   disableSkipConnection,
   backgroundImage,
-  onboardingText,
+  onConnectionComplete,
 }) => {
   const deepLink = `bcwallet://aries_connection_invitation?${invitationUrl?.split('?')[1]}`
   const isMobile = useMediaQuery({ query: '(max-width: 768px)' })
   const isTablet = useMediaQuery({ query: '(max-width: 1400px)' })
   const dispatch = useAppDispatch()
-  const navigate = useNavigate()
-  const onboardingCompleted = () => {
-    if (connectionId && currentCharacter) {
-      navigate(`${basePath}/dashboard`)
-      dispatch(clearCredentials())
-      dispatch(clearConnection())
-      dispatch(completeOnboarding())
-      dispatch(fetchAllUseCasesByCharId(currentCharacter.id))
-    } else {
-      // something went wrong so reset
-      navigate(`${basePath}/`)
-      dispatch({ type: 'demo/RESET' })
-    }
-  }
+
   const isCompleted = isConnected(connectionState as string)
 
   useEffect(() => {
     if (!isCompleted || newConnection) {
-      dispatch(createInvitation(customIssuer ?? currentCharacter?.onboardingEntity))
+      dispatch(clearConnection())
+      dispatch(createInvitation(issuerName))
       dispatch(clearCredentials())
     }
   }, [])
+
+  useEffect(() => {
+    if (isCompleted && onConnectionComplete) {
+      onConnectionComplete()
+    }
+  }, [isCompleted])
 
   useEffect(() => {
     if (connectionId) {
@@ -120,19 +108,17 @@ export const SetupConnection: React.FC<Props> = ({
   }
   const renderCTA = !isCompleted ? (
     <motion.div variants={fade} key="openWallet">
-      {currentCharacter.starterCredentials && (
-        <>
-          <p>
-            Scan the QR-code with your <a href={deepLink}>wallet {(isMobile || isTablet) && 'or'} </a>
-          </p>
-          {(isMobile || isTablet) && (
-            <a onClick={handleDeepLink} className="underline underline-offset-2 mt-2">
-              open in wallet
-              <FiExternalLink className="inline pb-1" />
-            </a>
-          )}
-        </>
-      )}
+      <>
+        <p>
+          Scan the QR-code with your <a href={deepLink}>wallet {(isMobile || isTablet) && 'or'} </a>
+        </p>
+        {(isMobile || isTablet) && (
+          <a onClick={handleDeepLink} className="underline underline-offset-2 mt-2">
+            open in wallet
+            <FiExternalLink className="inline pb-1" />
+          </a>
+        )}
+      </>
       {!disableSkipConnection && (
         <div className="my-5">
           <Button text="I Already Have my Credential" onClick={skipIssuance}></Button>
@@ -153,12 +139,10 @@ export const SetupConnection: React.FC<Props> = ({
       animate="show"
       exit="exit"
     >
-      <StepInformation title={title ?? content?.title} text={text ?? content?.text} />
-      {currentCharacter.starterCredentials && (
-        <div className="max-w-xs flex flex-col self-center items-center bg-white rounded-lg p-4  dark:text-black">
-          {renderQRCode(true)}
-        </div>
-      )}
+      <StepInformation title={title} text={text} />
+      <div className="max-w-xs flex flex-col self-center items-center bg-white rounded-lg p-4  dark:text-black">
+        {renderQRCode(true)}
+      </div>
       <div className="flex flex-col mt-4 text-center text-sm md:text-base font-semibold">{renderCTA}</div>
     </motion.div>
   ) : (
@@ -169,13 +153,12 @@ export const SetupConnection: React.FC<Props> = ({
       animate="show"
       exit="exit"
     >
-      <StepInformation title={title ?? content?.title} text={text ?? content?.text} />
+      <StepInformation title={title} text={text} />
       <div
         className="bg-contain position-relative bg-center bg-no-repeat h-full flex justify-center"
         style={{ backgroundImage: `url(${prependApiUrl(backgroundImage as string)})` }}
       >
         <div className="max-w-xs flex flex-col self-center items-center bg-white rounded-lg p-4  dark:text-black">
-          {onboardingText && <p className="text-center font-semibold mb-2">{onboardingText}</p>}
           <p className="text-center mb-2">Scan the QR Code below with your digital wallet.</p>
           <div>{renderQRCode(true)}</div>
           <div className="mt-5">

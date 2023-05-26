@@ -1,4 +1,5 @@
-import type { CredentialData, RequestedCredential, UseCase } from '../../../slices/types'
+/* eslint-disable */
+import type { CustomCharacter } from '../../../slices/types'
 
 import { motion } from 'framer-motion'
 import React from 'react'
@@ -11,43 +12,32 @@ import { RevocationItem } from './RevocationItem'
 import { UseCaseItem } from './UseCaseItem'
 
 export interface Props {
-  useCases: UseCase[]
+  currentCharacter: CustomCharacter
   issuedCredentials: any[]
   completedUseCaseSlugs: string[]
 }
 
-export const UseCaseContainer: React.FC<Props> = ({ useCases, completedUseCaseSlugs, issuedCredentials }) => {
+export const UseCaseContainer: React.FC<Props> = ({ currentCharacter, completedUseCaseSlugs, issuedCredentials }) => {
   const navigate = useNavigate()
 
   const startUseCase = (slug: string) => {
     navigate(`${basePath}/uc/${slug}`)
   }
 
-  const renderUseCases = useCases.map((item) => {
-    const issueCredentials = item.sections.flatMap((x) => x.issueCredentials).filter((y) => y) as CredentialData[]
+  const renderUseCases = currentCharacter.useCases.map((item) => {
 
-    const requiredCredentials = item.sections
-      .flatMap((x) => x.requestedCredentials)
-      .filter((o) => !issueCredentials.find((obj) => obj.name === o?.name))
-      .filter((y) => y) as RequestedCredential[]
+    const requiredCredentials: string[] = []
+    item.screens.forEach(screen => requiredCredentials.push(...(screen.requestOptions?.requestedCredentials.map(item => item.name) ?? [])))
 
-    // const isLocked = !Object.values(requiredCredentials).every((x) =>
-    //   issuedCredentials
-    //     .map((y) => {
-    //       const z = JsonTransformer.fromJSON(y, CredentialRecord)
-    //       return z.metadata.get<CredReqMetadata>('_internal/indyCredential')?.credentialDefinitionId
-    //     })
-    //     .includes(x.credentialDefinitionId)
-    // )
-
-    const isCompleted = completedUseCaseSlugs.includes(item.slug)
+    const isCompleted = completedUseCaseSlugs.includes(item.id)
 
     return (
       <UseCaseItem
-        key={item.slug}
-        slug={item.slug}
-        card={item.card}
+        key={item.id}
+        slug={item.id}
+        title={item.name}
         requiredCredentials={requiredCredentials}
+        currentCharacter={currentCharacter}
         start={startUseCase}
         isLocked={false}
         isCompleted={isCompleted}

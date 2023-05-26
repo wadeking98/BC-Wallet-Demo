@@ -10,7 +10,7 @@ export interface Item {
 
 export interface Props {
   title: string
-  items: Item[]
+  items: { name: string; icon?: string }[]
 }
 
 export const ActionCard: React.FC<Props> = ({ items, title }) => {
@@ -23,9 +23,11 @@ export const ActionCard: React.FC<Props> = ({ items, title }) => {
       {items.map((item) => {
         return (
           <div className="flex-1 flex flex-row items-center justify-between my-2" key={item.name}>
-            <div className="bg-bcgov-lightgrey dark:bg-bcgov-darkgrey rounded-lg p-2 w-12">
-              <img className="h-8 m-auto" src={prependApiUrl(item.icon)} alt="icon" />
-            </div>
+            {item.icon && (
+              <div className="bg-bcgov-lightgrey dark:bg-bcgov-darkgrey rounded-lg p-2 w-12">
+                <img className="h-8 m-auto" src={prependApiUrl(item.icon)} alt="icon" />
+              </div>
+            )}
             <div className="flex-1 px-4 justify-self-start dark:text-white">
               <p>{startCase(item.name)}</p>
             </div>

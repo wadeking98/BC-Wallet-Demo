@@ -1,4 +1,5 @@
-import type { Character } from '../../slices/types'
+/* eslint-disable */
+import type { Credential, CustomCharacter } from '../../slices/types'
 
 import { AnimatePresence, motion } from 'framer-motion'
 import { Item } from 'framer-motion/types/components/Reorder/Item'
@@ -15,12 +16,10 @@ import { useDarkMode } from '../../hooks/useDarkMode'
 import { clearConnection } from '../../slices/connection/connectionSlice'
 import { clearCredentials } from '../../slices/credentials/credentialsSlice'
 import { completeOnboarding } from '../../slices/onboarding/onboardingSlice'
-import { fetchAllUseCasesByCharId } from '../../slices/useCases/useCasesThunks'
 import { basePath } from '../../utils/BasePath'
 import { isConnected, isCredIssued } from '../../utils/Helpers'
 import {
   Progress,
-  OnboardingContent,
   addOnboardingProgress,
   removeOnboardingProgress,
 } from '../../utils/OnboardingUtils'
@@ -34,15 +33,16 @@ import { PickCharacter } from './steps/PickCharacter'
 import { SetupCompleted } from './steps/SetupCompleted'
 import { SetupConnection } from './steps/SetupConnection'
 import { SetupStart } from './steps/SetupStart'
+import { useCredentials } from '../../slices/credentials/credentialsSelectors'
+import { BasicSlide } from './steps/BasicSlide'
 
 export interface Props {
-  characters: Character[]
-  currentCharacter?: Character
+  characters: CustomCharacter[]
+  currentCharacter?: CustomCharacter
   connectionId?: string
   connectionState?: string
   invitationUrl?: string
-  onboardingStep: number
-  credentials: any[]
+  onboardingStep: string
 }
 
 export const OnboardingContainer: React.FC<Props> = ({
@@ -52,22 +52,21 @@ export const OnboardingContainer: React.FC<Props> = ({
   connectionId,
   connectionState,
   invitationUrl,
-  credentials,
 }) => {
   const darkMode = useDarkMode()
   const dispatch = useAppDispatch()
+  const { issuedCredentials } = useCredentials()
 
   const connectionCompleted = isConnected(connectionState as string)
-  const credentialsAccepted = Object.values(credentials).every((x) => isCredIssued(x.state))
+  const credentials = currentCharacter?.onboarding.find(step => step.screenId === onboardingStep)?.credentials
+  const credentialsAccepted = credentials?.every(cred => issuedCredentials.includes(cred.name))
 
-  const isBackDisabled =
-    [Progress.PICK_CHARACTER, Progress.ACCEPT_CREDENTIAL].includes(onboardingStep) ||
-    !!currentCharacter?.content?.[onboardingStep]?.isBackDisabled
+  const isBackDisabled = ['PICK_CHARACTER', 'ACCEPT_CREDENTIAL'].includes(onboardingStep)
   const isForwardDisabled =
-    (onboardingStep === Progress.RECEIVE_IDENTITY && !connectionCompleted) ||
-    (onboardingStep === Progress.ACCEPT_CREDENTIAL && !credentialsAccepted) ||
-    (onboardingStep === Progress.ACCEPT_CREDENTIAL && credentials.length === 0) ||
-    (onboardingStep === Progress.PICK_CHARACTER && !currentCharacter)
+    (onboardingStep.startsWith('CONNECT') && !connectionCompleted) ||
+    (onboardingStep === 'ACCEPT_CREDENTIAL' && !credentialsAccepted) ||
+    (onboardingStep === 'ACCEPT_CREDENTIAL' && credentials?.length === 0) ||
+    (onboardingStep === 'PICK_CHARACTER' && !currentCharacter)
 
   const jumpOnboardingPage = () => {
     addOnboardingProgress(dispatch, onboardingStep, currentCharacter, 2)
@@ -82,155 +81,103 @@ export const OnboardingContainer: React.FC<Props> = ({
   }
 
   //override title and text content to make them character dependant
-  const getCharacterContent = (progress: number) => {
-    const characterContent = currentCharacter?.content[progress]
+  const getCharacterContent = (progress: string) => {
+    const characterContent = currentCharacter?.onboarding.find((screen) => screen.screenId === progress)
     if (characterContent) {
-      return characterContent
+      return {
+        title: characterContent.title,
+        text: characterContent.text,
+        credentials: characterContent.credentials,
+        issuer_name: characterContent.issuer_name,
+        image: characterContent.image,
+      }
     }
     return { title: '', text: '' }
   }
   useEffect(() => {
-    if (onboardingStep === Progress.RECEIVE_IDENTITY && connectionCompleted) {
+    if (onboardingStep.startsWith('CONNECT') && connectionCompleted) {
       nextOnboardingPage()
     }
   }, [connectionState])
 
-  const getComponentToRender = (progress: Progress) => {
-    const { text, title } = getCharacterContent(progress)
-    const components = {
-      [Progress.PICK_CHARACTER]: (
+  const getComponentToRender = (progress: string) => {
+    const { text, title, credentials, issuer_name } = getCharacterContent(progress)
+    if (progress === 'PICK_CHARACTER') {
+      return (
         <PickCharacter
-          key={Progress.PICK_CHARACTER}
-          content={OnboardingContent[progress]}
+          key={progress}
           currentCharacter={currentCharacter}
           characters={characters}
           title={title}
           text={text}
-          textWithImage={currentCharacter?.content?.[progress]?.textWithImage?.map((contentItem) => {
-            return { ...contentItem, image: contentItem?.image ? prependApiUrl(contentItem.image) : '' }
-          })}
         />
-      ),
-      [Progress.SETUP_START]: <SetupStart key={Progress.SETUP_START} content={OnboardingContent[progress]} />,
-      [Progress.CHOOSE_WALLET]: (
-        <ChooseWallet
-          key={Progress.CHOOSE_WALLET}
-          content={OnboardingContent[progress]}
-          addOnboardingProgress={nextOnboardingPage}
-        />
-      ),
-      [Progress.RECEIVE_IDENTITY]: (
+      )
+    } else if (progress === 'SETUP_START') {
+      return <SetupStart key={progress} title={title} text={text} />
+    } else if (progress === 'CHOOSE_WALLET') {
+      return <ChooseWallet key={progress} title={title} text={text} addOnboardingProgress={nextOnboardingPage} />
+    } else if (progress.startsWith('CONNECT')) {
+      return (
         <SetupConnection
-          key={Progress.RECEIVE_IDENTITY}
-          content={OnboardingContent[progress]}
+          key={progress}
           connectionId={connectionId}
           skipIssuance={jumpOnboardingPage}
           nextSlide={nextOnboardingPage}
           invitationUrl={invitationUrl}
+          issuerName={issuer_name ?? 'Unknown'}
           newConnection
-          disableSkipConnection={currentCharacter?.disableSkipConnection}
+          disableSkipConnection={false}
           connectionState={connectionState}
-          currentCharacter={currentCharacter as Character}
           title={title}
           text={text}
-          backgroundImage={currentCharacter?.backgroundImage}
-          onboardingText={currentCharacter?.onboardingText}
+          backgroundImage={currentCharacter?.image}
         />
-      ),
-      [Progress.ACCEPT_CREDENTIAL]: currentCharacter && connectionId && (
+      )
+    } else if (progress.startsWith('ACCEPT') && credentials && connectionId) {
+      return (
         <AcceptCredential
-          key={Progress.ACCEPT_CREDENTIAL}
-          content={OnboardingContent[progress]}
+          key={progress}
           connectionId={connectionId}
           credentials={credentials}
-          credSelection={[Progress.ACCEPT_CREDENTIAL]}
           currentCharacter={currentCharacter}
           title={title}
           text={text}
         />
-      ),
-      [Progress.SETUP_COMPLETED]: currentCharacter && (
+      )
+    } else if (progress === 'SETUP_COMPLETED') {
+      return (
         <SetupCompleted
-          key={Progress.SETUP_COMPLETED}
-          content={OnboardingContent[progress]}
-          characterName={currentCharacter.name}
-          credName={text}
+          key={progress}
+          title={title}
+          text={text}
+          characterName={currentCharacter?.name ?? 'Unknown'}
         />
-      ),
+      )
+    } else {
+      return (
+        <BasicSlide title={title} text={text} />
+      )
     }
-
-    return components[progress]
   }
 
-  const getImageToRender = (progress: Progress) => {
-    const image = currentCharacter?.content?.[progress]?.image
-      ? prependApiUrl(currentCharacter.content[progress].image as string)
-      : OnboardingContent[progress].iconLight
-    const components = {
-      [Progress.PICK_CHARACTER]: <CharacterContent key={Progress.PICK_CHARACTER} character={currentCharacter} />,
-      [Progress.SETUP_START]: (
+  const getImageToRender = (progress: string) => {
+    const { image } = getCharacterContent(progress)
+    if (progress === 'PICK_CHARACTER') {
+      return <CharacterContent key={progress} character={currentCharacter} />
+    } else {
+      return (
         <motion.img
           variants={fadeExit}
           initial="hidden"
           animate="show"
           exit="exit"
           className="p-4"
-          key={Progress.SETUP_START}
-          src={image}
-          alt="BC Wallet"
+          key={progress}
+          src={prependApiUrl(image ?? "")}
+          alt={progress}
         />
-      ),
-      [Progress.CHOOSE_WALLET]: (
-        <motion.img
-          variants={fadeExit}
-          initial="hidden"
-          animate="show"
-          exit="exit"
-          className="p-4"
-          key={Progress.CHOOSE_WALLET}
-          src={darkMode ? OnboardingContent[progress].iconDark : OnboardingContent[progress].iconLight}
-          alt="choose wallet"
-        />
-      ),
-      [Progress.RECEIVE_IDENTITY]: (
-        <motion.img
-          variants={fadeExit}
-          initial="hidden"
-          animate="show"
-          exit="exit"
-          className="p-4"
-          key={Progress.RECEIVE_IDENTITY}
-          src={image}
-          alt="recieve identity"
-        />
-      ),
-      [Progress.ACCEPT_CREDENTIAL]: currentCharacter && connectionId && (
-        <motion.img
-          variants={fadeExit}
-          initial="hidden"
-          animate="show"
-          exit="exit"
-          className="p-4"
-          key={Progress.ACCEPT_CREDENTIAL}
-          src={image}
-          alt="accept credential"
-        />
-      ),
-      [Progress.SETUP_COMPLETED]: (
-        <motion.img
-          variants={fadeExit}
-          initial="hidden"
-          animate="show"
-          exit="exit"
-          className="p-4"
-          key={Progress.SETUP_COMPLETED}
-          src={image}
-          alt="setup completed"
-        />
-      ),
+      )
     }
-
-    return components[progress]
   }
 
   const navigate = useNavigate()
@@ -240,7 +187,6 @@ export const OnboardingContainer: React.FC<Props> = ({
       dispatch(clearCredentials())
       dispatch(clearConnection())
       dispatch(completeOnboarding())
-      dispatch(fetchAllUseCasesByCharId(currentCharacter.id))
     } else {
       // something went wrong so reset
       navigate(`${basePath}/`)

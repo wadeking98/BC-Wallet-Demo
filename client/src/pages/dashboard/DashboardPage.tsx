@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { AnimatePresence, motion } from 'framer-motion'
 import { track } from 'insights-js'
 import React, { useEffect } from 'react'
@@ -6,16 +7,12 @@ import { useNavigate } from 'react-router-dom'
 
 import { page } from '../../FramerAnimations'
 import { Modal } from '../../components/Modal'
-import { SmallButtonText } from '../../components/SmallButtonText'
-import { getConfiguration } from '../../configuration/configuration'
 import { useAppDispatch } from '../../hooks/hooks'
 import { useTitle } from '../../hooks/useTitle'
 import { useCurrentCharacter } from '../../slices/characters/charactersSelectors'
 import { useCredentials } from '../../slices/credentials/credentialsSelectors'
 import { usePreferences } from '../../slices/preferences/preferencesSelectors'
 import { setDemoCompleted } from '../../slices/preferences/preferencesSlice'
-import { useAllUseCases } from '../../slices/useCases/useCasesSelectors'
-import { fetchAllUseCasesByCharId } from '../../slices/useCases/useCasesThunks'
 import { basePath } from '../../utils/BasePath'
 import { Footer } from '../landing/components/Footer'
 import { NavBar } from '../landing/components/Navbar'
@@ -34,18 +31,10 @@ export const DashboardPage: React.FC = () => {
   const { issuedCredentials, revokableCredentials } = useCredentials()
   const { completedUseCaseSlugs, demoCompleted, completeCanceled, revocationEnabled } = usePreferences()
   const currentCharacter = useCurrentCharacter()
-  const useCases = useAllUseCases()
-  const { DashboardHeader, StepperItems } = getConfiguration(currentCharacter)
+  const useCases = currentCharacter?.useCases
 
   useEffect(() => {
-    // if user doesn't come from onboarding flow
-    if (useCases.length === 0 && currentCharacter) {
-      dispatch(fetchAllUseCasesByCharId(currentCharacter.id))
-    }
-  }, [])
-
-  useEffect(() => {
-    if (completedUseCaseSlugs.length !== 0 && completedUseCaseSlugs.length === useCases.length && !completeCanceled) {
+    if (completedUseCaseSlugs.length !== 0 && completedUseCaseSlugs.length === useCases?.length && !completeCanceled) {
       dispatch(setDemoCompleted(true))
     }
   }, [completedUseCaseSlugs, useCases])
@@ -85,7 +74,6 @@ export const DashboardPage: React.FC = () => {
       animate="show"
       exit="exit"
     >
-      <DashboardHeader steps={StepperItems} onboardingDone demoDone={demoCompleted} />
       <div className="mx-8 my-4">
         <NavBar />
       </div>
@@ -96,10 +84,10 @@ export const DashboardPage: React.FC = () => {
               <UseCaseContainer
                 issuedCredentials={issuedCredentials}
                 completedUseCaseSlugs={completedUseCaseSlugs}
-                useCases={useCases}
+                currentCharacter={currentCharacter}
               />
-              {revokableCredentials.length > 0 && revocationEnabled && (
-                <RevocationContainer revocationRecord={revokableCredentials} />
+              {revokableCredentials.length > 0 && revocationEnabled && currentCharacter.revocationInfo && (
+                <RevocationContainer revocationInfo={currentCharacter.revocationInfo} revocationRecord={revokableCredentials} />
               )}
             </div>
             <div className="flex flex-1 flex-col p-2 mx-2 dark:text-white">

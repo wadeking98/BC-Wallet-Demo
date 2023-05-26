@@ -1,3 +1,4 @@
+/* eslint-disable */
 import type { RevocationRecord } from '../types'
 import type { SerializedError } from '@reduxjs/toolkit'
 
@@ -13,8 +14,7 @@ import {
 } from './credentialsThunks'
 
 interface CredentialState {
-  credentials: any[]
-  issuedCredentials: any[]
+  issuedCredentials: string[]
   revokableCredentials: RevocationRecord[]
   isLoading: boolean
   isIssueCredentialLoading: boolean
@@ -22,7 +22,6 @@ interface CredentialState {
 }
 
 const initialState: CredentialState = {
-  credentials: [],
   issuedCredentials: [],
   revokableCredentials: [],
   isLoading: true,
@@ -35,8 +34,8 @@ const credentialSlice = createSlice({
   initialState,
   reducers: {
     clearCredentials: (state) => {
-      state.credentials.map((x) => isCredIssued(x.state) && state.issuedCredentials.push(x))
-      state.credentials = []
+      // state.credentials.map((x) => isCredIssued(x.state) && state.issuedCredentials.push(x))
+      // state.credentials = []
     },
   },
   extraReducers: (builder) => {
@@ -46,8 +45,18 @@ const credentialSlice = createSlice({
       })
       .addCase(fetchCredentialsByConId.fulfilled, (state, action) => {
         state.isLoading = false
+
         let revocationObjects: RevocationRecord[] = []
         if (action.payload.length) {
+          action.payload.forEach((cred: any) => {
+            if (isCredIssued(cred.state)) {
+              const credDefParts = cred.credential_definition_id.split(":")
+              const credName = credDefParts[credDefParts.length - 1]
+              if (!state.issuedCredentials.includes(credName)) {
+                state.issuedCredentials.push(credDefParts[credDefParts.length - 1])
+              }
+            }
+          });
           revocationObjects = action.payload
             .filter(
               (item: any) =>
@@ -63,7 +72,6 @@ const credentialSlice = createSlice({
             })
         }
         state.revokableCredentials.push(...revocationObjects)
-        state.credentials = action.payload
       })
       .addCase(issueCredential.rejected, (state, action) => {
         state.isIssueCredentialLoading = false
@@ -74,21 +82,20 @@ const credentialSlice = createSlice({
       })
       .addCase(issueCredential.fulfilled, (state, action) => {
         state.isIssueCredentialLoading = false
-        state.credentials.push(action.payload)
       })
       .addCase(fetchCredentialById.pending, (state) => {
         state.isLoading = true
       })
       .addCase(fetchCredentialById.fulfilled, (state, action) => {
         state.isLoading = false
-        const index = state.credentials.findIndex((cred) => cred.id == action.payload.id)
+        // const index = state.credentials.findIndex((cred) => cred.id == action.payload.id)
 
-        if (index == -1) {
-          state.credentials.push(action.payload)
-          return state
-        }
+        // if (index == -1) {
+        //   state.credentials.push(action.payload)
+        //   return state
+        // }
 
-        state.credentials[index] = action.payload
+        // state.credentials[index] = action.payload
         return state
       })
       .addCase(deleteCredentialById.pending, (state) => {
@@ -96,12 +103,12 @@ const credentialSlice = createSlice({
       })
       .addCase(deleteCredentialById.fulfilled, (state, action) => {
         state.isLoading = false
-        state.credentials.filter((cred) => cred.id !== action.payload)
+        // state.credentials.filter((cred) => cred.id !== action.payload)
         return state
       })
       .addCase('clearUseCase', (state) => {
-        state.credentials.map((x) => isCredIssued(x.state) && state.issuedCredentials.push(x))
-        state.credentials = []
+        // state.credentials.map((x) => isCredIssued(x.state) && state.issuedCredentials.push(x))
+        // state.credentials = []
         state.isLoading = false
       })
   },
