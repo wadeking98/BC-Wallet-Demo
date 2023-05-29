@@ -22,7 +22,6 @@ export const MainSection: React.FC = () => {
   const navigate = useNavigate()
 
   const handleStart = () => {
-    dispatch(setOnboardingStep("PICK_CHARACTER"))
     if (slug) {
       navigate(`${basePath}/demo/${slug}`)
     } else {
