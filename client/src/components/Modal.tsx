@@ -1,4 +1,3 @@
-/* eslint-disable */
 import { AnimatePresence, motion } from 'framer-motion'
 
 import { dropIn, standardFade } from '../FramerAnimations'
@@ -17,7 +16,17 @@ export interface Props {
   loadingText?: string
 }
 
-export const Modal: React.FC<Props> = ({ onOk, onCancel, title, description, okDisabled, okText, children, loading, loadingText }) => {
+export const Modal: React.FC<Props> = ({
+  onOk,
+  onCancel,
+  title,
+  description,
+  okDisabled,
+  okText,
+  children,
+  loading,
+  loadingText,
+}) => {
   return (
     <AnimatePresence>
       <motion.div
@@ -46,9 +55,7 @@ export const Modal: React.FC<Props> = ({ onOk, onCancel, title, description, okD
                   <h2 className="text-xl font-medium">{title}</h2>
                   <div className="mt-2">
                     <p className="text-sm">{description}</p>
-                    {loading && loadingText && (
-                      <p className="text-sm">{loadingText}</p>
-                    )}
+                    {loading && loadingText && <p className="text-sm">{loadingText}</p>}
                   </div>
                 </div>
               </div>

@@ -1,11 +1,10 @@
-/* eslint-disable */
+import type { CustomCharacter, ProgressBarStep } from '../../../slices/types'
 import type { StepperStep } from '../../../utils/OnboardingSteps'
 
 import React from 'react'
 
 import { useDarkMode } from '../../../hooks/useDarkMode'
 import { Progress } from '../../../utils/OnboardingUtils'
-import { CustomCharacter, ProgressBarStep } from '../../../slices/types'
 import { prependApiUrl } from '../../../utils/Url'
 
 export interface Props {
@@ -25,23 +24,30 @@ export const StepperItem: React.FC<Props> = ({ item, currentStep, currentCharact
     <>
       <div className="flex text-grey dark:text-white relative">
         <div
-          className={`rounded-full transition duration-1000 ease-in-out py-3 h-12 w-12 border-2 ${currentStepIsEqual
+          className={`rounded-full transition duration-1000 ease-in-out py-3 h-12 w-12 border-2 ${
+            currentStepIsEqual
               ? 'bg-white dark:bg-bcgov-black border-2 border-bcgov-blue dark:border-bcgov-gold '
               : `${currentStepIsLower && currentStepIsNotEqual ? 'grayscale' : ''}`
-            } ${currentStepIsHigher && currentStepIsNotEqual
+          } ${
+            currentStepIsHigher && currentStepIsNotEqual
               ? ' border-2 border-bcgov-blue dark:border-bcgov-gold bg-white dark:bg-bcgov-black text-white'
               : ''
-            } `}
+          } `}
         >
-          <img alt={item.name} src={darkMode ? prependApiUrl(item.iconDark) : prependApiUrl(item.iconLight)} className="m-auto h-5" />
+          <img
+            alt={item.name}
+            src={darkMode ? prependApiUrl(item.iconDark) : prependApiUrl(item.iconLight)}
+            className="m-auto h-5"
+          />
         </div>
       </div>
       {item.onboardingStep !== 'SETUP_COMPLETED' && (
         <div
-          className={`flex-auto  transition duration-300 ease-in-out  ${currentStepIsHigher && currentStepIsNotEqual
+          className={`flex-auto  transition duration-300 ease-in-out  ${
+            currentStepIsHigher && currentStepIsNotEqual
               ? ' border-t-4 border-bcgov-blue dark:border-bcgov-gold bg-bcgov-blue dark:bg-bcgov-gold'
               : ' border-t-2 border-grey bg-grey'
-            }`}
+          }`}
         />
       )}
     </>

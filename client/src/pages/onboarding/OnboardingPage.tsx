@@ -1,9 +1,9 @@
-/* eslint-disable */
 import { AnimatePresence, motion } from 'framer-motion'
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import { page } from '../../FramerAnimations'
+import { CustomUpload } from '../../components/CustomUpload'
 import { useAppDispatch } from '../../hooks/hooks'
 import { useTitle } from '../../hooks/useTitle'
 import { useCharacters } from '../../slices/characters/charactersSelectors'
@@ -15,13 +15,13 @@ import { useCredentials } from '../../slices/credentials/credentialsSelectors'
 import { clearCredentials } from '../../slices/credentials/credentialsSlice'
 import { useOnboarding } from '../../slices/onboarding/onboardingSelectors'
 import { completeOnboarding } from '../../slices/onboarding/onboardingSlice'
+import { usePreferences } from '../../slices/preferences/preferencesSelectors'
 import { fetchWallets } from '../../slices/wallets/walletsThunks'
 import { basePath } from '../../utils/BasePath'
-import { CustomUpload } from '../../components/CustomUpload'
-import { usePreferences } from '../../slices/preferences/preferencesSelectors'
 import { OnboardingComplete } from '../../utils/OnboardingUtils'
-import { Stepper } from './components/Stepper'
+
 import { OnboardingContainer } from './OnboardingContainer'
+import { Stepper } from './components/Stepper'
 
 export const OnboardingPage: React.FC = () => {
   useTitle('Get Started | BC Wallet Self-Sovereign Identity Demo')
@@ -39,7 +39,7 @@ export const OnboardingPage: React.FC = () => {
   const [mounted, setMounted] = useState(false)
 
   const allCharacters = [...characters]
-  if(uploadedCharacter){
+  if (uploadedCharacter) {
     allCharacters.push(uploadedCharacter)
   }
 
@@ -57,10 +57,9 @@ export const OnboardingPage: React.FC = () => {
     }
   }, [dispatch])
 
-
   return (
     <>
-      {characterUploadEnabled && <CustomUpload/>}
+      {characterUploadEnabled && <CustomUpload />}
       <motion.div
         variants={page}
         initial="hidden"

@@ -1,4 +1,3 @@
-/* eslint-disable */
 import type { Credential, CredentialData, CustomCharacter } from '../../../slices/types'
 import type { Content } from '../../../utils/OnboardingUtils'
 
@@ -8,6 +7,7 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { fade, fadeX } from '../../../FramerAnimations'
+import { getOrCreateCredDefId } from '../../../api/CredentialApi'
 import { ActionCTA } from '../../../components/ActionCTA'
 import { Loader } from '../../../components/Loader'
 import { Modal } from '../../../components/Modal'
@@ -26,7 +26,6 @@ import { isCredIssued } from '../../../utils/Helpers'
 import { FailedRequestModal } from '../components/FailedRequestModal'
 import { StarterCredentials } from '../components/StarterCredentials'
 import { StepInformation } from '../components/StepInformation'
-import { getOrCreateCredDefId } from '../../../api/CredentialApi'
 
 export interface Props {
   connectionId: string
@@ -34,7 +33,7 @@ export interface Props {
   currentCharacter?: CustomCharacter
   title: string
   text: string
-  onCredentialAccepted?: ()=>void
+  onCredentialAccepted?: () => void
 }
 
 export const AcceptCredential: React.FC<Props> = ({
@@ -43,7 +42,7 @@ export const AcceptCredential: React.FC<Props> = ({
   currentCharacter,
   title,
   text,
-  onCredentialAccepted
+  onCredentialAccepted,
 }) => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
@@ -60,8 +59,7 @@ export const AcceptCredential: React.FC<Props> = ({
   const showFailedRequestModal = () => setIsFailedRequestModalOpen(true)
   const closeFailedRequestModal = () => setIsFailedRequestModalOpen(false)
 
-
-  const credentialsAccepted = credentials.every(cred => issuedCredentials.includes(cred.name))
+  const credentialsAccepted = credentials.every((cred) => issuedCredentials.includes(cred.name))
 
   useEffect(() => {
     if (credentials.length > 0) {
@@ -82,8 +80,8 @@ export const AcceptCredential: React.FC<Props> = ({
     }
   }, [currentCharacter, connectionId])
 
-  useEffect(()=>{
-    if(credentialsAccepted && onCredentialAccepted){
+  useEffect(() => {
+    if (credentialsAccepted && onCredentialAccepted) {
       onCredentialAccepted()
     }
   }, [credentialsAccepted])

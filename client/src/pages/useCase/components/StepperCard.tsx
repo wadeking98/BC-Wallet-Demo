@@ -1,4 +1,3 @@
-/* eslint-disable */
 import type { StepperItem, UseCaseScreen } from '../../../slices/types'
 
 import { motion } from 'framer-motion'
@@ -21,7 +20,7 @@ export const StepperCard: React.FC<Props> = ({ steps, currentStep }) => {
         <div className="flex flex-col">
           <div
             className="rounded-full h-7 w-7 p-3.5 ring-2 border-2 border-white dark:border-bcgov-darkgrey ring-bcgov-lightgrey dark:ring-bcgov-black mx-2 transition transition-all duration-300 "
-            style={{ background: currentStepIsEqual ? "rgb(146, 227, 169)" : "rgb(201, 237, 211)" }}
+            style={{ background: currentStepIsEqual ? 'rgb(146, 227, 169)' : 'rgb(201, 237, 211)' }}
           />
           {idx !== progress.length - 1 && (
             <div className="border-l-2 border-bcgov-lightgrey dark:border-bcgov-black border-rounded h-full m-auto" />

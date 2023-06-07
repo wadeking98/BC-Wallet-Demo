@@ -1,14 +1,13 @@
-/* eslint-disable */
 import type { CustomCharacter, RevocationInfoItem, RevocationRecord } from '../../../slices/types'
 
 import { motion } from 'framer-motion'
+import { startCase } from 'lodash'
 import React, { useState } from 'react'
 
 import { dashboardTitle, rowContainer } from '../../../FramerAnimations'
 import { revokeCredential } from '../../../api/RevocationApi'
 
 import { RevocationItem } from './RevocationItem'
-import { startCase } from 'lodash'
 
 export interface Props {
   revocationRecord: RevocationRecord[]
@@ -21,7 +20,9 @@ export const RevocationContainer: React.FC<Props> = ({ revocationRecord, revocat
   const [menuExpanded, setMenuExpanded] = useState<boolean>(false)
   const renderUseCases = revocationRecord.map((item) => {
     const revocationKey = item.revocationRegId.split(':')[6]
-    const revocationDescription = revocationInfo.find(infoItem => startCase(infoItem.credentialName) === startCase(revocationKey))
+    const revocationDescription = revocationInfo.find(
+      (infoItem) => startCase(infoItem.credentialName) === startCase(revocationKey)
+    )
     return (
       <RevocationItem
         title={revocationDescription?.title}

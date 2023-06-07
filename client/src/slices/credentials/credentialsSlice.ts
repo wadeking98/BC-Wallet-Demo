@@ -1,4 +1,3 @@
-/* eslint-disable */
 import type { RevocationRecord } from '../types'
 import type { SerializedError } from '@reduxjs/toolkit'
 
@@ -50,13 +49,13 @@ const credentialSlice = createSlice({
         if (action.payload.length) {
           action.payload.forEach((cred: any) => {
             if (isCredIssued(cred.state)) {
-              const credDefParts = cred.credential_definition_id.split(":")
+              const credDefParts = cred.credential_definition_id.split(':')
               const credName = credDefParts[credDefParts.length - 1]
               if (!state.issuedCredentials.includes(credName)) {
                 state.issuedCredentials.push(credDefParts[credDefParts.length - 1])
               }
             }
-          });
+          })
           revocationObjects = action.payload
             .filter(
               (item: any) =>

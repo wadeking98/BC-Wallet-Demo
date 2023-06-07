@@ -1,4 +1,3 @@
-/* eslint-disable */
 import { AnimatePresence, motion } from 'framer-motion'
 import { KBarProvider, KBarPortal, KBarPositioner, KBarAnimator, KBarSearch } from 'kbar'
 import { useEffect, useState } from 'react'
@@ -9,7 +8,12 @@ import { confettiFade } from '../FramerAnimations'
 import { useAppDispatch } from '../hooks/hooks'
 import { fetchAllCharacters } from '../slices/characters/charactersThunks'
 import { usePreferences } from '../slices/preferences/preferencesSelectors'
-import { resetDashboard, setDarkMode, toggleRevocation, toggleCharacterUpload } from '../slices/preferences/preferencesSlice'
+import {
+  resetDashboard,
+  setDarkMode,
+  toggleRevocation,
+  toggleCharacterUpload,
+} from '../slices/preferences/preferencesSlice'
 import { fetchWallets } from '../slices/wallets/walletsThunks'
 
 import { basePath } from './BasePath'
@@ -57,7 +61,7 @@ export const KBar: React.FC = ({ children }) => {
       keywords: 'toggle character upload',
       perform: () => {
         dispatch(toggleCharacterUpload())
-      }
+      },
     },
     {
       id: 'resetDashboard',

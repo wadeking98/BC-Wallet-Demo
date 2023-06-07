@@ -1,4 +1,3 @@
-/* eslint-disable */
 import { motion } from 'framer-motion'
 import React from 'react'
 import { FiExternalLink, FiArrowRight } from 'react-icons/fi'
@@ -7,11 +6,11 @@ import { useNavigate, useParams } from 'react-router-dom'
 
 import { buttonHover, fade, fadeDelay, landingTitle } from '../../../FramerAnimations'
 import landingScreen from '../../../assets/light/landing-screen.svg'
+import { useAppDispatch } from '../../../hooks/hooks'
 import { useDarkMode } from '../../../hooks/useDarkMode'
+import { setOnboardingStep } from '../../../slices/onboarding/onboardingSlice'
 import { basePath } from '../../../utils/BasePath'
 import { addOnboardingProgress } from '../../../utils/OnboardingUtils'
-import { useAppDispatch } from '../../../hooks/hooks'
-import { setOnboardingStep } from '../../../slices/onboarding/onboardingSlice'
 
 export const MainSection: React.FC = () => {
   const isMobile = useMediaQuery({ query: '(max-width: 768px)' })

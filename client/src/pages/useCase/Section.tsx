@@ -1,4 +1,3 @@
-/* eslint-disable */
 import type { ConnectionState } from '../../slices/connection/connectionSlice'
 import type { UseCaseScreen } from '../../slices/types'
 
@@ -83,7 +82,7 @@ export const Section: React.FC<Props> = ({
   const [completed, setCompleted] = useState(false)
   const { slug } = useParams()
 
-  const verifier = section.find(x => x.verifier !== undefined)?.verifier ?? { name: "Unkown" }
+  const verifier = section.find((x) => x.verifier !== undefined)?.verifier ?? { name: 'Unkown' }
 
   useEffect(() => {
     if (completed && slug) {
@@ -159,9 +158,7 @@ export const Section: React.FC<Props> = ({
         <StartContainer
           key={step.screenId}
           step={step}
-          entity={
-            verifier
-          }
+          entity={verifier}
           requestedCredentials={step.requestOptions?.requestedCredentials}
         />
       )
@@ -192,7 +189,7 @@ export const Section: React.FC<Props> = ({
               <AnimatePresence initial={false} exitBeforeEnter onExitComplete={() => null}>
                 {step.screenId.startsWith('INFO') && <StepInformation key={step.screenId} step={step} />}
                 {step.screenId.startsWith('CONNECTION') && (
-                  <StepConnection key={step.screenId} step={step} connection={connection} />
+                  <StepConnection newConnection={true} key={step.screenId} step={step} connection={connection} />
                 )}
                 {/* {step.screenId.startsWith("CREDENTIAL") && connection.id && section.issueCredentials && (
                   <StepCredential
@@ -204,17 +201,20 @@ export const Section: React.FC<Props> = ({
                     proof={proof}
                   />
                 )} */}
-                {step.screenId.startsWith('PROOF') && !step.screenId.startsWith('PROOF_OOB') && step.requestOptions && connection.id && (
-                  <StepProof
-                    key={step.screenId}
-                    entityName={verifier.name}
-                    proof={proof}
-                    step={step}
-                    connectionId={connection.id}
-                    requestedCredentials={step.requestOptions.requestedCredentials}
-                  />
-                )}
-                {step.screenId.startsWith('PROOF_OOB') && !step.screenId.startsWith('PROOF') && step.requestOptions && (
+                {step.screenId.startsWith('PROOF') &&
+                  !step.screenId.startsWith('PROOF_OOB') &&
+                  step.requestOptions &&
+                  connection.id && (
+                    <StepProof
+                      key={step.screenId}
+                      entityName={verifier.name}
+                      proof={proof}
+                      step={step}
+                      connectionId={connection.id}
+                      requestedCredentials={step.requestOptions.requestedCredentials}
+                    />
+                  )}
+                {step.screenId.startsWith('PROOF_OOB') && step.requestOptions && (
                   <StepProofOOB
                     key={step.screenId}
                     proof={proof}

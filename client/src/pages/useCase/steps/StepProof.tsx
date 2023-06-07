@@ -1,4 +1,3 @@
-/* eslint-disable */
 import type { CredentialRequest, UseCaseScreen } from '../../../slices/types'
 
 import { motion } from 'framer-motion'
@@ -89,6 +88,9 @@ export const StepProof: React.FC<Props> = ({ proof, step, connectionId, requeste
   useEffect(() => {
     if (!proof) {
       createProofRequest()
+    }
+    return () => {
+      dispatch({ type: 'clearProof' })
     }
   }, [])
 

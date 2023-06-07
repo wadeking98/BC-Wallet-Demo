@@ -1,4 +1,3 @@
-/* eslint-disable */
 import type { Credential, CustomCharacter } from '../../slices/types'
 
 import { AnimatePresence, motion } from 'framer-motion'
@@ -14,27 +13,23 @@ import { Modal } from '../../components/Modal'
 import { useAppDispatch } from '../../hooks/hooks'
 import { useDarkMode } from '../../hooks/useDarkMode'
 import { clearConnection } from '../../slices/connection/connectionSlice'
+import { useCredentials } from '../../slices/credentials/credentialsSelectors'
 import { clearCredentials } from '../../slices/credentials/credentialsSlice'
 import { completeOnboarding } from '../../slices/onboarding/onboardingSlice'
 import { basePath } from '../../utils/BasePath'
 import { isConnected, isCredIssued } from '../../utils/Helpers'
-import {
-  Progress,
-  addOnboardingProgress,
-  removeOnboardingProgress,
-} from '../../utils/OnboardingUtils'
+import { Progress, addOnboardingProgress, removeOnboardingProgress } from '../../utils/OnboardingUtils'
 import { prependApiUrl } from '../../utils/Url'
 
 import { CharacterContent } from './components/CharacterContent'
 import { OnboardingBottomNav } from './components/OnboardingBottomNav'
 import { AcceptCredential } from './steps/AcceptCredential'
+import { BasicSlide } from './steps/BasicSlide'
 import { ChooseWallet } from './steps/ChooseWallet'
 import { PickCharacter } from './steps/PickCharacter'
 import { SetupCompleted } from './steps/SetupCompleted'
 import { SetupConnection } from './steps/SetupConnection'
 import { SetupStart } from './steps/SetupStart'
-import { useCredentials } from '../../slices/credentials/credentialsSelectors'
-import { BasicSlide } from './steps/BasicSlide'
 
 export interface Props {
   characters: CustomCharacter[]
@@ -58,8 +53,8 @@ export const OnboardingContainer: React.FC<Props> = ({
   const { issuedCredentials } = useCredentials()
 
   const connectionCompleted = isConnected(connectionState as string)
-  const credentials = currentCharacter?.onboarding.find(step => step.screenId === onboardingStep)?.credentials
-  const credentialsAccepted = credentials?.every(cred => issuedCredentials.includes(cred.name))
+  const credentials = currentCharacter?.onboarding.find((step) => step.screenId === onboardingStep)?.credentials
+  const credentialsAccepted = credentials?.every((cred) => issuedCredentials.includes(cred.name))
 
   const isBackDisabled = ['PICK_CHARACTER', 'ACCEPT_CREDENTIAL'].includes(onboardingStep)
   const isForwardDisabled =
@@ -146,17 +141,10 @@ export const OnboardingContainer: React.FC<Props> = ({
       )
     } else if (progress === 'SETUP_COMPLETED') {
       return (
-        <SetupCompleted
-          key={progress}
-          title={title}
-          text={text}
-          characterName={currentCharacter?.name ?? 'Unknown'}
-        />
+        <SetupCompleted key={progress} title={title} text={text} characterName={currentCharacter?.name ?? 'Unknown'} />
       )
     } else {
-      return (
-        <BasicSlide title={title} text={text} />
-      )
+      return <BasicSlide title={title} text={text} />
     }
   }
 
@@ -173,7 +161,7 @@ export const OnboardingContainer: React.FC<Props> = ({
           exit="exit"
           className="p-4"
           key={progress}
-          src={prependApiUrl(image ?? "")}
+          src={prependApiUrl(image ?? '')}
           alt={progress}
         />
       )

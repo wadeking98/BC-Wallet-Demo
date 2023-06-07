@@ -1,4 +1,3 @@
-/* eslint-disable */
 import type { CustomCharacter } from '../slices/types'
 import type { Dispatch } from 'react'
 
@@ -86,4 +85,3 @@ export const removeOnboardingProgress = (
     },
   })
 }
-
