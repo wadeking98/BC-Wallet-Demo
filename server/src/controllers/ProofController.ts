@@ -1,7 +1,7 @@
 import { Body, Delete, Get, JsonController, Param, Post } from 'routing-controllers'
 import { Service } from 'typedi'
 
-import { tractionRequest } from '../utils/tractionHelper'
+import { tractionBaseUrl, tractionRequest } from '../utils/tractionHelper'
 
 @JsonController('/proofs')
 @Service()
@@ -15,6 +15,29 @@ export class ProofController {
       // pass
     }
     return proofRecord
+  }
+
+  @Post('/requestProofOOB')
+  public async requestProofOOB(@Body() params: any) {
+    const proofRecord = (await tractionRequest.post('/present-proof/create-request', params)).data
+
+    const template = {
+      accept: ['didcomm/aip1', 'didcomm/aip2;env=rfc19'],
+      alias: 'BC Wallet Showcase',
+      attachments: [
+        {
+          id: proofRecord.presentation_exchange_id,
+          type: 'present-proof',
+        },
+      ],
+      handshake_protocols: ['https://didcomm.org/didexchange/1.0'],
+      metadata: {},
+      my_label: 'Proof Invitation',
+      protocol_version: '1.1',
+      use_public_did: true,
+    }
+    const invite = (await tractionRequest.post('/out-of-band/create-invitation', template)).data
+    return { proofUrl: invite.invitation_url, proof: proofRecord }
   }
 
   @Post('/requestProof')

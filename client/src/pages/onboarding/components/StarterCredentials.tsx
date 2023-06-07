@@ -1,4 +1,3 @@
-/* eslint-disable */
 import type { Credential, CredentialData } from '../../../slices/types'
 
 import { motion } from 'framer-motion'
@@ -7,16 +6,16 @@ import React from 'react'
 
 import { fadeX } from '../../../FramerAnimations'
 import { StateIndicator } from '../../../components/StateIndicator'
+import { useCredentials } from '../../../slices/credentials/credentialsSelectors'
 import { isCredIssued } from '../../../utils/Helpers'
 import { prependApiUrl } from '../../../utils/Url'
-import { useCredentials } from '../../../slices/credentials/credentialsSelectors'
 
 export interface Props {
   credentials: Credential[]
 }
 
 export const StarterCredentials: React.FC<Props> = ({ credentials }) => {
-  const {issuedCredentials } = useCredentials()
+  const { issuedCredentials } = useCredentials()
 
   return (
     <motion.div

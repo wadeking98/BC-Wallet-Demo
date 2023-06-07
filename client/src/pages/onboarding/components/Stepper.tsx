@@ -1,4 +1,4 @@
-/* eslint-disable */
+import type { CustomCharacter } from '../../../slices/types'
 
 import { motion } from 'framer-motion'
 import React from 'react'
@@ -6,7 +6,6 @@ import React from 'react'
 import { topDown } from '../../../FramerAnimations'
 
 import { StepperItem } from './StepperItem'
-import { CustomCharacter } from '../../../slices/types'
 
 export interface Props {
   onboardingStep: string
@@ -26,7 +25,6 @@ export const Stepper: React.FC<Props> = ({ currentCharacter, onboardingStep }) =
       exit="exit"
       className="mb-4 w-full lg:w-2/3 sxl:w-1/2 select-none"
     >
-
       <div className="mx-2 p-2 md:mx-4 md:p-4">
         <div className="flex items-center">
           {renderSteps && (

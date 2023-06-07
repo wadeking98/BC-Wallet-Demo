@@ -23,9 +23,10 @@ import { StepInfo } from '../components/StepInfo'
 export interface Props {
   step: UseCaseScreen
   connection: ConnectionState
+  newConnection?: boolean
 }
 
-export const StepConnection: React.FC<Props> = ({ step, connection }) => {
+export const StepConnection: React.FC<Props> = ({ step, connection, newConnection }) => {
   const dispatch = useAppDispatch()
   const { id, state, invitationUrl } = connection
   const isCompleted = isConnected(state as string)
@@ -33,7 +34,7 @@ export const StepConnection: React.FC<Props> = ({ step, connection }) => {
   const isMobile = useMediaQuery({ query: '(max-width: 768px)' })
 
   useEffect(() => {
-    if (!isCompleted) dispatch(createInvitation(step.verifier?.name ?? 'Unknown'))
+    if (!isCompleted || newConnection) dispatch(createInvitation(step.verifier?.name ?? 'Unknown'))
   }, [])
 
   useInterval(

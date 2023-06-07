@@ -1,4 +1,3 @@
-/* eslint-disable */
 import type { CustomCharacter } from '../../../slices/types'
 
 import { motion } from 'framer-motion'
@@ -25,9 +24,15 @@ export const UseCaseContainer: React.FC<Props> = ({ currentCharacter, completedU
   }
 
   const renderUseCases = currentCharacter.useCases.map((item) => {
-
     const requiredCredentials: string[] = []
-    item.screens.forEach(screen => requiredCredentials.push(...(screen.requestOptions?.requestedCredentials.map(item => item.name) ?? [])))
+    // item.screens.forEach(screen => requiredCredentials.push(...(screen.requestOptions?.requestedCredentials.map(item => item.name) ?? [])))
+    item.screens.forEach((screen) =>
+      screen.requestOptions?.requestedCredentials.forEach((cred) => {
+        if (!requiredCredentials.includes(cred.name)) {
+          requiredCredentials.push(cred.name)
+        }
+      })
+    )
 
     const isCompleted = completedUseCaseSlugs.includes(item.id)
 

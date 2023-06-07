@@ -1,4 +1,5 @@
-/* eslint-disable */
+import type { CustomUseCase } from '../../slices/types'
+
 import { AnimatePresence, motion } from 'framer-motion'
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
@@ -17,7 +18,6 @@ import { useProof } from '../../slices/proof/proofSelectors'
 import { clearProof } from '../../slices/proof/proofSlice'
 import { useSection } from '../../slices/section/sectionSelectors'
 import { setSection } from '../../slices/section/sectionSlice'
-import { CustomUseCase } from '../../slices/types'
 import { useUseCaseState } from '../../slices/useCases/useCasesSelectors'
 import { nextSection } from '../../slices/useCases/useCasesSlice'
 import { basePath } from '../../utils/BasePath'

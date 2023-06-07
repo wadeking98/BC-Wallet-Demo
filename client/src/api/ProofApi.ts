@@ -43,10 +43,12 @@ export const createOOBProofRequest = (data: ProofRequestData): Promise<AxiosResp
     requested_predicates: Object.assign({}, data.predicates),
     version: '1.0.0',
     name: data.requestOptions?.name,
+    auto_verify: true,
+    auto_present: true,
   }
 
-  return apiCall.post(`/demo/proofs/request-outofband-proof`, {
-    proofRequest: proofRequest,
+  return apiCall.post(`/demo/proofs/requestProofOOB`, {
+    proof_request: proofRequest,
     comment: data.requestOptions?.comment,
   })
 }

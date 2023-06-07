@@ -1,4 +1,3 @@
-/* eslint-disable */
 import type { UseCaseScreen } from '../../slices/types'
 
 import { motion } from 'framer-motion'
@@ -15,18 +14,14 @@ import { StepperCard } from './components/StepperCard'
 export interface Props {
   steps: UseCaseScreen[]
   currentStep: string
-  entity: {name:string, icon?:string}
+  entity: { name: string; icon?: string }
   showLeaveModal(): void
 }
 
-export const SideView: React.FC<Props> = ({
-  steps,
-  currentStep,
-  entity,
-  showLeaveModal,
-}) => {
+export const SideView: React.FC<Props> = ({ steps, currentStep, entity, showLeaveModal }) => {
   const isMobile = useMediaQuery({ query: '(max-width: 976px)' })
-  const requestedCredentials = steps.find(step => step.requestOptions?.requestedCredentials)?.requestOptions?.requestedCredentials
+  const requestedCredentials = steps.find((step) => step.requestOptions?.requestedCredentials)?.requestOptions
+    ?.requestedCredentials
 
   return (
     <motion.div
@@ -59,10 +54,7 @@ export const SideView: React.FC<Props> = ({
     >
       <ConnectionCard icon={entity.icon} entity={entity.name} />
       {requestedCredentials && <ProofCard requestedItems={requestedCredentials} />}
-      <StepperCard
-        steps={steps}
-        currentStep={currentStep}
-      />
+      <StepperCard steps={steps} currentStep={currentStep} />
       <motion.button
         onClick={showLeaveModal}
         variants={fadeDelay}

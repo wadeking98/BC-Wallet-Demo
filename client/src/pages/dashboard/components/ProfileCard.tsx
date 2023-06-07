@@ -1,4 +1,3 @@
-/* eslint-disable */
 import type { CustomCharacter } from '../../../slices/types'
 
 import { motion } from 'framer-motion'
@@ -43,7 +42,8 @@ export const ProfileCard: React.FC<Props> = ({ currentCharacter }) => {
 
         <h1 className="font-bold text-lg flex flex-1 justify-center mb-4">{currentCharacter.name}</h1>
         <p className="text-sm xl:text-base">
-          {currentCharacter.desctription ?? currentCharacter?.onboarding.find((screen) => screen.screenId === 'PICK_CHARACTER')?.text}
+          {currentCharacter.desctription ??
+            currentCharacter?.onboarding.find((screen) => screen.screenId === 'PICK_CHARACTER')?.text}
         </p>
         <div className="flex flex-1 items-end justify-end mt-2">
           <SmallButtonText text="LEAVE" onClick={() => setIsChangeModalOpen(true)} disabled={false} />

@@ -4,6 +4,8 @@ import axios from 'axios'
 
 export let agentKey = ''
 
+export const tractionBaseUrl = process.env.TRACTION_URL ?? ''
+
 export const tractionApiKeyUpdaterInit = async () => {
   // get traction api key
   const tractionBaseUrl = process.env.TRACTION_URL ?? ''

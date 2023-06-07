@@ -1,4 +1,3 @@
-/* eslint-disable */
 import { AnimatePresence, motion } from 'framer-motion'
 import { track } from 'insights-js'
 import React, { useEffect } from 'react'
@@ -87,7 +86,10 @@ export const DashboardPage: React.FC = () => {
                 currentCharacter={currentCharacter}
               />
               {revokableCredentials.length > 0 && revocationEnabled && currentCharacter.revocationInfo && (
-                <RevocationContainer revocationInfo={currentCharacter.revocationInfo} revocationRecord={revokableCredentials} />
+                <RevocationContainer
+                  revocationInfo={currentCharacter.revocationInfo}
+                  revocationRecord={revokableCredentials}
+                />
               )}
             </div>
             <div className="flex flex-1 flex-col p-2 mx-2 dark:text-white">

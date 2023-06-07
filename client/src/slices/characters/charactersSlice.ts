@@ -1,11 +1,11 @@
-/* eslint-disable */
 import type { CustomCharacter } from '../types'
 import type { PayloadAction } from '@reduxjs/toolkit'
 
 import { createSlice } from '@reduxjs/toolkit'
 
-import { fetchAllCharacters, fetchCharacterById } from './charactersThunks'
 import { getOrCreateCredDefId } from '../../api/CredentialApi'
+
+import { fetchAllCharacters, fetchCharacterById } from './charactersThunks'
 
 interface CharactersState {
   characters: CustomCharacter[]
@@ -27,13 +27,15 @@ const characterSlice = createSlice({
   name: 'character',
   initialState,
   reducers: {
-    uploadCharacter: (state, action: PayloadAction<{ character: CustomCharacter, callback?: () => void }>) => {
+    uploadCharacter: (state, action: PayloadAction<{ character: CustomCharacter; callback?: () => void }>) => {
       state.uploadedCharacter = action.payload.character
       const promises: Promise<any>[] = []
       state.isUploading = true
-      action.payload.character.onboarding.filter(screen => screen.credentials).forEach(screen => screen.credentials?.forEach(cred => promises.push(getOrCreateCredDefId(cred))))
+      action.payload.character.onboarding
+        .filter((screen) => screen.credentials)
+        .forEach((screen) => screen.credentials?.forEach((cred) => promises.push(getOrCreateCredDefId(cred))))
       Promise.all(promises).then(() => {
-        if (action.payload.callback){
+        if (action.payload.callback) {
           action.payload.callback()
         }
       })

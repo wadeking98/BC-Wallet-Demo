@@ -25,6 +25,9 @@ const proofSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      .addCase('clearProof', (state) => {
+        state.proof = undefined
+      })
       .addCase(createProof.pending, (state) => {
         state.isLoading = true
       })
@@ -38,8 +41,11 @@ const proofSlice = createSlice({
       .addCase(createProofOOB.fulfilled, (state, action) => {
         state.isLoading = false
         // const url = action.payload.message.split('?')[0] + '?id=' + action.payload.proofRecord.id
-        state.proofUrl = action.payload.message
-        state.proof = action.payload.proofRecord
+        state.proofUrl = action.payload.proofUrl
+        state.proof = action.payload.proof
+        if (action.payload.proof.presentation_exchange_id) {
+          state.proof = { ...action.payload.proof, id: action.payload.proof?.presentation_exchange_id }
+        }
       })
       .addCase(fetchProofById.pending, (state) => {
         state.isLoading = true

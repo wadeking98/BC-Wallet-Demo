@@ -1,4 +1,3 @@
-/* eslint-disable */
 import { AnimatePresence } from 'framer-motion'
 import { useEffect } from 'react'
 import { Routes, Route, useLocation, useNavigate, Navigate } from 'react-router-dom'

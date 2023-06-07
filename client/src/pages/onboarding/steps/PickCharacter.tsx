@@ -1,4 +1,3 @@
-/* eslint-disable */
 import type { CustomCharacter, TextWithImage } from '../../../slices/types'
 import type { Content } from '../../../utils/OnboardingUtils'
 

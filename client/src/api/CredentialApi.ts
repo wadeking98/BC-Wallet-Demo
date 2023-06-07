@@ -1,10 +1,13 @@
-/* eslint-disable */
 import type { Credential, CredentialData } from '../slices/types'
 import type { AxiosResponse } from 'axios'
 
 import { apiCall } from './BaseUrl'
 
-export const issueCredential = async (connectionId: string, cred: Credential, credDefId: string): Promise<AxiosResponse> => {
+export const issueCredential = async (
+  connectionId: string,
+  cred: Credential,
+  credDefId: string
+): Promise<AxiosResponse> => {
   return apiCall.post(`/demo/credentials/offerCredential`, {
     connection_id: connectionId,
     cred_def_id: credDefId,
@@ -15,7 +18,11 @@ export const issueCredential = async (connectionId: string, cred: Credential, cr
   })
 }
 
-export const issueDeepCredential = async (connectionId: string, cred: Credential, credDefId: string): Promise<AxiosResponse> => {
+export const issueDeepCredential = async (
+  connectionId: string,
+  cred: Credential,
+  credDefId: string
+): Promise<AxiosResponse> => {
   return apiCall.post(`/demo/deeplink/offerCredential`, {
     connection_id: connectionId,
     cred_def_id: credDefId,
@@ -26,7 +33,7 @@ export const issueDeepCredential = async (connectionId: string, cred: Credential
   })
 }
 
-export const getOrCreateCredDefId = async (credential: Credential) =>{
+export const getOrCreateCredDefId = async (credential: Credential) => {
   return apiCall.post(`/demo/credentials/getOrCreateCredDef`, credential)
 }
 

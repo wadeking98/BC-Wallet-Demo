@@ -1,4 +1,3 @@
-/* eslint-disable */
 import { motion } from 'framer-motion'
 import { track } from 'insights-js'
 import React, { useEffect } from 'react'
