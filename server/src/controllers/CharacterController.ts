@@ -5,18 +5,9 @@ import { Inject, Service } from 'typedi'
 
 import characters from '../content/Characters'
 
-import { CredDefService } from './CredDefService'
-
 @JsonController('/characters')
 @Service()
 export class CharacterController {
-  @Inject()
-  private service: CredDefService
-
-  public constructor(service: CredDefService) {
-    this.service = service
-  }
-
   /**
    * Retrieve character by id
    */

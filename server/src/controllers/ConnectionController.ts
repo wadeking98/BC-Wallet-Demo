@@ -3,8 +3,6 @@ import { Inject, Service } from 'typedi'
 
 import { tractionRequest } from '../utils/tractionHelper'
 
-import { CredDefService } from './CredDefService'
-
 @JsonController('/connections')
 @Service()
 export class ConnectionController {

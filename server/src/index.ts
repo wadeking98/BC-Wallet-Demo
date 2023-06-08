@@ -5,7 +5,6 @@ import { json, static as stx } from 'express'
 import { createExpressServer, useContainer } from 'routing-controllers'
 import { Container } from 'typedi'
 
-import { CredDefService } from './controllers/CredDefService'
 import { tractionApiKeyUpdaterInit, tractionRequest } from './utils/tractionHelper'
 
 process.on('unhandledRejection', (error) => {
@@ -26,10 +25,6 @@ const run = async () => {
     cors: true,
     routePrefix: '/demo',
   })
-
-  const credDefService = new CredDefService()
-  useContainer(Container)
-  Container.set(CredDefService, credDefService)
 
   app.use(json())
 
