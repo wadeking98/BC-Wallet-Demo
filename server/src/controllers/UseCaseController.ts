@@ -3,19 +3,10 @@ import { Inject, Service } from 'typedi'
 
 import characters from '../content/Characters'
 
-import { CredDefService } from './CredDefService'
-
 const useCases = characters.map((c) => c.useCases)
 @JsonController('/usecases')
 @Service()
 export class UseCaseController {
-  @Inject()
-  private service: CredDefService
-
-  public constructor(service: CredDefService) {
-    this.service = service
-  }
-
   /**
    * Retrieve use case by slug
    */
