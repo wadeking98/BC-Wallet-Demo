@@ -1,4 +1,5 @@
 import type { CustomCharacter } from '../src/content/types'
+import { getDateInt } from '../src/utils/dateint'
 export const lawyerCustom: CustomCharacter = {
   name: 'Joyce',
   type: 'Lawyer',
@@ -171,11 +172,11 @@ export const lawyerCustom: CustomCharacter = {
             },
             {
               name: 'expiry_date_dateint',
-              value: '23052030',
+              value: `${getDateInt(5)}`,
             },
             {
               name: 'birthdate_dateint',
-              value: '23051993',
+              value: `${getDateInt(-19)}`,
             },
           ],
         },
