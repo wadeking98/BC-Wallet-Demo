@@ -6,6 +6,19 @@ import { tractionRequest } from '../utils/tractionHelper'
 @JsonController('/credentials')
 @Service()
 export class CredentialController {
+  @Get('/connId/:connId')
+  public async getCredByConnId(@Param('connId') connId: string) {
+    const res = (
+      await tractionRequest.get('/issue-credential/records', {
+        params: {
+          connection_id: connId,
+        },
+      })
+    ).data
+
+    return res
+  }
+
   @Post('/getOrCreateCredDef')
   public async getOrCreateCredDef(@Body() credential: Credential) {
     const schemas = (

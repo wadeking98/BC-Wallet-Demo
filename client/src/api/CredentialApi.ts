@@ -38,7 +38,7 @@ export const getOrCreateCredDefId = async (credential: Credential) => {
 }
 
 export const getDemoCredentialsByConnectionId = async (connectionId: string) => {
-  return apiCall.get(`/demo/credentials/${connectionId}`)
+  return apiCall.get(`/demo/credentials/connId/${connectionId}`)
 }
 
 export const getCredentialById = (credentialId: string): Promise<AxiosResponse> => {

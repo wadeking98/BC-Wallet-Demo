@@ -44,10 +44,10 @@ const credentialSlice = createSlice({
       })
       .addCase(fetchCredentialsByConId.fulfilled, (state, action) => {
         state.isLoading = false
-
+        const results = action.payload.results
         let revocationObjects: RevocationRecord[] = []
-        if (action.payload.length) {
-          action.payload.forEach((cred: any) => {
+        if (results?.length) {
+          results.forEach((cred: any) => {
             if (isCredIssued(cred.state)) {
               const credDefParts = cred.credential_definition_id.split(':')
               const credName = credDefParts[credDefParts.length - 1]
@@ -56,7 +56,7 @@ const credentialSlice = createSlice({
               }
             }
           })
-          revocationObjects = action.payload
+          revocationObjects = results
             .filter(
               (item: any) =>
                 item.revoc_reg_id !== undefined &&
