@@ -7,7 +7,6 @@ import React from 'react'
 import { fadeX } from '../../../FramerAnimations'
 import { StateIndicator } from '../../../components/StateIndicator'
 import { useCredentials } from '../../../slices/credentials/credentialsSelectors'
-import { isCredIssued } from '../../../utils/Helpers'
 import { prependApiUrl } from '../../../utils/Url'
 
 export interface Props {
@@ -16,7 +15,7 @@ export interface Props {
 
 export const StarterCredentials: React.FC<Props> = ({ credentials }) => {
   const { issuedCredentials } = useCredentials()
-
+  const issuedCredentialsStartCase = issuedCredentials.map((name) => startCase(name))
   return (
     <motion.div
       variants={fadeX}
@@ -29,7 +28,7 @@ export const StarterCredentials: React.FC<Props> = ({ credentials }) => {
         <hr className="text-bcgov-lightgrey" />
       </div>
       {credentials.map((item) => {
-        const completed = issuedCredentials.includes(item.name)
+        const completed = issuedCredentials.includes(item.name) || issuedCredentialsStartCase.includes(item.name)
 
         return (
           <div key={item.name} className="flex-1 flex flex-row items-center justify-between my-2">

@@ -1,8 +1,8 @@
-import type { Credential, CredentialData, CustomCharacter } from '../../../slices/types'
-import type { Content } from '../../../utils/OnboardingUtils'
+import type { Credential, CustomCharacter } from '../../../slices/types'
 
 import { AnimatePresence, motion } from 'framer-motion'
 import { track } from 'insights-js'
+import { startCase } from 'lodash'
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
@@ -16,13 +16,11 @@ import { useInterval } from '../../../hooks/useInterval'
 import { useConnection } from '../../../slices/connection/connectionSelectors'
 import { useCredentials } from '../../../slices/credentials/credentialsSelectors'
 import {
-  deleteCredentialById,
   fetchCredentialsByConId,
   issueCredential,
   issueDeepCredential,
 } from '../../../slices/credentials/credentialsThunks'
 import { basePath } from '../../../utils/BasePath'
-import { isCredIssued } from '../../../utils/Helpers'
 import { FailedRequestModal } from '../components/FailedRequestModal'
 import { StarterCredentials } from '../components/StarterCredentials'
 import { StepInformation } from '../components/StepInformation'
@@ -59,7 +57,10 @@ export const AcceptCredential: React.FC<Props> = ({
   const showFailedRequestModal = () => setIsFailedRequestModalOpen(true)
   const closeFailedRequestModal = () => setIsFailedRequestModalOpen(false)
 
-  const credentialsAccepted = credentials.every((cred) => issuedCredentials.includes(cred.name))
+  const issuedCredentialsStartCase = issuedCredentials.map((name) => startCase(name))
+  const credentialsAccepted = credentials.every(
+    (cred) => issuedCredentials.includes(cred.name) || issuedCredentialsStartCase.includes(cred.name)
+  )
 
   useEffect(() => {
     if (credentials.length > 0) {
