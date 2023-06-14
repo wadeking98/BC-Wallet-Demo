@@ -14,7 +14,7 @@ export const lawyerCustom: CustomCharacter = {
         'Revoking your credentials does not mean that is it unusable. Services may accept revoked credentials especially for information that is unchanging, such as your birthday.',
     },
     {
-      credentialName: 'Member Card',
+      credentialName: 'member_card',
       credentialIcon: '/public/lawyer2/icon-lawyer2.svg',
       title: 'Revoke your LSBC Member Card',
       description:
@@ -91,8 +91,8 @@ export const lawyerCustom: CustomCharacter = {
       image: '/public/lawyer2/onboarding/lawyerCredPhone.svg',
       credentials: [
         {
-          name: 'Member Card',
-          version: '1.1',
+          name: 'member_card',
+          version: '1.51',
           icon: '/public/lawyer2/connection/lsbc-logo.png',
           attributes: [
             {
@@ -217,7 +217,7 @@ export const lawyerCustom: CustomCharacter = {
             requestedCredentials: [
               {
                 icon: '/public/lawyer2/connection/lsbc-logo.png',
-                name: 'Member Card',
+                name: 'member_card',
                 properties: ['Given Name', 'Surname', 'PPID'],
               },
               {
