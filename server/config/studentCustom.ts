@@ -1,4 +1,5 @@
 import type { CustomCharacter } from '../src/content/types'
+import { getDateInt } from '../src/utils/dateint'
 export const studentCustom: CustomCharacter = {
   name: 'Alice',
   type: 'Student',
@@ -90,7 +91,7 @@ export const studentCustom: CustomCharacter = {
             },
             {
               name: 'expiry_date',
-              value: '20270517',
+              value: `${getDateInt(4)}`,
             },
           ],
         },
@@ -135,7 +136,7 @@ export const studentCustom: CustomCharacter = {
                 predicates: {
                   name: 'expiry_date',
                   type: '>=',
-                  value: 20230517,
+                  value: getDateInt(),
                 },
               },
             ],
