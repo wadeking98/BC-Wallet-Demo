@@ -117,7 +117,7 @@ export const AcceptCredential: React.FC<Props> = ({
     () => {
       if (document.visibilityState === 'visible') dispatch(fetchCredentialsByConId(connectionId))
     },
-    !credentialsAccepted ? 1000 : null
+    !credentialsAccepted ? 3000 : null
   )
 
   const routeError = () => {
