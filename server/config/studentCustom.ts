@@ -1,4 +1,5 @@
 import type { CustomCharacter } from '../src/content/types'
+
 import { getDateInt } from '../src/utils/dateint'
 export const studentCustom: CustomCharacter = {
   name: 'Alice',

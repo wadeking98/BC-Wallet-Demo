@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react'
 
 import { CheckMark } from '../../../components/Checkmark'
 import { Loader } from '../../../components/Loader'
+import { isDataUrl } from '../../../utils/Helpers'
 import { getAttributesFromProof } from '../../../utils/ProofUtils'
 import { prependApiUrl } from '../../../utils/Url'
 
@@ -50,12 +51,21 @@ export const ProofAttributesCard: React.FC<Props> = ({ entityName, requestedCred
             const value = values.find((x) => x.name === prop)?.value
             return (
               <div key={prop} className="flex flex-row">
-                <p className="flex-1-1 text-sm bg-bcgov-lightgrey dark:bg-bcgov-darkgrey p-1 px-2 rounded-lg my-1 md:m-2">
-                  {prop.charAt(0).toUpperCase() + prop.slice(1)}
-                </p>
-                <p className="flex-1 text-sm bg-white dark:bg-grey p-1 px-2 rounded-lg m-2 truncate">
-                  {value && prop.includes('Date') ? formatDate(value) : value}
-                </p>
+                <div
+                  style={{ justifySelf: 'center', alignSelf: 'center' }}
+                  className="flex-1-1 text-sm bg-bcgov-lightgrey dark:bg-bcgov-darkgrey p-1 px-2 rounded-lg my-1 md:m-2"
+                >
+                  <p>{prop.charAt(0).toUpperCase() + prop.slice(1)}</p>
+                </div>
+                {isDataUrl(value) ? (
+                  <div className="text-sm bg-white dark:bg-grey p-1 px-2 rounded-lg m-2 truncate">
+                    <img src={value} style={{ height: 100 }} />
+                  </div>
+                ) : (
+                  <p className="flex-1 text-sm bg-white dark:bg-grey p-1 px-2 rounded-lg m-2 truncate">
+                    {value && prop.includes('Date') ? formatDate(value) : value}
+                  </p>
+                )}
               </div>
             )
           })}
