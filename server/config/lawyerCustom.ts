@@ -1,4 +1,5 @@
 import type { CustomCharacter } from '../src/content/types'
+
 import { getDateInt } from '../src/utils/dateint'
 export const lawyerCustom: CustomCharacter = {
   name: 'Joyce',
@@ -232,6 +233,52 @@ export const lawyerCustom: CustomCharacter = {
           screenId: 'STEP_END',
           title: "You're done!",
           text: 'You’ve proved to Court Services Branch that you’re a practising lawyer from B.C. and your identity using your Person credential. You can now access court materials online from the comfort of your own home. It only took a few seconds and you revealed minimal information that Court Services Branch could easily and automatically trust.',
+          image: '/public/lawyer2/onboarding/lawyer2Success.svg',
+        },
+      ],
+    },
+    {
+      id: 'courtLibrary',
+      name: 'Court Library',
+      screens: [
+        {
+          screenId: 'START',
+          title: 'Gain access to the Court Library in person',
+          text: 'Joyce wants to gain access to the court library using her digital credentials. The court library requires that joyce provides photo identification.',
+          image: '/public/lawyer2/useCases/courtServices/bothCreds.svg',
+        },
+        {
+          screenId: 'CONNECTION',
+          title: 'Start proving you’re a lawyer',
+          text: 'As Joyce you’re now ready to prove you’re a practising lawyer in B.C. to the court library. Scan the QR code.',
+          image: '/public/lawyer2/useCases/courtServices/courtServicesOverlay.png',
+          verifier: { name: 'Court Library', icon: '/public/lawyer2/connection/lsbc-logo.png' },
+        },
+        {
+          screenId: 'PROOF',
+          title: 'Confirm the information to send',
+          text: 'BC Wallet will now ask you to confirm what to send. Notice how you’re not sharing your entire credential. The Court Library is requesting that you prove only what is needed.',
+          requestOptions: {
+            title: 'Court Library (DEMO) Request',
+            text: 'Court Library (DEMO) would like some of your personal information.',
+            requestedCredentials: [
+              {
+                icon: '/public/lawyer2/connection/lsbc-logo.png',
+                name: 'member_card',
+                properties: ['Given Name', 'Surname', 'PPID'],
+              },
+              {
+                icon: '/public/lawyer2/connection/bc-logo.png',
+                name: 'Person',
+                properties: ['given_names', 'family_name', 'picture'],
+              },
+            ],
+          },
+        },
+        {
+          screenId: 'STEP_END',
+          title: "You're done!",
+          text: 'You’ve proved to the Court Library that you’re a practising lawyer from B.C. and your identity using your Person credential. You can now access court materials online from the comfort of your own home. It only took a few seconds and you revealed minimal information that Court Services Branch could easily and automatically trust.',
           image: '/public/lawyer2/onboarding/lawyer2Success.svg',
         },
       ],
