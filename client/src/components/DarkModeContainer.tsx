@@ -1,4 +1,4 @@
-import { useMediaQuery } from 'react-responsive'
+import { isMobile } from 'react-device-detect'
 
 import { useAppDispatch } from '../hooks/hooks'
 import { useDarkMode } from '../hooks/useDarkMode'
@@ -9,8 +9,6 @@ import { DarkModeSwitch, MiniDarkModeSwitch } from './DarkModeSwitcher'
 export const DarkModeContainer: React.FC = () => {
   const dispatch = useAppDispatch()
   const darkMode = useDarkMode()
-
-  const isMobile = useMediaQuery({ query: '(max-width: 768px)' })
 
   const handleDarkMode = () => {
     if (darkMode) {

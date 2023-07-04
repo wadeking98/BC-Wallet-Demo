@@ -2,8 +2,8 @@ import type { CredentialRequest, UseCaseScreen } from '../../../slices/types'
 
 import { motion } from 'framer-motion'
 import React from 'react'
+import { isMobile } from 'react-device-detect'
 import { FiLogOut } from 'react-icons/fi'
-import { useMediaQuery } from 'react-responsive'
 import { useNavigate } from 'react-router-dom'
 
 import { fadeExit } from '../../../FramerAnimations'
@@ -24,7 +24,7 @@ export interface Props {
 export const StartContainer: React.FC<Props> = ({ entity, requestedCredentials, step }) => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
-  const isMobile = useMediaQuery({ query: '(max-width: 976px)' })
+
   const style = isMobile ? { minHeight: '85vh' } : { maxHeight: '940px' }
 
   const leave = () => {

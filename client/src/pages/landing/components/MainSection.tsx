@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
 import React from 'react'
+import { isMobile } from 'react-device-detect'
 import { FiExternalLink, FiArrowRight } from 'react-icons/fi'
-import { useMediaQuery } from 'react-responsive'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import { buttonHover, fade, fadeDelay, landingTitle } from '../../../FramerAnimations'
@@ -13,7 +13,6 @@ import { basePath } from '../../../utils/BasePath'
 import { addOnboardingProgress } from '../../../utils/OnboardingUtils'
 
 export const MainSection: React.FC = () => {
-  const isMobile = useMediaQuery({ query: '(max-width: 768px)' })
   const darkMode = useDarkMode()
   const dispatch = useAppDispatch()
   const { slug } = useParams()

@@ -1,8 +1,8 @@
 import { motion } from 'framer-motion'
 import { track } from 'insights-js'
 import React, { useEffect } from 'react'
+import { isMobile } from 'react-device-detect'
 import { FiExternalLink } from 'react-icons/fi'
-import { useMediaQuery } from 'react-responsive'
 import { useNavigate } from 'react-router-dom'
 
 import { fade, fadeX } from '../../../FramerAnimations'
@@ -53,8 +53,7 @@ export const SetupConnection: React.FC<Props> = ({
   onConnectionComplete,
 }) => {
   const deepLink = `bcwallet://aries_connection_invitation?${invitationUrl?.split('?')[1]}`
-  const isMobile = useMediaQuery({ query: '(max-width: 768px)' })
-  const isTablet = useMediaQuery({ query: '(max-width: 1400px)' })
+
   const dispatch = useAppDispatch()
 
   const isCompleted = isConnected(connectionState as string)
@@ -109,9 +108,9 @@ export const SetupConnection: React.FC<Props> = ({
     <motion.div variants={fade} key="openWallet">
       <>
         <p>
-          Scan the QR-code with your <a href={deepLink}>wallet {(isMobile || isTablet) && 'or'} </a>
+          Scan the QR-code with your <a href={deepLink}>wallet {isMobile && 'or'} </a>
         </p>
-        {(isMobile || isTablet) && (
+        {isMobile && (
           <a onClick={handleDeepLink} className="underline underline-offset-2 mt-2">
             open in wallet
             <FiExternalLink className="inline pb-1" />
@@ -130,7 +129,7 @@ export const SetupConnection: React.FC<Props> = ({
     </motion.div>
   )
 
-  return !backgroundImage || isMobile || isTablet ? (
+  return !backgroundImage || isMobile ? (
     <motion.div
       className="flex flex-col h-full  dark:text-white"
       variants={fadeX}

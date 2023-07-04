@@ -1,6 +1,5 @@
 import { track } from 'insights-js'
 import React, { useEffect } from 'react'
-import { useMediaQuery } from 'react-responsive'
 
 import { isConnected } from '../utils/Helpers'
 

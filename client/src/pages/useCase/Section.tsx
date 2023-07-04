@@ -4,7 +4,7 @@ import type { UseCaseScreen } from '../../slices/types'
 import { AnimatePresence, motion } from 'framer-motion'
 import { track } from 'insights-js'
 import React, { useEffect, useState } from 'react'
-import { useMediaQuery } from 'react-responsive'
+import { isMobile } from 'react-device-detect'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import { fadeExit } from '../../FramerAnimations'
@@ -49,7 +49,6 @@ export const Section: React.FC<Props> = ({
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
 
-  const isMobile = useMediaQuery({ query: '(max-width: 976px)' })
   const style = isMobile ? { height: '700px' } : { minHeight: '800px', height: '80vh' }
 
   const [isBackDisabled, setIsBackDisabled] = useState(false)
