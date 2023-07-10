@@ -4,8 +4,8 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { Item } from 'framer-motion/types/components/Reorder/Item'
 import { track } from 'insights-js'
 import React, { useEffect, useState } from 'react'
+import { isMobile } from 'react-device-detect'
 import { FiLogOut } from 'react-icons/fi'
-import { useMediaQuery } from 'react-responsive'
 import { useNavigate } from 'react-router-dom'
 
 import { fadeDelay, fadeExit } from '../../FramerAnimations'
@@ -182,8 +182,6 @@ export const OnboardingContainer: React.FC<Props> = ({
     }
   }
 
-  const isMobile = useMediaQuery({ query: '(max-width: 976px)' })
-
   const style = isMobile ? { minHeight: '85vh' } : { minHeight: '680px', height: '75vh', maxHeight: '940px' }
 
   const [leaveModal, setLeaveModal] = useState(false)
@@ -202,7 +200,7 @@ export const OnboardingContainer: React.FC<Props> = ({
       className="flex flex-row h-full justify-between bg-white dark:bg-bcgov-darkgrey rounded-lg p-2 w-full sxl:w-5/6 shadow"
       style={style}
     >
-      <div className="flex flex-col grid justify-items-end w-full lg:w-2/3 px-8">
+      <div className={`flex flex-col grid justify-items-end ${isMobile ? 'w-full' : 'w-2/3'} px-8`}>
         <div className="w-full">
           <motion.button onClick={showLeaveModal} variants={fadeDelay}>
             <FiLogOut className="inline h-12 cursor-pointer dark:text-white" />
@@ -218,9 +216,11 @@ export const OnboardingContainer: React.FC<Props> = ({
           onboardingCompleted={onboardingCompleted}
         />
       </div>
-      <div className="bg-bcgov-white dark:bg-bcgov-black hidden lg:flex lg:w-1/3 rounded-r-lg flex-col justify-center h-full select-none">
-        <AnimatePresence exitBeforeEnter>{getImageToRender(onboardingStep)}</AnimatePresence>
-      </div>
+      {!isMobile && (
+        <div className="bg-bcgov-white dark:bg-bcgov-black hidden lg:flex lg:w-1/3 rounded-r-lg flex-col justify-center h-full select-none">
+          <AnimatePresence exitBeforeEnter>{getImageToRender(onboardingStep)}</AnimatePresence>
+        </div>
+      )}
       {leaveModal && (
         <Modal title={LEAVE_MODAL_TITLE} description={LEAVE_MODAL_DESCRIPTION} onOk={leave} onCancel={closeLeave} />
       )}

@@ -3,7 +3,7 @@ import type { UseCaseScreen } from '../../../slices/types'
 import { motion } from 'framer-motion'
 import { track } from 'insights-js'
 import React, { useEffect, useState } from 'react'
-import { useMediaQuery } from 'react-responsive'
+import { isMobile } from 'react-device-detect'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import { fadeExit } from '../../../FramerAnimations'
@@ -21,7 +21,7 @@ export const EndContainer: React.FC<Props> = ({ step }) => {
   const navigate = useNavigate()
   const [completed, setCompleted] = useState(false)
   const { slug } = useParams()
-  const isMobile = useMediaQuery({ query: '(max-width: 976px)' })
+
   const style = isMobile ? { minHeight: '85vh' } : { maxHeight: '940px' }
 
   useEffect(() => {

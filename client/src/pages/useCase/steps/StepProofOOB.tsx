@@ -2,8 +2,8 @@ import type { CredentialRequest, UseCaseScreen } from '../../../slices/types'
 
 import { AnimatePresence, motion } from 'framer-motion'
 import React, { useEffect } from 'react'
+import { isMobile, isBrowser } from 'react-device-detect'
 import { FiExternalLink } from 'react-icons/fi'
-import { useMediaQuery } from 'react-responsive'
 
 import { fade, fadeExit, fadeX } from '../../../FramerAnimations'
 import { useAppDispatch } from '../../../hooks/hooks'
@@ -82,8 +82,6 @@ export const StepProofOOB: React.FC<Props> = ({ proof, proofUrl, step, requested
   )
 
   const deepLink = `bcwallet://aries_connection_invitation?${proofUrl?.split('?')[1]}`
-  const isMobile = useMediaQuery({ query: '(max-width: 768px)' })
-  const isLarge = useMediaQuery({ query: '(max-width: 1242px)' })
 
   const renderCTA = !proofReceived ? (
     <motion.div variants={fade} key="openWallet">
@@ -117,7 +115,7 @@ export const StepProofOOB: React.FC<Props> = ({ proof, proofUrl, step, requested
             className="flex flex-row m-auto p-4 bg-bcgov-white rounded-lg"
           >
             {proofUrl && proof && (
-              <QR value={`${JSON.stringify(proofUrl)}`} size={isMobile ? 192 : isLarge ? 212 : 256} />
+              <QR value={`${JSON.stringify(proofUrl)}`} size={isMobile ? 192 : isBrowser ? 212 : 256} />
             )}
 
             {/* <div id="qr-target" /> */}

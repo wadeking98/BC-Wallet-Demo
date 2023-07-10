@@ -3,8 +3,8 @@ import type { UseCaseScreen } from '../../../slices/types'
 
 import { motion } from 'framer-motion'
 import React, { useEffect } from 'react'
+import { isMobile } from 'react-device-detect'
 import { FiExternalLink } from 'react-icons/fi'
-import { useMediaQuery } from 'react-responsive'
 
 import { fade, fadeX } from '../../../FramerAnimations'
 import { apiCall } from '../../../api/BaseUrl'
@@ -31,7 +31,6 @@ export const StepConnection: React.FC<Props> = ({ step, connection, newConnectio
   const { id, state, invitationUrl } = connection
   const isCompleted = isConnected(state as string)
   const deepLink = `bcwallet://aries_connection_invitation?${invitationUrl?.split('?')[1]}`
-  const isMobile = useMediaQuery({ query: '(max-width: 768px)' })
 
   useEffect(() => {
     if (!isCompleted || newConnection) dispatch(createInvitation(step.verifier?.name ?? 'Unknown'))

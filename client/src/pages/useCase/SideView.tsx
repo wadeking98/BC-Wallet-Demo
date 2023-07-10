@@ -2,8 +2,8 @@ import type { UseCaseScreen } from '../../slices/types'
 
 import { motion } from 'framer-motion'
 import React from 'react'
+import { isMobile } from 'react-device-detect'
 import { FiLogOut } from 'react-icons/fi'
-import { useMediaQuery } from 'react-responsive'
 
 import { fadeDelay } from '../../FramerAnimations'
 
@@ -19,7 +19,6 @@ export interface Props {
 }
 
 export const SideView: React.FC<Props> = ({ steps, currentStep, entity, showLeaveModal }) => {
-  const isMobile = useMediaQuery({ query: '(max-width: 976px)' })
   const requestedCredentials = steps.find((step) => step.requestOptions?.requestedCredentials)?.requestOptions
     ?.requestedCredentials
 

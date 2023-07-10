@@ -1,7 +1,8 @@
+/* eslint-disable */
 import { motion } from 'framer-motion'
 import React from 'react'
+import { isMobile } from 'react-device-detect'
 import { FiExternalLink } from 'react-icons/fi'
-import { useMediaQuery } from 'react-responsive'
 
 import { fade, fadeDelay } from '../FramerAnimations'
 
@@ -11,8 +12,6 @@ interface Props {
 }
 
 export const ActionCTA: React.FC<Props> = ({ isCompleted, onFail }) => {
-  const isMobile = useMediaQuery({ query: '(max-width: 768px)' })
-
   const renderCTA = !isCompleted ? (
     <motion.div variants={fade} key="openWallet">
       <p>

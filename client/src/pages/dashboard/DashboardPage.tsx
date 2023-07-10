@@ -1,7 +1,7 @@
 import { AnimatePresence, motion } from 'framer-motion'
 import { track } from 'insights-js'
 import React, { useEffect } from 'react'
-import { useMediaQuery } from 'react-responsive'
+import { isMobile } from 'react-device-detect'
 import { useNavigate } from 'react-router-dom'
 
 import { page } from '../../FramerAnimations'
@@ -37,8 +37,6 @@ export const DashboardPage: React.FC = () => {
       dispatch(setDemoCompleted(true))
     }
   }, [completedUseCaseSlugs, useCases])
-
-  const isMobile = useMediaQuery({ query: '(max-width: 976px)' })
 
   const ERROR_TITLE = `Woops...`
   const ERROR_DESCRIPTION = `That's not gone well. Please restart the demo.`

@@ -2,7 +2,7 @@ import type { Wallet } from '../../../slices/types'
 
 import { AnimatePresence, motion } from 'framer-motion'
 import React, { useState } from 'react'
-import { useMediaQuery } from 'react-responsive'
+import { isMobile, isBrowser } from 'react-device-detect'
 
 import { fadeX, rowContainer } from '../../../FramerAnimations'
 import { useWallets } from '../../../slices/wallets/walletsSelectors'
@@ -48,9 +48,7 @@ export const ChooseWallet: React.FC<Props> = ({ title, text, addOnboardingProgre
     }, 300)
   }
 
-  const isLarge = useMediaQuery({ query: '(max-width: 976px)' })
-
-  const style = isLarge ? { marginBottom: '1rem', maxHeight: '35vh' } : { maxHeight: '34vh' }
+  const style = isBrowser ? { marginBottom: '1rem', maxHeight: '35vh' } : { maxHeight: '34vh' }
 
   return (
     <motion.div variants={fadeX} initial="hidden" animate="show" exit="exit">
