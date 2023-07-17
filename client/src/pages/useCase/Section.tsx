@@ -14,7 +14,7 @@ import { Modal } from '../../components/Modal'
 import { SmallButton } from '../../components/SmallButton'
 import { useAppDispatch } from '../../hooks/hooks'
 import { useCaseCompleted } from '../../slices/preferences/preferencesSlice'
-import { nextStep, prevStep } from '../../slices/useCases/useCasesSlice'
+import { nextStep, prevStep, resetStep } from '../../slices/useCases/useCasesSlice'
 import { basePath } from '../../utils/BasePath'
 import { isConnected, isCredIssued } from '../../utils/Helpers'
 
@@ -66,6 +66,7 @@ export const Section: React.FC<Props> = ({
   const leave = () => {
     navigate(`${basePath}/dashboard`)
     dispatch({ type: 'clearUseCase' })
+    dispatch(resetStep())
   }
 
   const prev = () => dispatch(prevStep())
@@ -88,6 +89,7 @@ export const Section: React.FC<Props> = ({
       dispatch(useCaseCompleted(slug))
       dispatch({ type: 'clearUseCase' })
       navigate(`${basePath}/dashboard`)
+      dispatch(resetStep())
       track({
         id: 'use-case-completed',
         parameters: {
