@@ -93,7 +93,7 @@ export const lawyerCustom: CustomCharacter = {
       credentials: [
         {
           name: 'member_card',
-          version: '1.51',
+          version: '1.53',
           icon: '/public/lawyer2/connection/lsbc-logo.png',
           attributes: [
             {
@@ -135,7 +135,7 @@ export const lawyerCustom: CustomCharacter = {
       credentials: [
         {
           name: 'Person',
-          version: '1.1',
+          version: '1.2',
           icon: '/public/lawyer2/connection/bc-logo.png',
           attributes: [
             {
