@@ -79,7 +79,7 @@ export const studentCustom: CustomCharacter = {
       credentials: [
         {
           name: 'student_card',
-          version: '1.0',
+          version: '1.2',
           icon: '/public/student/icon-student.svg',
           attributes: [
             {
