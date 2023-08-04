@@ -29,11 +29,12 @@
     # Enable templates module - required for 
     templates
 
-    # Openly exposed health check endpoint for OpenShift
-    respond /health 200
-
     vars basePath "/digital-trust/showcase/"
-
+    
+    # Health check for openshift
+    handle /health {
+        respond 200
+    }
     handle /digital-trust/showcase/demo {
         redir {vars.basePath}
     }
@@ -41,7 +42,7 @@
 
          # Required for SPA router to work
         @spa_router {
-            not path /digital-trust/showcase/demo/* /digital-trust/showcase/server/last-reset /digital-trust/showcase/public/* /digital-trust/showcase/qr
+            not path /digital-trust/showcase/demo/* /digital-trust/showcase/server/* /digital-trust/showcase/agent/ready /digital-trust/showcase/public/* /digital-trust/showcase/qr
             file {
                 try_files {path} /index.html
             }
@@ -50,7 +51,7 @@
 
         # pass API requests to backend
         @pass {
-            path /digital-trust/showcase/demo/* /digital-trust/showcase/server/last-reset /digital-trust/showcase/public/* /digital-trust/showcase/qr
+            path /digital-trust/showcase/demo/* /digital-trust/showcase/server/* /digital-trust/showcase/agent/ready /digital-trust/showcase/public/* /digital-trust/showcase/qr
         }
 
         # Proxy requests to API service
