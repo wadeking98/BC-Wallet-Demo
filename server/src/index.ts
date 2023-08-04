@@ -23,21 +23,21 @@ const run = async () => {
   const app: Express = createExpressServer({
     controllers: [__dirname + '/controllers/**/*.ts', __dirname + '/controllers/**/*.js'],
     cors: true,
-    routePrefix: '/demo',
+    routePrefix: '/digital-trust/showcase/demo',
   })
 
   app.use(json())
 
-  app.use('/public', stx(__dirname + '/public'))
+  app.use('/digital-trust/showcase/public', stx(__dirname + '/public'))
 
-  app.get('/server/last-reset', async (req, res) => {
+  app.get('/digital-trust/showcase/server/last-reset', async (req, res) => {
     res.send(new Date())
   })
 
   // Redirect QR code scans for installing bc wallet to the apple or google play store
   const androidUrl = 'https://play.google.com/store/apps/details?id=ca.bc.gov.BCWallet'
   const appleUrl = 'https://apps.apple.com/us/app/bc-wallet/id1587380443'
-  app.get('/qr', async (req, res) => {
+  app.get('/digital-trust/showcase/qr', async (req, res) => {
     const appleMatchers = [/iPhone/i, /iPad/i, /iPod/i]
     let url = androidUrl
     const isApple = appleMatchers.some((item) => req.get('User-Agent')?.match(item))
