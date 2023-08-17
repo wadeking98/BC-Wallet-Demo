@@ -1,6 +1,7 @@
 import type { ConnectionState } from '../../slices/connection/connectionSlice'
 import type { UseCaseScreen } from '../../slices/types'
 
+import { trackSelfDescribingEvent } from '@snowplow/browser-tracker'
 import { AnimatePresence, motion } from 'framer-motion'
 import { track } from 'insights-js'
 import React, { useEffect, useState } from 'react'
@@ -13,6 +14,7 @@ import { Button } from '../../components/Button'
 import { Modal } from '../../components/Modal'
 import { SmallButton } from '../../components/SmallButton'
 import { useAppDispatch } from '../../hooks/hooks'
+import { useCurrentCharacter } from '../../slices/characters/charactersSelectors'
 import { useCaseCompleted } from '../../slices/preferences/preferencesSlice'
 import { nextStep, prevStep, resetStep } from '../../slices/useCases/useCasesSlice'
 import { basePath } from '../../utils/BasePath'
@@ -83,6 +85,7 @@ export const Section: React.FC<Props> = ({
   const { slug } = useParams()
 
   const verifier = section.find((x) => x.verifier !== undefined)?.verifier ?? { name: 'Unkown' }
+  const currentCharacter = useCurrentCharacter()
 
   useEffect(() => {
     if (completed && slug) {
@@ -141,6 +144,16 @@ export const Section: React.FC<Props> = ({
     // automatically go to next step if connection is set up
     if (step?.screenId.startsWith('CONNECTION') && isConnectionCompleted) {
       next()
+      trackSelfDescribingEvent({
+        event: {
+          schema: 'iglu:ca.bc.gov.digital/action/jsonschema/1-0-0',
+          data: {
+            action: 'next',
+            path: `${currentCharacter?.name}_${slug}`,
+            step: step.title,
+          },
+        },
+      })
     }
   }, [connection.state])
 
@@ -158,6 +171,7 @@ export const Section: React.FC<Props> = ({
       return (
         <StartContainer
           key={step.screenId}
+          characterName={currentCharacter?.name}
           step={step}
           entity={verifier}
           requestedCredentials={step.requestOptions?.requestedCredentials}
@@ -209,6 +223,7 @@ export const Section: React.FC<Props> = ({
                     <StepProof
                       key={step.screenId}
                       entityName={verifier.name}
+                      characterName={currentCharacter?.name}
                       proof={proof}
                       step={step}
                       connectionId={connection.id}
@@ -228,11 +243,43 @@ export const Section: React.FC<Props> = ({
                 {step.screenId.startsWith('STEP_END') && <StepEnd key={step.screenId} step={step} />}
               </AnimatePresence>
               <div className="flex justify-between items-center">
-                <BackButton onClick={prev} disabled={isBackDisabled} />
+                <BackButton
+                  onClick={() => {
+                    prev()
+                    trackSelfDescribingEvent({
+                      event: {
+                        schema: 'iglu:ca.bc.gov.digital/action/jsonschema/1-0-0',
+                        data: {
+                          action: 'back',
+                          path: `${currentCharacter?.name}_${slug}`,
+                          step: step.title,
+                        },
+                      },
+                    })
+                  }}
+                  disabled={isBackDisabled}
+                />
                 {step.screenId.startsWith('STEP_END') ? (
                   <Button text="COMPLETE" onClick={() => setCompleted(true)} />
                 ) : (
-                  <SmallButton text="NEXT" onClick={next} disabled={isForwardDisabled} data-cy="use-case-next" />
+                  <SmallButton
+                    text="NEXT"
+                    onClick={() => {
+                      next()
+                      trackSelfDescribingEvent({
+                        event: {
+                          schema: 'iglu:ca.bc.gov.digital/action/jsonschema/1-0-0',
+                          data: {
+                            action: 'next',
+                            path: `${currentCharacter?.name}_${slug}`,
+                            step: step.title,
+                          },
+                        },
+                      })
+                    }}
+                    disabled={isForwardDisabled}
+                    data-cy="use-case-next"
+                  />
                 )}
               </div>
             </motion.div>

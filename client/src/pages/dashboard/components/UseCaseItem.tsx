@@ -1,5 +1,6 @@
 import type { CustomCharacter } from '../../../slices/types'
 
+import { trackSelfDescribingEvent } from '@snowplow/browser-tracker'
 import { motion } from 'framer-motion'
 import { startCase } from 'lodash'
 import React from 'react'
@@ -66,7 +67,24 @@ export const UseCaseItem: React.FC<Props> = ({
               )
             })}
             <div className="flex flex-1 items-end justify-end">
-              <StartButton onClick={() => start(slug)} text={'START'} disabled={isLocked} isCompleted={isCompleted} />
+              <StartButton
+                onClick={() => {
+                  trackSelfDescribingEvent({
+                    event: {
+                      schema: 'iglu:ca.bc.gov.digital/action/jsonschema/1-0-0',
+                      data: {
+                        action: 'start',
+                        path: `${currentCharacter?.name}_${slug}`,
+                        step: 'usecase_start',
+                      },
+                    },
+                  })
+                  start(slug)
+                }}
+                text={'START'}
+                disabled={isLocked}
+                isCompleted={isCompleted}
+              />
             </div>
           </div>
         </div>

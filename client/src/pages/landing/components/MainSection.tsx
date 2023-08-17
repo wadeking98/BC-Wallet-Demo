@@ -1,3 +1,4 @@
+import { trackSelfDescribingEvent } from '@snowplow/browser-tracker'
 import { motion } from 'framer-motion'
 import React from 'react'
 import { isMobile } from 'react-device-detect'
@@ -20,6 +21,16 @@ export const MainSection: React.FC = () => {
   const navigate = useNavigate()
 
   const handleStart = () => {
+    trackSelfDescribingEvent({
+      event: {
+        schema: 'iglu:ca.bc.gov.digital/action/jsonschema/1-0-0',
+        data: {
+          action: 'next',
+          path: 'shared',
+          step: "Let's get started",
+        },
+      },
+    })
     if (slug) {
       navigate(`${basePath}/demo/${slug}`)
     } else {

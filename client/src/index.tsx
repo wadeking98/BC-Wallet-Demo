@@ -1,3 +1,4 @@
+import { newTracker, enableActivityTracking } from '@snowplow/browser-tracker'
 import React from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
@@ -11,6 +12,15 @@ import { KBar } from './utils/KBar'
 
 const { store, persistor } = Redux
 
+newTracker('sp1', 'spm.apps.gov.bc.ca', {
+  appId: 'Snowplow_standalone_DIG',
+  cookieLifetime: 86400 * 548,
+  platform: 'web',
+  contexts: {
+    webPage: true,
+  },
+})
+enableActivityTracking({ minimumVisitLength: 15, heartbeatDelay: 30 })
 render(
   <React.StrictMode>
     <Provider store={store}>

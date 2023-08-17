@@ -1,5 +1,6 @@
 import type { Credential, CustomCharacter } from '../../../slices/types'
 
+import { trackSelfDescribingEvent } from '@snowplow/browser-tracker'
 import { AnimatePresence, motion } from 'framer-motion'
 import { track } from 'insights-js'
 import { startCase } from 'lodash'
@@ -160,7 +161,22 @@ export const AcceptCredential: React.FC<Props> = ({
           <Modal title={'There seems to be an issue.'} description={errorMsg} onOk={routeError} />
         )}
       </div>
-      <ActionCTA isCompleted={credentialsAccepted && credentials.length > 0} onFail={showFailedRequestModal} />
+      <ActionCTA
+        isCompleted={credentialsAccepted && credentials.length > 0}
+        onFail={() => {
+          trackSelfDescribingEvent({
+            event: {
+              schema: 'iglu:ca.bc.gov.digital/action/jsonschema/1-0-0',
+              data: {
+                action: 'cred_not_received',
+                path: currentCharacter?.name,
+                step: title,
+              },
+            },
+          })
+          showFailedRequestModal()
+        }}
+      />
     </motion.div>
   )
 }

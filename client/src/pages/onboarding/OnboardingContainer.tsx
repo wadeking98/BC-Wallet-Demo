@@ -1,8 +1,7 @@
 import type { Credential, CustomCharacter } from '../../slices/types'
 
+import { trackSelfDescribingEvent } from '@snowplow/browser-tracker'
 import { AnimatePresence, motion } from 'framer-motion'
-import { Item } from 'framer-motion/types/components/Reorder/Item'
-import { track } from 'insights-js'
 import React, { useEffect, useState } from 'react'
 import { isMobile } from 'react-device-detect'
 import { FiLogOut } from 'react-icons/fi'
@@ -51,6 +50,10 @@ export const OnboardingContainer: React.FC<Props> = ({
   const darkMode = useDarkMode()
   const dispatch = useAppDispatch()
   const { issuedCredentials } = useCredentials()
+  const idToTitle: Record<string, string> = {}
+  currentCharacter?.onboarding.forEach((item) => {
+    idToTitle[item.screenId] = item.title
+  })
 
   const connectionCompleted = isConnected(connectionState as string)
   const credentials = currentCharacter?.onboarding.find((step) => step.screenId === onboardingStep)?.credentials
@@ -64,14 +67,44 @@ export const OnboardingContainer: React.FC<Props> = ({
     (onboardingStep === 'PICK_CHARACTER' && !currentCharacter)
 
   const jumpOnboardingPage = () => {
+    trackSelfDescribingEvent({
+      event: {
+        schema: 'iglu:ca.bc.gov.digital/action/jsonschema/1-0-0',
+        data: {
+          action: 'skip_credential',
+          path: currentCharacter?.name,
+          step: idToTitle[onboardingStep],
+        },
+      },
+    })
     addOnboardingProgress(dispatch, onboardingStep, currentCharacter, 2)
   }
 
   const nextOnboardingPage = () => {
+    trackSelfDescribingEvent({
+      event: {
+        schema: 'iglu:ca.bc.gov.digital/action/jsonschema/1-0-0',
+        data: {
+          action: 'next',
+          path: currentCharacter?.name,
+          step: idToTitle[onboardingStep],
+        },
+      },
+    })
     addOnboardingProgress(dispatch, onboardingStep, currentCharacter)
   }
 
   const prevOnboardingPage = () => {
+    trackSelfDescribingEvent({
+      event: {
+        schema: 'iglu:ca.bc.gov.digital/action/jsonschema/1-0-0',
+        data: {
+          action: 'back',
+          path: currentCharacter?.name,
+          step: idToTitle[onboardingStep],
+        },
+      },
+    })
     removeOnboardingProgress(dispatch, onboardingStep, currentCharacter)
   }
 
