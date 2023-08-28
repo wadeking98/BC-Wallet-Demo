@@ -3,7 +3,6 @@ import type { UseCaseScreen } from '../../slices/types'
 
 import { trackSelfDescribingEvent } from '@snowplow/browser-tracker'
 import { AnimatePresence, motion } from 'framer-motion'
-import { track } from 'insights-js'
 import React, { useEffect, useState } from 'react'
 import { isMobile } from 'react-device-detect'
 import { useNavigate, useParams } from 'react-router-dom'
@@ -65,12 +64,6 @@ export const Section: React.FC<Props> = ({
 
   const step = section[stepCount]
 
-  const leave = () => {
-    navigate(`${basePath}/dashboard`)
-    dispatch({ type: 'clearUseCase' })
-    dispatch(resetStep())
-  }
-
   const prev = () => dispatch(prevStep())
   const next = () => dispatch(nextStep())
 
@@ -87,16 +80,36 @@ export const Section: React.FC<Props> = ({
   const verifier = section.find((x) => x.verifier !== undefined)?.verifier ?? { name: 'Unkown' }
   const currentCharacter = useCurrentCharacter()
 
+  const leave = () => {
+    trackSelfDescribingEvent({
+      event: {
+        schema: 'iglu:ca.bc.gov.digital/action/jsonschema/1-0-0',
+        data: {
+          action: 'leave',
+          path: `${currentCharacter?.name}_${slug}`,
+          step: step.title,
+        },
+      },
+    })
+    navigate(`${basePath}/dashboard`)
+    dispatch({ type: 'clearUseCase' })
+    dispatch(resetStep())
+  }
+
   useEffect(() => {
     if (completed && slug) {
       dispatch(useCaseCompleted(slug))
       dispatch({ type: 'clearUseCase' })
       navigate(`${basePath}/dashboard`)
       dispatch(resetStep())
-      track({
-        id: 'use-case-completed',
-        parameters: {
-          useCase: slug,
+      trackSelfDescribingEvent({
+        event: {
+          schema: 'iglu:ca.bc.gov.digital/action/jsonschema/1-0-0',
+          data: {
+            action: 'usecase_completed',
+            path: `${currentCharacter?.name}_${slug}`,
+            step: step.title,
+          },
         },
       })
     }

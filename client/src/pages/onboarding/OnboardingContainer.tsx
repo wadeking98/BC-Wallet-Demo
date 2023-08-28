@@ -224,6 +224,16 @@ export const OnboardingContainer: React.FC<Props> = ({
   const closeLeave = () => setLeaveModal(false)
 
   const leave = () => {
+    trackSelfDescribingEvent({
+      event: {
+        schema: 'iglu:ca.bc.gov.digital/action/jsonschema/1-0-0',
+        data: {
+          action: 'leave',
+          path: currentCharacter?.name,
+          step: idToTitle[onboardingStep],
+        },
+      },
+    })
     navigate(`${basePath}/`)
     dispatch({ type: 'demo/RESET' })
   }
