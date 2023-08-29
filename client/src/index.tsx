@@ -1,4 +1,4 @@
-import { newTracker, enableActivityTracking } from '@snowplow/browser-tracker'
+import { newTracker, enableActivityTracking, trackPageView } from '@snowplow/browser-tracker'
 import React from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
@@ -21,6 +21,7 @@ newTracker('sp1', 'spm.apps.gov.bc.ca', {
   },
 })
 enableActivityTracking({ minimumVisitLength: 15, heartbeatDelay: 30 })
+trackPageView()
 render(
   <React.StrictMode>
     <Provider store={store}>
