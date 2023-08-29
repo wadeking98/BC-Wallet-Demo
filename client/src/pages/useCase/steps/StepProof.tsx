@@ -1,5 +1,6 @@
 import type { CredentialRequest, UseCaseScreen } from '../../../slices/types'
 
+import { trackSelfDescribingEvent } from '@snowplow/browser-tracker'
 import { motion } from 'framer-motion'
 import React, { useEffect, useState } from 'react'
 
@@ -16,12 +17,20 @@ import { StepInfo } from '../components/StepInfo'
 export interface Props {
   proof?: any
   step: UseCaseScreen
+  characterName?: string
   connectionId: string
   requestedCredentials: CredentialRequest[]
   entityName: string
 }
 
-export const StepProof: React.FC<Props> = ({ proof, step, connectionId, requestedCredentials, entityName }) => {
+export const StepProof: React.FC<Props> = ({
+  proof,
+  step,
+  connectionId,
+  requestedCredentials,
+  entityName,
+  characterName,
+}) => {
   const dispatch = useAppDispatch()
   const proofReceived =
     (proof?.state as string) === 'presentation_received' ||
@@ -133,7 +142,22 @@ export const StepProof: React.FC<Props> = ({ proof, step, connectionId, requeste
           )}
         </div>
       </div>
-      <ActionCTA isCompleted={proofReceived} onFail={showFailedRequestModal} />
+      <ActionCTA
+        isCompleted={proofReceived}
+        onFail={() => {
+          trackSelfDescribingEvent({
+            event: {
+              schema: 'iglu:ca.bc.gov.digital/action/jsonschema/1-0-0',
+              data: {
+                action: 'cred_not_received',
+                path: characterName,
+                step: step.title,
+              },
+            },
+          })
+          showFailedRequestModal()
+        }}
+      />
       {isFailedRequestModalOpen && (
         <FailedRequestModal
           key="credentialModal"

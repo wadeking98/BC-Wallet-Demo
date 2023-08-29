@@ -1,5 +1,6 @@
 import type { CustomCharacter } from '../../../slices/types'
 
+import { trackSelfDescribingEvent } from '@snowplow/browser-tracker'
 import { motion } from 'framer-motion'
 import React, { useState } from 'react'
 
@@ -23,6 +24,16 @@ export const ProfileCard: React.FC<Props> = ({ currentCharacter }) => {
   before you do this.`
 
   const reset = () => {
+    trackSelfDescribingEvent({
+      event: {
+        schema: 'iglu:ca.bc.gov.digital/action/jsonschema/1-0-0',
+        data: {
+          action: 'leave',
+          path: currentCharacter.name,
+          step: 'dashboard',
+        },
+      },
+    })
     dispatch({ type: 'demo/RESET' })
   }
 

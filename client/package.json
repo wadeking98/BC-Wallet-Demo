@@ -6,6 +6,7 @@
   "description": "BC Wallet - Verifiable Credential Demo",
   "dependencies": {
     "@reduxjs/toolkit": "^1.7.2",
+    "@snowplow/browser-tracker": "^3.14.0",
     "@types/lodash": "^4.14.194",
     "axios": "^0.26.0",
     "framer-motion": "^5.2.1",
