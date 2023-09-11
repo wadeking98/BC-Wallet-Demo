@@ -57,8 +57,28 @@ export const tractionGarbageCollection = async () => {
       }
     })
   }
+  const cleanupExchangeRecords = async () =>{
+    const records: any[] = (await tractionRequest.get('/issue-credential/records')).data.results
+    records.forEach(record => {
+      if (moment().diff(moment(record.created_at), 'hours') >= 1) {
+        tractionRequest.delete(`/issue-credential/records/${record.credential_exchange_id}`)
+      }
+    })
+  }
+  const cleanupProofRecords = async () => {
+    const proofs: any[] = (await tractionRequest.get('/present-proof/records')).data.results
+    proofs.forEach(proof => {
+      if (moment().diff(moment(proof.created_at), 'hours') >= 1) {
+        tractionRequest.delete(`/present-proof/records/${proof.presentation_exchange_id}`)
+      }
+    })
+  }
   cleanupConnections()
+  cleanupExchangeRecords()
+  cleanupProofRecords()
   setInterval(async () => {
     cleanupConnections()
+    cleanupExchangeRecords()
+    cleanupProofRecords()
   }, 3600000)
 }
