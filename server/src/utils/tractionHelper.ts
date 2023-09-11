@@ -52,7 +52,7 @@ export const tractionGarbageCollection = async () => {
   const cleanupConnections = async () => {
     const connections: any[] = (await tractionRequest.get('/connections')).data.results
     connections.forEach((conn) => {
-      if (moment().diff(moment(conn.created_at), 'hours') >= 1) {
+      if (moment().diff(moment(conn.created_at), 'days') >= 1) {
         tractionRequest.delete(`/connections/${conn.connection_id}`)
       }
     })
@@ -60,7 +60,7 @@ export const tractionGarbageCollection = async () => {
   const cleanupExchangeRecords = async () =>{
     const records: any[] = (await tractionRequest.get('/issue-credential/records')).data.results
     records.forEach(record => {
-      if (moment().diff(moment(record.created_at), 'hours') >= 1) {
+      if (moment().diff(moment(record.created_at), 'months') >= 2) {
         tractionRequest.delete(`/issue-credential/records/${record.credential_exchange_id}`)
       }
     })
@@ -68,7 +68,7 @@ export const tractionGarbageCollection = async () => {
   const cleanupProofRecords = async () => {
     const proofs: any[] = (await tractionRequest.get('/present-proof/records')).data.results
     proofs.forEach(proof => {
-      if (moment().diff(moment(proof.created_at), 'hours') >= 1) {
+      if (moment().diff(moment(proof.created_at), 'days') >= 1) {
         tractionRequest.delete(`/present-proof/records/${proof.presentation_exchange_id}`)
       }
     })
@@ -80,5 +80,5 @@ export const tractionGarbageCollection = async () => {
     cleanupConnections()
     cleanupExchangeRecords()
     cleanupProofRecords()
-  }, 3600000)
+  }, 24*60*60*1000)
 }
