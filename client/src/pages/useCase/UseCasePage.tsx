@@ -1,5 +1,6 @@
 import type { CustomUseCase } from '../../slices/types'
 
+import { trackPageView } from '@snowplow/browser-tracker'
 import { AnimatePresence, motion } from 'framer-motion'
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
@@ -64,6 +65,10 @@ export const UseCasePage: React.FC = () => {
       dispatch(setSection(currentUseCase.screens[sectionCount]))
     }
   }, [currentUseCase, sectionCount])
+
+  useEffect(() => {
+    trackPageView()
+  }, [])
 
   const ERROR_TITLE = `Woops...`
   const ERROR_DESCRIPTION = `You haven't picked your character yet. Please restart the demo.`
