@@ -48,7 +48,7 @@ export const tractionRequest = {
 }
 
 export const tractionGarbageCollection = async () => {
-  // delete all connections that are older than one hour
+  // delete all connections that are older than one day
   const cleanupConnections = async () => {
     const connections: any[] = (await tractionRequest.get('/connections')).data.results
     connections.forEach((conn) => {
@@ -60,7 +60,7 @@ export const tractionGarbageCollection = async () => {
   const cleanupExchangeRecords = async () =>{
     const records: any[] = (await tractionRequest.get('/issue-credential/records')).data.results
     records.forEach(record => {
-      if (moment().diff(moment(record.created_at), 'months') >= 2) {
+      if (moment().diff(moment(record.created_at), 'days') >= 1) {
         tractionRequest.delete(`/issue-credential/records/${record.credential_exchange_id}`)
       }
     })
@@ -80,5 +80,5 @@ export const tractionGarbageCollection = async () => {
     cleanupConnections()
     cleanupExchangeRecords()
     cleanupProofRecords()
-  }, 24*60*60*1000)
+  }, 12*60*60*1000)
 }
