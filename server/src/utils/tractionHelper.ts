@@ -1,6 +1,7 @@
 import type { AxiosRequestConfig } from 'axios'
 
 import axios from 'axios'
+import moment from 'moment'
 
 export let agentKey = ''
 
@@ -44,4 +45,20 @@ export const tractionRequest = {
       headers: { ...config?.headers, Authorization: `Bearer ${agentKey}` },
     })
   },
+}
+
+export const tractionGarbageCollection = async () => {
+  // delete all connections that are older than one hour
+  const cleanupConnections = async () => {
+    const connections: any[] = (await tractionRequest.get('/connections')).data.results
+    connections.forEach((conn) => {
+      if (moment().diff(moment(conn.created_at), 'hours') >= 1) {
+        tractionRequest.delete(`/connections/${conn.connection_id}`)
+      }
+    })
+  }
+  cleanupConnections()
+  setInterval(async () => {
+    cleanupConnections()
+  }, 3600000)
 }

@@ -1,3 +1,4 @@
+import { trackPageView } from '@snowplow/browser-tracker'
 import { AnimatePresence, motion } from 'framer-motion'
 import { track } from 'insights-js'
 import React, { useEffect } from 'react'
@@ -37,6 +38,10 @@ export const DashboardPage: React.FC = () => {
       dispatch(setDemoCompleted(true))
     }
   }, [completedUseCaseSlugs, useCases])
+
+  useEffect(() => {
+    trackPageView()
+  }, [])
 
   const ERROR_TITLE = `Woops...`
   const ERROR_DESCRIPTION = `That's not gone well. Please restart the demo.`

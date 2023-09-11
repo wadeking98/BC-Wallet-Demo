@@ -1,3 +1,4 @@
+import { trackPageView } from '@snowplow/browser-tracker'
 import { AnimatePresence, motion } from 'framer-motion'
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
@@ -25,8 +26,6 @@ import { Stepper } from './components/Stepper'
 
 export const OnboardingPage: React.FC = () => {
   useTitle('Get Started | BC Wallet Self-Sovereign Identity Demo')
-
-  const { slug } = useParams()
 
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
@@ -56,6 +55,10 @@ export const OnboardingPage: React.FC = () => {
       setMounted(true)
     }
   }, [dispatch])
+
+  useEffect(() => {
+    trackPageView()
+  }, [])
 
   return (
     <>
