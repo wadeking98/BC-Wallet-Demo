@@ -52,7 +52,7 @@ export const tractionGarbageCollection = async () => {
   const cleanupConnections = async () => {
     const connections: any[] = (await tractionRequest.get('/connections')).data.results
     connections.forEach((conn) => {
-      if (moment().diff(moment(conn.created_at), 'days') >= 1) {
+      if (moment().diff(moment(conn.created_at), 'days') >= 1 && conn.alias !== "endorser") {
         tractionRequest.delete(`/connections/${conn.connection_id}`)
       }
     })
