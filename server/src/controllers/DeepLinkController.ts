@@ -1,8 +1,8 @@
-import axios from 'axios'
 import { Body, JsonController, Post } from 'routing-controllers'
 import { Service } from 'typedi'
 
-export const apiCall = axios.create({ baseURL: 'http://localhost:5000' })
+import { tractionRequest } from '../utils/tractionHelper'
+
 
 @JsonController('/deeplink')
 @Service()
@@ -11,7 +11,7 @@ export class DeeplinkController {
   public async offerCredential(@Body() params: any) {
     const state = await this.waitUntilConnected(params.connection_id)
     if (this.isConnected(state)) {
-      const resp = await apiCall.post('/demo/credentials/offerCredential', params)
+      const resp = await tractionRequest.post(`/issue-credential/send`, params)
       return resp.data
     }
   }
@@ -20,7 +20,7 @@ export class DeeplinkController {
   public async requestProof(@Body() params: any) {
     const state = await this.waitUntilConnected(params.connection_id)
     if (this.isConnected(state)) {
-      const resp = await apiCall.post('/demo/proofs/requestProof', params)
+      const resp = await tractionRequest.post('/present-proof/send-request', params)
       return resp.data
     }
   }
@@ -34,7 +34,7 @@ export class DeeplinkController {
     for (let i = 0; i < 10 && !this.isConnected(state); i++) {
       await new Promise((r) => setTimeout(r, 1000))
       if (!this.isConnected(state)) {
-        apiCall.get(`/demo/connections/getConnectionStatus/${connectionId}`).then((resp) => {
+        tractionRequest.get(`/connections/${connectionId}`).then((resp) => {
           state = resp.data?.state
         })
       }
