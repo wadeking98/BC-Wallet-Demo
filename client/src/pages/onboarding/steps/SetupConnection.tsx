@@ -101,7 +101,7 @@ export const SetupConnection: React.FC<Props> = ({
       nextSlide()
       setTimeout(() => {
         window.location.href = deepLink
-      }, 250)
+      }, 500)
     }
   }
   const renderCTA = !isCompleted ? (
