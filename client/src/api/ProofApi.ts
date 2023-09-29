@@ -7,7 +7,6 @@ export const createProofRequest = (data: ProofRequestData): Promise<AxiosRespons
   const proofRequest = {
     requested_attributes: Object.assign({}, data.attributes),
     requested_predicates: Object.assign({}, data.predicates),
-    non_revoked: { to: Math.floor(new Date().valueOf() / 1000) },
     version: '1.0.0',
     name: data.requestOptions?.name,
   }
@@ -24,7 +23,6 @@ export const createDeepProofRequest = (data: ProofRequestData): Promise<AxiosRes
   const proofRequest = {
     requested_attributes: Object.assign({}, data.attributes),
     requested_predicates: Object.assign({}, data.predicates),
-    non_revoked: { to: Math.floor(new Date().valueOf() / 1000) },
     version: '1.0.0',
     name: data.requestOptions?.name,
   }

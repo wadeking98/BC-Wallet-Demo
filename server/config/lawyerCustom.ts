@@ -1,6 +1,9 @@
 import type { CustomCharacter } from '../src/content/types'
 
 import { getDateInt } from '../src/utils/dateint'
+
+const now = () => Math.floor(new Date().getTime() / 1000)
+
 export const lawyerCustom: CustomCharacter = {
   name: 'Joyce',
   type: 'Lawyer',
@@ -266,11 +269,13 @@ export const lawyerCustom: CustomCharacter = {
                 icon: '/public/lawyer2/connection/lsbc-logo.png',
                 name: 'member_card',
                 properties: ['Given Name', 'Surname', 'PPID'],
+                nonRevoked: { to: now() }
               },
               {
                 icon: '/public/lawyer2/connection/bc-logo.png',
                 name: 'Person',
                 properties: ['given_names', 'family_name', 'picture'],
+                nonRevoked: { to: now() }
               },
             ],
           },
