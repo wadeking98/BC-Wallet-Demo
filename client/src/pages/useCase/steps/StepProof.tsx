@@ -58,6 +58,7 @@ export const StepProof: React.FC<Props> = ({
             },
           ],
           names: item.properties,
+          non_revoked: item.nonRevoked,
         }
       }
       if (item.predicates) {
@@ -70,6 +71,7 @@ export const StepProof: React.FC<Props> = ({
           name: item.predicates?.name,
           p_value: item.predicates?.value,
           p_type: item.predicates?.type,
+          non_revoked: item.nonRevoked,
         }
       }
     })
