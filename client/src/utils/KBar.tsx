@@ -13,6 +13,7 @@ import {
   setDarkMode,
   toggleRevocation,
   toggleCharacterUpload,
+  toggleHiddenUseCases,
 } from '../slices/preferences/preferencesSlice'
 import { fetchWallets } from '../slices/wallets/walletsThunks'
 
@@ -45,6 +46,14 @@ export const KBar: React.FC = ({ children }) => {
         setTimeout(() => {
           setConfettiPieces(0)
         }, 1300)
+      },
+    },
+    {
+      id: 'toggleHiddenUsecases',
+      name: 'Show/Hide hidden use cases',
+      keywords: 'use case toggle hide',
+      perform: () => {
+        dispatch(toggleHiddenUseCases())
       },
     },
     {

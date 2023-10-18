@@ -240,6 +240,7 @@ export const lawyerCustom: CustomCharacter = {
     {
       id: 'courtLibrary',
       name: 'Court Library',
+      hidden: true,
       screens: [
         {
           screenId: 'START',

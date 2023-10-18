@@ -6,6 +6,7 @@ import { fetchLastServerReset } from './preferencesThunks'
 
 interface PreferencesState {
   darkMode: boolean
+  showHiddenUseCases: boolean
   revocationEnabled: boolean
   characterUploadEnabled: boolean
   completedUseCaseSlugs: string[]
@@ -17,6 +18,7 @@ interface PreferencesState {
 
 const initialState: PreferencesState = {
   darkMode: false,
+  showHiddenUseCases: false,
   revocationEnabled: false,
   characterUploadEnabled: false,
   completedUseCaseSlugs: [],
@@ -50,6 +52,9 @@ const preferencesSlice = createSlice({
       }
       state.completeCanceled = false
     },
+    toggleHiddenUseCases: (state) => {
+      state.showHiddenUseCases = !state.showHiddenUseCases
+    },
     setDemoCompleted: (state, val) => {
       state.demoCompleted = val.payload
     },
@@ -77,6 +82,7 @@ const preferencesSlice = createSlice({
 
 export const {
   setDarkMode,
+  toggleHiddenUseCases,
   useCaseCompleted,
   resetDashboard,
   setDemoCompleted,
