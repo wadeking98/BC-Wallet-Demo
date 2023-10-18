@@ -43,6 +43,7 @@ export interface UseCaseScreen {
 export interface CustomUseCase {
   id: string
   name: string
+  hidden?: boolean
   screens: UseCaseScreen[]
 }
 

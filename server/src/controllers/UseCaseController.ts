@@ -1,4 +1,4 @@
-import { Get, JsonController, NotFoundError, Param } from 'routing-controllers'
+import { Get, JsonController, NotFoundError, Param,QueryParam } from 'routing-controllers'
 import { Inject, Service } from 'typedi'
 
 import characters from '../content/Characters'
@@ -24,13 +24,13 @@ export class UseCaseController {
    * Retrieve all usecases for given character id
    */
   @Get('/character/:type')
-  public async getUseCasesByCharType(@Param('type') type: string) {
+  public async getUseCasesByCharType(@Param('type') type: string, @QueryParam('showHidden') showHidden?: boolean) {
     const UCs = characters.find((c) => c.type === type)
 
     if (!UCs) {
       throw new NotFoundError(`Use cases for character with type "${type}" not found.`)
     }
 
-    return UCs.useCases
+    return showHidden ? UCs.useCases : UCs.useCases.filter(usecase => !usecase.hidden)
   }
 }

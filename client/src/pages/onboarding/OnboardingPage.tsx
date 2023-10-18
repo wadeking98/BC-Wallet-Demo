@@ -9,7 +9,7 @@ import { useAppDispatch } from '../../hooks/hooks'
 import { useTitle } from '../../hooks/useTitle'
 import { useCharacters } from '../../slices/characters/charactersSelectors'
 import { setCharacter } from '../../slices/characters/charactersSlice'
-import { fetchAllCharacters } from '../../slices/characters/charactersThunks'
+import { fetchAllCharacters, fetchAllCharactersWithHiddenUseCase } from '../../slices/characters/charactersThunks'
 import { useConnection } from '../../slices/connection/connectionSelectors'
 import { clearConnection } from '../../slices/connection/connectionSlice'
 import { useCredentials } from '../../slices/credentials/credentialsSelectors'
@@ -33,7 +33,7 @@ export const OnboardingPage: React.FC = () => {
 
   const { onboardingStep, isCompleted } = useOnboarding()
   const { state, invitationUrl, id } = useConnection()
-  const { characterUploadEnabled } = usePreferences()
+  const { characterUploadEnabled, showHiddenUseCases } = usePreferences()
 
   const [mounted, setMounted] = useState(false)
 
@@ -51,10 +51,14 @@ export const OnboardingPage: React.FC = () => {
     } else {
       dispatch({ type: 'demo/RESET' })
       dispatch(fetchWallets())
-      dispatch(fetchAllCharacters())
+      if (showHiddenUseCases) {
+        dispatch(fetchAllCharactersWithHiddenUseCase())
+      } else {
+        dispatch(fetchAllCharacters())
+      }
       setMounted(true)
     }
-  }, [dispatch])
+  }, [dispatch, showHiddenUseCases])
 
   useEffect(() => {
     trackPageView()
