@@ -17,7 +17,7 @@ import { StepInfo } from '../components/StepInfo'
 export interface Props {
   proof?: any
   step: UseCaseScreen
-  characterName?: string
+  characterType?: string
   connectionId: string
   requestedCredentials: CredentialRequest[]
   entityName: string
@@ -29,7 +29,7 @@ export const StepProof: React.FC<Props> = ({
   connectionId,
   requestedCredentials,
   entityName,
-  characterName,
+  characterType,
 }) => {
   const dispatch = useAppDispatch()
   const proofReceived =
@@ -152,7 +152,7 @@ export const StepProof: React.FC<Props> = ({
               schema: 'iglu:ca.bc.gov.digital/action/jsonschema/1-0-0',
               data: {
                 action: 'cred_not_received',
-                path: characterName,
+                path: characterType,
                 step: step.title,
               },
             },

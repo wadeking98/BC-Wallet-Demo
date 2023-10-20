@@ -29,7 +29,7 @@ export const ProfileCard: React.FC<Props> = ({ currentCharacter }) => {
         schema: 'iglu:ca.bc.gov.digital/action/jsonschema/1-0-0',
         data: {
           action: 'leave',
-          path: currentCharacter.name,
+          path: currentCharacter.type,
           step: 'dashboard',
         },
       },
