@@ -18,12 +18,12 @@ import { StarterInfo } from './StarterInfo'
 
 export interface Props {
   step: UseCaseScreen
-  characterName?: string
+  characterType?: string
   entity: { name: string; icon?: string }
   requestedCredentials?: CredentialRequest[]
 }
 
-export const StartContainer: React.FC<Props> = ({ entity, requestedCredentials, step, characterName }) => {
+export const StartContainer: React.FC<Props> = ({ entity, requestedCredentials, step, characterType }) => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const { slug } = useParams()
@@ -36,7 +36,7 @@ export const StartContainer: React.FC<Props> = ({ entity, requestedCredentials, 
         schema: 'iglu:ca.bc.gov.digital/action/jsonschema/1-0-0',
         data: {
           action: 'leave',
-          path: `${characterName}_${slug}`,
+          path: `${characterType}_${slug}`,
           step: step.title,
         },
       },
@@ -50,7 +50,7 @@ export const StartContainer: React.FC<Props> = ({ entity, requestedCredentials, 
         schema: 'iglu:ca.bc.gov.digital/action/jsonschema/1-0-0',
         data: {
           action: 'start',
-          path: `${characterName}_${slug}`,
+          path: `${characterType}_${slug}`,
           step: step.title,
         },
       },

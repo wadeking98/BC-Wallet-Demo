@@ -12,7 +12,7 @@ import { KBar } from './utils/KBar'
 
 const { store, persistor } = Redux
 
-newTracker('sp1', 'spm.apps.gov.bc.ca', {
+newTracker('sp1', process.env.SNOWPLOW_ENDPOINT ?? '', {
   appId: 'Snowplow_standalone_DIG',
   cookieLifetime: 86400 * 548,
   platform: 'web',

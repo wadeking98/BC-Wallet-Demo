@@ -72,7 +72,7 @@ export const OnboardingContainer: React.FC<Props> = ({
         schema: 'iglu:ca.bc.gov.digital/action/jsonschema/1-0-0',
         data: {
           action: 'skip_credential',
-          path: currentCharacter?.name,
+          path: currentCharacter?.type.toLowerCase(),
           step: idToTitle[onboardingStep],
         },
       },
@@ -86,7 +86,7 @@ export const OnboardingContainer: React.FC<Props> = ({
         schema: 'iglu:ca.bc.gov.digital/action/jsonschema/1-0-0',
         data: {
           action: 'next',
-          path: currentCharacter?.name,
+          path: currentCharacter?.type.toLowerCase(),
           step: idToTitle[onboardingStep],
         },
       },
@@ -100,7 +100,7 @@ export const OnboardingContainer: React.FC<Props> = ({
         schema: 'iglu:ca.bc.gov.digital/action/jsonschema/1-0-0',
         data: {
           action: 'back',
-          path: currentCharacter?.name,
+          path: currentCharacter?.type.toLowerCase(),
           step: idToTitle[onboardingStep],
         },
       },
@@ -229,7 +229,7 @@ export const OnboardingContainer: React.FC<Props> = ({
         schema: 'iglu:ca.bc.gov.digital/action/jsonschema/1-0-0',
         data: {
           action: 'leave',
-          path: currentCharacter?.name,
+          path: currentCharacter?.type.toLowerCase(),
           step: idToTitle[onboardingStep],
         },
       },

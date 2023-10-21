@@ -86,7 +86,7 @@ export const Section: React.FC<Props> = ({
         schema: 'iglu:ca.bc.gov.digital/action/jsonschema/1-0-0',
         data: {
           action: 'leave',
-          path: `${currentCharacter?.name}_${slug}`,
+          path: `${currentCharacter?.type.toLowerCase()}_${slug}`,
           step: step.title,
         },
       },
@@ -107,7 +107,7 @@ export const Section: React.FC<Props> = ({
           schema: 'iglu:ca.bc.gov.digital/action/jsonschema/1-0-0',
           data: {
             action: 'usecase_completed',
-            path: `${currentCharacter?.name}_${slug}`,
+            path: `${currentCharacter?.type.toLowerCase()}_${slug}`,
             step: step.title,
           },
         },
@@ -162,7 +162,7 @@ export const Section: React.FC<Props> = ({
           schema: 'iglu:ca.bc.gov.digital/action/jsonschema/1-0-0',
           data: {
             action: 'next',
-            path: `${currentCharacter?.name}_${slug}`,
+            path: `${currentCharacter?.type.toLowerCase()}_${slug}`,
             step: step.title,
           },
         },
@@ -184,7 +184,7 @@ export const Section: React.FC<Props> = ({
       return (
         <StartContainer
           key={step.screenId}
-          characterName={currentCharacter?.name}
+          characterType={currentCharacter?.type.toLowerCase()}
           step={step}
           entity={verifier}
           requestedCredentials={step.requestOptions?.requestedCredentials}
@@ -236,7 +236,7 @@ export const Section: React.FC<Props> = ({
                     <StepProof
                       key={step.screenId}
                       entityName={verifier.name}
-                      characterName={currentCharacter?.name}
+                      characterType={currentCharacter?.type.toLowerCase()}
                       proof={proof}
                       step={step}
                       connectionId={connection.id}
@@ -264,7 +264,7 @@ export const Section: React.FC<Props> = ({
                         schema: 'iglu:ca.bc.gov.digital/action/jsonschema/1-0-0',
                         data: {
                           action: 'back',
-                          path: `${currentCharacter?.name}_${slug}`,
+                          path: `${currentCharacter?.type.toLowerCase()}_${slug}`,
                           step: step.title,
                         },
                       },
@@ -284,7 +284,7 @@ export const Section: React.FC<Props> = ({
                           schema: 'iglu:ca.bc.gov.digital/action/jsonschema/1-0-0',
                           data: {
                             action: 'next',
-                            path: `${currentCharacter?.name}_${slug}`,
+                            path: `${currentCharacter?.type.toLowerCase()}_${slug}`,
                             step: step.title,
                           },
                         },
