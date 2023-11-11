@@ -11,7 +11,7 @@ import * as Redux from './store/configureStore'
 import { KBar } from './utils/KBar'
 
 const { store, persistor } = Redux
-newTracker('sp1', process.env.REACT_APP_SNOWPLOW_ENDPOINT ?? '', {
+newTracker('sp1', 'spt.apps.gov.bc.ca', {
   appId: 'Snowplow_standalone_DIG',
   cookieLifetime: 86400 * 548,
   platform: 'web',
