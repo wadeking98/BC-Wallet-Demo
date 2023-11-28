@@ -22,7 +22,7 @@ export interface CredentialRequest {
   icon?: string
   predicates?: { name: string; value?: string | number | (() => string | number); type: string }
   properties?: string[]
-  nonRevoked?: { to: number, from?: number }
+  nonRevoked?: { to: number; from?: number }
 }
 
 export interface CustomRequestOptions {
