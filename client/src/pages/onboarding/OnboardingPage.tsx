@@ -9,7 +9,7 @@ import { useAppDispatch } from '../../hooks/hooks'
 import { useTitle } from '../../hooks/useTitle'
 import { useCharacters } from '../../slices/characters/charactersSelectors'
 import { setCharacter } from '../../slices/characters/charactersSlice'
-import { fetchAllCharacters, fetchAllCharactersWithHiddenUseCase } from '../../slices/characters/charactersThunks'
+import { fetchAllCharacters } from '../../slices/characters/charactersThunks'
 import { useConnection } from '../../slices/connection/connectionSelectors'
 import { clearConnection } from '../../slices/connection/connectionSlice'
 import { useCredentials } from '../../slices/credentials/credentialsSelectors'
@@ -51,11 +51,7 @@ export const OnboardingPage: React.FC = () => {
     } else {
       dispatch({ type: 'demo/RESET' })
       dispatch(fetchWallets())
-      if (showHiddenUseCases) {
-        dispatch(fetchAllCharactersWithHiddenUseCase())
-      } else {
-        dispatch(fetchAllCharacters())
-      }
+      dispatch(fetchAllCharacters())
       setMounted(true)
     }
   }, [dispatch, showHiddenUseCases])

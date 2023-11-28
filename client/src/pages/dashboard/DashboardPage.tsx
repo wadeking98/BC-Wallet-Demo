@@ -1,8 +1,8 @@
+/* eslint-disable */
 import { trackPageView } from '@snowplow/browser-tracker'
 import { AnimatePresence, motion } from 'framer-motion'
 import { track } from 'insights-js'
 import React, { useEffect } from 'react'
-import { isMobile } from 'react-device-detect'
 import { useNavigate } from 'react-router-dom'
 
 import { page } from '../../FramerAnimations'
@@ -17,11 +17,11 @@ import { basePath } from '../../utils/BasePath'
 import { Footer } from '../landing/components/Footer'
 import { NavBar } from '../landing/components/Navbar'
 
-import { DashboardCard } from './components/DashboardCard'
 import { DemoCompletedModal } from './components/DemoCompletedModal'
 import { ProfileCard } from './components/ProfileCard'
 import { RevocationContainer } from './components/RevocationContainer'
 import { UseCaseContainer } from './components/UseCaseContainer'
+import { CustomCharacter } from '../../slices/types'
 
 export const DashboardPage: React.FC = () => {
   useTitle('Dashboard | BC Wallet Self-Sovereign Identity Demo')
@@ -29,15 +29,15 @@ export const DashboardPage: React.FC = () => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const { issuedCredentials, revokableCredentials } = useCredentials()
-  const { completedUseCaseSlugs, demoCompleted, completeCanceled, revocationEnabled } = usePreferences()
-  const currentCharacter = useCurrentCharacter()
+  const { completedUseCaseSlugs, demoCompleted, completeCanceled, revocationEnabled, showHiddenUseCases } = usePreferences()
+  const currentCharacter = { ...useCurrentCharacter(), useCases: useCurrentCharacter()?.useCases.filter((item) => !item.hidden || showHiddenUseCases) ?? [] } as CustomCharacter
   const useCases = currentCharacter?.useCases
 
   useEffect(() => {
     if (completedUseCaseSlugs.length !== 0 && completedUseCaseSlugs.length === useCases?.length && !completeCanceled) {
       dispatch(setDemoCompleted(true))
     }
-  }, [completedUseCaseSlugs, useCases])
+  }, [completedUseCaseSlugs])
 
   useEffect(() => {
     trackPageView()
