@@ -1,4 +1,5 @@
-/* eslint-disable */
+import type { CustomCharacter } from '../../slices/types'
+
 import { trackPageView } from '@snowplow/browser-tracker'
 import { AnimatePresence, motion } from 'framer-motion'
 import { track } from 'insights-js'
@@ -21,7 +22,6 @@ import { DemoCompletedModal } from './components/DemoCompletedModal'
 import { ProfileCard } from './components/ProfileCard'
 import { RevocationContainer } from './components/RevocationContainer'
 import { UseCaseContainer } from './components/UseCaseContainer'
-import { CustomCharacter } from '../../slices/types'
 
 export const DashboardPage: React.FC = () => {
   useTitle('Dashboard | BC Wallet Self-Sovereign Identity Demo')
@@ -29,8 +29,12 @@ export const DashboardPage: React.FC = () => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const { issuedCredentials, revokableCredentials } = useCredentials()
-  const { completedUseCaseSlugs, demoCompleted, completeCanceled, revocationEnabled, showHiddenUseCases } = usePreferences()
-  const currentCharacter = { ...useCurrentCharacter(), useCases: useCurrentCharacter()?.useCases.filter((item) => !item.hidden || showHiddenUseCases) ?? [] } as CustomCharacter
+  const { completedUseCaseSlugs, demoCompleted, completeCanceled, revocationEnabled, showHiddenUseCases } =
+    usePreferences()
+  const currentCharacter = {
+    ...useCurrentCharacter(),
+    useCases: useCurrentCharacter()?.useCases.filter((item) => !item.hidden || showHiddenUseCases) ?? [],
+  } as CustomCharacter
   const useCases = currentCharacter?.useCases
 
   useEffect(() => {

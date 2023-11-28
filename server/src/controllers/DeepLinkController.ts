@@ -3,7 +3,6 @@ import { Service } from 'typedi'
 
 import { tractionRequest } from '../utils/tractionHelper'
 
-
 @JsonController('/deeplink')
 @Service()
 export class DeeplinkController {

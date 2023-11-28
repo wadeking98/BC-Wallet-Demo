@@ -19,7 +19,7 @@ export class CharacterController {
       throw new NotFoundError(`character with characterId "${characterId}" not found.`)
     }
 
-    return {...character, useCases: character.useCases}
+    return { ...character, useCases: character.useCases }
   }
 
   /**

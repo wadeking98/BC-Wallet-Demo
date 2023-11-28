@@ -1,4 +1,4 @@
-import { Get, JsonController, NotFoundError, Param,QueryParam } from 'routing-controllers'
+import { Get, JsonController, NotFoundError, Param, QueryParam } from 'routing-controllers'
 import { Inject, Service } from 'typedi'
 
 import characters from '../content/Characters'
@@ -31,6 +31,6 @@ export class UseCaseController {
       throw new NotFoundError(`Use cases for character with type "${type}" not found.`)
     }
 
-    return showHidden ? UCs.useCases : UCs.useCases.filter(usecase => !usecase.hidden)
+    return showHidden ? UCs.useCases : UCs.useCases.filter((usecase) => !usecase.hidden)
   }
 }
