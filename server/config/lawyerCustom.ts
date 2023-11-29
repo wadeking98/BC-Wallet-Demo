@@ -289,5 +289,54 @@ export const lawyerCustom: CustomCharacter = {
         },
       ],
     },
+    {
+      id: 'attestation',
+      name: 'BC Wallet Attestation',
+      hidden: true,
+      screens: [
+        {
+          screenId: 'START',
+          title: 'Verify a BC Wallet application',
+          text: 'Verify that you are using a valid BC Wallet application.',
+          image: '/public/lawyer2/useCases/courtServices/bothCreds.svg',
+        },
+        {
+          screenId: 'CONNECTION',
+          title: 'Connect to Attestation Service',
+          text: 'You\'re now ready to prove you\'re using a valid BC Wallet application. Scan the QR code.',
+          image: '/public/lawyer2/useCases/courtServices/courtServicesOverlay.png',
+          verifier: { name: 'BC Wallet Attestation', icon: '/public/lawyer2/connection/bc-logo.png' },
+        },
+        {
+          screenId: 'PROOF',
+          title: 'Confirm the information to send',
+          text: 'BC Wallet will now ask you to confirm what to send. Notice how you’re not sharing your entire credential.',
+          requestOptions: {
+            title: 'Attestation (DEMO) Request',
+            text: 'Attestation (DEMO) would like some of your personal information.',
+            requestedCredentials: [
+              {
+                icon: '/public/lawyer2/connection/bc-logo.png',
+                name: 'Certified Application',
+                properties: ['Issued At', 'Assurance Level'],
+                nonRevoked: { to: now() },
+              },
+              {
+                icon: '/public/lawyer2/connection/bc-logo.png',
+                name: 'Person',
+                properties: ['given_names', 'family_name', 'picture'],
+                nonRevoked: { to: now() },
+              },
+            ],
+          },
+        },
+        {
+          screenId: 'STEP_END',
+          title: "You're done!",
+          text: 'You’ve proved to the Attestation Service that you’re using a valid BC Wallet application. It only took a few seconds and you revealed minimal information that Attestation Service could easily and automatically trust.',
+          image: '/public/lawyer2/onboarding/lawyer2Success.svg',
+        },
+      ],
+    },
   ],
 }
