@@ -22,14 +22,16 @@ export interface Props {
 
 const getCredIcon = (currChar: CustomCharacter, credName: string) => {
   let icon = ''
-  currChar.onboarding.forEach((screen) => {
-    if (screen.credentials) {
-      screen.credentials.forEach((cred) => {
-        if (cred.name === credName) {
-          icon = cred.icon
-        }
-      })
-    }
+  currChar.useCases.forEach((useCase) => {
+    useCase.screens.forEach((screen) => {
+      if (screen) {
+        screen.requestOptions?.requestedCredentials.forEach((cred) => {
+          if (cred.name === credName) {
+            icon = cred.icon ?? ''
+          }
+        })
+      }
+    })
   })
   return icon
 }
