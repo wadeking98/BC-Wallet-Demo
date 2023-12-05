@@ -1,5 +1,5 @@
-import { Body, Delete, Get, InternalServerError, JsonController, NotFoundError, Param, Post } from 'routing-controllers'
-import { Inject, Service } from 'typedi'
+import { Body, Get, JsonController, Param, Post } from 'routing-controllers'
+import { Service } from 'typedi'
 
 import { tractionRequest } from '../utils/tractionHelper'
 
@@ -12,11 +12,24 @@ export class ConnectionController {
     return response.data
   }
 
+  @Get('/invitationId/:id')
+  public async getConnectionByInvitation(@Param('id') invitationId: string) {
+    const response = await tractionRequest.get(`/connections?invitation_msg_id=${invitationId}`)
+    return response.data.results[0]
+  }
+
   @Post('/createInvite')
   public async createConnectionInvite(@Body() params: any) {
-    const response = await tractionRequest.post(`/connections/create-invitation`, params, {
-      params: { auto_accept: true },
-    })
+    const data = {
+      ...params,
+      accept: ['didcomm/aip1', 'didcomm/aip2;env=rfc19'],
+      goal: 'Showcase connection',
+      protocol_version: '1.0',
+      handshake_protocols: ['https://didcomm.org/connections/1.0'],
+
+      metadata: {},
+    }
+    const response = await tractionRequest.post(`/out-of-band/create-invitation?auto_accept=true`, data)
     return response.data
   }
 }

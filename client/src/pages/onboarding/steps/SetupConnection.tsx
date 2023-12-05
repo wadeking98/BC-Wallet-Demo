@@ -1,25 +1,19 @@
 import { motion } from 'framer-motion'
-import { track } from 'insights-js'
 import React, { useEffect } from 'react'
 import { isMobile } from 'react-device-detect'
 import { FiExternalLink } from 'react-icons/fi'
-import { useNavigate } from 'react-router-dom'
 
 import { fade, fadeX } from '../../../FramerAnimations'
 import { Button } from '../../../components/Button'
-import { Loader } from '../../../components/Loader'
 import { QRCode } from '../../../components/QRCode'
 import { useAppDispatch } from '../../../hooks/hooks'
 import { useInterval } from '../../../hooks/useInterval'
 import { clearConnection, setDeepLink } from '../../../slices/connection/connectionSlice'
 import { createInvitation, fetchConnectionById } from '../../../slices/connection/connectionThunks'
 import { clearCredentials } from '../../../slices/credentials/credentialsSlice'
-import { useOnboarding } from '../../../slices/onboarding/onboardingSelectors'
-import { completeOnboarding, setOnboardingConnectionId } from '../../../slices/onboarding/onboardingSlice'
+import { setOnboardingConnectionId } from '../../../slices/onboarding/onboardingSlice'
 import { setConnectionDate } from '../../../slices/preferences/preferencesSlice'
-import { basePath } from '../../../utils/BasePath'
 import { isConnected } from '../../../utils/Helpers'
-import { Content, addOnboardingProgress } from '../../../utils/OnboardingUtils'
 import { prependApiUrl } from '../../../utils/Url'
 import { StepInformation } from '../components/StepInformation'
 
@@ -61,7 +55,7 @@ export const SetupConnection: React.FC<Props> = ({
   useEffect(() => {
     if (!isCompleted || newConnection) {
       dispatch(clearConnection())
-      dispatch(createInvitation(issuerName))
+      dispatch(createInvitation({ issuer: issuerName, goalCode: 'aries.vc.issue' }))
       dispatch(clearCredentials())
     }
   }, [])

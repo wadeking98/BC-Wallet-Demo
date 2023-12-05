@@ -7,14 +7,11 @@ import { isMobile } from 'react-device-detect'
 import { FiExternalLink } from 'react-icons/fi'
 
 import { fade, fadeX } from '../../../FramerAnimations'
-import { apiCall } from '../../../api/BaseUrl'
-import { Modal } from '../../../components/Modal'
 import { QRCode } from '../../../components/QRCode'
 import { useAppDispatch } from '../../../hooks/hooks'
 import { useInterval } from '../../../hooks/useInterval'
 import { setDeepLink } from '../../../slices/connection/connectionSlice'
 import { createInvitation, fetchConnectionById } from '../../../slices/connection/connectionThunks'
-import { createDeepProof } from '../../../slices/proof/proofThunks'
 import { nextStep } from '../../../slices/useCases/useCasesSlice'
 import { isConnected } from '../../../utils/Helpers'
 import { prependApiUrl } from '../../../utils/Url'
@@ -33,7 +30,8 @@ export const StepConnection: React.FC<Props> = ({ step, connection, newConnectio
   const deepLink = `bcwallet://aries_connection_invitation?${invitationUrl?.split('?')[1]}`
 
   useEffect(() => {
-    if (!isCompleted || newConnection) dispatch(createInvitation(step.verifier?.name ?? 'Unknown'))
+    if (!isCompleted || newConnection)
+      dispatch(createInvitation({ issuer: step.verifier?.name ?? 'Unknown', goalCode: 'aries.vc.verify.once' }))
   }, [])
 
   useInterval(
