@@ -20,6 +20,8 @@ export interface OnboardingStep {
 export interface CredentialRequest {
   name: string
   icon?: string
+  schema_id?: string
+  cred_def_id?: string
   predicates?: { name: string; value?: string | number | (() => string | number); type: string }
   properties?: string[]
   nonRevoked?: { to: number; from?: number }
