@@ -50,24 +50,31 @@ export const StepProof: React.FC<Props> = ({
     const predicates: any = []
 
     requestedCredentials?.forEach((item) => {
+      const restrictions: any[] = [
+        {
+          schema_name: item.name,
+        },
+      ]
+      if (item.schema_id) {
+        restrictions.push({
+          schema_id: item.schema_id,
+        })
+      }
+      if (item.cred_def_id) {
+        restrictions.push({
+          cred_def_id: item.cred_def_id,
+        })
+      }
       if (item.properties) {
         proofs[item.name] = {
-          restrictions: [
-            {
-              schema_name: item.name,
-            },
-          ],
+          restrictions,
           names: item.properties,
           non_revoked: item.nonRevoked,
         }
       }
       if (item.predicates) {
         predicates[item.name] = {
-          restrictions: [
-            {
-              schema_name: item.name,
-            },
-          ],
+          restrictions,
           name: item.predicates?.name,
           p_value: item.predicates?.value,
           p_type: item.predicates?.type,

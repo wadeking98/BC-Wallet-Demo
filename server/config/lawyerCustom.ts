@@ -222,11 +222,13 @@ export const lawyerCustom: CustomCharacter = {
               {
                 icon: '/public/lawyer2/connection/lsbc-logo.png',
                 name: 'member_card',
+                schema_id: 'QEquAHkM35w4XVT3Ku5yat:2:member_card:1.54',
                 properties: ['Given Name', 'Surname', 'PPID'],
               },
               {
                 icon: '/public/lawyer2/connection/bc-logo.png',
                 name: 'Person',
+                schema_id: 'QEquAHkM35w4XVT3Ku5yat:2:Person:1.3',
                 properties: ['given_names', 'family_name'],
               },
             ],
@@ -269,12 +271,14 @@ export const lawyerCustom: CustomCharacter = {
               {
                 icon: '/public/lawyer2/connection/lsbc-logo.png',
                 name: 'member_card',
+                schema_id: 'QEquAHkM35w4XVT3Ku5yat:2:member_card:1.54',
                 properties: ['Given Name', 'Surname', 'PPID'],
                 nonRevoked: { to: now() },
               },
               {
                 icon: '/public/lawyer2/connection/bc-logo.png',
                 name: 'Person',
+                schema_id: 'QEquAHkM35w4XVT3Ku5yat:2:Person:1.3',
                 properties: ['given_names', 'family_name', 'picture'],
                 nonRevoked: { to: now() },
               },

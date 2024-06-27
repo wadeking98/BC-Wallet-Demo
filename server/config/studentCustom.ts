@@ -134,6 +134,7 @@ export const studentCustom: CustomCharacter = {
               {
                 icon: '/public/student/useCases/school/icon-university-card.png',
                 name: 'student_card',
+                schema_id: 'QEquAHkM35w4XVT3Ku5yat:2:student_card:1.6',
                 predicates: {
                   name: 'expiry_date',
                   type: '>=',
@@ -179,6 +180,7 @@ export const studentCustom: CustomCharacter = {
               {
                 icon: '/public/student/useCases/school/icon-university-card.png',
                 name: 'student_card',
+                schema_id: 'QEquAHkM35w4XVT3Ku5yat:2:student_card:1.6',
                 properties: ['student_first_name'],
               },
             ],
