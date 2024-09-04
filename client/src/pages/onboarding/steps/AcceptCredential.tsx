@@ -8,12 +8,12 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { fade, fadeX } from '../../../FramerAnimations'
+import { baseWsUrl } from '../../../api/BaseUrl'
 import { getOrCreateCredDefId } from '../../../api/CredentialApi'
 import { ActionCTA } from '../../../components/ActionCTA'
 import { Loader } from '../../../components/Loader'
 import { Modal } from '../../../components/Modal'
 import { useAppDispatch } from '../../../hooks/hooks'
-import { useInterval } from '../../../hooks/useInterval'
 import { useConnection } from '../../../slices/connection/connectionSelectors'
 import { useCredentials } from '../../../slices/credentials/credentialsSelectors'
 import {
@@ -114,12 +114,20 @@ export const AcceptCredential: React.FC<Props> = ({
     }
   }, [error])
 
-  useInterval(
-    () => {
-      if (document.visibilityState === 'visible') dispatch(fetchCredentialsByConId(connectionId))
-    },
-    !credentialsAccepted ? 3000 : null
-  )
+  useEffect(() => {
+    const ws = new WebSocket(baseWsUrl)
+    ws.onopen = () => {
+      ws.send(JSON.stringify({ connectionId: connectionId }))
+    }
+
+    ws.onmessage = (event) => {
+      const data = JSON.parse(event.data)
+      const { state, endpoint } = data
+      if (endpoint === 'issue_credential' && state === 'credential_issued') {
+        dispatch(fetchCredentialsByConId(connectionId))
+      }
+    }
+  }, [connectionId])
 
   const routeError = () => {
     navigate(`${basePath}/demo`)
@@ -144,7 +152,7 @@ export const AcceptCredential: React.FC<Props> = ({
       <StepInformation title={title} text={text} />
       <div className="flex flex-row m-auto content-center">
         {credentials.length ? (
-          <AnimatePresence exitBeforeEnter>
+          <AnimatePresence mode="wait">
             <motion.div className={`flex flex-1 flex-col m-auto`} variants={fade} animate="show" exit="exit">
               <StarterCredentials credentials={credentials} />
             </motion.div>

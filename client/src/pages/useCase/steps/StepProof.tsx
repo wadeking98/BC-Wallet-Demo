@@ -5,9 +5,9 @@ import { motion } from 'framer-motion'
 import React, { useEffect, useState } from 'react'
 
 import { fadeX } from '../../../FramerAnimations'
+import { baseWsUrl } from '../../../api/BaseUrl'
 import { ActionCTA } from '../../../components/ActionCTA'
 import { useAppDispatch } from '../../../hooks/hooks'
-import { useInterval } from '../../../hooks/useInterval'
 import { useConnection } from '../../../slices/connection/connectionSelectors'
 import { createProof, deleteProofById, fetchProofById, createDeepProof } from '../../../slices/proof/proofThunks'
 import { FailedRequestModal } from '../../onboarding/components/FailedRequestModal'
@@ -112,14 +112,19 @@ export const StepProof: React.FC<Props> = ({
     }
   }, [])
 
-  useInterval(
-    () => {
-      if (!proofReceived && proof && document.visibilityState === 'visible') {
-        dispatch(fetchProofById(proof.id))
+  useEffect(() => {
+    const ws = new WebSocket(baseWsUrl as string)
+    ws.onopen = () => {
+      ws.send(JSON.stringify({ connectionId: connectionId }))
+    }
+    ws.onmessage = (event) => {
+      const data = JSON.parse(event.data)
+      const { state, endpoint } = data
+      if (proof && endpoint === 'present_proof' && (state === 'presentation_received' || state === 'verified')) {
+        dispatch(fetchProofById(proof.id as string))
       }
-    },
-    !proofReceived ? 1000 : null
-  )
+    }
+  }, [connectionId, proof])
 
   // remove proof record after we're done with it
   useEffect(() => {

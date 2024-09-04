@@ -47,11 +47,10 @@ function App() {
       }
     }
   }, [connectionDate, lastServerReset])
-
   return (
     <ThemeProvider>
       <AuthProvider>
-        <AnimatePresence exitBeforeEnter>
+        <AnimatePresence mode="wait">
           <Routes location={location} key={location.pathname}>
             {basePath !== '/' && <Route path="/" element={<Navigate to={basePath} />}></Route>}
             <Route path={`${basePath}/`} element={<LandingPage />} />

@@ -20,7 +20,11 @@ import { fetchWallets } from '../slices/wallets/walletsThunks'
 import { basePath } from './BasePath'
 import { RenderResults } from './RenderResults'
 
-export const KBar: React.FC = ({ children }) => {
+interface Props {
+  children?: React.ReactNode
+}
+
+export const KBar: React.FC<Props> = ({ children }) => {
   const dispatch = useAppDispatch()
   const { demoCompleted } = usePreferences()
   const [confettiPieces, setConfettiPieces] = useState(0)
