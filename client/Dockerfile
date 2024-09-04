@@ -1,4 +1,4 @@
-ARG build_image=node:fermium
+ARG build_image=node:18-alpine
 ARG runtime_image=caddy:alpine
 
 # build stage

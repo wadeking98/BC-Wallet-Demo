@@ -47,7 +47,6 @@ export const OnboardingContainer: React.FC<Props> = ({
   connectionState,
   invitationUrl,
 }) => {
-  const darkMode = useDarkMode()
   const dispatch = useAppDispatch()
   const { issuedCredentials } = useCredentials()
   const idToTitle: Record<string, string> = {}
@@ -249,7 +248,7 @@ export const OnboardingContainer: React.FC<Props> = ({
             <FiLogOut className="inline h-12 cursor-pointer dark:text-white" />
           </motion.button>
         </div>
-        <AnimatePresence exitBeforeEnter>{getComponentToRender(onboardingStep)}</AnimatePresence>
+        <AnimatePresence mode="wait">{getComponentToRender(onboardingStep)}</AnimatePresence>
         <OnboardingBottomNav
           onboardingStep={onboardingStep}
           addOnboardingStep={nextOnboardingPage}
@@ -261,7 +260,7 @@ export const OnboardingContainer: React.FC<Props> = ({
       </div>
       {!isMobile && (
         <div className="bg-bcgov-white dark:bg-bcgov-black hidden lg:flex lg:w-1/3 rounded-r-lg flex-col justify-center h-full select-none">
-          <AnimatePresence exitBeforeEnter>{getImageToRender(onboardingStep)}</AnimatePresence>
+          <AnimatePresence mode="wait">{getImageToRender(onboardingStep)}</AnimatePresence>
         </div>
       )}
       {leaveModal && (

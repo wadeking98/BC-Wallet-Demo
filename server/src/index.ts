@@ -1,9 +1,10 @@
 import 'reflect-metadata'
 import type { Express } from 'express'
+import type WebSocket from 'ws'
 
 import { json, static as stx } from 'express'
-import { createExpressServer, useContainer } from 'routing-controllers'
-import { Container } from 'typedi'
+import { createExpressServer } from 'routing-controllers'
+import { WebSocketServer } from 'ws'
 
 import { tractionApiKeyUpdaterInit, tractionRequest, tractionGarbageCollection } from './utils/tractionHelper'
 
@@ -21,11 +22,44 @@ const run = async () => {
   await tractionApiKeyUpdaterInit()
   await tractionGarbageCollection()
 
+  // setup websockets
+  // Websocket server for the demo
+  const wss = new WebSocketServer({ port: 5001 })
+  interface CustomWebSocket extends WebSocket {
+    isAlive: boolean
+    connectionId?: string
+  }
+  wss.on('connection', function connection(c) {
+    const ws = c as CustomWebSocket
+    ws.isAlive = true
+    ws.on('pong', () => (ws.isAlive = true))
+    ws.on('message', (message) => {
+      const data = JSON.parse(message.toString())
+      ws.connectionId = data.connectionId
+    })
+  })
+
+  const interval = setInterval(function ping() {
+    wss.clients.forEach(function each(c) {
+      const ws = c as CustomWebSocket
+      if (ws.isAlive === false) return ws.terminate()
+
+      ws.isAlive = false
+      ws.ping()
+    })
+  }, 5000)
+
+  wss.on('close', function close() {
+    clearInterval(interval)
+  })
+
   const app: Express = createExpressServer({
-    controllers: [__dirname + '/controllers/**/*.ts', __dirname + '/controllers/**/*.js'],
+    controllers: [__dirname + '/controllers/**/*.ts'],
     cors: true,
     routePrefix: '/digital-trust/showcase/demo',
   })
+
+  app.set('wss', wss)
 
   app.use(json())
 

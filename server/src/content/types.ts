@@ -17,6 +17,11 @@ export interface OnboardingStep {
   credentials?: Credential[]
 }
 
+export interface CustomWebSocket extends WebSocket {
+  isAlive: boolean
+  connectionId?: string
+}
+
 export interface CredentialRequest {
   name: string
   icon?: string

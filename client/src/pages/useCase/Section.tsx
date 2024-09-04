@@ -26,7 +26,6 @@ import { StepConnection } from './steps/StepConnection'
 import { StepEnd } from './steps/StepEnd'
 import { StepInformation } from './steps/StepInformation'
 import { StepProof } from './steps/StepProof'
-import { StepProofOOB } from './steps/StepProofOOB'
 
 export interface Props {
   section: UseCaseScreen[]
@@ -214,43 +213,20 @@ export const Section: React.FC<Props> = ({
               style={style}
               data-cy="section"
             >
-              <AnimatePresence initial={false} exitBeforeEnter onExitComplete={() => null}>
+              <AnimatePresence initial={false} mode="wait" onExitComplete={() => null}>
                 {step.screenId.startsWith('INFO') && <StepInformation key={step.screenId} step={step} />}
                 {step.screenId.startsWith('CONNECTION') && (
                   <StepConnection newConnection={true} key={step.screenId} step={step} connection={connection} />
                 )}
-                {/* {step.screenId.startsWith("CREDENTIAL") && connection.id && section.issueCredentials && (
-                  <StepCredential
+                {step.screenId.startsWith('PROOF') && step.requestOptions && connection.id && (
+                  <StepProof
                     key={step.screenId}
+                    entityName={verifier.name}
+                    characterType={currentCharacter?.type.toLowerCase()}
+                    proof={proof}
                     step={step}
                     connectionId={connection.id}
-                    issueCredentials={section.issueCredentials}
-                    credentials={credentials}
-                    proof={proof}
-                  />
-                )} */}
-                {step.screenId.startsWith('PROOF') &&
-                  !step.screenId.startsWith('PROOF_OOB') &&
-                  step.requestOptions &&
-                  connection.id && (
-                    <StepProof
-                      key={step.screenId}
-                      entityName={verifier.name}
-                      characterType={currentCharacter?.type.toLowerCase()}
-                      proof={proof}
-                      step={step}
-                      connectionId={connection.id}
-                      requestedCredentials={step.requestOptions.requestedCredentials}
-                    />
-                  )}
-                {step.screenId.startsWith('PROOF_OOB') && step.requestOptions && (
-                  <StepProofOOB
-                    key={step.screenId}
-                    proof={proof}
-                    proofUrl={proofUrl}
-                    step={step}
-                    requestedCredentials={step.requestOptions?.requestedCredentials}
-                    entityName={verifier.name}
+                    requestedCredentials={step.requestOptions.requestedCredentials}
                   />
                 )}
                 {step.screenId.startsWith('STEP_END') && <StepEnd key={step.screenId} step={step} />}
@@ -305,5 +281,5 @@ export const Section: React.FC<Props> = ({
     }
   }
 
-  return <AnimatePresence exitBeforeEnter>{step && renderStepItem()}</AnimatePresence>
+  return <AnimatePresence mode="wait">{step && renderStepItem()}</AnimatePresence>
 }

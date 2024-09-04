@@ -307,7 +307,7 @@ export const lawyerCustom: CustomCharacter = {
         {
           screenId: 'CONNECTION',
           title: 'Connect to Attestation Service',
-          text: 'You\'re now ready to prove you\'re using a valid BC Wallet application. Scan the QR code.',
+          text: "You're now ready to prove you're using a valid BC Wallet application. Scan the QR code.",
           image: '/public/lawyer2/useCases/courtServices/courtServicesOverlay.png',
           verifier: { name: 'BC Wallet Attestation', icon: '/public/lawyer2/connection/bc-logo.png' },
         },

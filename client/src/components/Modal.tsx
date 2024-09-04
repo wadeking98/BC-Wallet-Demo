@@ -10,6 +10,7 @@ export interface Props {
   onCancel?(): void
   okDisabled?: boolean
   okText?: string
+  children?: React.ReactNode
   title: string
   description: string
   loading?: boolean

@@ -7,9 +7,9 @@ import { isMobile } from 'react-device-detect'
 import { FiExternalLink } from 'react-icons/fi'
 
 import { fade, fadeX } from '../../../FramerAnimations'
+import { baseWsUrl } from '../../../api/BaseUrl'
 import { QRCode } from '../../../components/QRCode'
 import { useAppDispatch } from '../../../hooks/hooks'
-import { useInterval } from '../../../hooks/useInterval'
 import { setDeepLink } from '../../../slices/connection/connectionSlice'
 import { createInvitation, fetchConnectionById } from '../../../slices/connection/connectionThunks'
 import { nextStep } from '../../../slices/useCases/useCasesSlice'
@@ -34,12 +34,20 @@ export const StepConnection: React.FC<Props> = ({ step, connection, newConnectio
       dispatch(createInvitation({ issuer: step.verifier?.name ?? 'Unknown', goalCode: 'aries.vc.verify.once' }))
   }, [])
 
-  useInterval(
-    () => {
-      if (id && document.visibilityState === 'visible') dispatch(fetchConnectionById(id))
-    },
-    !isCompleted ? 1000 : null
-  )
+  useEffect(() => {
+    const ws = new WebSocket(baseWsUrl as string)
+    ws.onopen = () => {
+      ws.send(JSON.stringify({ connectionId: id }))
+    }
+
+    ws.onmessage = (event) => {
+      const data = JSON.parse(event.data)
+      const { state, endpoint } = data
+      if (endpoint === 'connections' && state === 'active') {
+        dispatch(fetchConnectionById(id as string))
+      }
+    }
+  }, [id])
 
   const handleDeepLink = () => {
     if (connection.id) {

@@ -4,10 +4,10 @@ import { isMobile } from 'react-device-detect'
 import { FiExternalLink } from 'react-icons/fi'
 
 import { fade, fadeX } from '../../../FramerAnimations'
+import { baseWsUrl } from '../../../api/BaseUrl'
 import { Button } from '../../../components/Button'
 import { QRCode } from '../../../components/QRCode'
 import { useAppDispatch } from '../../../hooks/hooks'
-import { useInterval } from '../../../hooks/useInterval'
 import { clearConnection, setDeepLink } from '../../../slices/connection/connectionSlice'
 import { createInvitation, fetchConnectionById } from '../../../slices/connection/connectionThunks'
 import { clearCredentials } from '../../../slices/credentials/credentialsSlice'
@@ -74,14 +74,20 @@ export const SetupConnection: React.FC<Props> = ({
     }
   }, [connectionId])
 
-  useInterval(
-    () => {
-      if (connectionId && document.visibilityState === 'visible') {
-        dispatch(fetchConnectionById(connectionId))
+  useEffect(() => {
+    const ws = new WebSocket(baseWsUrl as string)
+    ws.onopen = () => {
+      ws.send(JSON.stringify({ connectionId: connectionId }))
+    }
+
+    ws.onmessage = (event) => {
+      const data = JSON.parse(event.data)
+      const { state, endpoint } = data
+      if (endpoint === 'connections' && state === 'active') {
+        dispatch(fetchConnectionById(connectionId as string))
       }
-    },
-    !isCompleted ? 1000 : null
-  )
+    }
+  }, [connectionId])
 
   const renderQRCode = (overlay?: boolean) => {
     return invitationUrl ? (
