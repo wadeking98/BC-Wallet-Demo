@@ -331,6 +331,8 @@ There are three pipelines for the showcase: `bc-wallet-demo-pipeline`, `bc-walle
 
 The other two pipelines are triggered manually, the test pipeline points the test image stream tags to dev, and the prod pipeline points the prod image stream tags to test. This means to deploy changes to prod, the test pipeline must run first.
 
+To trigger a pipeline manually go to the buildconfigs section in a99fd4-tools, find the pipeline you would like to run and select `Start Build`.
+![](Pasted%20image%2020241003161630.png)
 Once the a pipeline has been run, there's nothing else you need to do, it will automatically handle the deployment to dev, test, or prod depending on the pipeline.
 
 **Note:** The name pipeline is a bit of a misnomer because the pipelines are actually located under the buildconfig section in a99fd4-tools, not the pipeline section.
